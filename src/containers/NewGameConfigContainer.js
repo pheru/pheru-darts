@@ -1,7 +1,6 @@
 import {connect} from 'react-redux'
-import {startNewGame} from "../actions/newGame";
+import {startNewGame} from "../actions/game";
 import NewGameConfig from "../components/NewGameConfig";
-
 
 const mapStateToProps = state => ({
     //TODO players

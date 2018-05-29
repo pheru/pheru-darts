@@ -38,7 +38,7 @@ class NewGameConfig extends React.Component {
 
     render() {
         return <Grid>
-            <Row className="show-grid text-center">
+            <Row className="show-grid">
                 <Col xs={12} sm={2} style={this.colStyle}>
                     <h3 style={{margin: 0}}>Spieler: </h3>
                 </Col>
@@ -58,7 +58,7 @@ class NewGameConfig extends React.Component {
                     <Button bsStyle="success" block>+</Button>
                 </Col>
             </Row>
-            <Row className="show-grid text-center">
+            <Row className="show-grid">
                 <Col xs={12} sm={2} style={this.colStyle}>
                     <h3 style={{margin: 0}}>Punkte: </h3>
                 </Col>
@@ -66,7 +66,7 @@ class NewGameConfig extends React.Component {
                     <FormControl type="text" value={this.state.score} onChange={this.handleScoreChange}/>
                 </Col>
             </Row>
-            <Row className="show-grid text-center">
+            <Row className="show-grid">
                 <Col xs={12} sm={2} style={this.colStyle}>
                     <h3 style={{margin: 0}}>Check-Out: </h3>
                 </Col>
@@ -78,7 +78,7 @@ class NewGameConfig extends React.Component {
                     </ToggleButtonGroup>
                 </Col>
             </Row>
-            <Row className="show-grid text-center">
+            <Row className="show-grid">
                 <Col xs={12} sm={12} style={this.colStyle}>
                     <Button bsStyle="primary" bsSize="large" block
                             onClick={() => this.props.startNewGameButtonClicked(this.state.selectedPlayers, this.state.score, this.state.checkOutMode)}
