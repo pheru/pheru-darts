@@ -56,13 +56,13 @@ describe('gameInformationService', () => {
         ];
         players[1].aufnahmen = [
             [{value: 1, multiplier: 1}, {value: 1, multiplier: 1}, {value: 1, multiplier: 1}],
-            [{value: 1, multiplier: 1}, {value: 1, multiplier: 1}]
+            [{value: 11, multiplier: 1}, {value: 11, multiplier: 1}]
         ];
 
         let turnInfo = getTurnInformation(players, 101, DOUBLE_OUT);
 
         expect(turnInfo.playerInformation[0].score).toEqual(95);
-        expect(turnInfo.playerInformation[1].score).toEqual(96);
+        expect(turnInfo.playerInformation[1].score).toEqual(76);
         expect(turnInfo.playerInformation[0].dartCount).toEqual(6);
         expect(turnInfo.playerInformation[1].dartCount).toEqual(5);
         expect(turnInfo.playerInformation[0].average).toEqual("3.00");
@@ -105,7 +105,7 @@ describe('gameInformationService', () => {
     it('getTurnInformation checkout fehlgeschlagen da doubleout', () => {
         let players = defaultPlayers();
         players[0].aufnahmen = [
-            [{value: 20, multiplier: 3}, {value: 20, multiplier: 2}, {value: 1, multiplier: 1}]
+            [{value: 20, multiplier: 3}, {value: 15, multiplier: 2}, {value: 11, multiplier: 1}]
         ];
         players[1].aufnahmen = [];
 
@@ -204,6 +204,46 @@ describe('gameInformationService', () => {
         expect(turnInfo.turnInformation.previous.playerIndex).toEqual(1);
         expect(turnInfo.turnInformation.previous.aufnahmeIndex).toEqual(1);
         expect(turnInfo.turnInformation.previous.dartIndex).toEqual(1);
+    });
+
+    it('getTurnInformation 1 bei Double out ist ueberworfen', () => {
+        let players = defaultPlayers();
+        players[0].aufnahmen = [
+            [{value: 20, multiplier: 3}, {value: 20, multiplier: 2}]
+        ];
+        players[1].aufnahmen = [];
+
+        let turnInfo = getTurnInformation(players, 101, DOUBLE_OUT);
+
+        expect(turnInfo.playerInformation[0].score).toEqual(101);
+        expect(turnInfo.playerInformation[1].score).toEqual(101);
+        expect(turnInfo.playerInformation[0].dartCount).toEqual(2);
+        expect(turnInfo.playerInformation[1].dartCount).toEqual(0);
+        expect(turnInfo.playerInformation[0].average).toEqual("0.00");
+        expect(turnInfo.playerInformation[1].average).toEqual("0.00");
+
+        expect(turnInfo.turnInformation.current.playerIndex).toEqual(1);
+        expect(turnInfo.turnInformation.current.aufnahmeIndex).toEqual(0);
+        expect(turnInfo.turnInformation.current.dartIndex).toEqual(0);
+
+        expect(turnInfo.turnInformation.previous.playerIndex).toEqual(0);
+        expect(turnInfo.turnInformation.previous.aufnahmeIndex).toEqual(0);
+        expect(turnInfo.turnInformation.previous.dartIndex).toEqual(1);
+    });
+
+    it('Bug #11 fehlerhafte average-berechnung', () => {
+        let players = defaultPlayers();
+        players[0].aufnahmen = [
+            [{value: 20, multiplier: 1}, {value: 20, multiplier: 1}, {value: 20, multiplier: 1}],
+            [{value: 14, multiplier: 1}, {value: 7, multiplier: 1}]
+        ];
+        players[1].aufnahmen = [
+            [{value: 20, multiplier: 1}, {value: 20, multiplier: 1}, {value: 20, multiplier: 1}]
+        ];
+
+        let turnInfo = getTurnInformation(players, 101, DOUBLE_OUT);
+
+        expect(turnInfo.playerInformation[0].average).toEqual("60.00");
     });
 
 });

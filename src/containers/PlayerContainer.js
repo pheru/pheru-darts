@@ -53,39 +53,6 @@ function getDarts(player) {
     }
     return darts;
 }
-//
-// function getDartCount(player) {
-//     let count = 0;
-//     for (let i = 0; i < player.aufnahmen.length; i++) {
-//         let aufnahme = player.aufnahmen[i];
-//         for (let j = 0; j < aufnahme.length; j++) {
-//             count++;
-//         }
-//     }
-//     return count;
-// }
-//
-// function computeAverage(aufnahmen, current, startScore, score) {
-//     let aufnahmenCount = current ? aufnahmen.length - 1 : aufnahmen.length;
-//     if (aufnahmenCount === 0) {
-//         return 0.0;
-//     }
-//     let currentAufnahmeScore = 0;
-//     if (current) {
-//         let currentAufnahme = aufnahmen[aufnahmen.length - 1];
-//         for (let i = 0; i < currentAufnahme.length; i++) {
-//             currentAufnahmeScore += currentAufnahme[i].value * currentAufnahme[i].multiplier;
-//         }
-//     }
-//     let scoreDifference = startScore - (score + currentAufnahmeScore);
-//     let avg = scoreDifference / aufnahmenCount;
-//     return avg.toFixed(2);
-// }
-//
-// function computeIfCurrent(players, index, startScore, checkOutMode) {
-//     let turnInfo = getTurnInformation(players, startScore, checkOutMode);
-//     return turnInfo.current.playerIndex === index;
-// }
 
 const mapDispatchToProps = dispatch => ({});
 

@@ -1,14 +1,11 @@
-import {ADD_DART, START_NEW_GAME, UNDO_DART} from "../actions/game";
+import {ADD_DART, EXIT_GAME, REMATCH, START_NEW_GAME, UNDO_DART} from "../actions/game";
 import getTurnInformation from "../services/gameInformationService";
 
 function game(state = null, action) {
     switch (action.type) {
         case START_NEW_GAME:
             let players = action.players;
-            for (let i = 0; i < players.length; i++) {
-                players[i].aufnahmen = [];
-            }
-            players[0].aufnahmen[0] = [];
+            initPlayers(players);
             return {
                 ...state,
                 players: players,
@@ -19,9 +16,26 @@ function game(state = null, action) {
             return addDart(state, {value: action.value, multiplier: action.multiplier});
         case UNDO_DART:
             return undoDart(state);
+        case EXIT_GAME:
+            return null;
+        case REMATCH:
+            let playersCopy = state.players.slice();
+            playersCopy.push(playersCopy.shift());
+            initPlayers(playersCopy);
+            return {
+                ...state,
+                players: playersCopy
+            };
         default:
             return state
     }
+}
+
+function initPlayers(players){
+    for (let i = 0; i < players.length; i++) {
+        players[i].aufnahmen = [];
+    }
+    players[0].aufnahmen[0] = [];
 }
 
 function addDart(state, dart) {
@@ -38,13 +52,9 @@ function addDart(state, dart) {
     players[currentTurnInfo.playerIndex].aufnahmen[currentTurnInfo.aufnahmeIndex][currentTurnInfo.dartIndex] = validatedDart;
 
     let turnInfo = getTurnInformation(players, state.score, state.checkOutMode);
-    if (turnInfo.playerInformation[turnInfo.turnInformation.previous.playerIndex].score === 0) {
-        alert("Gewonnen!");
-    } else {
-        currentTurnInfo = turnInfo.turnInformation.current;
-        if (players[currentTurnInfo.playerIndex].aufnahmen[currentTurnInfo.aufnahmeIndex] === undefined) {
-            players[currentTurnInfo.playerIndex].aufnahmen[currentTurnInfo.aufnahmeIndex] = [];
-        }
+    currentTurnInfo = turnInfo.turnInformation.current;
+    if (players[currentTurnInfo.playerIndex].aufnahmen[currentTurnInfo.aufnahmeIndex] === undefined) {
+        players[currentTurnInfo.playerIndex].aufnahmen[currentTurnInfo.aufnahmeIndex] = [];
     }
     return {
         ...state,
@@ -56,7 +66,7 @@ function undoDart(state) {
     let players = state.players;
 
     let currentTurnInfo = getTurnInformation(players, state.score, state.checkOutMode).turnInformation.current;
-    if(currentTurnInfo.playerIndex === 0 && currentTurnInfo.aufnahmeIndex === 0 && currentTurnInfo.dartIndex === 0){
+    if (currentTurnInfo.playerIndex === 0 && currentTurnInfo.aufnahmeIndex === 0 && currentTurnInfo.dartIndex === 0) {
         alert("Rückgängig beim ersten Wurf nicht möglich!");
         return state;
     }

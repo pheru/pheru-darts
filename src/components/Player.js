@@ -6,6 +6,8 @@ class Player extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
+        this.activeBorder = '10px solid #2196f3';
+        this.blackBorder = '1px solid black';
         this.rowStyle = {
             margin: 0,
             padding: 0
@@ -18,52 +20,71 @@ class Player extends React.Component {
             ...this.colStyle,
             border: '1px solid #337ab7'
         };
-        this.pStyle3 = {
-            fontSize: '3vw',
+        this.pStyle = {
             fontWeight: 'bold',
             margin: 0,
             padding: 0
         };
-        this.pStyle5 = {
-            fontSize: '5vw',
-            fontWeight: 'bold',
-            margin: 0,
-            padding: 0
+        this.pStyleSmall = {
+            ...this.pStyle,
+            fontSize: '3vw'
         };
-
+        this.pStyleBig = {
+            ...this.pStyle,
+            fontSize: '5vw'
+        };
     }
 
     render() {
         return <Row className="show-grid text-center"
-                    style={this.props.current ? {backgroundColor: '#5bc0de', borderRadius: 20} : {backgroundColor: '#EDFFFC', borderRadius: 20}}>
-            <Col xs={12} sm={12} style={{...this.borderedColStyle, borderRadius: 20}}>
+                    style={this.props.current ? {
+                            backgroundColor: 'white',
+                            borderRadius: 20,
+                            margin: 0,
+                            borderLeft: this.activeBorder,
+                            borderRight: this.activeBorder
+                        }
+                        : {
+                            backgroundColor: '#cadad8',
+                            borderRadius: 20,
+                            margin: 0
+                        }}>
+            <Col xs={12} sm={12} style={{...this.colStyle, borderRadius: 20}}>
                 <Row className="show-grid text-center" style={this.rowStyle}>
-                    <Col xs={12} sm={12} style={{...this.borderedColStyle, borderTopLeftRadius: 18, borderTopRightRadius: 18}}>
-                        <p style={this.pStyle3}>{this.props.name}</p>
+                    <Col xs={12} sm={12} style={{...this.colStyle, borderTopLeftRadius: 18, borderTopRightRadius: 18}}>
+                        <p style={this.pStyleSmall}>{this.props.name}</p>
                     </Col>
                 </Row>
                 <Row className="show-grid text-center" style={this.rowStyle}>
-                    <Col xs={12} sm={12} style={this.borderedColStyle}>
-                        <p style={this.pStyle5}>{this.props.score}</p>
+                    <Col xs={12} sm={12} style={this.colStyle}>
+                        <p style={this.pStyleBig}>{this.props.score}</p>
                     </Col>
                 </Row>
                 <Row className="show-grid text-center" style={this.rowStyle}>
-                    <Col xs={6} sm={6} style={this.borderedColStyle}>
-                        <p style={this.pStyle3}># {this.props.dartCount}</p>
+                    <Col xs={6} sm={6}
+                         style={{...this.colStyle, borderRight: this.blackBorder, borderTop: this.blackBorder}}>
+                        <p style={this.pStyleSmall}># {this.props.dartCount}</p>
                     </Col>
-                    <Col xs={6} sm={6} style={this.borderedColStyle}>
-                        <p style={this.pStyle3}>&empty; {this.props.average}</p>
+                    <Col xs={6} sm={6} style={{...this.colStyle, borderTop: this.blackBorder}}>
+                        <p style={this.pStyleSmall}>&empty; {this.props.average}</p>
                     </Col>
                 </Row>
                 <Row className="show-grid text-center" style={this.rowStyle}>
-                    <Col xs={4} sm={4} style={{...this.borderedColStyle, borderBottomLeftRadius: 18}}>
-                        <p style={this.pStyle3}>{this.props.dart1}</p>
+                    <Col xs={4} sm={4}
+                         style={{...this.colStyle, borderBottomLeftRadius: 18, borderTop: this.blackBorder}}>
+                        <p style={this.pStyleSmall}>{this.props.dart1}</p>
                     </Col>
-                    <Col xs={4} sm={4} style={this.borderedColStyle}>
-                        <p style={this.pStyle3}>{this.props.dart2}</p>
+                    <Col xs={4} sm={4} style={{
+                        ...this.colStyle,
+                        borderRight: this.blackBorder,
+                        borderLeft: this.blackBorder,
+                        borderTop: this.blackBorder
+                    }}>
+                        <p style={this.pStyleSmall}>{this.props.dart2}</p>
                     </Col>
-                    <Col xs={4} sm={4} style={{...this.borderedColStyle, borderBottomRightRadius: 18}}>
-                        <p style={this.pStyle3}>{this.props.dart3}</p>
+                    <Col xs={4} sm={4}
+                         style={{...this.colStyle, borderBottomRightRadius: 18, borderTop: this.blackBorder}}>
+                        <p style={this.pStyleSmall}>{this.props.dart3}</p>
                     </Col>
                 </Row>
             </Col>
