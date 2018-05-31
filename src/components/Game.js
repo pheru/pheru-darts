@@ -51,7 +51,7 @@ class Game extends React.Component {
                             <Col xs={5} xsOffset={1} sm={12} smOffset={0} style={this.colStyleButton}>
                                 <Button bsStyle='info' bsSize='large' block
                                         onClick={this.handleBackToMenuModalShow}>
-                                    <Glyphicon glyph="list"/>
+                                    <Glyphicon glyph="home"/>
                                 </Button>
                             </Col>
                             <Col xs={5} sm={12} style={this.colStyleButton}>

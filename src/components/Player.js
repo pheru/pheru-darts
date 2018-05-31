@@ -6,6 +6,7 @@ class Player extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
+        this.borderRadius = 8;
         this.activeBorder = '10px solid #2196f3';
         this.blackBorder = '1px solid black';
         this.rowStyle = {
@@ -39,19 +40,19 @@ class Player extends React.Component {
         return <Row className="show-grid text-center"
                     style={this.props.current ? {
                             backgroundColor: 'white',
-                            borderRadius: 20,
+                            borderRadius: this.borderRadius,
                             margin: 0,
                             borderLeft: this.activeBorder,
                             borderRight: this.activeBorder
                         }
                         : {
                             backgroundColor: '#cadad8',
-                            borderRadius: 20,
+                            borderRadius: this.borderRadius,
                             margin: 0
                         }}>
-            <Col xs={12} sm={12} style={{...this.colStyle, borderRadius: 20}}>
+            <Col xs={12} sm={12} style={{...this.colStyle, borderRadius: this.borderRadius}}>
                 <Row className="show-grid text-center" style={this.rowStyle}>
-                    <Col xs={12} sm={12} style={{...this.colStyle, borderTopLeftRadius: 18, borderTopRightRadius: 18}}>
+                    <Col xs={12} sm={12} style={{...this.colStyle, borderTopLeftRadius: this.borderRadius, borderTopRightRadius: this.borderRadius}}>
                         <p style={this.pStyleSmall}>{this.props.name}</p>
                     </Col>
                 </Row>
@@ -71,7 +72,7 @@ class Player extends React.Component {
                 </Row>
                 <Row className="show-grid text-center" style={this.rowStyle}>
                     <Col xs={4} sm={4}
-                         style={{...this.colStyle, borderBottomLeftRadius: 18, borderTop: this.blackBorder}}>
+                         style={{...this.colStyle, borderBottomLeftRadius: this.borderRadius, borderTop: this.blackBorder}}>
                         <p style={this.pStyleSmall}>{this.props.dart1}</p>
                     </Col>
                     <Col xs={4} sm={4} style={{
@@ -83,7 +84,7 @@ class Player extends React.Component {
                         <p style={this.pStyleSmall}>{this.props.dart2}</p>
                     </Col>
                     <Col xs={4} sm={4}
-                         style={{...this.colStyle, borderBottomRightRadius: 18, borderTop: this.blackBorder}}>
+                         style={{...this.colStyle, borderBottomRightRadius: this.borderRadius, borderTop: this.blackBorder}}>
                         <p style={this.pStyleSmall}>{this.props.dart3}</p>
                     </Col>
                 </Row>
