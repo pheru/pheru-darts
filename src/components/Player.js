@@ -46,7 +46,7 @@ class Player extends React.Component {
                             borderRight: this.activeBorder
                         }
                         : {
-                            backgroundColor: '#cadad8',
+                            backgroundColor: '#bfcecc',
                             borderRadius: this.borderRadius,
                             margin: 0
                         }}>

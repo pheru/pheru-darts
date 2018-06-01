@@ -3,6 +3,7 @@ import {Button, Col, FormControl, Glyphicon, Grid, Row, ToggleButton, ToggleButt
 import {ALL_MODES, DOUBLE_OUT} from "../constants/checkoutModes";
 import Dropdown from "react-bootstrap/es/Dropdown";
 import MenuItem from "react-bootstrap/es/MenuItem";
+import {LinkContainer} from "react-router-bootstrap";
 
 class NewGameConfig extends React.Component {
 
@@ -70,7 +71,7 @@ class NewGameConfig extends React.Component {
                 <Col xs={12} sm={2} style={this.colStyle}>
                     <h3 style={{margin: 0}}>Spieler: </h3>
                 </Col>
-                <Col xs={12} sm={3} style={this.colStyle}>
+                <Col xs={12} sm={4} style={this.colStyle}>
                     {this.createPlayerDropDown(1)}
                 </Col>
                 <Col xs={6} xsOffset={3} sm={2} smOffset={0} style={this.colStyleButton}>
@@ -78,11 +79,8 @@ class NewGameConfig extends React.Component {
                         <Glyphicon glyph="transfer"/>
                     </Button>
                 </Col>
-                <Col xs={12} sm={3} style={this.colStyle}>
+                <Col xs={12} sm={4} style={this.colStyle}>
                     {this.createPlayerDropDown(2)}
-                </Col>
-                <Col xs={6} xsOffset={3} sm={1} smOffset={1} style={this.colStyleButton}>
-                    <Button block bsStyle="primary"><Glyphicon glyph="user"/></Button>
                 </Col>
             </Row>
             <Row className="show-grid  text-center">
@@ -108,27 +106,22 @@ class NewGameConfig extends React.Component {
             </Row>
             <Row className="show-grid  text-center">
                 <Col xs={12} sm={12} style={this.colStyleButton}>
-                    <Button bsStyle="primary" bsSize="large" block
-                            onClick={() => this.props.startNewGameButtonClicked(this.state.selectedPlayers, this.state.score, this.state.checkOutMode)}
-                    >Neues Spiel starten</Button>
+                    <LinkContainer to="/game">
+                        <Button bsStyle="primary" bsSize="large" block
+                                onClick={() => this.props.startNewGameButtonClicked(this.state.selectedPlayers, this.state.score, this.state.checkOutMode)}
+                        >Neues Spiel starten</Button>
+                    </LinkContainer>
                 </Col>
             </Row>
         </Grid>
     }
 
     createPlayerDropDown(playerNumber) {
-        // return <FormControl componentClass="select" placeholder={"Spieler " + playerNumber}
-        //                     value={this.state.selectedPlayers[playerNumber - 1].name}
-        //                     onChange={(e) => this.changeSelectedPlayer(playerNumber - 1, e.target.value)}>
-        //     {this.players.map((player, i) =>
-        //         <option key={playerNumber + "_" + player.id} value={i}>{player.name}</option>
-        //     )}
-        // </FormControl>
         return <Dropdown id={"playerDropdown_" + playerNumber} block vertical>
             <Dropdown.Toggle>
                 {this.state.selectedPlayers[playerNumber - 1].name}
             </Dropdown.Toggle>
-            <Dropdown.Menu>
+            <Dropdown.Menu style={{minWidth: '100%', textAlign: 'center'}}>
                 {this.players.map(player =>
                     <MenuItem key={playerNumber + "_" + player.id}
                               onClick={() => this.changeSelectedPlayer(playerNumber - 1, player)}>{player.name}</MenuItem>

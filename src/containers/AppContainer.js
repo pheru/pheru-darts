@@ -1,5 +1,6 @@
 import {connect} from 'react-redux'
 import App from "../components/App";
+import {withRouter} from "react-router-dom";
 
 const mapStateToProps = state => ({
     gameRunning: state.game !== null
@@ -7,7 +8,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({});
 
-export default connect(
+export default withRouter(connect(
     mapStateToProps,
     mapDispatchToProps
-)(App)
+)(App))
