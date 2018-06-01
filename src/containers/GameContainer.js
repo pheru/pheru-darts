@@ -16,7 +16,9 @@ const mapStateToProps = function (state) {
         }
     }
     return {
-        finished
+        finished,
+        startScore,
+        checkOutMode
     };
 };
 

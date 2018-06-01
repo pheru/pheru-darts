@@ -99,7 +99,7 @@ class NewGameConfig extends React.Component {
                     <ToggleButtonGroup type="radio" name="options" defaultValue={this.state.checkOutMode}
                                        onChange={this.handleCheckOutModeChange}>
                         {ALL_MODES.map(mode =>
-                            <ToggleButton key={mode} value={mode}>{mode}</ToggleButton>
+                            <ToggleButton key={mode.key} value={mode}>{mode.text}</ToggleButton>
                         )}
                     </ToggleButtonGroup>
                 </Col>
