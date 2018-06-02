@@ -3,11 +3,11 @@ import {startNewGame} from "../actions/game";
 import NewGameConfig from "../components/NewGameConfig";
 
 const mapStateToProps = state => ({
-    //TODO players
+    gameRunning: state.game !== null
 });
 
 const mapDispatchToProps = dispatch => ({
-    startNewGameButtonClicked: (players, score, checkOutMode) => dispatch(startNewGame(players, score, checkOutMode))
+    startNewGame: (players, score, checkOutMode) => dispatch(startNewGame(players, score, checkOutMode))
 });
 
 export default connect(

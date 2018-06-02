@@ -1,39 +1,52 @@
 import React from 'react'
-import GameContainer from "../containers/GameContainer";
-import Navbar from "react-bootstrap/es/Navbar";
+import {Redirect, Route, Switch} from "react-router-dom";
+import {LinkContainer} from "react-router-bootstrap";
+import {Glyphicon, Nav, Navbar, NavItem} from "react-bootstrap";
 import NewGameConfigContainer from "../containers/NewGameConfigContainer";
-import NavItem from "react-bootstrap/es/NavItem";
-import Nav from "react-bootstrap/es/Nav";
-import {Redirect, Route} from "react-router-dom";
+import GameContainer from "../containers/GameContainer";
 import Statistics from "./Statistics";
 import Users from "./Users";
-import {LinkContainer} from "react-router-bootstrap";
+import {GAME_ROUTE, NEW_GAME_ROUTE, STATISTICS_ROUTE, USERS_ROUTE} from "../constants/routes";
 
 class App extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {};
+        this.onBeforeUnload = this.onBeforeUnload.bind(this);
     }
 
-    shouldNavbarBeRendered() {
-        return this.props.location.pathname !== "/game";
+    componentDidMount() {
+        window.onbeforeunload = this.onBeforeUnload;
+    }
+
+    onBeforeUnload(e) {
+        if (this.props.gameRunning) {
+            let dialogText = 'Seite wirklich verlassen?';
+            e.returnValue = dialogText;
+            return dialogText;
+        } else {
+            return undefined;
+        }
     }
 
     render() {
         return <div>
-            {this.shouldNavbarBeRendered() && this.createNavbar()}
-            <div style={{paddingTop: this.shouldNavbarBeRendered() ? 60 : 0}}>
-                <Route exact path="/" render={() => <Redirect to="/newgame"/>}/>
-                <Route path="/newgame" component={NewGameConfigContainer}/>
-                <Route path="/game"
-                       render={() => this.props.gameRunning
-                           ? <div style={{paddingTop: 10}}><GameContainer/></div>
-                           : <Redirect to="/newgame"/>
-                       }
-                />
-                <Route path="/statistics" component={Statistics}/>
-                <Route path="/users" component={Users}/>
+            {this.createNavbar()}
+            <div style={{paddingTop: 60}}>
+                <Switch>
+                    <Route path={NEW_GAME_ROUTE} component={NewGameConfigContainer}/>
+                    <Route path={GAME_ROUTE}
+                           render={() => this.props.gameRunning
+                               ? <div style={{paddingTop: 10}}><GameContainer/></div>
+                               : <Redirect to={NEW_GAME_ROUTE}/>
+                           }
+                    />
+                    <Route path={STATISTICS_ROUTE} component={Statistics}/>
+                    <Route path={USERS_ROUTE} component={Users}/>
+                    {/*no-match-route*/}
+                    <Route render={() => <Redirect to={NEW_GAME_ROUTE}/>}/>
+                </Switch>
             </div>
         </div>
     }
@@ -53,16 +66,23 @@ class App extends React.Component {
             </Navbar.Header>
             <Navbar.Collapse>
                 <Nav>
-                    <LinkContainer to="/newgame">
+                    <LinkContainer to={NEW_GAME_ROUTE}>
                         <NavItem>Neues Spiel</NavItem>
                     </LinkContainer>
-                    <LinkContainer to="/statistics">
+                    <LinkContainer to={STATISTICS_ROUTE}>
                         <NavItem>Statistiken</NavItem>
                     </LinkContainer>
-                    <LinkContainer to="/users">
+                    <LinkContainer to={USERS_ROUTE}>
                         <NavItem>Spielerverwaltung</NavItem>
                     </LinkContainer>
                 </Nav>
+                {this.props.gameRunning && this.props.location.pathname !== GAME_ROUTE &&
+                <Nav pullRight>
+                    <LinkContainer to={GAME_ROUTE}>
+                        <NavItem>Zurück zum Spiel <Glyphicon glyph="share-alt"/></NavItem>
+                    </LinkContainer>
+                </Nav>
+                }
             </Navbar.Collapse>
         </Navbar>;
     }
