@@ -1,24 +1,31 @@
 import React from 'react'
-import {Button, Col, FormControl, Glyphicon, Grid, Row, ToggleButton, ToggleButtonGroup} from "react-bootstrap";
+import {
+    Button,
+    Col,
+    Dropdown,
+    FormControl,
+    Glyphicon,
+    Grid,
+    MenuItem,
+    Row,
+    ToggleButton,
+    ToggleButtonGroup
+} from "react-bootstrap";
 import {ALL_MODES, DOUBLE_OUT} from "../constants/checkoutModes";
-import {Dropdown, MenuItem} from "react-bootstrap";
 import {LinkContainer} from "react-router-bootstrap";
 import ConfirmModal from "./ConfirmModal";
 import {GAME_ROUTE} from "../constants/routes";
+import {ScaleLoader} from "react-spinners";
 
 class NewGameConfig extends React.Component {
 
     constructor(props) {
         super(props);
-        this.players = [
-            {id: 1, name: "Philipp"},
-            {id: 2, name: "Patrick"}
-        ];
         this.state = {
             score: 501,
             selectedPlayers: [
-                this.players[0] ? this.players[0] : "",
-                this.players[1] ? this.players[1] : ""
+                {name: ""},
+                {name: ""}
             ],
             checkOutMode: DOUBLE_OUT,
             showNewGameModal: false
@@ -33,12 +40,19 @@ class NewGameConfig extends React.Component {
 
         this.swapPlayerSelection = this.swapPlayerSelection.bind(this);
         this.handleScoreChange = this.handleScoreChange.bind(this);
+        this.handleUnregisteredUserChange = this.handleUnregisteredUserChange.bind(this);
         this.handleCheckOutModeChange = this.handleCheckOutModeChange.bind(this);
         this.onStartNewGameButtonClicked = this.onStartNewGameButtonClicked.bind(this);
         this.startNewGame = this.startNewGame.bind(this);
     }
 
     changeSelectedPlayer(selectedPlayerIndex, player) {
+        for (let i = 0; i < this.state.selectedPlayers.length; i++) {
+            if (i !== selectedPlayerIndex && this.state.selectedPlayers[i] === player) {
+                this.swapPlayerSelection();
+                return;
+            }
+        }
         let selected = this.state.selectedPlayers.slice();
         selected[selectedPlayerIndex] = player;
         this.setState({
@@ -50,6 +64,18 @@ class NewGameConfig extends React.Component {
         let swapped = this.state.selectedPlayers.slice().reverse();
         this.setState({
             selectedPlayers: swapped
+        });
+    }
+
+    handleUnregisteredUserChange(selectedPlayerIndex, value) {
+        let selected = this.state.selectedPlayers.slice();
+        if (value) {
+            selected[selectedPlayerIndex] = {id: -1, name: value};
+        } else {
+            selected[selectedPlayerIndex] = {name: ""};
+        }
+        this.setState({
+            selectedPlayers: selected
         });
     }
 
@@ -70,7 +96,18 @@ class NewGameConfig extends React.Component {
     }
 
     onStartNewGameButtonClicked(e) {
-        if (this.props.gameRunning) {
+        let allPlayersChosen = true;
+        for (let i = 0; i < this.state.selectedPlayers.length; i++) {
+            if (this.state.selectedPlayers[i].id === undefined) {
+                allPlayersChosen = false;
+                break;
+            }
+        }
+        if (!allPlayersChosen) {
+            // TODO modal statt alert()
+            alert("Zuerst Spieler auswählen!");
+            e.preventDefault();
+        } else if (this.props.gameRunning) {
             this.setState({
                 showNewGameModal: true
             });
@@ -94,15 +131,16 @@ class NewGameConfig extends React.Component {
                         <h3 style={{margin: 0}}>Spieler: </h3>
                     </Col>
                     <Col xs={12} sm={4} style={this.colStyle}>
-                        {this.createPlayerDropDown(1)}
+                        {this.props.isFetchingUsers ? <ScaleLoader height={25}/> : this.createPlayerDropDown(1)}
                     </Col>
                     <Col xs={6} xsOffset={3} sm={2} smOffset={0} style={this.colStyleButton}>
-                        <Button block bsStyle="primary" onClick={this.swapPlayerSelection}>
+                        <Button block bsStyle="primary" onClick={this.swapPlayerSelection}
+                                disabled={this.props.isFetchingUsers}>
                             <Glyphicon glyph="transfer"/>
                         </Button>
                     </Col>
                     <Col xs={12} sm={4} style={this.colStyle}>
-                        {this.createPlayerDropDown(2)}
+                        {this.props.isFetchingUsers ? <ScaleLoader height={25}/> : this.createPlayerDropDown(2)}
                     </Col>
                 </Row>
                 <Row className="show-grid  text-center">
@@ -131,6 +169,7 @@ class NewGameConfig extends React.Component {
                         <LinkContainer to={GAME_ROUTE}>
                             <Button bsStyle="primary" bsSize="large" block
                                     onClick={this.onStartNewGameButtonClicked}
+                                    disabled={this.props.isFetchingUsers}
                             >Neues Spiel starten</Button>
                         </LinkContainer>
                     </Col>
@@ -142,12 +181,20 @@ class NewGameConfig extends React.Component {
     }
 
     createPlayerDropDown(playerNumber) {
+        if (this.props.fetchAllUsersFailed) {
+            return <FormControl type="text" placeholder={"Spieler " + playerNumber}
+                                value={this.state.selectedPlayers[playerNumber - 1].name}
+                                onChange={(e) => this.handleUnregisteredUserChange(playerNumber - 1, e.target.value)}/>
+        }
         return <Dropdown id={"playerDropdown_" + playerNumber} block vertical>
             <Dropdown.Toggle>
-                {this.state.selectedPlayers[playerNumber - 1].name}
+                {this.state.selectedPlayers[playerNumber - 1].name
+                    ? this.state.selectedPlayers[playerNumber - 1].name
+                    : "[Spieler " + playerNumber + "]"
+                }
             </Dropdown.Toggle>
             <Dropdown.Menu style={{minWidth: '100%', textAlign: 'center'}}>
-                {this.players.map(player =>
+                {this.props.users.map(player =>
                     <MenuItem key={playerNumber + "_" + player.id}
                               onClick={() => this.changeSelectedPlayer(playerNumber - 1, player)}>{player.name}</MenuItem>
                 )}
