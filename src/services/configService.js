@@ -8,11 +8,7 @@ const LOCAL_ERROR = {
         users: "http://localhost:8080/pheru-darts/testfehler"
     }
 };
-const PRODUCTION = {
-    resourceUrls: {
-        users: "TODO"
-    }
-};
+const PRODUCTION = LOCAL;
 
 const LOCAL_ERROR_MODE_STRING = "testmodefail";
 
