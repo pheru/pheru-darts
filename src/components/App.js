@@ -43,7 +43,7 @@ class App extends React.Component {
             {this.createNavbar()}
             <div style={{paddingTop: 60}}>
                 {this.props.fetchAllUsersFailed && !this.state.alertDismissed &&
-                <Alert bsStyle="danger" onDismiss={this.handleAlertDismiss}>
+                <Alert style={{marginTop: -10, borderRadius: 0}} bsStyle="danger" onDismiss={this.handleAlertDismiss}>
                     <h4>Spieler konnten nicht abgerufen werden!</h4>
                     <ul>
                         <li>Statistiken stehen nicht zur Verfügung</li>
@@ -85,16 +85,16 @@ class App extends React.Component {
             <Navbar.Collapse>
                 <Nav>
                     <LinkContainer to={NEW_GAME_ROUTE}>
-                        <NavItem>Neues Spiel</NavItem>
+                        <NavItem><Glyphicon glyph="play-circle"/> Neues Spiel</NavItem>
                     </LinkContainer>
                     <LinkContainer to={STATISTICS_ROUTE}>
                         <NavItem disabled={this.props.isFetchingUsers || this.props.fetchAllUsersFailed}>
-                            Statistiken
+                            <Glyphicon glyph="stats"/> Statistiken
                         </NavItem>
                     </LinkContainer>
                     <LinkContainer to={USERS_ROUTE}>
                         <NavItem disabled={this.props.isFetchingUsers || this.props.fetchAllUsersFailed}>
-                            Spielerverwaltung
+                            <Glyphicon glyph="user"/> Spielerverwaltung
                         </NavItem>
                     </LinkContainer>
                 </Nav>

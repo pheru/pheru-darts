@@ -1,16 +1,16 @@
 const LOCAL = {
-    urls: {
-        allUsers: "http://localhost:8080/pheru-darts/users"
+    resourceUrls: {
+        users: "http://localhost:8080/pheru-darts/users"
     }
 };
 const LOCAL_ERROR = {
-    urls: {
-        allUsers: "http://localhost:8080/pheru-darts/testfehler"
+    resourceUrls: {
+        users: "http://localhost:8080/pheru-darts/testfehler"
     }
 };
 const PRODUCTION = {
-    urls: {
-        allUsers: "TODO"
+    resourceUrls: {
+        users: "TODO"
     }
 };
 
