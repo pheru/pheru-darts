@@ -16,7 +16,7 @@ const store = createStore(
 
 render(
     <Provider store={store}>
-        <BrowserRouter>
+        <BrowserRouter basename="/pheru-darts">
             <AppContainer/>
         </BrowserRouter>
     </Provider>,
