@@ -5,7 +5,7 @@ import {applyMiddleware, createStore} from 'redux'
 import {Provider} from 'react-redux'
 import rootReducer from './reducers'
 import AppContainer from "./containers/AppContainer";
-import {BrowserRouter} from "react-router-dom";
+import {HashRouter} from "react-router-dom";
 
 const store = createStore(
     rootReducer,
@@ -16,9 +16,9 @@ const store = createStore(
 
 render(
     <Provider store={store}>
-        <BrowserRouter basename="/pheru-darts">
+        <HashRouter>
             <AppContainer/>
-        </BrowserRouter>
+        </HashRouter>
     </Provider>,
     document.getElementById('root')
 );
