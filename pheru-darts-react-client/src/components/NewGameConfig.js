@@ -149,7 +149,7 @@ class NewGameConfig extends React.Component {
                     </Col>
                     <Col xs={12} sm={10} style={this.colStyle}>
                         <Dropdown style={{display: 'inline-flex'}} id={"score_dropdown"}>
-                            <FormControl type="text" style={{borderTopRightRadius: 0, borderBottomRightRadius: 0}}
+                            <FormControl type="text" style={{borderTopRightRadius: 0, borderBottomRightRadius: 0, borderRightWidth: 0}}
                                          value={this.state.score}
                                          onChange={(e) => this.handleScoreChange(parseInt(e.target.value, 10))}/>
                             <Dropdown.Toggle/>
