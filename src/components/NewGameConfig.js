@@ -37,6 +37,7 @@ class NewGameConfig extends React.Component {
             ...this.colStyle,
             padding: 0
         };
+        this.scoreChoices = [101, 201, 301, 401, 501, 1001];
 
         this.swapPlayerSelection = this.swapPlayerSelection.bind(this);
         this.handleScoreChange = this.handleScoreChange.bind(this);
@@ -79,13 +80,12 @@ class NewGameConfig extends React.Component {
         });
     }
 
-    handleScoreChange(e) {
-        let newValue = parseInt(e.target.value, 10);
-        if (Number.isNaN(newValue)) {
+    handleScoreChange(value) {
+        if (Number.isNaN(value)) {
             return;
         }
         this.setState({
-            score: parseInt(e.target.value, 10)
+            score: value
         });
     }
 
@@ -148,7 +148,20 @@ class NewGameConfig extends React.Component {
                         <h3 style={{margin: 0}}>Punkte: </h3>
                     </Col>
                     <Col xs={12} sm={10} style={this.colStyle}>
-                        <FormControl type="text" value={this.state.score} onChange={this.handleScoreChange}/>
+                        <Dropdown style={{display: 'inline-flex'}} id={"score_dropdown"}>
+                            <FormControl type="text" style={{borderTopRightRadius: 0, borderBottomRightRadius: 0}}
+                                         value={this.state.score}
+                                         onChange={(e) => this.handleScoreChange(parseInt(e.target.value, 10))}/>
+                            <Dropdown.Toggle/>
+                            <Dropdown.Menu style={{minWidth: '100%', textAlign: 'center'}}>
+                                {this.scoreChoices.map(score =>
+                                    <MenuItem key={"scoreChoice_" + score}
+                                              onClick={() => this.handleScoreChange(score)}>
+                                        {score}
+                                    </MenuItem>
+                                )}
+                            </Dropdown.Menu>
+                        </Dropdown>
                     </Col>
                 </Row>
                 <Row className="show-grid  text-center">
