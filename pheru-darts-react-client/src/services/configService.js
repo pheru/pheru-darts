@@ -1,11 +1,11 @@
 const LOCAL = {
     resourceUrls: {
-        users: "http://localhost:8080/pheru-darts/users"
+        users: "http://localhost:8080/users"
     }
 };
 const LOCAL_ERROR = {
     resourceUrls: {
-        users: "http://localhost:8080/pheru-darts/testfehler"
+        users: "http://localhost:8080/testfehler"
     }
 };
 const PRODUCTION = LOCAL;
