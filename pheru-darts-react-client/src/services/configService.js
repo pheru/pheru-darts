@@ -15,7 +15,7 @@ const LOCAL_ERROR_MODE_STRING = "testmodefail";
 export function getConfig() {
     switch (window.location.hostname) {
         case "localhost":
-            if (window.location.search.includes(LOCAL_ERROR_MODE_STRING)) {
+            if (window.location.href.includes(LOCAL_ERROR_MODE_STRING)) {
                 return LOCAL_ERROR;
             }
             return LOCAL;
