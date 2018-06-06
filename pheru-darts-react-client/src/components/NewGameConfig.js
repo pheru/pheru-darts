@@ -45,6 +45,7 @@ class NewGameConfig extends React.Component {
         this.handleCheckOutModeChange = this.handleCheckOutModeChange.bind(this);
         this.onStartNewGameButtonClicked = this.onStartNewGameButtonClicked.bind(this);
         this.startNewGame = this.startNewGame.bind(this);
+        this.hideNewGameModal = this.hideNewGameModal.bind(this);
     }
 
     changeSelectedPlayer(selectedPlayerIndex, player) {
@@ -108,14 +109,16 @@ class NewGameConfig extends React.Component {
             alert("Zuerst Spieler auswählen!");
             e.preventDefault();
         } else if (this.props.gameRunning) {
-            this.setState({
-                showNewGameModal: true
-            });
+            this.setState({showNewGameModal: true});
             // Um routing zu verhindern
             e.preventDefault();
         } else {
             this.startNewGame();
         }
+    }
+
+    hideNewGameModal() {
+        this.setState({showNewGameModal: false})
     }
 
     startNewGame() {
@@ -149,10 +152,10 @@ class NewGameConfig extends React.Component {
                     </Col>
                     <Col xs={12} sm={10} style={this.colStyle}>
                         <Dropdown style={{display: 'inline-flex'}} id={"score_dropdown"}>
-                            <FormControl type="text" style={{borderTopRightRadius: 0, borderBottomRightRadius: 0, borderRightWidth: 0}}
-                                         value={this.state.score}
-                                         onChange={(e) => this.handleScoreChange(parseInt(e.target.value, 10))}/>
-                            <Dropdown.Toggle/>
+                            <FormControl type="text" value={this.state.score}
+                                         onChange={(e) => this.handleScoreChange(parseInt(e.target.value, 10))}
+                                         style={{borderTopRightRadius: 0, borderBottomRightRadius: 0}}/>
+                            <Dropdown.Toggle style={{borderLeftWidth: 0}}/>
                             <Dropdown.Menu style={{minWidth: '100%', textAlign: 'center'}}>
                                 {this.scoreChoices.map(score =>
                                     <MenuItem key={"scoreChoice_" + score}
@@ -189,7 +192,8 @@ class NewGameConfig extends React.Component {
                 </Row>
             </Grid>
             <ConfirmModal text="Es läuft bereits ein Spiel. Dennoch ein neues Spiel starten?"
-                          show={this.state.showNewGameModal} onConfirm={this.startNewGame}/>
+                          show={this.state.showNewGameModal} onConfirm={this.startNewGame}
+                          onCancel={this.hideNewGameModal}/>
         </div>
     }
 
