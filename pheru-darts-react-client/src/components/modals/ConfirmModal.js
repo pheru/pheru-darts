@@ -14,11 +14,9 @@ class ConfirmModal extends React.Component {
             </Modal.Body>
             <Modal.Footer>
                 <Button style={{width: 100}} bsStyle="primary"
-                        onClick={() => {
-                            this.props.onConfirm();
-                            this.handleHide()
-                        }}
-                >Ja</Button>
+                        onClick={this.props.onConfirm}>
+                    Ja
+                </Button>
                 <Button style={{width: 100}} bsStyle='primary' onClick={this.props.onCancel}>Nein</Button>
             </Modal.Footer>
         </Modal>;

@@ -13,7 +13,7 @@ import {
 } from "react-bootstrap";
 import {ALL_MODES, DOUBLE_OUT} from "../constants/checkoutModes";
 import {LinkContainer} from "react-router-bootstrap";
-import ConfirmModal from "./ConfirmModal";
+import ConfirmModal from "./modals/ConfirmModal";
 import {GAME_ROUTE} from "../constants/routes";
 import {ScaleLoader} from "react-spinners";
 
@@ -105,7 +105,6 @@ class NewGameConfig extends React.Component {
             }
         }
         if (!allPlayersChosen) {
-            // TODO modal statt alert()
             alert("Zuerst Spieler auswählen!");
             e.preventDefault();
         } else if (this.props.gameRunning) {
