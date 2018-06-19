@@ -2,6 +2,7 @@ package de.pheru.darts.backend.controllers;
 
 import de.pheru.darts.backend.Logger;
 import de.pheru.darts.backend.entities.UserEntity;
+import de.pheru.darts.backend.exceptions.UsernameAlreadyExistsException;
 import de.pheru.darts.backend.repositories.UserRepository;
 import de.pheru.darts.backend.security.SecurityConstants;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -26,6 +27,9 @@ public class SignUpController {
     @PostMapping(SecurityConstants.SIGN_UP_URL)
     public void signUp(@RequestBody final UserEntity userEntity) {
         LOGGER.debug("POST auf " + SecurityConstants.SIGN_UP_URL + " aufgerufen");
+        if (userRepository.findByName(userEntity.getName()) != null) {
+            throw new UsernameAlreadyExistsException();
+        }
         userEntity.setPassword(bCryptPasswordEncoder.encode(userEntity.getPassword()));
         userRepository.save(userEntity);
         LOGGER.debug("POST auf " + SecurityConstants.SIGN_UP_URL + ": erfolgreich");
