@@ -2,10 +2,14 @@ package de.pheru.darts.backend.controllers;
 
 import de.pheru.darts.backend.Logger;
 import de.pheru.darts.backend.dtos.UserDto;
+import de.pheru.darts.backend.dtos.UserModificationDto;
 import de.pheru.darts.backend.entities.UserEntity;
+import de.pheru.darts.backend.exceptions.ForbiddenException;
 import de.pheru.darts.backend.exceptions.UserNotFoundException;
 import de.pheru.darts.backend.mappers.EntityToDtoMapper;
 import de.pheru.darts.backend.repositories.UserRepository;
+import de.pheru.darts.backend.security.SecurityUtil;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,9 +20,11 @@ public class UserController {
     private static final Logger LOGGER = new Logger();
 
     private final UserRepository userRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public UserController(final UserRepository userRepository) {
+    public UserController(final UserRepository userRepository, final BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @GetMapping("/users")
@@ -45,25 +51,32 @@ public class UserController {
         return EntityToDtoMapper.toUserDto(userEntity);
     }
 
-    @PutMapping("/users")
-    public UserDto putUser(@RequestBody final UserDto userDto) {
-        LOGGER.debug("PUT auf /users aufgerufen: id=" + userDto.getId());
-        // erst mit Rechteprüfung
-        throw new UnsupportedOperationException();
-//        final UserEntity userEntity = getUserEntityById(userDto.getId());
-//        userEntity.setName(userDto.getName());
-//        userRepository.save(userEntity);
-//        LOGGER.debug("PUT auf /users aufgerufen: UserDto mit id " + userDto.getId() + "  erfolgreich angepasst");
-//        return userDto;
+    @PutMapping("/users/{id}")
+    public UserDto putUser(@PathVariable("id") final String id, @RequestBody final UserModificationDto userModificationDto) {
+        LOGGER.debug("PUT auf /users aufgerufen: id=" + id);
+        if (!id.equals(SecurityUtil.getLoggedInUserId())) {
+            throw new ForbiddenException("Not allowed to modify other users!");
+        }
+        final UserEntity userEntity = getUserEntityById(id);
+        if (userModificationDto.getName() != null && !userModificationDto.getName().isEmpty()) {
+            userEntity.setName(userModificationDto.getName());
+        }
+        if (userModificationDto.getPassword() != null && !userModificationDto.getPassword().isEmpty()) {
+            userEntity.setPassword(bCryptPasswordEncoder.encode(userModificationDto.getPassword()));
+        }
+        final UserEntity savedEntity = userRepository.save(userEntity);
+        LOGGER.debug("PUT auf /users aufgerufen: UserDto mit id " + id + "  erfolgreich angepasst");
+        return EntityToDtoMapper.toUserDto(savedEntity);
     }
 
     @DeleteMapping("/users/{id}")
     public void deleteUser(@PathVariable("id") final String id) {
         LOGGER.debug("DELETE auf /users aufgerufen: id=" + id);
-        // erst mit Rechteprüfung
-        throw new UnsupportedOperationException();
-//        userRepository.deleteById(id);
-//        LOGGER.debug("DELETE auf /users aufgerufen: UserDto mit id " + id + " erfolgreich gelöscht");
+        if (!id.equals(SecurityUtil.getLoggedInUserId())) {
+            throw new ForbiddenException("Not allowed to delete other users!");
+        }
+        userRepository.deleteById(id);
+        LOGGER.debug("DELETE auf /users aufgerufen: UserDto mit id " + id + " erfolgreich gelöscht");
     }
 
     private UserEntity getUserEntityByName(final String name) {
