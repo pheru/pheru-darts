@@ -28,7 +28,7 @@ public class SignUpController {
     public void signUp(@RequestBody final UserEntity userEntity) {
         LOGGER.debug("POST auf " + SecurityConstants.SIGN_UP_URL + " aufgerufen");
         if (userRepository.findByName(userEntity.getName()) != null) {
-            throw new UsernameAlreadyExistsException();
+            throw new UsernameAlreadyExistsException("Username must be unique");
         }
         userEntity.setPassword(bCryptPasswordEncoder.encode(userEntity.getPassword()));
         userRepository.save(userEntity);
