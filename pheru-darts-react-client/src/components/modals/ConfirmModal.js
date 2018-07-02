@@ -3,13 +3,9 @@ import {Modal, Button} from "react-bootstrap";
 
 class ConfirmModal extends React.Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return <Modal show={this.props.show} onHide={this.props.onCancel}>
-            <Modal.Body style={this.modalBodyStyle}>
+            <Modal.Body>
                 <h4>{this.props.text}</h4>
             </Modal.Body>
             <Modal.Footer>

@@ -1,5 +1,5 @@
 import React from 'react'
-import {ScaleLoader} from "react-spinners";
+import {Alert, Button, Glyphicon} from "react-bootstrap";
 
 class Statistics extends React.Component {
 
@@ -10,13 +10,18 @@ class Statistics extends React.Component {
 
     render() {
         return <div>
-            {this.props.isFetchingUsers
-                ? <ScaleLoader height={25}/>
-                : this.props.fetchAllUsersFailed
-                    ? <h1 style={{textAlign: 'center'}}>Statistiken nicht verfügbar</h1>
-                    : <h1>Statistiken</h1>
+            {this.props.isLoggedIn
+                ? this.createStatisticsView()
+                : <Alert bsStyle="warning" style={{marginLeft: 15, marginRight: 15, marginBottom: 5}}>
+                        <Glyphicon glyph="exclamation-sign"/> <strong>Nur für angemeldete Benutzer können Statistiken erstellt und eingesehen werden </strong>
+                    <Button bsStyle="primary" onClick={this.props.showLogin}><Glyphicon glyph="log-in"/> Anmelden</Button>
+                </Alert>
             }
         </div>
+    }
+
+    createStatisticsView() {
+        return <h1>Statistiken</h1>
     }
 
 }

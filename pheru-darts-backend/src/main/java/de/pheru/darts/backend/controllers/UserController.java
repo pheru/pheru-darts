@@ -7,7 +7,8 @@ import de.pheru.darts.backend.entities.UserEntity;
 import de.pheru.darts.backend.exceptions.ForbiddenException;
 import de.pheru.darts.backend.exceptions.UserNotFoundException;
 import de.pheru.darts.backend.exceptions.UsernameAlreadyExistsException;
-import de.pheru.darts.backend.mappers.EntityToDtoMapper;
+import de.pheru.darts.backend.mappers.EntityMapper;
+import de.pheru.darts.backend.repositories.PlayerPermissionRepository;
 import de.pheru.darts.backend.repositories.UserRepository;
 import de.pheru.darts.backend.security.SecurityUtil;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,52 +17,57 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/users")
 public class UserController {
 
     private static final Logger LOGGER = new Logger();
 
     private final UserRepository userRepository;
+    private final PlayerPermissionRepository playerPermissionRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public UserController(final UserRepository userRepository, final BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public UserController(final UserRepository userRepository,
+                          final PlayerPermissionRepository playerPermissionRepository,
+                          final BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
+        this.playerPermissionRepository = playerPermissionRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-    @GetMapping("/users")
+    @GetMapping
     public List<UserDto> getAllUsers() {
         LOGGER.debug("GET auf /users aufgerufen");
-        final List<UserDto> userDtos = EntityToDtoMapper.toUserDto(userRepository.findAll());
+        final List<UserDto> userDtos = EntityMapper.toUserDto(userRepository.findAll());
         LOGGER.debug("GET auf /users: " + userDtos.size() + " UserDtos");
         return userDtos;
     }
 
-    @GetMapping("/users/current")
+    @GetMapping("/current")
     public UserDto getCurrentUser() {
         LOGGER.debug("GET auf /users/current aufgerufen");
         final String currentId = SecurityUtil.getLoggedInUserId();
         final UserEntity userEntity = getUserEntityById(currentId);
         LOGGER.debug("GET auf /users/current: erfolgreich");
-        return EntityToDtoMapper.toUserDto(userEntity);
+        return EntityMapper.toUserDto(userEntity);
     }
 
-    @GetMapping("/users/name/{name}")
+    @GetMapping("/name/{name}")
     public UserDto getUserByName(@PathVariable("name") final String name) {
         LOGGER.debug("GET auf /users aufgerufen: name=" + name);
         final UserEntity userEntity = getUserEntityByName(name);
         LOGGER.debug("GET auf /users: UserDto mit name " + name + "  gefunden");
-        return EntityToDtoMapper.toUserDto(userEntity);
+        return EntityMapper.toUserDto(userEntity);
     }
 
-    @GetMapping("/users/id/{id}")
+    @GetMapping("/id/{id}")
     public UserDto getUserById(@PathVariable("id") final String id) {
         LOGGER.debug("GET auf /users aufgerufen: id=" + id);
         final UserEntity userEntity = getUserEntityById(id);
         LOGGER.debug("GET auf /users: UserDto mit id " + id + "  gefunden");
-        return EntityToDtoMapper.toUserDto(userEntity);
+        return EntityMapper.toUserDto(userEntity);
     }
 
-    @PutMapping("/users/{id}")
+    @PutMapping("/{id}")
     public UserDto putUser(@PathVariable("id") final String id, @RequestBody final UserModificationDto userModificationDto) {
         LOGGER.debug("PUT auf /users aufgerufen: id=" + id);
         if (!id.equals(SecurityUtil.getLoggedInUserId())) {
@@ -79,10 +85,11 @@ public class UserController {
         }
         final UserEntity savedEntity = userRepository.save(userEntity);
         LOGGER.debug("PUT auf /users aufgerufen: UserDto mit id " + id + "  erfolgreich angepasst");
-        return EntityToDtoMapper.toUserDto(savedEntity);
+        return EntityMapper.toUserDto(savedEntity);
     }
 
-    @DeleteMapping("/users/{id}")
+    //TODO permissions löschen
+    @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable("id") final String id) {
         LOGGER.debug("DELETE auf /users aufgerufen: id=" + id);
         if (!id.equals(SecurityUtil.getLoggedInUserId())) {

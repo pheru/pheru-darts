@@ -6,8 +6,8 @@ class Player extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
-        this.borderRadius = 8;
-        this.activeBorder = '10px solid #2196f3';
+        this.borderRadius = 0;
+        this.activeBorder = '4px solid #2196f3';
         this.blackBorder = '1px solid black';
         this.rowStyle = {
             margin: 0,
@@ -37,17 +37,18 @@ class Player extends React.Component {
     }
 
     render() {
-        return <Row className="show-grid text-center"
+        return <Row className="show-grid text-center blink-border"
                     style={this.props.current ? {
                             backgroundColor: 'white',
                             borderRadius: this.borderRadius,
                             margin: 0,
-                            borderLeft: this.activeBorder,
-                            borderRight: this.activeBorder
+                            border: this.activeBorder,
+                            boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)'
                         }
                         : {
                             backgroundColor: '#bfcecc',
                             borderRadius: this.borderRadius,
+                            padding: 4,
                             margin: 0
                         }}>
             <Col xs={12} sm={12} style={{...this.colStyle, borderRadius: this.borderRadius}}>

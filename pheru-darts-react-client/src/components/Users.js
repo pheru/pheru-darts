@@ -129,8 +129,7 @@ class Users extends React.Component {
                 )}
                 </tbody>
             </Table>
-        </Well>
-            ;
+        </Well>;
     }
 
 }

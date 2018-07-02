@@ -197,7 +197,7 @@ class NewGameConfig extends React.Component {
     }
 
     createPlayerDropDown(playerNumber) {
-        if (this.props.fetchAllUsersFailed) {
+        if (this.props.fetchAllUsersFailed || !this.props.isLoggedIn) {
             return <FormControl type="text" placeholder={"Spieler " + playerNumber}
                                 value={this.state.selectedPlayers[playerNumber - 1].name}
                                 onChange={(e) => this.handleUnregisteredUserChange(playerNumber - 1, e.target.value)}/>
@@ -210,7 +210,7 @@ class NewGameConfig extends React.Component {
                 }
             </Dropdown.Toggle>
             <Dropdown.Menu style={{minWidth: '100%', textAlign: 'center'}}>
-                {this.props.users.map(player =>
+                {this.props.playableUsers.map(player =>
                     <MenuItem key={playerNumber + "_" + player.id}
                               onClick={() => this.changeSelectedPlayer(playerNumber - 1, player)}>{player.name}</MenuItem>
                 )}

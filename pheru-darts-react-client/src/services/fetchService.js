@@ -10,23 +10,30 @@ export function fetchPut(url, data, onSuccess, onResponseNotOK, onError) {
     return baseFetch(url, 'PUT', data, onSuccess, onResponseNotOK, onError);
 }
 
-export function fetchDelete(url, onSuccess, onResponseNotOK, onError) {
-    return baseFetch(url, 'DELETE', {}, onSuccess, onResponseNotOK, onError);
+export function fetchDelete(url, data, onSuccess, onResponseNotOK, onError) {
+    return baseFetch(url, 'DELETE', data, onSuccess, onResponseNotOK, onError);
 }
 
 function baseFetch(url, method, data, onSuccess, onResponseNotOK, onError) {
-    let fetchParameter;
-    if (method === 'POST' || method === 'PUT') {
+    let fetchParameter = {
+        credentials: 'include'
+    };
+    if (method !== 'GET') {
         fetchParameter = {
             body: JSON.stringify(data),
             headers: {'content-type': 'application/json'},
-            method: method
+            method: method,
+            credentials: 'include'
         }
     }
     return fetch(url, fetchParameter)
         .then(response => {
             if (response.ok) {
-                return response.json();
+                const contentType = response.headers.get("content-type");
+                if (contentType && contentType.indexOf("application/json") !== -1) {
+                    return response.json();
+                }
+                return "";
             }
             return response.json()
                 .then(json => {

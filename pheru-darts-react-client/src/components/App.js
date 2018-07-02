@@ -1,27 +1,45 @@
 import React from 'react'
 import {Redirect, Route, Switch} from "react-router-dom";
 import {LinkContainer} from "react-router-bootstrap";
-import {Alert, Glyphicon, Nav, Navbar, NavItem} from "react-bootstrap";
+import {Alert, Button, Glyphicon, Nav, Navbar, NavItem} from "react-bootstrap";
 import NewGameConfigContainer from "../containers/NewGameConfigContainer";
 import GameContainer from "../containers/GameContainer";
-import {GAME_ROUTE, NEW_GAME_ROUTE, STATISTICS_ROUTE, USERS_ROUTE} from "../constants/routes";
+import {GAME_ROUTE, NEW_GAME_ROUTE, SETTINGS_ROUTE, STATISTICS_ROUTE} from "../constants/routes";
 import StatisticsContainer from "../containers/StatisticsContainer";
-import UsersContainer from "../containers/UsersContainer";
+import SettingsContainer from "../containers/SettingsContainer";
+import LoginModalContainer from "../containers/modals/LoginModalContainer";
+import SignUpModalContainer from "../containers/modals/SignUpModalContainer";
+import {ScaleLoader} from "react-spinners";
 
 class App extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            alertDismissed: false
+            alertDismissed: false,
+            showLogin: false,
+            showSignUp: false
         };
+
         this.onBeforeUnload = this.onBeforeUnload.bind(this);
         this.handleAlertDismiss = this.handleAlertDismiss.bind(this);
+        this.showLoginModal = this.showLoginModal.bind(this);
+        this.hideLoginModal = this.hideLoginModal.bind(this);
+        this.showSignUpModal = this.showSignUpModal.bind(this);
+        this.hideSignUpModal = this.hideSignUpModal.bind(this);
     }
 
     componentDidMount() {
         window.onbeforeunload = this.onBeforeUnload;
-        this.props.fetchAllUsers();
+        this.props.loginByToken();
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.isLoggedIn && !prevProps.isLoggedIn) {
+            this.props.fetchAllUsers();
+            this.props.fetchPlayableUsers(this.props.userId);
+            this.props.fetchPermittedUsers(this.props.userId);
+        }
     }
 
     onBeforeUnload(e) {
@@ -32,6 +50,22 @@ class App extends React.Component {
         } else {
             return undefined;
         }
+    }
+
+    showLoginModal() {
+        this.setState({showLogin: true});
+    }
+
+    hideLoginModal() {
+        this.setState({showLogin: false});
+    }
+
+    showSignUpModal() {
+        this.setState({showSignUp: true});
+    }
+
+    hideSignUpModal() {
+        this.setState({showSignUp: false});
     }
 
     handleAlertDismiss() {
@@ -45,11 +79,7 @@ class App extends React.Component {
                 {this.props.fetchAllUsersFailed && !this.state.alertDismissed &&
                 <Alert style={{marginTop: -10, borderRadius: 0}} bsStyle="danger" onDismiss={this.handleAlertDismiss}>
                     <h4>Spieler konnten nicht abgerufen werden!</h4>
-                    <ul>
-                        <li>Statistiken stehen nicht zur Verfügung</li>
-                        <li>Spielerverwaltung steht nicht zur Verfügung</li>
-                        <li>Spiel nur mit unregistrierten Benutzern möglich (keine Erfassung von Statistiken)</li>
-                    </ul>
+                    <p>Spiel nur mit unregistrierten Benutzern möglich (keine Erfassung von Statistiken)</p>
                 </Alert>
                 }
                 <Switch>
@@ -61,11 +91,13 @@ class App extends React.Component {
                            }
                     />
                     <Route path={STATISTICS_ROUTE} component={StatisticsContainer}/>
-                    <Route path={USERS_ROUTE} component={UsersContainer}/>
+                    <Route path={SETTINGS_ROUTE} component={SettingsContainer}/>
                     {/*no-match-route*/}
                     <Route render={() => <Redirect to={NEW_GAME_ROUTE}/>}/>
                 </Switch>
             </div>
+            <LoginModalContainer/>
+            <SignUpModalContainer/>
         </div>
     }
 
@@ -88,23 +120,42 @@ class App extends React.Component {
                         <NavItem><Glyphicon glyph="play-circle"/> Neues Spiel</NavItem>
                     </LinkContainer>
                     <LinkContainer to={STATISTICS_ROUTE}>
-                        <NavItem disabled={this.props.isFetchingUsers || this.props.fetchAllUsersFailed}>
+                        <NavItem>
                             <Glyphicon glyph="stats"/> Statistiken
                         </NavItem>
                     </LinkContainer>
-                    <LinkContainer to={USERS_ROUTE}>
-                        <NavItem disabled={this.props.isFetchingUsers || this.props.fetchAllUsersFailed}>
-                            <Glyphicon glyph="user"/> Spielerverwaltung
+                    {this.props.gameRunning && this.props.location.pathname !== GAME_ROUTE &&
+                    <LinkContainer to={GAME_ROUTE}>
+                        <NavItem><Glyphicon glyph="share-alt"/> Zurück zum Spiel</NavItem>
+                    </LinkContainer>
+                    }
+                </Nav>
+                {(this.props.isLoggingIn || this.props.isLoggingOut) &&
+                <Nav style={{paddingTop: 5}} pullRight>
+                        <ScaleLoader color={'#8b8d8f'}/>
+                </Nav>
+                }
+                {!this.props.isLoggedIn && !this.props.isLoggingIn && !this.props.isLoggingOut &&
+                <Navbar.Form pullRight>
+                    <Button bsStyle="link" style={{outline: 0}} onClick={this.props.showLogin}>
+                        <Glyphicon glyph="log-in"/> Anmelden
+                    </Button>
+                </Navbar.Form>
+                }
+                {this.props.isLoggedIn && !this.props.isLoggingIn && !this.props.isLoggingOut &&
+                <Navbar.Form pullRight>
+                    <Button bsStyle="link" style={{outline: 0}} onClick={this.props.logout}>
+                        <Glyphicon glyph="log-out"/> Abmelden ({this.props.userName})
+                    </Button>
+                </Navbar.Form>
+                }
+                <Nav pullRight>
+                    <LinkContainer to={SETTINGS_ROUTE}>
+                        <NavItem>
+                            <Glyphicon glyph="cog"/> Einstellungen
                         </NavItem>
                     </LinkContainer>
                 </Nav>
-                {this.props.gameRunning && this.props.location.pathname !== GAME_ROUTE &&
-                <Nav pullRight>
-                    <LinkContainer to={GAME_ROUTE}>
-                        <NavItem>Zurück zum Spiel <Glyphicon glyph="share-alt"/></NavItem>
-                    </LinkContainer>
-                </Nav>
-                }
             </Navbar.Collapse>
         </Navbar>;
     }
