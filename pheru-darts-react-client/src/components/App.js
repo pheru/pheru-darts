@@ -1,7 +1,7 @@
 import React from 'react'
 import {Redirect, Route, Switch} from "react-router-dom";
 import {LinkContainer} from "react-router-bootstrap";
-import {Alert, Button, Glyphicon, Nav, Navbar, NavItem} from "react-bootstrap";
+import {Alert, Glyphicon, Nav, Navbar, NavItem} from "react-bootstrap";
 import NewGameConfigContainer from "../containers/NewGameConfigContainer";
 import GameContainer from "../containers/GameContainer";
 import {GAME_ROUTE, NEW_GAME_ROUTE, SETTINGS_ROUTE, STATISTICS_ROUTE} from "../constants/routes";
@@ -9,7 +9,7 @@ import StatisticsContainer from "../containers/StatisticsContainer";
 import SettingsContainer from "../containers/SettingsContainer";
 import LoginModalContainer from "../containers/modals/LoginModalContainer";
 import SignUpModalContainer from "../containers/modals/SignUpModalContainer";
-import {ScaleLoader} from "react-spinners";
+import {BarLoader} from "react-spinners";
 
 class App extends React.Component {
 
@@ -130,31 +130,27 @@ class App extends React.Component {
                     </LinkContainer>
                     }
                 </Nav>
-                {(this.props.isLoggingIn || this.props.isLoggingOut) &&
-                <Nav style={{paddingTop: 5}} pullRight>
-                        <ScaleLoader color={'#8b8d8f'}/>
-                </Nav>
-                }
-                {!this.props.isLoggedIn && !this.props.isLoggingIn && !this.props.isLoggingOut &&
-                <Navbar.Form pullRight>
-                    <Button bsStyle="link" style={{outline: 0}} onClick={this.props.showLogin}>
-                        <Glyphicon glyph="log-in"/> Anmelden
-                    </Button>
-                </Navbar.Form>
-                }
-                {this.props.isLoggedIn && !this.props.isLoggingIn && !this.props.isLoggingOut &&
-                <Navbar.Form pullRight>
-                    <Button bsStyle="link" style={{outline: 0}} onClick={this.props.logout}>
-                        <Glyphicon glyph="log-out"/> Abmelden ({this.props.userName})
-                    </Button>
-                </Navbar.Form>
-                }
                 <Nav pullRight>
                     <LinkContainer to={SETTINGS_ROUTE}>
                         <NavItem>
                             <Glyphicon glyph="cog"/> Einstellungen
                         </NavItem>
                     </LinkContainer>
+                    {(this.props.isLoggingIn || this.props.isLoggingOut) &&
+                    <NavItem style={{marginTop: 8}}>
+                        <BarLoader color={'#8b8d8f'}/>
+                    </NavItem>
+                    }
+                    {!this.props.isLoggedIn && !this.props.isLoggingIn && !this.props.isLoggingOut &&
+                    <NavItem onClick={this.props.showLogin}>
+                        <Glyphicon glyph="log-in"/> Anmelden
+                    </NavItem>
+                    }
+                    {this.props.isLoggedIn && !this.props.isLoggingIn && !this.props.isLoggingOut &&
+                    <NavItem onClick={this.props.logout}>
+                        <Glyphicon glyph="log-out"/> Abmelden ({this.props.userName})
+                    </NavItem>
+                    }
                 </Nav>
             </Navbar.Collapse>
         </Navbar>;
