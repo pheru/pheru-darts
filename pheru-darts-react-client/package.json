@@ -2,6 +2,7 @@
   "name": "pheru-darts",
   "version": "1.0.0-SNAPSHOT",
   "private": true,
+  "homepage": ".",
   "devDependencies": {
     "react-scripts": "^1.1.4"
   },
