@@ -1,31 +1,30 @@
 import {connect} from 'react-redux'
 import Game from "../components/Game";
 import {exitGame, rematch, undoDart} from "../actions/game";
-import getTurnInformation from "../services/gameInformationService";
+import {archiveGame} from "../actions/games";
 
 const mapStateToProps = function (state) {
-    let players = state.game.players;
     let startScore = state.game.score;
     let checkOutMode = state.game.checkOutMode;
-    let turnInfo = getTurnInformation(players, startScore, checkOutMode);
-    let finished = false;
-    for (let i = 0; i < turnInfo.playerInformation.length; i++) {
-        if (turnInfo.playerInformation[i].score === 0) {
-            finished = true;
-            break;
-        }
-    }
+    let players = state.game.players;
+    let winner = state.game.winner;
+    let game = state.game;
+    let isArchiving = state.games.isArchiving;
     return {
-        finished,
         startScore,
-        checkOutMode
+        checkOutMode,
+        players,
+        winner,
+        game,
+        isArchiving
     };
 };
 
 const mapDispatchToProps = dispatch => ({
     undoDart: () => dispatch(undoDart()),
     exit: () => dispatch(exitGame()),
-    rematch: () => dispatch(rematch())
+    rematch: (startingPlayer) => dispatch(rematch(startingPlayer)),
+    archiveGame: (game) => dispatch(archiveGame(game))
 });
 
 export default connect(

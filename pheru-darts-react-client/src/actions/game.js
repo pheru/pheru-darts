@@ -10,22 +10,18 @@ export const startNewGame = (players, score, checkOutMode) => ({
     score,
     checkOutMode
 });
-
 export const addDart = (value, multiplier) => ({
     type: ADD_DART,
     value,
     multiplier
 });
-
 export const undoDart = () => ({
     type: UNDO_DART
 });
-
 export const exitGame = () => ({
     type: EXIT_GAME
 });
-
-export const rematch = () => ({
-    type: REMATCH
+export const rematch = (startingPlayer) => ({
+    type: REMATCH,
+    startingPlayer
 });
-

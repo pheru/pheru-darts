@@ -3,7 +3,8 @@ import game from "./game";
 import users from "./users";
 import user from "./user";
 import playerPermission from "./playerPermission";
+import games from "./games";
 
 export default combineReducers({
-    game, users, user, playerPermission
+    game, games, user, users, playerPermission
 })

@@ -20,18 +20,21 @@ function game(state = null, action) {
             return null;
         case REMATCH:
             let playersCopy = state.players.slice();
-            playersCopy.push(playersCopy.shift());
+            while (playersCopy[0] !== action.startingPlayer) {
+                playersCopy.push(playersCopy.shift());
+            }
             initPlayers(playersCopy);
             return {
                 ...state,
-                players: playersCopy
+                players: playersCopy,
+                winner: undefined
             };
         default:
             return state
     }
 }
 
-function initPlayers(players){
+function initPlayers(players) {
     for (let i = 0; i < players.length; i++) {
         players[i].aufnahmen = [];
     }
@@ -40,8 +43,11 @@ function initPlayers(players){
 
 function addDart(state, dart) {
     let multiplier = dart.multiplier;
-    if ((dart.value === 0 && multiplier !== 1) || (dart.value === 25 && multiplier > 2)) {
-        alert("multiplier auf 1 korrigiert, da Dart ungültig: " + JSON.stringify(dart));
+    if (dart.value === 25 && multiplier > 2) {
+        alert("Dart ungültig: " + JSON.stringify(dart));
+        return state;
+    }
+    if (dart.value === 0 && multiplier !== 1) {
         multiplier = 1;
     }
     let validatedDart = {...dart, multiplier};
@@ -56,9 +62,19 @@ function addDart(state, dart) {
     if (players[currentTurnInfo.playerIndex].aufnahmen[currentTurnInfo.aufnahmeIndex] === undefined) {
         players[currentTurnInfo.playerIndex].aufnahmen[currentTurnInfo.aufnahmeIndex] = [];
     }
+
+    // Pruefen, ob jemand gewonnen hat
+    let winner;
+    for (let i = 0; i < turnInfo.playerInformation.length; i++) {
+        if (turnInfo.playerInformation[i].score === 0) {
+            winner = players[i];
+            break;
+        }
+    }
     return {
         ...state,
         players: players,
+        winner
     };
 }
 
@@ -80,6 +96,7 @@ function undoDart(state) {
     return {
         ...state,
         players: players,
+        winner: undefined
     };
 }
 

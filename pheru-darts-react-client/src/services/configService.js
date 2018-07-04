@@ -1,7 +1,9 @@
 const LOCAL = {
     resourceUrls: {
         users: "http://localhost:8080/users",
-        playerPermission: "http://localhost:8080/playerPermission"
+        playerPermission: "http://localhost:8080/playerPermission",
+        games: "http://localhost:8080/games",
+        statistics: "http://localhost:8080/statistics"
     },
     loginUrl : "http://localhost:8080/login",
     logoutUrl : "http://localhost:8080/logout",
@@ -10,7 +12,9 @@ const LOCAL = {
 const LOCAL_ERROR = {
     resourceUrls: {
         users: "http://localhost:8080/testfehler",
-        playerPermission: "http://localhost:8080/testfehler"
+        playerPermission: "http://localhost:8080/testfehler",
+        games: "http://localhost:8080/testfehler",
+        statistics: "http://localhost:8080/testfehler"
     },
     loginUrl : "http://localhost:8080/testfehler",
     logoutUrl : "http://localhost:8080/testfehler",

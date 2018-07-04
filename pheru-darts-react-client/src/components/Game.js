@@ -1,15 +1,16 @@
 import React from 'react'
 import ScoreButtonsContainer from "../containers/ScoreButtonsContainer";
 import PlayerContainer from "../containers/PlayerContainer";
-import {Button, Col, Glyphicon, Grid, Modal, Row, Well} from "react-bootstrap";
+import {Button, Col, Dropdown, Glyphicon, Grid, MenuItem, Modal, Row, Well} from "react-bootstrap";
 
 class Game extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            gameFinishedModalShow: props.finished,
-            backToMenuModalShow: false
+            gameFinishedModalShow: props.winner !== undefined,
+            backToMenuModalShow: false,
+            rematchStartingPlayer: props.players[1]
         };
         this.colStyle = {
             marginBottom: 15
@@ -25,10 +26,22 @@ class Game extends React.Component {
             textAlign: 'center'
         };
         this.handleGameFinishedModalClose = this.handleGameFinishedModalClose.bind(this);
+        this.handleRematchStartingPlayerChanged = this.handleRematchStartingPlayerChanged.bind(this);
     }
 
+    componentDidUpdate(prevProps) {
+        if (this.props.players !== prevProps.players) {
+            this.setState({rematchStartingPlayer: this.props.players[1]});
+        }
+    }
+
+    //TODO in componentDidUpdate verschieben
     static getDerivedStateFromProps(props, state) {
-        return {gameFinishedModalShow: props.finished};
+        return {gameFinishedModalShow: props.winner !== undefined};
+    }
+
+    handleRematchStartingPlayerChanged(player) {
+        this.setState({rematchStartingPlayer: player});
     }
 
     handleGameFinishedModalClose() {
@@ -66,15 +79,39 @@ class Game extends React.Component {
             </Grid>
             <ScoreButtonsContainer/>
 
-            <Modal dialogClassName='modal-bottom' bsSize='small' show={this.state.gameFinishedModalShow}
+            <Modal dialogClassName='modal-bottom' show={this.state.gameFinishedModalShow}
                    onHide={this.handleGameFinishedModalClose}
                    keyboard={false} backdrop='static'>
                 <Modal.Body style={this.modalBodyStyle}>
-                    <h4>Gewonnen!</h4>
+                    <h4>{this.props.winner !== undefined && this.props.winner.name} hat gewonnen!</h4>
                 </Modal.Body>
-                <Modal.Footer>
-                    <Button bsStyle='primary' onClick={() => this.props.rematch()}>Rematch</Button>
-                    <Button bsStyle='primary' onClick={() => this.props.exit()}>Zurück zum Menü</Button>
+                <Modal.Footer style={{textAlign: 'center'}}>
+                    <Dropdown style={{display: 'inline-flex'}} id="rematch_player_dropdown">
+                        <Button bsStyle='primary' onClick={() => {
+                            this.props.archiveGame(this.props.game);
+                            this.props.rematch(this.state.rematchStartingPlayer);
+                        }}>
+                            Rematch ({this.state.rematchStartingPlayer.name} beginnt)
+                        </Button>
+                        <Dropdown.Toggle bsStyle="primary"/>
+                        <Dropdown.Menu style={{minWidth: '100%', textAlign: 'center'}}>
+                            {this.props.players.map((player, i) =>
+                                <MenuItem key={"rematch_player_" + i}
+                                          onClick={() => this.handleRematchStartingPlayerChanged(player)}>
+                                    {player.name} beginnt
+                                </MenuItem>
+                            )}
+                        </Dropdown.Menu>
+                    </Dropdown>
+                    <Button style={{marginLeft: 10}} bsStyle='primary' onClick={() => {
+                        this.props.archiveGame(this.props.game);
+                        this.props.exit();
+                    }}>
+                        Zurück zum Menü
+                    </Button>
+                    <Button style={{marginLeft: 10}} bsStyle='warning' onClick={() => this.props.undoDart()}>
+                        Dart rückgängig machen
+                    </Button>
                 </Modal.Footer>
             </Modal>
 

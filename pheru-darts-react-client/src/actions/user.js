@@ -84,7 +84,7 @@ export function signUp(name, password) {
                 dispatch(login(name, password));
             },
             responseNotOk => dispatch(signUpFailed(responseNotOk.message)),
-            error => dispatch(signUpFailed())
+            error => dispatch(signUpFailed(error))
         );
     };
 }
@@ -99,7 +99,7 @@ export function login(name, password) {
                 dispatch(loginByToken());
             },
             responseNotOk => dispatch(loginFailed(responseNotOk.message)),
-            error => dispatch(loginFailed())
+            error => dispatch(loginFailed(error))
         );
     };
 }
