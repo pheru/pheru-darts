@@ -4,6 +4,7 @@ import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.model.*;
 import de.pheru.darts.backend.dtos.UserDto;
+import de.pheru.darts.backend.entities.GameEntity;
 import de.pheru.darts.backend.entities.PlayerPermissionEntity;
 import de.pheru.darts.backend.entities.UserEntity;
 import de.pheru.darts.backend.repositories.PlayerPermissionRepository;
@@ -60,6 +61,9 @@ public class TestController { //TODO Entfernen
 //        deleteTablePermission();
 //        createTablePermission();
 
+//        deleteTableGames();
+//        createTableGames();
+
         System.out.println("DB Ende");
     }
 
@@ -97,6 +101,21 @@ public class TestController { //TODO Entfernen
         System.out.println("Create Table Ende");
     }
 
+    private void createTableGames() {
+        System.out.println("Create Table Games");
+
+        final DynamoDBMapper dynamoDBMapper = new DynamoDBMapper(amazonDynamoDB);
+        final CreateTableRequest tableRequest = dynamoDBMapper.generateCreateTableRequest(GameEntity.class);
+        tableRequest.setProvisionedThroughput(new ProvisionedThroughput(1L, 1L));
+        tableRequest.getGlobalSecondaryIndexes().get(0).setProvisionedThroughput(new ProvisionedThroughput(1L, 1L));
+        final Projection projection = new Projection();
+        projection.setProjectionType(ProjectionType.ALL);
+        tableRequest.getGlobalSecondaryIndexes().get(0).setProjection(projection);
+        amazonDynamoDB.createTable(tableRequest);
+
+        System.out.println("Create Table Ende");
+    }
+
     private void deleteTableUser() {
         System.out.println("Delete Table User");
 
@@ -112,6 +131,16 @@ public class TestController { //TODO Entfernen
 
         final DynamoDBMapper dynamoDBMapper = new DynamoDBMapper(amazonDynamoDB);
         final DeleteTableRequest tableRequest = dynamoDBMapper.generateDeleteTableRequest(PlayerPermissionEntity.class);
+        amazonDynamoDB.deleteTable(tableRequest);
+
+        System.out.println("Delete Table Ende");
+    }
+
+    private void deleteTableGames() {
+        System.out.println("Delete Table Game");
+
+        final DynamoDBMapper dynamoDBMapper = new DynamoDBMapper(amazonDynamoDB);
+        final DeleteTableRequest tableRequest = dynamoDBMapper.generateDeleteTableRequest(GameEntity.class);
         amazonDynamoDB.deleteTable(tableRequest);
 
         System.out.println("Delete Table Ende");
