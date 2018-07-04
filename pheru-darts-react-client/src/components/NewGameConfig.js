@@ -21,15 +21,19 @@ class NewGameConfig extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            score: 501,
-            selectedPlayers: [
-                {name: ""},
-                {name: ""}
-            ],
-            checkOutMode: DOUBLE_OUT,
-            showNewGameModal: false
-        };
+        if (props.initialState !== undefined) {
+            this.state = {...props.initialState, showNewGameModal: false};
+        } else {
+            this.state = {
+                score: 501,
+                selectedPlayers: [
+                    {name: ""},
+                    {name: ""}
+                ],
+                checkOutMode: DOUBLE_OUT,
+                showNewGameModal: false
+            };
+        }
         this.colStyle = {
             marginBottom: 15
         };
@@ -46,6 +50,10 @@ class NewGameConfig extends React.Component {
         this.onStartNewGameButtonClicked = this.onStartNewGameButtonClicked.bind(this);
         this.startNewGame = this.startNewGame.bind(this);
         this.hideNewGameModal = this.hideNewGameModal.bind(this);
+    }
+
+    componentWillUnmount() {
+        this.props.memorizeState(this.state);
     }
 
     changeSelectedPlayer(selectedPlayerIndex, player) {
