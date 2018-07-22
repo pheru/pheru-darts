@@ -5,7 +5,6 @@ public class GameDto {
     private PlayerDto[] players;
     private int score;
     private CheckOutDto checkOutMode;
-    private PlayerDto winner;
 
     public PlayerDto[] getPlayers() {
         return players;
@@ -31,11 +30,4 @@ public class GameDto {
         this.checkOutMode = checkOutMode;
     }
 
-    public PlayerDto getWinner() {
-        return winner;
-    }
-
-    public void setWinner(final PlayerDto winner) {
-        this.winner = winner;
-    }
 }

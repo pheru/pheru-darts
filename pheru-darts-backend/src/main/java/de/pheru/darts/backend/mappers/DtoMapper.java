@@ -3,10 +3,7 @@ package de.pheru.darts.backend.mappers;
 import de.pheru.darts.backend.dtos.DartDto;
 import de.pheru.darts.backend.dtos.GameDto;
 import de.pheru.darts.backend.dtos.PlayerDto;
-import de.pheru.darts.backend.entities.AufnahmeDocument;
-import de.pheru.darts.backend.entities.DartDocument;
-import de.pheru.darts.backend.entities.GameEntity;
-import de.pheru.darts.backend.entities.PlayerDocument;
+import de.pheru.darts.backend.entities.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,9 +17,8 @@ public final class DtoMapper {
 
     public static GameEntity toGameEntity(final GameDto gameDto) {
         final GameEntity gameEntity = new GameEntity();
-        gameEntity.setWinnerId(gameDto.getWinner().getId());
         gameEntity.setScore(gameDto.getScore());
-        gameEntity.setCheckOutMode(gameDto.getCheckOutMode().getKey());
+        gameEntity.setCheckOutMode(CheckOutMode.forString(gameDto.getCheckOutMode().getKey()));
         gameEntity.setPlayers(toPlayerDocument(Arrays.asList(gameDto.getPlayers())));
         return gameEntity;
     }

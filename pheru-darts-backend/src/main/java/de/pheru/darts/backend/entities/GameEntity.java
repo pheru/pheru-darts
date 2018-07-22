@@ -15,13 +15,14 @@ public class GameEntity {
     private String userId;
 
     @DynamoDBAttribute
+    private Long timestamp;
+
+    @DynamoDBAttribute
     private int score;
 
     @DynamoDBAttribute
-    private String checkOutMode;
-
-    @DynamoDBAttribute
-    private String winnerId;
+    @DynamoDBTyped(DynamoDBMapperFieldModel.DynamoDBAttributeType.S)
+    private CheckOutMode checkOutMode;
 
     @DynamoDBAttribute
     private List<PlayerDocument> players;
@@ -42,6 +43,14 @@ public class GameEntity {
         this.userId = userId;
     }
 
+    public Long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(final Long timestamp) {
+        this.timestamp = timestamp;
+    }
+
     public int getScore() {
         return score;
     }
@@ -50,20 +59,12 @@ public class GameEntity {
         this.score = score;
     }
 
-    public String getCheckOutMode() {
+    public CheckOutMode getCheckOutMode() {
         return checkOutMode;
     }
 
-    public void setCheckOutMode(final String checkOutMode) {
+    public void setCheckOutMode(final CheckOutMode checkOutMode) {
         this.checkOutMode = checkOutMode;
-    }
-
-    public String getWinnerId() {
-        return winnerId;
-    }
-
-    public void setWinnerId(final String winnerId) {
-        this.winnerId = winnerId;
     }
 
     public List<PlayerDocument> getPlayers() {

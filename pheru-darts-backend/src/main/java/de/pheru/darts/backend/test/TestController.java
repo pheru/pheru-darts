@@ -7,12 +7,14 @@ import de.pheru.darts.backend.dtos.UserDto;
 import de.pheru.darts.backend.entities.GameEntity;
 import de.pheru.darts.backend.entities.PlayerPermissionEntity;
 import de.pheru.darts.backend.entities.UserEntity;
+import de.pheru.darts.backend.repositories.GamesRepository;
 import de.pheru.darts.backend.repositories.PlayerPermissionRepository;
 import de.pheru.darts.backend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,10 +24,12 @@ public class TestController { //TODO Entfernen
 
     private final UserRepository userRepository;
     private final PlayerPermissionRepository playerPermissionRepository;
+    private final GamesRepository gamesRepository;
 
-    public TestController(final UserRepository userRepository, final PlayerPermissionRepository playerPermissionRepository) {
+    public TestController(final UserRepository userRepository, final PlayerPermissionRepository playerPermissionRepository, final GamesRepository gamesRepository) {
         this.userRepository = userRepository;
         this.playerPermissionRepository = playerPermissionRepository;
+        this.gamesRepository = gamesRepository;
     }
 
     @RequestMapping("/testfehler")
@@ -40,11 +44,12 @@ public class TestController { //TODO Entfernen
         throw new RuntimeException("Ich bin ein Fehler");
     }
 
-    @RequestMapping("/admin/db/clear")
+    @PostMapping("/admin/db/clear")
     public void clearDBs() {
         System.out.println("Clear DBs");
         userRepository.deleteAll();
         playerPermissionRepository.deleteAll();
+        gamesRepository.deleteAll();
         System.out.println("Clear DBs fertig");
     }
 

@@ -17,7 +17,7 @@ public class SleepConfig extends WebMvcConfigurerAdapter {
             @Override
             public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
                 System.out.println("SleepInterceptor");
-                Thread.sleep(1500);
+                Thread.sleep(0);
                 return true;
             }
         });
