@@ -1,5 +1,6 @@
 import React from 'react'
 import {Button, FormControl, Glyphicon, Modal} from "react-bootstrap";
+import PropTypes from 'prop-types';
 
 class SignUpModal extends React.Component {
 
@@ -74,6 +75,12 @@ class SignUpModal extends React.Component {
     }
 }
 
-SignUpModal.propTypes = {};
+SignUpModal.propTypes = {
+    show: PropTypes.bool,
+    hide: PropTypes.func.isRequired,
+    isSigningUp: PropTypes.bool,
+    signUp: PropTypes.func.isRequired,
+    signUpFailedMessage: PropTypes.string
+};
 
 export default SignUpModal;

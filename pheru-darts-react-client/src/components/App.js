@@ -10,6 +10,7 @@ import SettingsContainer from "../containers/SettingsContainer";
 import LoginModalContainer from "../containers/modals/LoginModalContainer";
 import SignUpModalContainer from "../containers/modals/SignUpModalContainer";
 import {BarLoader} from "react-spinners";
+import PropTypes from 'prop-types';
 
 class App extends React.Component {
 
@@ -157,6 +158,21 @@ class App extends React.Component {
     }
 }
 
-App.propTypes = {};
+App.propTypes = {
+    userId: PropTypes.string,
+    userName: PropTypes.string,
+    isLoggedIn: PropTypes.bool.isRequired,
+    isLoggingIn: PropTypes.bool.isRequired,
+    isLoggingOut: PropTypes.bool.isRequired,
+    gameRunning: PropTypes.bool.isRequired,
+    fetchAllUsersFailed: PropTypes.bool.isRequired,
+    isFetchingUsers: PropTypes.bool.isRequired,
+    fetchAllUsers: PropTypes.func.isRequired,
+    fetchPlayableUsers: PropTypes.func.isRequired,
+    fetchPermittedUsers: PropTypes.func.isRequired,
+    showLogin: PropTypes.func.isRequired,
+    loginByToken: PropTypes.func.isRequired,
+    logout: PropTypes.func.isRequired,
+};
 
 export default App;

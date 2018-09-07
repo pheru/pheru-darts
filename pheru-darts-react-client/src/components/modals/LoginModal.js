@@ -1,5 +1,6 @@
 import React from 'react'
 import {Modal, Button, FormControl} from "react-bootstrap";
+import PropTypes from 'prop-types';
 
 class LoginModal extends React.Component {
 
@@ -59,6 +60,13 @@ class LoginModal extends React.Component {
     }
 }
 
-LoginModal.propTypes = {};
+LoginModal.propTypes = {
+    login: PropTypes.func.isRequired,
+    hide: PropTypes.func.isRequired,
+    showSignUp: PropTypes.func.isRequired,
+    show: PropTypes.bool.isRequired,
+    isLoggingIn: PropTypes.bool.isRequired,
+    loginFailedMessage: PropTypes.string
+};
 
 export default LoginModal;
