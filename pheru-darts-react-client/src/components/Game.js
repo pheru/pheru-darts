@@ -9,7 +9,6 @@ class Game extends React.Component {
         super(props);
         this.state = {
             gameFinishedModalShow: props.winner !== undefined,
-            backToMenuModalShow: false,
             rematchStartingPlayer: props.players[1]
         };
         this.colStyle = {
@@ -112,17 +111,6 @@ class Game extends React.Component {
                     <Button style={{marginLeft: 10}} bsStyle='warning' onClick={() => this.props.undoDart()}>
                         Dart rückgängig machen
                     </Button>
-                </Modal.Footer>
-            </Modal>
-
-            <Modal show={this.state.backToMenuModalShow} onHide={this.handleBackToMenuModalClose}>
-                <Modal.Body style={this.modalBodyStyle}>
-                    <h4>Spiel beenden und zurück zum Menü?</h4>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button style={{width: 100}} bsStyle="danger" onClick={() => this.props.exit()}>Ja</Button>
-                    <Button style={{width: 100}} bsStyle='primary'
-                            onClick={this.handleBackToMenuModalClose}>Nein</Button>
                 </Modal.Footer>
             </Modal>
         </div>
