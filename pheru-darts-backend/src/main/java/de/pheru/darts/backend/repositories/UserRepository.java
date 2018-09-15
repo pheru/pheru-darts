@@ -18,8 +18,4 @@ public interface UserRepository extends CrudRepository<UserEntity, String> {
     @EnableScan
     List<UserEntity> findAll();
 
-    // TODO Testmethoden
-    @Override
-    @EnableScan
-    void deleteAll();
 }
