@@ -3,7 +3,7 @@ package de.pheru.darts.backend.controllers;
 import de.pheru.darts.backend.Logger;
 import de.pheru.darts.backend.dtos.statistics.*;
 import de.pheru.darts.backend.entities.*;
-import de.pheru.darts.backend.repositories.GamesRepository;
+import de.pheru.darts.backend.repositories.GameRepository;
 import de.pheru.darts.backend.repositories.UserRepository;
 import de.pheru.darts.backend.security.SecurityUtil;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,19 +20,18 @@ public class StatisticsController {
 
     private static final Logger LOGGER = new Logger();
 
-    private final GamesRepository gamesRepository;
+    private final GameRepository gameRepository;
     private final UserRepository userRepository;
 
-    public StatisticsController(final GamesRepository gamesRepository, final UserRepository userRepository) {
-        this.gamesRepository = gamesRepository;
+    public StatisticsController(final GameRepository gameRepository, final UserRepository userRepository) {
+        this.gameRepository = gameRepository;
         this.userRepository = userRepository;
     }
 
-    // TODO WIP
     @GetMapping
     public StatisticDto get() {
         LOGGER.debug("GET auf /statistics aufgerufen");
-        final List<GameEntity> games = gamesRepository.findByUserId(SecurityUtil.getLoggedInUserId());
+        final List<GameEntity> games = gameRepository.findByUserId(SecurityUtil.getLoggedInUserId());
 
         final Map<String, String> playerCache = new HashMap<>();
 
@@ -43,11 +42,15 @@ public class StatisticsController {
         final Map<String, GameCountStatisticDto> gameCountsPerPlayer = new HashMap<>();
 
         for (final GameEntity game : games) {
+            final CheckOutMode checkOutMode = game.getCheckOutMode();
+            int score = game.getScore();
             boolean gameWon = false;
             for (final PlayerDocument playerDocument : game.getPlayers()) {
                 if (playerDocument.getId().equals(SecurityUtil.getLoggedInUserId())) {
                     for (final AufnahmeDocument aufnahmeDocument : playerDocument.getAufnahmen()) {
+                        final int aufnahmeStartScore = score;
                         for (final DartDocument dartDocument : aufnahmeDocument.getDarts()) {
+                            // Dart-Count
                             totalDarts++;
                             final Integer key = dartDocument.getValue();
                             dartCountsPerScore.putIfAbsent(key, new DartCountStatisticDto());
@@ -59,10 +62,22 @@ public class StatisticsController {
                             } else if (dartDocument.getMultiplier() == 3) {
                                 dartCountStatisticDto.setTripleCount(dartCountStatisticDto.getTripleCount() + 1);
                             }
+                            // Sieg-Prüfung
+                            final int dartScore = dartDocument.getValue() * dartDocument.getMultiplier();
+                            final boolean checkOutCondition = (checkOutMode == CheckOutMode.SINGLE_OUT && dartDocument.getMultiplier() == 1)
+                                    || (checkOutMode == CheckOutMode.DOUBLE_OUT && dartDocument.getMultiplier() == 2);
+                            final boolean thrownOver = isThrownOver(score, dartScore, game.getCheckOutMode());
+                            if (score - dartScore == 0 && checkOutCondition) { // ausgecheckt
+                                score = 0;
+                                gameWon = true;
+                            } else if (thrownOver) { // ueberworfen
+                                score = aufnahmeStartScore;
+                            } else {
+                                score -= dartScore;
+                            }
                         }
                     }
                 }
-                //TODO hier irgendwo gameWon setzen
             }
             // Player-Game-Statistic
             for (final PlayerDocument playerDocument : game.getPlayers()) {
@@ -102,6 +117,10 @@ public class StatisticsController {
 
         LOGGER.debug("GET auf /statistics: erfolgreich");
         return statisticDto;
+    }
+
+    private boolean isThrownOver(final int score, final int dartScore, final CheckOutMode checkOutMode) {
+        return score - dartScore <= (checkOutMode == CheckOutMode.SINGLE_OUT ? 0 : 1);
     }
 
 }

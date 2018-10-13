@@ -5,75 +5,65 @@ import de.pheru.darts.backend.dtos.DartDto;
 import de.pheru.darts.backend.dtos.GameDto;
 import de.pheru.darts.backend.dtos.PlayerDto;
 import de.pheru.darts.backend.entities.GameEntity;
+import de.pheru.darts.backend.exceptions.ForbiddenException;
 import de.pheru.darts.backend.mappers.DtoMapper;
-import de.pheru.darts.backend.repositories.GamesRepository;
+import de.pheru.darts.backend.repositories.GameRepository;
 import de.pheru.darts.backend.repositories.PlayerPermissionRepository;
-import de.pheru.darts.backend.repositories.UserRepository;
-import org.springframework.web.bind.annotation.*;
+import de.pheru.darts.backend.security.SecurityUtil;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 
 @RestController
-@RequestMapping("/games")
-public class GamesController {
+@RequestMapping("/game")
+public class GameController {
 
     private static final Logger LOGGER = new Logger();
 
-    private final UserRepository userRepository;
     private final PlayerPermissionRepository playerPermissionRepository;
-    private final GamesRepository gamesRepository;
+    private final GameRepository gameRepository;
 
-    public GamesController(final UserRepository userRepository,
-                           final PlayerPermissionRepository playerPermissionRepository,
-                           final GamesRepository gamesRepository) {
-        this.userRepository = userRepository;
+    public GameController(final PlayerPermissionRepository playerPermissionRepository,
+                          final GameRepository gameRepository) {
         this.playerPermissionRepository = playerPermissionRepository;
-        this.gamesRepository = gamesRepository;
+        this.gameRepository = gameRepository;
     }
 
     @PostMapping
     public void postGame(@RequestBody final GameDto game) {
         LOGGER.debug("POST auf /games aufgerufen");
 
+        checkPermissions(game);
+
         final Date timestamp = new Date();
-        //TODO Permission-Check
         for (final PlayerDto playerDto : game.getPlayers()) {
             final DartDto[][] aufnahmen = playerDto.getAufnahmen();
             // Die letzte Aufnahme ist beim Verlierer leer und sollte nicht gespeichert werden
-            // TODO evtl. besser vom Client garnicht mitschicken?
             if (aufnahmen[aufnahmen.length - 1].length == 0) {
                 playerDto.setAufnahmen(Arrays.copyOfRange(aufnahmen, 0, aufnahmen.length - 1));
             }
             final GameEntity gameEntity = DtoMapper.toGameEntity(game);
             gameEntity.setUserId(playerDto.getId());
             gameEntity.setTimestamp(timestamp.getTime());
-            gamesRepository.save(gameEntity);
+            gameRepository.save(gameEntity);
             LOGGER.debug("Spiel für User " + playerDto.getId() + " gespeichert.");
         }
-
         LOGGER.debug("POST auf /games: erfolgreich");
     }
 
-    //TODO temp
-    @DeleteMapping
-    public void deleteGames() {
-        LOGGER.debug("DELETE auf /games aufgerufen");
-
-        gamesRepository.deleteAll();
-
-        LOGGER.debug("DELETE auf /games: erfolgreich");
-    }
-
-    //TODO temp
-    @GetMapping
-    public List<GameEntity> getGames() {
-//        LOGGER.debug("DELETE auf /games aufgerufen");
-
-        return gamesRepository.findAll();
-
-//        LOGGER.debug("DELETE auf /games: erfolgreich");
+    private void checkPermissions(final GameDto game) {
+        final String loggedInUserId = SecurityUtil.getLoggedInUserId();
+        for (final PlayerDto playerDto : game.getPlayers()) {
+            if (playerPermissionRepository.findByUserIdAndPermittedUserId(playerDto.getId(), loggedInUserId) == null) {
+                final String msg = "Missing permission for at least one player";
+                LOGGER.warn(msg + ": loggedInUserId=" + loggedInUserId + ", playerId=" + playerDto.getId());
+                throw new ForbiddenException(msg);
+            }
+        }
     }
 
 }

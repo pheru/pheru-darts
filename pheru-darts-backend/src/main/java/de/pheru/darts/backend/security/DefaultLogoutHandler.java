@@ -12,7 +12,6 @@ public class DefaultLogoutHandler implements LogoutHandler {
 
     private static final Logger LOGGER = new Logger();
 
-    //TODO JWT blacklisten
     @Override
     public void logout(final HttpServletRequest request, final HttpServletResponse response, final Authentication authentication) {
         LOGGER.debug("logout aufgerufen");

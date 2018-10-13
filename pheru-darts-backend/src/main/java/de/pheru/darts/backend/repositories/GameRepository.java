@@ -5,8 +5,10 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface GamesRepository extends CrudRepository<GameEntity, String> {
+public interface GameRepository extends CrudRepository<GameEntity, String> {
 
     List<GameEntity> findByUserId(final String userId);
+
+    void deleteAllByUserId(final String userId);
 
 }

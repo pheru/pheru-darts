@@ -1,9 +1,11 @@
 package de.pheru.darts.backend.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import de.pheru.darts.backend.entities.UserEntity;
+import de.pheru.darts.backend.Logger;
+import de.pheru.darts.backend.exceptions.BadRequestException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -20,6 +22,8 @@ import java.util.Date;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
+    private static final Logger LOGGER = new Logger();
+
     private final AuthenticationManager authenticationManager;
 
     public JWTAuthenticationFilter(final AuthenticationManager authenticationManager) {
@@ -30,12 +34,15 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     public Authentication attemptAuthentication(final HttpServletRequest req, final HttpServletResponse res)
             throws AuthenticationException {
         try {
-            final UserEntity creds = new ObjectMapper().readValue(req.getInputStream(), UserEntity.class);
+            final AuthenticationInput creds = new ObjectMapper().readValue(req.getInputStream(), AuthenticationInput.class);
             return authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(creds.getName(), creds.getPassword(), new ArrayList<>())
             );
         } catch (final IOException e) {
-            throw new RuntimeException(e);
+            final String msg = "Could not read authentication information from input.";
+            LOGGER.warn(msg, e);
+            //TODO Filter ignoriert Status-Annotation an Exception -> 500er obwohl 400er kommen sollte
+            throw new BadRequestException(msg);
         }
     }
 
@@ -52,5 +59,27 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         //TODO funktioniert nicht gegen localhost, da kein https
 //        cookie.setSecure(true);
         res.addCookie(cookie);
+    }
+
+    public static class AuthenticationInput {
+
+        private String name;
+        private String password;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(final String name) {
+            this.name = name;
+        }
+
+        public String getPassword() {
+            return password;
+        }
+
+        public void setPassword(final String password) {
+            this.password = password;
+        }
     }
 }

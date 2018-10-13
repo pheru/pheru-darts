@@ -15,15 +15,6 @@ public class UserEntity {
     @DynamoDBAttribute
     private String password;
 
-    public UserEntity() {
-    }
-
-    public UserEntity(final String id, final String name, final String password) {
-        this.id = id;
-        this.name = name;
-        this.password = password;
-    }
-
     public String getId() {
         return id;
     }

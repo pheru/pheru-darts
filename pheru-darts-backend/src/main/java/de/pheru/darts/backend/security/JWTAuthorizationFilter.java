@@ -36,13 +36,13 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
     private Authentication getAuthentication(final String token) {
         // parse the token.
-        final String id = Jwts.parser()
+        final String userId = Jwts.parser()
                 .setSigningKey(SecurityConstants.SECRET.getBytes())
                 .parseClaimsJws(token)
                 .getBody()
                 .getSubject();
-        if (id != null) {
-            return new IdAuthentication(id, new ArrayList<>());
+        if (userId != null) {
+            return new IdAuthentication(userId, new ArrayList<>());
         }
         return null;
     }
