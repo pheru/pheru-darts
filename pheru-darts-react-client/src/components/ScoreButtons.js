@@ -2,6 +2,7 @@ import React from 'react'
 import {Button, Col, Grid, Row} from "react-bootstrap";
 import ToggleButton from "react-bootstrap/es/ToggleButton";
 import ToggleButtonGroup from "react-bootstrap/es/ToggleButtonGroup";
+import PropTypes from "prop-types";
 
 class ScoreButtons extends React.Component {
 
@@ -72,6 +73,8 @@ class ScoreButtons extends React.Component {
     }
 }
 
-ScoreButtons.propTypes = {};
+ScoreButtons.propTypes = {
+    addDart: PropTypes.func.isRequired
+};
 
 export default ScoreButtons

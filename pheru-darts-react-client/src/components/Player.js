@@ -1,5 +1,6 @@
 import React from 'react'
 import {Col, Row} from "react-bootstrap";
+import PropTypes from "prop-types";
 
 class Player extends React.Component {
 
@@ -37,7 +38,7 @@ class Player extends React.Component {
     }
 
     render() {
-        return <Row className="show-grid text-center blink-border"
+        return <Row className={"show-grid text-center" + (this.props.current ? " blink-border" : "")}
                     style={this.props.current ? {
                             backgroundColor: 'white',
                             borderRadius: this.borderRadius,
@@ -48,7 +49,8 @@ class Player extends React.Component {
                         : {
                             backgroundColor: '#bfcecc',
                             borderRadius: this.borderRadius,
-                            padding: 4,
+                            padding: 0,
+                            border: '4px solid #bfcecc',
                             margin: 0
                         }}>
             <Col xs={12} sm={12} style={{...this.colStyle, borderRadius: this.borderRadius}}>
@@ -94,6 +96,15 @@ class Player extends React.Component {
     }
 }
 
-Player.propTypes = {};
+Player.propTypes = {
+    name: PropTypes.string.isRequired,
+    score: PropTypes.number.isRequired,
+    dartCount: PropTypes.number.isRequired,
+    average: PropTypes.string.isRequired,
+    dart1: PropTypes.string.isRequired,
+    dart2: PropTypes.string.isRequired,
+    dart3: PropTypes.string.isRequired,
+    current: PropTypes.bool.isRequired
+};
 
 export default Player

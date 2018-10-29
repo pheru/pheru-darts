@@ -2,6 +2,7 @@ import React from 'react'
 import ScoreButtonsContainer from "../containers/ScoreButtonsContainer";
 import PlayerContainer from "../containers/PlayerContainer";
 import {Button, Col, Dropdown, Glyphicon, Grid, MenuItem, Modal, Row, Well} from "react-bootstrap";
+import PropTypes from "prop-types";
 
 class Game extends React.Component {
 
@@ -118,6 +119,17 @@ class Game extends React.Component {
 
 }
 
-Game.propTypes = {};
+Game.propTypes = {
+    startScore: PropTypes.number.isRequired,
+    checkOutMode: PropTypes.object.isRequired,
+    players: PropTypes.array.isRequired,
+    winner: PropTypes.object,
+    game: PropTypes.object.isRequired,
+    isArchiving: PropTypes.bool.isRequired,
+    undoDart: PropTypes.func.isRequired,
+    exit: PropTypes.func.isRequired,
+    rematch: PropTypes.func.isRequired,
+    archiveGame: PropTypes.func.isRequired
+};
 
 export default Game
