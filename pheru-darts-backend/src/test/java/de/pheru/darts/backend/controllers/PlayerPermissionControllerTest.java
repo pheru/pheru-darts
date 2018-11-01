@@ -1,12 +1,11 @@
 package de.pheru.darts.backend.controllers;
 
+import de.pheru.darts.backend.dtos.PlayerPermissionModificationDto;
 import de.pheru.darts.backend.dtos.UserDto;
 import de.pheru.darts.backend.entities.PlayerPermissionEntity;
 import de.pheru.darts.backend.entities.UserEntity;
 import de.pheru.darts.backend.exceptions.PermissionAlreadyGrantedException;
 import de.pheru.darts.backend.exceptions.UserNotFoundException;
-import de.pheru.darts.backend.mocks.repositories.MockedPlayerPermissionRepository;
-import de.pheru.darts.backend.mocks.repositories.MockedUserRepository;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -24,9 +23,9 @@ public class PlayerPermissionControllerTest extends ControllerTest {
     }
 
     @Test
-    public void post() {
+    public void postWithId() {
         final UserEntity savedUser = userRepository.save(createDefaultUserEntity());
-        playerPermissionController.post(savedUser.getId());
+        playerPermissionController.post(createModificationDtoWithId(savedUser.getId()));
 
         final Iterable<PlayerPermissionEntity> all = playerPermissionRepository.findAll();
         assertTrue(all.iterator().hasNext());
@@ -37,9 +36,33 @@ public class PlayerPermissionControllerTest extends ControllerTest {
     }
 
     @Test
-    public void postUserDoesNotExist() {
+    public void postWithName() {
+        final UserEntity savedUser = userRepository.save(createDefaultUserEntity());
+        playerPermissionController.post(createModificationDtoWithUserName(savedUser.getName()));
+
+        final Iterable<PlayerPermissionEntity> all = playerPermissionRepository.findAll();
+        assertTrue(all.iterator().hasNext());
+
+        final PlayerPermissionEntity entity = all.iterator().next();
+        assertEquals(LOGIN_ID, entity.getUserId());
+        assertEquals(savedUser.getId(), entity.getPermittedUserId());
+    }
+
+    @Test
+    public void postWithIdUserDoesNotExist() {
         try {
-            playerPermissionController.post("gibtsnicht");
+            playerPermissionController.post(createModificationDtoWithId("gibtsnicht"));
+            fail("Exception expected");
+        } catch (final UserNotFoundException e) {
+            final Iterable<PlayerPermissionEntity> all = playerPermissionRepository.findAll();
+            assertFalse(all.iterator().hasNext());
+        }
+    }
+
+    @Test
+    public void postWithUserNameUserDoesNotExist() {
+        try {
+            playerPermissionController.post(createModificationDtoWithUserName("gibtsnicht"));
             fail("Exception expected");
         } catch (final UserNotFoundException e) {
             final Iterable<PlayerPermissionEntity> all = playerPermissionRepository.findAll();
@@ -53,7 +76,7 @@ public class PlayerPermissionControllerTest extends ControllerTest {
         savePlayerPermission(LOGIN_ID, savedUser.getId());
 
         try {
-            playerPermissionController.post(savedUser.getId());
+            playerPermissionController.post(createModificationDtoWithId(savedUser.getId()));
             fail("Exception expected");
         } catch (final PermissionAlreadyGrantedException e) {
             final List<PlayerPermissionEntity> all = (List<PlayerPermissionEntity>) playerPermissionRepository.findAll();
@@ -62,14 +85,28 @@ public class PlayerPermissionControllerTest extends ControllerTest {
     }
 
     @Test
-    public void delete() {
+    public void deleteWithId() {
         final UserEntity savedUser = userRepository.save(createDefaultUserEntity());
         savePlayerPermission(LOGIN_ID, savedUser.getId());
 
         final Iterable<PlayerPermissionEntity> allBefore = playerPermissionRepository.findAll();
         assertTrue(allBefore.iterator().hasNext());
 
-        playerPermissionController.delete(savedUser.getId());
+        playerPermissionController.delete(createModificationDtoWithId(savedUser.getId()));
+
+        final Iterable<PlayerPermissionEntity> allAfter = playerPermissionRepository.findAll();
+        assertFalse(allAfter.iterator().hasNext());
+    }
+
+    @Test
+    public void deleteWithUsername() {
+        final UserEntity savedUser = userRepository.save(createDefaultUserEntity());
+        savePlayerPermission(LOGIN_ID, savedUser.getId());
+
+        final Iterable<PlayerPermissionEntity> allBefore = playerPermissionRepository.findAll();
+        assertTrue(allBefore.iterator().hasNext());
+
+        playerPermissionController.delete(createModificationDtoWithUserName(savedUser.getName()));
 
         final Iterable<PlayerPermissionEntity> allAfter = playerPermissionRepository.findAll();
         assertFalse(allAfter.iterator().hasNext());
@@ -132,5 +169,17 @@ public class PlayerPermissionControllerTest extends ControllerTest {
         playerPermissionEntity.setUserId(userId);
         playerPermissionEntity.setPermittedUserId(idToPermit);
         playerPermissionRepository.save(playerPermissionEntity);
+    }
+
+    private PlayerPermissionModificationDto createModificationDtoWithId(final String permittedId){
+        final PlayerPermissionModificationDto modificationDto = new PlayerPermissionModificationDto();
+        modificationDto.setPermittedId(permittedId);
+        return modificationDto;
+    }
+
+    private PlayerPermissionModificationDto createModificationDtoWithUserName(final String name){
+        final PlayerPermissionModificationDto modificationDto = new PlayerPermissionModificationDto();
+        modificationDto.setPermittedUsername(name);
+        return modificationDto;
     }
 }

@@ -30,14 +30,13 @@ class Game extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props.players !== prevProps.players) {
-            this.setState({rematchStartingPlayer: this.props.players[1]});
+        if (this.props.players !== prevProps.players
+            || this.props.winner !== prevProps.winner) {
+            this.setState({
+                rematchStartingPlayer: this.props.players[1],
+                gameFinishedModalShow: this.props.winner !== undefined
+            });
         }
-    }
-
-    //TODO in componentDidUpdate verschieben
-    static getDerivedStateFromProps(props, state) {
-        return {gameFinishedModalShow: props.winner !== undefined};
     }
 
     handleRematchStartingPlayerChanged(player) {

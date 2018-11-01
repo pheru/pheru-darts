@@ -1,5 +1,7 @@
 import {fetchGet, fetchPost} from "../services/fetchService";
 import {getConfig} from "../services/configService";
+import {fetchPermittedUsers, fetchPlayableUsers} from "./playerPermission";
+import {showError} from "./errors";
 
 export const SHOW_LOGIN_MODAL = "SHOW_LOGIN_MODAL";
 export const HIDE_LOGIN_MODAL = "HIDE_LOGIN_MODAL";
@@ -77,14 +79,20 @@ export const signUpFailed = (message) => ({
 export function signUp(name, password) {
     return function (dispatch) {
         dispatch(requestSignUp());
-        return fetchPost(getConfig().signUpUrl,
+        return fetchPost(getConfig().resourceUrls.user,
             {name, password},
             json => {
                 dispatch(signUpSuccessful());
                 dispatch(login(name, password));
             },
-            responseNotOk => dispatch(signUpFailed(responseNotOk.message)),
-            error => dispatch(signUpFailed(error))
+            responseNotOk => {
+                dispatch(signUpFailed(responseNotOk.message));
+                dispatch(showError("Sign-up failed", responseNotOk.message));
+            },
+            error => {
+                dispatch(signUpFailed(error.message));
+                dispatch(showError("Sign-up failed", error.message));
+            }
         );
     };
 }
@@ -98,8 +106,14 @@ export function login(name, password) {
                 dispatch(loginSuccessful());
                 dispatch(loginByToken());
             },
-            responseNotOk => dispatch(loginFailed(responseNotOk.message)),
-            error => dispatch(loginFailed(error))
+            responseNotOk => {
+                dispatch(loginFailed(responseNotOk.message));
+                dispatch(showError("Login failed", responseNotOk.message));
+            },
+            error => {
+                dispatch(loginFailed(error.message));
+                dispatch(showError("Login failed", error.message));
+            }
         );
     };
 }
@@ -107,10 +121,20 @@ export function login(name, password) {
 export function loginByToken() {
     return function (dispatch) {
         dispatch(requestLoginByToken());
-        return fetchGet(getConfig().resourceUrls.users + "/current",
-            json => dispatch(loginByTokenSuccessful(json)),
-            responseNotOk => dispatch(loginByTokenFailed()),
-            error => dispatch(loginByTokenFailed())
+        return fetchGet(getConfig().resourceUrls.user,
+            json => {
+                dispatch(loginByTokenSuccessful(json));
+                dispatch(fetchPlayableUsers());
+                dispatch(fetchPermittedUsers());
+            },
+            responseNotOk => {
+                dispatch(loginByTokenFailed());
+                dispatch(showError("Login failed", responseNotOk.message));
+            },
+            error => {
+                dispatch(loginByTokenFailed());
+                dispatch(showError("Login failed", error.message));
+            }
         );
     };
 }
@@ -120,8 +144,14 @@ export function logout() {
         dispatch(requestLogout());
         return fetchGet(getConfig().logoutUrl,
             json => dispatch(logoutSuccessful()),
-            responseNotOk => dispatch(logoutFailed()),
-            error => dispatch(logoutFailed())
+            responseNotOk => {
+                dispatch(logoutFailed());
+                dispatch(showError("Logout failed", responseNotOk.message));
+            },
+            error => {
+                dispatch(logoutFailed());
+                dispatch(showError("Logout failed", error.message));
+            }
         );
     };
 }

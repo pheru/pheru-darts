@@ -1,0 +1,23 @@
+.navbar-login-loader {
+    position: absolute;
+    height: 4px;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 10px;
+    background-color: #ddd;
+}
+.navbar-login-loader:before{
+    display: block;
+    position: absolute;
+    content: "";
+    left: -50px;
+    width: 25px;
+    height: 4px;
+    background-color: #2980b9;
+    animation: navbar-login-loading 0.8s linear infinite;
+}
+
+@keyframes navbar-login-loading {
+    from {left: -50px}
+    to {left: 100%;}
+}

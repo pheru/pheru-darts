@@ -22,9 +22,7 @@ function user(state = {
     isLoggedIn: false,
     isLoggingIn: false,
     isLoggingOut: false,
-    isSigningUp: false,
-    loginFailedMessage: undefined,
-    signUpFailedMessage: undefined
+    isSigningUp: false
 }, action) {
     switch (action.type) {
         case SHOW_LOGIN_MODAL:
@@ -56,14 +54,12 @@ function user(state = {
             return {
                 ...state,
                 isLoggingIn: false,
-                showLoginModal: false,
-                loginFailedMessage: undefined
+                showLoginModal: false
             };
         case LOGIN_FAILED:
             return {
                 ...state,
-                isLoggingIn: false,
-                loginFailedMessage: action.message
+                isLoggingIn: false
             };
         case REQUEST_LOGIN_BY_TOKEN:
             return {
@@ -116,14 +112,12 @@ function user(state = {
             return {
                 ...state,
                 isSigningUp: false,
-                showSignUpModal: false,
-                signUpFailedMessage: undefined
+                showSignUpModal: false
             };
         case SIGNUP_FAILED:
             return {
                 ...state,
-                isSigningUp: false,
-                signUpFailedMessage: action.message
+                isSigningUp: false
             };
         default:
             return state

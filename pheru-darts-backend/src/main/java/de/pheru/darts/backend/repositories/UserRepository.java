@@ -10,14 +10,12 @@ public interface UserRepository extends CrudRepository<UserEntity, String> {
 
     UserEntity findById(final String id);
 
+    // TODO sollte nicht nötig sein, da Hashkey; ohne kommt aber Exception
+    @EnableScan
     List<UserEntity> findByIdIn(final List<String> ids);
 
     UserEntity findByName(final String name);
 
     void deleteById(final String id);
-
-    @Override
-    @EnableScan
-    List<UserEntity> findAll();
 
 }

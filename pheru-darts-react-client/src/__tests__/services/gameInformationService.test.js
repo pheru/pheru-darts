@@ -1,5 +1,5 @@
-import {DOUBLE_OUT, SINGLE_OUT} from "../constants/checkoutModes";
-import getTurnInformation from "../services/gameInformationService";
+import {DOUBLE_OUT, SINGLE_OUT} from "../../constants/checkoutModes";
+import getTurnInformation from "../../services/gameInformationService";
 
 describe('gameInformationService', () => {
 
@@ -152,7 +152,7 @@ describe('gameInformationService', () => {
         expect(turnInfo.turnInformation.previous.dartIndex).toEqual(2);
     });
 
-    it('getTurnInformation checkout fehlgeschlagen da singleout', () => {
+    it('getTurnInformation checkout singleout mit double', () => {
         let players = defaultPlayers();
         players[0].aufnahmen = [
             [{value: 20, multiplier: 3}, {value: 1, multiplier: 1}, {value: 20, multiplier: 2}]
@@ -161,11 +161,11 @@ describe('gameInformationService', () => {
 
         let turnInfo = getTurnInformation(players, 101, SINGLE_OUT);
 
-        expect(turnInfo.playerInformation[0].score).toEqual(101);
+        expect(turnInfo.playerInformation[0].score).toEqual(0);
         expect(turnInfo.playerInformation[1].score).toEqual(101);
         expect(turnInfo.playerInformation[0].dartCount).toEqual(3);
         expect(turnInfo.playerInformation[1].dartCount).toEqual(0);
-        expect(turnInfo.playerInformation[0].average).toEqual("0.00");
+        expect(turnInfo.playerInformation[0].average).toEqual("101.00");
         expect(turnInfo.playerInformation[1].average).toEqual("0.00");
 
         expect(turnInfo.turnInformation.current.playerIndex).toEqual(1);

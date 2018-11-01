@@ -1,4 +1,9 @@
-import {sortDartDataByScoreDesc, sortGameDataByOpponentAsc, sortPlayerByNameAsc} from "../../services/sortService";
+import {
+    sortDartDataByScoreBoardOrder,
+    sortDartDataByScoreDesc,
+    sortGameDataByOpponentAsc,
+    sortPlayerByNameAsc
+} from "../../services/sortService";
 
 describe('sortService', () => {
 
@@ -42,6 +47,36 @@ describe('sortService', () => {
         expect(dartData[4].score).toEqual("12");
         expect(dartData[5].score).toEqual("3");
         expect(dartData[6].score).toEqual("1");
+    });
+
+    it('sortDartDataByScoreBoardOrder', () => {
+        let dartData = [];
+        for (let i = 1; i <= 20; i++) {
+            dartData.push(createDartData("" + i));
+        }
+
+        dartData.sort(sortDartDataByScoreBoardOrder);
+
+        expect(dartData[0].score).toEqual("20");
+        expect(dartData[1].score).toEqual("1");
+        expect(dartData[2].score).toEqual("18");
+        expect(dartData[3].score).toEqual("4");
+        expect(dartData[4].score).toEqual("13");
+        expect(dartData[5].score).toEqual("6");
+        expect(dartData[6].score).toEqual("10");
+        expect(dartData[7].score).toEqual("15");
+        expect(dartData[8].score).toEqual("2");
+        expect(dartData[9].score).toEqual("17");
+        expect(dartData[10].score).toEqual("3");
+        expect(dartData[11].score).toEqual("19");
+        expect(dartData[12].score).toEqual("7");
+        expect(dartData[13].score).toEqual("16");
+        expect(dartData[14].score).toEqual("8");
+        expect(dartData[15].score).toEqual("11");
+        expect(dartData[16].score).toEqual("14");
+        expect(dartData[17].score).toEqual("9");
+        expect(dartData[18].score).toEqual("12");
+        expect(dartData[19].score).toEqual("5");
     });
 
     it('sortGameDataByOpponentAsc', () => {

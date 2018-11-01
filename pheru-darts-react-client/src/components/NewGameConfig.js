@@ -2,20 +2,20 @@ import React from 'react'
 import {
     Button,
     Col,
-    Dropdown,
-    FormControl,
     Glyphicon,
     Grid,
-    MenuItem,
+    OverlayTrigger,
     Row,
     ToggleButton,
-    ToggleButtonGroup
+    ToggleButtonGroup,
+    Tooltip
 } from "react-bootstrap";
 import {ALL_MODES, DOUBLE_OUT} from "../constants/checkoutModes";
 import {LinkContainer} from "react-router-bootstrap";
 import ConfirmModal from "./modals/ConfirmModal";
 import {GAME_ROUTE} from "../constants/routes";
-import {ScaleLoader} from "react-spinners";
+import DropdownTextfield from "./DropdownTextfield";
+import PropTypes from "prop-types";
 
 class NewGameConfig extends React.Component {
 
@@ -50,6 +50,27 @@ class NewGameConfig extends React.Component {
         this.onStartNewGameButtonClicked = this.onStartNewGameButtonClicked.bind(this);
         this.startNewGame = this.startNewGame.bind(this);
         this.hideNewGameModal = this.hideNewGameModal.bind(this);
+        this.playerIconFactory = this.playerIconFactory.bind(this);
+    }
+
+    componentDidUpdate(prevProps) {
+        if ((prevProps.isFetchingUsers && !this.props.isFetchingUsers)
+            || (prevProps.isLoggedIn && !this.props.isLoggedIn)) {
+            // Damit die ID richtig ergänzt wird, wenn User geladen wurden bzw.
+            // entfernt werden, wenn nicht mehr eingeloggt
+            let selected = this.state.selectedPlayers.slice();
+            for (let i = 0; i < selected.length; i++) {
+                let playableUser = this.getPlayableUserByName(selected[i].name);
+                if (playableUser) {
+                    selected[i] = playableUser;
+                } else {
+                    selected[i] = {name: selected[i].name};
+                }
+                this.setState({
+                    selectedPlayers: selected
+                });
+            }
+        }
     }
 
     componentWillUnmount() {
@@ -79,10 +100,11 @@ class NewGameConfig extends React.Component {
 
     handleUnregisteredUserChange(selectedPlayerIndex, value) {
         let selected = this.state.selectedPlayers.slice();
-        if (value) {
-            selected[selectedPlayerIndex] = {id: -1, name: value};
+        let playableUser = this.getPlayableUserByName(value);
+        if (playableUser) {
+            selected[selectedPlayerIndex] = playableUser;
         } else {
-            selected[selectedPlayerIndex] = {name: ""};
+            selected[selectedPlayerIndex] = {name: value};
         }
         this.setState({
             selectedPlayers: selected
@@ -107,7 +129,7 @@ class NewGameConfig extends React.Component {
     onStartNewGameButtonClicked(e) {
         let allPlayersChosen = true;
         for (let i = 0; i < this.state.selectedPlayers.length; i++) {
-            if (this.state.selectedPlayers[i].id === undefined) {
+            if (this.state.selectedPlayers[i].id === undefined && this.state.selectedPlayers[i].name === "") {
                 allPlayersChosen = false;
                 break;
             }
@@ -133,52 +155,70 @@ class NewGameConfig extends React.Component {
         this.props.history.push(GAME_ROUTE);
     }
 
+    playerIconFactory(playerName) {
+        if (!this.props.isLoggedIn || !playerName || this.props.isFetchingUsers) {
+            return null;
+        }
+        if (this.getPlayableUserByName(playerName)) {
+            return <Glyphicon glyph='ok' style={{color: 'green'}}/>;
+        }
+        return <OverlayTrigger placement='bottom'
+                               overlay={<Tooltip id="tooltip">
+                                   Dieser Spieler ist entweder kein registrierter Benutzer oder Du bist nicht berechtigt worden, ein Spiel mit ihm zu erstellen.<br/>
+                                   In den Statistiken wird dieser Spieler als "Unregistrierter Benutzer" gelistet.
+                               </Tooltip>}>
+            <Glyphicon glyph='exclamation-sign' style={{color: 'orange'}}/>
+        </OverlayTrigger>;
+    }
+
+    getPlayableUserByName(name) {
+        for (let i = 0; i < this.props.playableUsers.length; i++) {
+            if (this.props.playableUsers[i].name === name) {
+                return this.props.playableUsers[i];
+            }
+        }
+        return null;
+    }
+
     render() {
         return <div>
             <Grid>
                 <Row className="show-grid text-center">
-                    <Col xs={12} sm={2} style={this.colStyle}>
-                        <h3 style={{margin: 0}}>Spieler: </h3>
-                    </Col>
-                    <Col xs={12} sm={4} style={this.colStyle}>
-                        {this.props.isFetchingUsers ? <ScaleLoader height={25}/> : this.createPlayerDropDown(1)}
+                    <Col xs={12} sm={5} style={this.colStyle}>
+                        <DropdownTextfield id="player-1-dropdown" placeholder="Spieler 1"
+                                           value={this.state.selectedPlayers[0].name}
+                                           choices={this.props.playableUsers}
+                                           dropdownPropertyName='name'
+                                           style={{width: '100%'}}
+                                           iconFactory={this.playerIconFactory}
+                                           onDropdownClick={(newValue) => this.changeSelectedPlayer(0, newValue)}
+                                           onInputChange={(newValue) => this.handleUnregisteredUserChange(0, newValue)}/>
                     </Col>
                     <Col xs={6} xsOffset={3} sm={2} smOffset={0} style={this.colStyleButton}>
-                        <Button block bsStyle="primary" onClick={this.swapPlayerSelection}
-                                disabled={this.props.isFetchingUsers}>
+                        <Button block bsStyle="primary" onClick={this.swapPlayerSelection}>
                             <Glyphicon glyph="transfer"/>
                         </Button>
                     </Col>
-                    <Col xs={12} sm={4} style={this.colStyle}>
-                        {this.props.isFetchingUsers ? <ScaleLoader height={25}/> : this.createPlayerDropDown(2)}
+                    <Col xs={12} sm={5} style={this.colStyle}>
+                        <DropdownTextfield id="player-1-dropdown" placeholder="Spieler 2"
+                                           value={this.state.selectedPlayers[1].name}
+                                           choices={this.props.playableUsers}
+                                           dropdownPropertyName='name'
+                                           style={{width: '100%'}}
+                                           iconFactory={this.playerIconFactory}
+                                           onDropdownClick={(newValue) => this.changeSelectedPlayer(1, newValue)}
+                                           onInputChange={(newValue) => this.handleUnregisteredUserChange(1, newValue)}/>
                     </Col>
                 </Row>
                 <Row className="show-grid  text-center">
-                    <Col xs={12} sm={2} style={this.colStyle}>
-                        <h3 style={{margin: 0}}>Punkte: </h3>
-                    </Col>
-                    <Col xs={12} sm={10} style={this.colStyle}>
-                        <Dropdown style={{display: 'inline-flex'}} id={"score_dropdown"}>
-                            <FormControl type="text" value={this.state.score}
-                                         onChange={(e) => this.handleScoreChange(parseInt(e.target.value, 10))}
-                                         style={{borderTopRightRadius: 0, borderBottomRightRadius: 0}}/>
-                            <Dropdown.Toggle style={{borderLeftWidth: 0}}/>
-                            <Dropdown.Menu style={{minWidth: '100%', textAlign: 'center'}}>
-                                {this.scoreChoices.map(score =>
-                                    <MenuItem key={"scoreChoice_" + score}
-                                              onClick={() => this.handleScoreChange(score)}>
-                                        {score}
-                                    </MenuItem>
-                                )}
-                            </Dropdown.Menu>
-                        </Dropdown>
+                    <Col xs={12} sm={12} style={this.colStyle}>
+                        <DropdownTextfield id="score-dropdown" value={this.state.score} choices={this.scoreChoices}
+                                           onDropdownClick={(newValue) => this.handleScoreChange(newValue)}
+                                           onInputChange={(newValue) => this.handleScoreChange(parseInt(newValue, 10))}/>
                     </Col>
                 </Row>
                 <Row className="show-grid  text-center">
-                    <Col xs={12} sm={2} style={this.colStyle}>
-                        <h3 style={{margin: 0}}>Check-Out: </h3>
-                    </Col>
-                    <Col xs={12} sm={10} style={this.colStyle}>
+                    <Col xs={12} sm={12} style={this.colStyle}>
                         <ToggleButtonGroup type="radio" name="options" defaultValue={this.state.checkOutMode}
                                            onChange={this.handleCheckOutModeChange}>
                             {ALL_MODES.map(mode =>
@@ -192,7 +232,6 @@ class NewGameConfig extends React.Component {
                         <LinkContainer to={GAME_ROUTE}>
                             <Button bsStyle="primary" bsSize="large" block
                                     onClick={this.onStartNewGameButtonClicked}
-                                    disabled={this.props.isFetchingUsers}
                             >Neues Spiel starten</Button>
                         </LinkContainer>
                     </Col>
@@ -203,30 +242,17 @@ class NewGameConfig extends React.Component {
                           onCancel={this.hideNewGameModal}/>
         </div>
     }
-
-    createPlayerDropDown(playerNumber) {
-        if (this.props.fetchAllUsersFailed || !this.props.isLoggedIn) {
-            return <FormControl type="text" placeholder={"Spieler " + playerNumber}
-                                value={this.state.selectedPlayers[playerNumber - 1].name}
-                                onChange={(e) => this.handleUnregisteredUserChange(playerNumber - 1, e.target.value)}/>
-        }
-        return <Dropdown id={"playerDropdown_" + playerNumber} block vertical>
-            <Dropdown.Toggle>
-                {this.state.selectedPlayers[playerNumber - 1].name
-                    ? this.state.selectedPlayers[playerNumber - 1].name
-                    : "[Spieler " + playerNumber + "]"
-                }
-            </Dropdown.Toggle>
-            <Dropdown.Menu style={{minWidth: '100%', textAlign: 'center'}}>
-                {this.props.playableUsers.map(player =>
-                    <MenuItem key={playerNumber + "_" + player.id}
-                              onClick={() => this.changeSelectedPlayer(playerNumber - 1, player)}>{player.name}</MenuItem>
-                )}
-            </Dropdown.Menu>
-        </Dropdown>
-    }
 }
 
-NewGameConfig.propTypes = {};
+NewGameConfig.propTypes = {
+    initialState: PropTypes.object,
+    isLoggedIn: PropTypes.bool.isRequired,
+    playableUsers: PropTypes.array.isRequired,
+    gameRunning: PropTypes.bool.isRequired,
+    fetchAllUsersFailed: PropTypes.bool.isRequired,
+    isFetchingUsers: PropTypes.bool.isRequired,
+    startNewGame: PropTypes.func.isRequired,
+    memorizeState: PropTypes.func.isRequired
+};
 
 export default NewGameConfig

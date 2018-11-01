@@ -10,77 +10,99 @@ import {
     REQUEST_UPDATE_PLAYER_PERMISSION,
     UPDATE_PLAYER_PERMISSION_FAILED
 } from "../actions/playerPermission";
+import {LOGOUT_SUCCESSFUL} from "../actions/user";
 
 function playerPermission(state = {
+    playableUsers: [],
     isFetchingPlayableUsers: false,
+    fetchPlayableUsersFailed: false,
+
+    permittedUsers: [],
     isFetchingPermittedUsers: false,
-    playableUserIds: [],
-    permittedUserIds: [],
-    isUpdatingPlayerPermission: false
+    fetchPermittedUsersFailed: false,
+
+    isUpdatingPlayerPermission: false,
+    updatePlayerPermissionFailed: false
 }, action) {
     switch (action.type) {
         case REQUEST_FETCH_PLAYABLE_USERS:
             return {
                 ...state,
-                isFetchingPlayableUsers: true
+                isFetchingPlayableUsers: true,
+                fetchPlayableUsersFailed: false
             };
         case FETCH_PLAYABLE_USERS_SUCCESSFUL:
             return {
                 ...state,
                 isFetchingPlayableUsers: false,
-                playableUserIds: action.userIds
+                fetchPlayableUsersFailed: false,
+                playableUsers: action.users
             };
         case FETCH_PLAYABLE_USERS_FAILED:
             return {
                 ...state,
                 isFetchingPlayableUsers: false,
-                playableUserIds: []
+                fetchPlayableUsersFailed: true,
+                playableUsers: []
             };
         case REQUEST_FETCH_PERMITTED_USERS:
             return {
                 ...state,
-                isFetchingPermittedUsers: true
+                isFetchingPermittedUsers: true,
+                fetchPermittedUsersFailed: false
             };
         case FETCH_PERMITTED_USERS_SUCCESSFUL:
             return {
                 ...state,
                 isFetchingPermittedUsers: false,
-                permittedUserIds: action.userIds
+                fetchPermittedUsersFailed: false,
+                permittedUsers: action.users
             };
         case FETCH_PERMITTED_USERS_FAILED:
             return {
                 ...state,
                 isFetchingPermittedUsers: false,
-                permittedUserIds: []
+                fetchPermittedUsersFailed: true,
+                permittedUsers: []
             };
         case REQUEST_UPDATE_PLAYER_PERMISSION:
             return {
                 ...state,
-                isUpdatingPlayerPermission: true
+                isUpdatingPlayerPermission: true,
+                updatePlayerPermissionFailed: false
             };
         case ADD_PLAYER_PERMISSION_SUCCESSFUL:
-            let permittedUserIdsAfterAdd = state.permittedUserIds.slice();
-            permittedUserIdsAfterAdd.push(action.changedUserId);
+            let permittedUsersAfterAdd = state.permittedUsers.slice();
+            permittedUsersAfterAdd.push(action.changedUser);
             return {
                 ...state,
                 isUpdatingPlayerPermission: false,
-                permittedUserIds: permittedUserIdsAfterAdd
+                updatePlayerPermissionFailed: false,
+                permittedUsers: permittedUsersAfterAdd
             };
         case REMOVE_PLAYER_PERMISSION_SUCCESSFUL:
-            let permittedUserIdsAfterRemove = state.permittedUserIds.slice();
-            let indexToRemove = permittedUserIdsAfterRemove.indexOf(action.changedUserId);
+            let permittedUsersAfterRemove = state.permittedUsers.slice();
+            let indexToRemove = permittedUsersAfterRemove.map(user => user.id).indexOf(action.changedUserId);
             if (indexToRemove !== -1) {
-                permittedUserIdsAfterRemove.splice(indexToRemove, 1);
+                permittedUsersAfterRemove.splice(indexToRemove, 1);
             }
             return {
                 ...state,
                 isUpdatingPlayerPermission: false,
-                permittedUserIds: permittedUserIdsAfterRemove
+                updatePlayerPermissionFailed: false,
+                permittedUsers: permittedUsersAfterRemove
             };
         case UPDATE_PLAYER_PERMISSION_FAILED:
             return {
                 ...state,
-                isUpdatingPlayerPermission: false //TODO Fehlerbehandlung
+                isUpdatingPlayerPermission: false,
+                updatePlayerPermissionFailed: true
+            };
+        case LOGOUT_SUCCESSFUL:
+            return {
+                ...state,
+                playableUsers: [],
+                permittedUsers: []
             };
         default:
             return state

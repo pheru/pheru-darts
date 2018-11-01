@@ -1,5 +1,8 @@
 import React from 'react'
-import {Alert, Button, FormControl, Glyphicon, Table, Well} from "react-bootstrap";
+import {Alert, Button, FormControl, Glyphicon, OverlayTrigger, Table, Tooltip, Well} from "react-bootstrap";
+import {ifEnterKey} from "../util/functionUtil";
+import PropTypes from "prop-types";
+import StackLoader from "./loaders/StackLoader";
 
 class Settings extends React.Component {
 
@@ -11,47 +14,68 @@ class Settings extends React.Component {
             newPassword: "",
             passwordRepeat: "",
             passwordsMatch: true,
-            playersInformation: Settings.mapUsers(this.props)
+            userNameToPermit: "",
+            permitButtonDisabled: true,
+            playersInformation: Settings.mergeUsers(this.props.playableUsers, this.props.permittedUsers)
         };
         this.handleNameChange = this.handleNameChange.bind(this);
+        this.handleUserNameToPermitChange = this.handleUserNameToPermitChange.bind(this);
         this.handleCurrentPasswordChange = this.handleCurrentPasswordChange.bind(this);
         this.handleNewPasswordChange = this.handleNewPasswordChange.bind(this);
         this.handlePasswordRepeatChange = this.handlePasswordRepeatChange.bind(this);
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props.userName !== prevProps.userName) {
-            this.setState({name: this.props.userName});
+        if (this.props.userName !== prevProps.userName
+            || this.props.permittedUsers !== prevProps.permittedUsers
+            || this.props.playableUsers !== prevProps.playableUsers
+        ) {
+            this.setState({
+                name: this.props.userName !== undefined ? this.props.userName : "",
+                playersInformation: Settings.mergeUsers(this.props.playableUsers, this.props.permittedUsers)
+            });
         }
     }
 
-    //TODO besser in componentDidUpdate
-    static getDerivedStateFromProps(props, state) {
-        return {playersInformation: Settings.mapUsers(props)};
-    }
-
-    static mapUsers(props) {
-        return props.users.map(user => (
+    static mergeUsers(playableUsers, permittedUsers) {
+        let playerInformation = playableUsers.map(user => (
             {
                 id: user.id,
                 name: user.name,
-                playable: Settings.isUserInList(user, props.playableUsers),
-                authorized: Settings.isUserInList(user, props.authorizedUsers)
+                playable: true,
+                permitted: false
             }
         ));
-    }
-
-    static isUserInList(user, userList) {
-        for (let i = 0; i < userList.length; i++) {
-            if (userList[i].id === user.id) {
-                return true;
+        for (let i = 0; i < permittedUsers.length; i++) {
+            let userInPlayableFound = false;
+            for (let j = 0; j < playerInformation.length; j++) {
+                if (permittedUsers[i].id === playerInformation[j].id) {
+                    playerInformation[j].permitted = true;
+                    userInPlayableFound = true;
+                }
+            }
+            if (!userInPlayableFound) {
+                playerInformation.push({
+                    id: permittedUsers[i].id,
+                    name: permittedUsers[i].name,
+                    playable: false,
+                    permitted: true
+                });
             }
         }
-        return false;
+        return playerInformation;
     }
 
     handleNameChange(value) {
         this.setState({name: value});
+    }
+
+    handleUserNameToPermitChange(value) {
+        let buttonDisabled = value === undefined || value === null || value === "";
+        this.setState({
+            userNameToPermit: value,
+            permitButtonDisabled: buttonDisabled
+        });
     }
 
     handleNewPasswordChange(value) {
@@ -72,10 +96,10 @@ class Settings extends React.Component {
         return <div>
             {this.props.isLoggedIn
                 ? this.createUserSettings()
-                : <Alert bsStyle="warning" style={{marginLeft: 15, marginRight: 15, marginBottom: 5}}>
-                    <Glyphicon glyph="exclamation-sign"/> <strong>Einstellungen können nur von angemeldeten Benutzern
-                    vorgenommen werden </strong>
-                    <Button bsStyle="primary" onClick={this.props.showLogin}><Glyphicon
+                : <Alert bsStyle="warning" style={{marginLeft: 15, marginRight: 15, marginBottom: 5, textAlign:'center'}}>
+                    <strong>Einstellungen können nur von angemeldeten Benutzern vorgenommen werden</strong>
+                    <br/>
+                    <Button style={{marginTop: 10}} bsStyle="primary" onClick={this.props.showLogin}><Glyphicon
                         glyph="log-in"/> Anmelden</Button>
                 </Alert>
             }
@@ -83,62 +107,72 @@ class Settings extends React.Component {
     }
 
     createUserSettings() {
-        return <div>
+        return <div style={{textAlign: 'center'}}>
             {/*<div style={{marginBottom: 50}}>*/}
-            <div>
-                <h3 style={{marginLeft: 10, marginRight: 10}}><strong>Benutzer-Einstellungen</strong></h3>
-                <Alert bsStyle="warning" style={{marginLeft: 15, marginRight: 15, marginBottom: 5}}>
-                    <Glyphicon glyph="exclamation-sign"/> <strong>Ändern von Benutzer-Einstellungen noch nicht möglich</strong>
-                </Alert>
-                <div style={{marginLeft: 20, marginRight: 20}}>
-                    <strong>Benutzername ändern: </strong>
-                    <FormControl style={{marginBottom: 5, width: 300}} type="text"
-                                 value={this.state.name}
-                                 onChange={(e) => this.handleNameChange(e.target.value)}
-                                 placeholder="Benutzername" autoFocus/>
-                    <strong>Passwort ändern: </strong>
-                    <FormControl style={{marginBottom: 5, width: 300}} type="password"
-                                 value={this.state.currentPassword}
-                                 onChange={(e) => this.handleCurrentPasswordChange(e.target.value)}
-                                 placeholder="Aktuelles Passwort"/>
-                    <FormControl style={{marginBottom: 5, width: 300}} type="password"
-                                 value={this.state.newPassword}
-                                 onChange={(e) => this.handleNewPasswordChange(e.target.value)}
-                                 placeholder="Neues Passwort"/>
-                    <FormControl style={{marginBottom: 5, width: 300}} type="password"
-                                 value={this.state.passwordRepeat}
-                                 onChange={(e) => this.handlePasswordRepeatChange(e.target.value)}
-                                 placeholder="Neues Passwort wiederholen"/>
-                    <Button bsStyle="primary" disabled={true}>Änderungen speichern</Button>
-                    <p/>
-                    <strong>Benutzer löschen: </strong>
-                    <p/>
-                    <div style={{color: "#d9534f"}}>
-                        <Glyphicon glyph="alert"/> Dieser Vorgang kann nicht rückgängig gemacht werden <Glyphicon glyph="alert"/>
-                    </div>
-                    <FormControl style={{marginBottom: 5, width: 300}} type="password"
-                        // value={this.state.password}
-                        // onChange={(e) => this.handlePasswordChange(e.target.value)}
-                                 placeholder="Passwort bestätigen"/>
-                    <Button bsStyle="danger" disabled={true}>Benutzer löschen</Button>
-                </div>
-                <h3 style={{marginLeft: 10, marginRight: 10}}><strong>Spieler-Berechtigungen</strong></h3>
-                <div style={{marginLeft: 20, marginRight: 20}}>
-                    <p><strong>Hier kannst du sehen, welche Spieler dir erlaubt haben ein Spiel mit ihnen zu
-                        erstellen.</strong></p>
-                    <p><strong>Außerdem kannst du hier andere Spieler berechtigen, ein Spiel mit dir zu
-                        erstellen.</strong></p>
-                </div>
-                {this.createAuthorizationTable()}
-            </div>
-            {/*<div style={{position:'fixed', bottom: 0, width:'100%', background:'#222', textAlign:'right'}}>*/}
-            {/*<Button bsStyle="primary" disabled={true} style={{margin:5}}>Änderungen Speichern</Button>*/}
+            {/*<h3 style={{marginLeft: 10, marginRight: 10}}><strong>Benutzer-Einstellungen</strong></h3>*/}
+            {/*<Alert bsStyle="warning" style={{marginLeft: 15, marginRight: 15, marginBottom: 5}}>*/}
+            {/*<Glyphicon glyph="exclamation-sign"/> <strong>Ändern von Benutzer-Einstellungen noch nicht*/}
+            {/*möglich</strong>*/}
+            {/*</Alert>*/}
+            {/*<div style={{marginLeft: 20, marginRight: 20}}>*/}
+            {/*<strong>Benutzername ändern: </strong>*/}
+            {/*<FormControl style={{marginBottom: 5, width: 300}} type="text"*/}
+            {/*value={this.state.name}*/}
+            {/*onChange={(e) => this.handleNameChange(e.target.value)}*/}
+            {/*placeholder="Benutzername"/>*/}
+            {/*<strong>Passwort ändern: </strong>*/}
+            {/*<FormControl style={{marginBottom: 5, width: 300}} type="password"*/}
+            {/*value={this.state.currentPassword}*/}
+            {/*onChange={(e) => this.handleCurrentPasswordChange(e.target.value)}*/}
+            {/*placeholder="Aktuelles Passwort"/>*/}
+            {/*<FormControl style={{marginBottom: 5, width: 300}} type="password"*/}
+            {/*value={this.state.newPassword}*/}
+            {/*onChange={(e) => this.handleNewPasswordChange(e.target.value)}*/}
+            {/*placeholder="Neues Passwort"/>*/}
+            {/*<FormControl style={{marginBottom: 5, width: 300}} type="password"*/}
+            {/*value={this.state.passwordRepeat}*/}
+            {/*onChange={(e) => this.handlePasswordRepeatChange(e.target.value)}*/}
+            {/*placeholder="Neues Passwort wiederholen"/>*/}
+            {/*<Button bsStyle="primary" disabled={true}>Änderungen speichern</Button>*/}
+            {/*<p/><strong>Benutzer löschen: </strong><p/>*/}
+            {/*/!*TODO in Alert auslagern (Hinweis (inklusive Löschen von Statistiken) und PW-Bestätigung)*!/*/}
+            {/*<div style={{color: "#d9534f"}}>*/}
+            {/*<Glyphicon glyph="alert"/> Dieser Vorgang kann nicht rückgängig gemacht werden <Glyphicon*/}
+            {/*glyph="alert"/>*/}
             {/*</div>*/}
+            {/*<FormControl style={{marginBottom: 5, width: 300}} type="password"*/}
+            {/*// value={this.state.password}*/}
+            {/*// onChange={(e) => this.handlePasswordChange(e.target.value)}*/}
+            {/*placeholder="Passwort bestätigen"/>*/}
+            {/*<Button bsStyle="danger" disabled={true}>Benutzer löschen</Button>*/}
+            {/*</div>*/}
+            <h3 style={{marginTop: 0}}><strong>Spieler-Berechtigungen</strong></h3>
+            <div>
+                <p><strong>Hier siehst Du welche Spieler Dir erlaubt haben ein Spiel mit ihnen zu erstellen und
+                    kannst einstellen wer dich in einem Spiel auswählen darf.</strong></p>
+                <div style={{display: "inline-flex", marginBottom: 5}}>
+                    <FormControl style={{width: 300, display: 'inline', marginRight: 5}} type="text"
+                                 value={this.state.userNameToPermit}
+                                 onChange={(e) => this.handleUserNameToPermitChange(e.target.value)}
+                                 onKeyDown={ifEnterKey(() => {
+                                         if (!this.state.permitButtonDisabled && !this.props.isUpdatingPlayerPermission) {
+                                             this.props.addPlayerPermissionByName(this.state.userNameToPermit)
+                                         }
+                                     }
+                                 )}
+                                 placeholder="Spieler berechtigen"/>
+                    <Button bsStyle="success"
+                            disabled={this.state.permitButtonDisabled || this.props.isUpdatingPlayerPermission}
+                            onClick={() => this.props.addPlayerPermissionByName(this.state.userNameToPermit)}
+                    >Berechtigen</Button>
+                </div>
+            </div>
+            {this.createAuthorizationTable()}
         </div>
     }
 
     createAuthorizationTable() {
-        return <Well style={{marginLeft: 20, marginRight: 20, paddingBottom: 0}}>
+        return <Well style={{marginLeft: 20, marginRight: 20, paddingBottom: 0, textAlign: 'center'}}>
             <Table responsive hover style={{textAlign: 'center'}}>
                 <thead>
                 <tr>
@@ -163,27 +197,57 @@ class Settings extends React.Component {
                                 : <Glyphicon style={{color: 'red'}} glyph="remove"/>}
                         </td>
                         <td>
-                            {playerInformation.authorized
-                                ? <Button bsStyle="success"
-                                          onClick={() => this.props.removePlayerPermission(playerInformation.id)}
-                                          disabled={this.props.isUpdatingPlayerPermission}>
-                                    <Glyphicon glyph="ok"/>
-                                </Button>
-                                : <Button bsStyle="danger"
-                                          onClick={() => this.props.addPlayerPermission(playerInformation.id)}
-                                          disabled={this.props.isUpdatingPlayerPermission}>
-                                    <Glyphicon glyph="remove"/>
-                                </Button>}
+                            {playerInformation.permitted
+                                ? <OverlayTrigger placement='top'
+                                                  overlay={<Tooltip id="tooltip">Berechtigung nehmen</Tooltip>}>
+                                    <Button bsStyle="success"
+                                            onClick={() => this.props.removePlayerPermission(playerInformation.id)}
+                                            disabled={this.props.isUpdatingPlayerPermission}>
+                                        <Glyphicon glyph="ok"/>
+                                    </Button>
+                                </OverlayTrigger>
+                                : <OverlayTrigger placement='top'
+                                                  overlay={<Tooltip id="tooltip">Berechtigung geben</Tooltip>}>
+                                    <Button bsStyle="danger"
+                                            onClick={() => this.props.addPlayerPermissionById(playerInformation.id)}
+                                            disabled={this.props.isUpdatingPlayerPermission}>
+                                        <Glyphicon glyph="remove"/>
+                                    </Button>
+                                </OverlayTrigger>
+                            }
                         </td>
                     </tr>
                 )}
                 </tbody>
             </Table>
+            {(this.props.isFetchingPlayableUsers || this.props.isFetchingPermittedUsers)
+            &&
+            <StackLoader label="Lade Spieler-Berechtigungen..."/>
+            }
         </Well>;
     }
 
 }
 
-Settings.propTypes = {};
+Settings.propTypes = {
+    userId: PropTypes.string,
+    userName: PropTypes.string,
+    isLoggedIn: PropTypes.bool.isRequired,
+
+    playableUsers: PropTypes.array.isRequired,
+    fetchPlayableUsersFailed: PropTypes.bool.isRequired,
+    isFetchingPlayableUsers: PropTypes.bool.isRequired,
+
+    permittedUsers: PropTypes.array.isRequired,
+    fetchPermittedUsersFailed: PropTypes.bool.isRequired,
+    isFetchingPermittedUsers: PropTypes.bool.isRequired,
+
+    isUpdatingPlayerPermission: PropTypes.bool.isRequired,
+
+    showLogin: PropTypes.func.isRequired,
+    addPlayerPermissionById: PropTypes.func.isRequired,
+    addPlayerPermissionByName: PropTypes.func.isRequired,
+    removePlayerPermission: PropTypes.func.isRequired,
+};
 
 export default Settings;

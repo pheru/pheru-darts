@@ -1,6 +1,7 @@
 import React from 'react'
 import {Button, FormControl, Glyphicon, Modal} from "react-bootstrap";
 import PropTypes from 'prop-types';
+import {ifEnterKey} from "../../util/functionUtil";
 
 class SignUpModal extends React.Component {
 
@@ -38,10 +39,8 @@ class SignUpModal extends React.Component {
 
     render() {
         return <Modal bsSize="small" backdrop='static' show={this.props.show} onHide={this.props.hide}>
-            <Modal.Header style={{textAlign: 'center'}}>
-                <Modal.Title>Registrieren</Modal.Title>
-            </Modal.Header>
             <Modal.Body style={{textAlign: 'center'}}>
+                <Modal.Title style={{marginBottom: 10}}>Registrieren</Modal.Title>
                 <FormControl style={{marginBottom: 5}} type="text" value={this.state.name}
                              onChange={(e) => this.handleNameChange(e.target.value)}
                              placeholder="Benutzername" autoFocus/>
@@ -50,14 +49,17 @@ class SignUpModal extends React.Component {
                              placeholder="Passwort"/>
                 <FormControl type="password" value={this.state.passwordRepeat}
                              onChange={(e) => this.handlePasswordRepeatChange(e.target.value)}
+                             onKeyDown={ifEnterKey(() => {
+                                 if (this.state.passwordsMatch && !this.props.isSigningUp) {
+                                     this.props.signUp(this.state.name, this.state.password);
+                                     this.clearInputFields();
+                                 }
+                             })}
                              placeholder="Passwort wiederholen"/>
                 {!this.state.passwordsMatch &&
                 <div style={{color: "red"}}>
                     <Glyphicon glyph="remove"/> Passwort muss übereinstimmen
                 </div>
-                }
-                {this.props.signUpFailedMessage !== undefined &&
-                <div style={{color: "red"}}>{this.props.signUpFailedMessage}</div>
                 }
             </Modal.Body>
             <Modal.Footer style={{textAlign: 'center'}}>
@@ -79,8 +81,7 @@ SignUpModal.propTypes = {
     show: PropTypes.bool,
     hide: PropTypes.func.isRequired,
     isSigningUp: PropTypes.bool,
-    signUp: PropTypes.func.isRequired,
-    signUpFailedMessage: PropTypes.string
+    signUp: PropTypes.func.isRequired
 };
 
 export default SignUpModal;

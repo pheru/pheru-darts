@@ -47,7 +47,6 @@ public class GameControllerTest extends ControllerTest {
 
         final GameEntity savedGame = allAfterSave.get(0);
         assertEquals(LOGIN_ID, savedGame.getUserId());
-        assertEquals(ID_2, allAfterSave.get(1).getUserId());
         assertEquals(CheckOutMode.DOUBLE_OUT, savedGame.getCheckOutMode());
         assertEquals(game.getScore(), savedGame.getScore());
         assertTrue(savedGame.getTimestamp() >= postGameDate.getTime()
@@ -56,10 +55,45 @@ public class GameControllerTest extends ControllerTest {
         assertEquals(game.getPlayers()[1].getId(), savedGame.getPlayers().get(1).getId());
         assertEquals(game.getPlayers()[0].getAufnahmen().length, savedGame.getPlayers().get(0).getAufnahmen().size());
 
+        assertEquals(ID_2, allAfterSave.get(1).getUserId());
+
         final DartDto[] aufnahme = game.getPlayers()[0].getAufnahmen()[1];
         final AufnahmeDocument savedAufnahme = savedGame.getPlayers().get(0).getAufnahmen().get(1);
         assertEquals(aufnahme[1].getValue(), savedAufnahme.getDarts().get(1).getValue());
         assertEquals(aufnahme[1].getMultiplier(), savedAufnahme.getDarts().get(1).getMultiplier());
+    }
+
+    @Test
+    public void postGameOneUnregisteredPlayer() {
+        final PlayerPermissionEntity permissionLL = createPlayerPermissionEntity(LOGIN_ID, LOGIN_ID);
+        playerPermissionRepository.save(permissionLL);
+
+        final Iterable<GameEntity> allBeforeSave = gamesRepository.findAll();
+        assertFalse(allBeforeSave.iterator().hasNext());
+
+        final GameDto game = createDefaultGame();
+        game.getPlayers()[1].setId(null);
+        gameController.postGame(game);
+
+        final List<GameEntity> allAfterSave = (List<GameEntity>) gamesRepository.findAll();
+        assertEquals(1, allAfterSave.size());
+
+        final GameEntity savedGame = allAfterSave.get(0);
+        assertEquals(LOGIN_ID, savedGame.getUserId());
+    }
+
+    @Test
+    public void postGameAllUnregisteredPlayers() {
+        final Iterable<GameEntity> allBeforeSave = gamesRepository.findAll();
+        assertFalse(allBeforeSave.iterator().hasNext());
+
+        final GameDto game = createDefaultGame();
+        game.getPlayers()[0].setId(null);
+        game.getPlayers()[1].setId(null);
+        gameController.postGame(game);
+
+        final List<GameEntity> allAfterSave = (List<GameEntity>) gamesRepository.findAll();
+        assertEquals(0, allAfterSave.size());
     }
 
     @Test

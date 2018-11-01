@@ -1,6 +1,7 @@
 package de.pheru.darts.backend.controllers;
 
 import de.pheru.darts.backend.Logger;
+import de.pheru.darts.backend.dtos.PlayerPermissionModificationDto;
 import de.pheru.darts.backend.dtos.UserDto;
 import de.pheru.darts.backend.entities.PlayerPermissionEntity;
 import de.pheru.darts.backend.entities.UserEntity;
@@ -30,14 +31,13 @@ public class PlayerPermissionController {
     }
 
     @PostMapping
-    public void post(@RequestBody final String idToPermit) {
-        LOGGER.debug("POST auf /playerPermission mit idToPermit=" + idToPermit + " aufgerufen");
+    public UserDto post(@RequestBody final PlayerPermissionModificationDto modificationDto) {
+        LOGGER.debug("POST auf /playerPermission mit idToPermit=" + modificationDto.getPermittedId()
+                + ", permittedUsername=" + modificationDto.getPermittedUsername() + " aufgerufen");
         final String loggedInUserId = SecurityUtil.getLoggedInUserId();
 
-        if (userRepository.findById(idToPermit) == null) {
-            LOGGER.warn("User to permit not found: idToPermit=" + idToPermit);
-            throw new UserNotFoundException("User not found");
-        }
+        final UserEntity userToPermit = findUserByModificationDto(modificationDto);
+        final String idToPermit = userToPermit.getId();
 
         final PlayerPermissionEntity existingEntity =
                 playerPermissionRepository.findByUserIdAndPermittedUserId(loggedInUserId, idToPermit);
@@ -52,10 +52,34 @@ public class PlayerPermissionController {
         playerPermissionRepository.save(newPlayerPermission);
 
         LOGGER.debug("POST auf /playerPermission: erfolgreich");
+        return EntityMapper.toUserDto(userToPermit);
+    }
+
+    private UserEntity findUserByModificationDto(final PlayerPermissionModificationDto modificationDto) {
+        final String id = modificationDto.getPermittedId();
+        final String username = modificationDto.getPermittedUsername();
+        final UserEntity userToPermit;
+
+        if (id != null && !id.isEmpty()) {
+            userToPermit = userRepository.findById(id);
+            if (userToPermit == null) {
+                LOGGER.warn("User to permit not found: idToPermit=" + id);
+                throw new UserNotFoundException("User not found");
+            }
+        } else {
+            userToPermit = userRepository.findByName(username);
+            if (userToPermit == null) {
+                LOGGER.info("User to permit not found: username=" + username);
+                throw new UserNotFoundException("User not found");
+            }
+        }
+        return userToPermit;
     }
 
     @DeleteMapping
-    public void delete(@RequestBody final String permittedId) {
+    public void delete(@RequestBody final PlayerPermissionModificationDto modificationDto) {
+        final UserEntity userToRemovePermission = findUserByModificationDto(modificationDto);
+        final String permittedId = userToRemovePermission.getId();
         LOGGER.debug("DELETE auf /playerPermission permittedId=" + permittedId + " aufgerufen");
         final String loggedInUserId = SecurityUtil.getLoggedInUserId();
 

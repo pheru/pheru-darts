@@ -41,6 +41,9 @@ public class GameController {
 
         final Date timestamp = new Date();
         for (final PlayerDto playerDto : game.getPlayers()) {
+            if (playerDto.getId() == null) {
+                continue;
+            }
             final DartDto[][] aufnahmen = playerDto.getAufnahmen();
             // Die letzte Aufnahme ist beim Verlierer leer und sollte nicht gespeichert werden
             if (aufnahmen[aufnahmen.length - 1].length == 0) {
@@ -58,7 +61,7 @@ public class GameController {
     private void checkPermissions(final GameDto game) {
         final String loggedInUserId = SecurityUtil.getLoggedInUserId();
         for (final PlayerDto playerDto : game.getPlayers()) {
-            if (playerPermissionRepository.findByUserIdAndPermittedUserId(playerDto.getId(), loggedInUserId) == null) {
+            if (playerDto.getId() != null && playerPermissionRepository.findByUserIdAndPermittedUserId(playerDto.getId(), loggedInUserId) == null) {
                 final String msg = "Missing permission for at least one player";
                 LOGGER.warn(msg + ": loggedInUserId=" + loggedInUserId + ", playerId=" + playerDto.getId());
                 throw new ForbiddenException(msg);

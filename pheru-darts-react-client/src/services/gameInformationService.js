@@ -29,7 +29,7 @@ function getTurnInformation(players, startScore, checkOutMode) {
 
         let dart = players[playerIndex].aufnahmen[aufnahmeIndex][dartIndex];
         let dartScore = dart.value * dart.multiplier;
-        let checkOutCondition = (checkOutMode === SINGLE_OUT && dart.multiplier === 1) || (checkOutMode === DOUBLE_OUT && dart.multiplier === 2);
+        let checkOutCondition = checkOutMode === SINGLE_OUT || (checkOutMode === DOUBLE_OUT && dart.multiplier === 2);
         let score = playerInformationList[playerIndex].score;
         if (dartIndex === 0) {
             aufnahmeStartScore = score;

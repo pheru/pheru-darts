@@ -5,8 +5,7 @@ import {hideLoginModal, login, showSignUpModal} from "../../actions/user";
 
 const mapStateToProps = state => ({
     show: state.user.showLoginModal,
-    isLoggingIn: state.user.isLoggingIn,
-    loginFailedMessage: state.user.loginFailedMessage
+    isLoggingIn: state.user.isLoggingIn
 });
 
 const mapDispatchToProps = dispatch => ({

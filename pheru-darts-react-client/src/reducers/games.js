@@ -10,13 +10,11 @@ function games(state = {
                 isArchiving: true
             };
         case ARCHIVE_GAME_SUCCESSFUL:
-            console.log("Archive successful");
             return {
                 ...state,
                 isArchiving: false
             };
         case ARCHIVE_GAME_FAILED:
-            console.log("Archive failed");
             return {
                 ...state,
                 isArchiving: false

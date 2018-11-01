@@ -15,15 +15,18 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/statistics")
-public class StatisticsController {
+@RequestMapping("/statistic")
+public class StatisticController {
 
     private static final Logger LOGGER = new Logger();
+
+    public static final String UNREGISTERED_PLAYER_NAME = "Unregistrierter Benutzer";
+    public static final String DELETED_PLAYER_NAME = "Gelöschter Benutzer";
 
     private final GameRepository gameRepository;
     private final UserRepository userRepository;
 
-    public StatisticsController(final GameRepository gameRepository, final UserRepository userRepository) {
+    public StatisticController(final GameRepository gameRepository, final UserRepository userRepository) {
         this.gameRepository = gameRepository;
         this.userRepository = userRepository;
     }
@@ -38,6 +41,8 @@ public class StatisticsController {
         long gamesWon = 0;
         long gamesLost = 0;
         long totalDarts = 0;
+        long possibleCheckoutCount = 0;
+        long checkoutCount = 0;
         final Map<Integer, DartCountStatisticDto> dartCountsPerScore = new HashMap<>();
         final Map<String, GameCountStatisticDto> gameCountsPerPlayer = new HashMap<>();
 
@@ -46,7 +51,7 @@ public class StatisticsController {
             int score = game.getScore();
             boolean gameWon = false;
             for (final PlayerDocument playerDocument : game.getPlayers()) {
-                if (playerDocument.getId().equals(SecurityUtil.getLoggedInUserId())) {
+                if (playerDocument.getId() != null && playerDocument.getId().equals(SecurityUtil.getLoggedInUserId())) {
                     for (final AufnahmeDocument aufnahmeDocument : playerDocument.getAufnahmen()) {
                         final int aufnahmeStartScore = score;
                         for (final DartDocument dartDocument : aufnahmeDocument.getDarts()) {
@@ -62,13 +67,17 @@ public class StatisticsController {
                             } else if (dartDocument.getMultiplier() == 3) {
                                 dartCountStatisticDto.setTripleCount(dartCountStatisticDto.getTripleCount() + 1);
                             }
+                            if (checkOutPossible(checkOutMode, score)) {
+                                possibleCheckoutCount++;
+                            }
                             // Sieg-Prüfung
                             final int dartScore = dartDocument.getValue() * dartDocument.getMultiplier();
-                            final boolean checkOutCondition = (checkOutMode == CheckOutMode.SINGLE_OUT && dartDocument.getMultiplier() == 1)
+                            final boolean checkOutCondition = checkOutMode == CheckOutMode.SINGLE_OUT
                                     || (checkOutMode == CheckOutMode.DOUBLE_OUT && dartDocument.getMultiplier() == 2);
                             final boolean thrownOver = isThrownOver(score, dartScore, game.getCheckOutMode());
                             if (score - dartScore == 0 && checkOutCondition) { // ausgecheckt
                                 score = 0;
+                                checkoutCount++;
                                 gameWon = true;
                             } else if (thrownOver) { // ueberworfen
                                 score = aufnahmeStartScore;
@@ -81,12 +90,21 @@ public class StatisticsController {
             }
             // Player-Game-Statistic
             for (final PlayerDocument playerDocument : game.getPlayers()) {
-                if (!playerDocument.getId().equals(SecurityUtil.getLoggedInUserId())) {
-                    if (!playerCache.containsKey(playerDocument.getId())) {
-                        final UserEntity userEntity = userRepository.findOne(playerDocument.getId());
-                        playerCache.put(userEntity.getId(), userEntity.getName());
+                if (playerDocument.getId() == null || !playerDocument.getId().equals(SecurityUtil.getLoggedInUserId())) {
+                    final String playerName;
+                    if (playerDocument.getId() != null) {
+                        if (!playerCache.containsKey(playerDocument.getId())) {
+                            final UserEntity userEntity = userRepository.findById(playerDocument.getId());
+                            if (userEntity == null) {
+                                playerCache.put(playerDocument.getId(), DELETED_PLAYER_NAME);
+                            } else {
+                                playerCache.put(playerDocument.getId(), userEntity.getName());
+                            }
+                        }
+                        playerName = playerCache.get(playerDocument.getId());
+                    } else {
+                        playerName = UNREGISTERED_PLAYER_NAME;
                     }
-                    final String playerName = playerCache.get(playerDocument.getId());
                     gameCountsPerPlayer.putIfAbsent(playerName, new GameCountStatisticDto());
                     final GameCountStatisticDto gameCountStatisticDto = gameCountsPerPlayer.get(playerName);
                     if (gameWon) {
@@ -109,6 +127,8 @@ public class StatisticsController {
 
         final DartStatisticDto dartStatisticDto = new DartStatisticDto();
         dartStatisticDto.setTotalCount(totalDarts);
+        dartStatisticDto.setPossibleCheckoutCount(possibleCheckoutCount);
+        dartStatisticDto.setCheckoutCount(checkoutCount);
         dartStatisticDto.setCountsPerScore(dartCountsPerScore);
 
         final StatisticDto statisticDto = new StatisticDto();
@@ -117,6 +137,19 @@ public class StatisticsController {
 
         LOGGER.debug("GET auf /statistics: erfolgreich");
         return statisticDto;
+    }
+
+    private boolean checkOutPossible(final CheckOutMode checkOutMode, final int score) {
+        if (checkOutMode == CheckOutMode.SINGLE_OUT) {
+            return score <= 20
+                    || score == 25
+                    || score == 50
+                    || (score <= 40 && score % 2 == 0)
+                    || (score <= 60 && score % 3 == 0);
+        } else {
+            return score == 50
+                    || (score <= 40 && score % 2 == 0);
+        }
     }
 
     private boolean isThrownOver(final int score, final int dartScore, final CheckOutMode checkOutMode) {

@@ -1,25 +1,29 @@
 import {connect} from 'react-redux'
 import Settings from "../components/Settings";
-import {filterUserByIds} from "../services/userFilterService";
 import {showLoginModal} from "../actions/user";
-import {addPlayerPermission, removePlayerPermission} from "../actions/playerPermission";
+import {addPlayerPermissionById, addPlayerPermissionByName, removePlayerPermission} from "../actions/playerPermission";
 import {sortPlayerByNameAsc} from "../services/sortService";
 
 const mapStateToProps = state => ({
     userId: state.user.id,
     userName: state.user.name,
     isLoggedIn: state.user.isLoggedIn,
-    users: state.users.all.slice().sort(sortPlayerByNameAsc),
-    playableUsers: filterUserByIds(state.users.all, state.playerPermission.playableUserIds),
-    authorizedUsers: filterUserByIds(state.users.all, state.playerPermission.permittedUserIds),
-    fetchAllUsersFailed: state.users.fetchFailed,
-    isFetchingUsers: state.users.isFetching,
+
+    playableUsers: state.playerPermission.playableUsers.sort(sortPlayerByNameAsc),
+    fetchPlayableUsersFailed: state.playerPermission.fetchPlayableUsersFailed,
+    isFetchingPlayableUsers: state.playerPermission.isFetchingPlayableUsers,
+
+    permittedUsers: state.playerPermission.permittedUsers.sort(sortPlayerByNameAsc),
+    fetchPermittedUsersFailed: state.playerPermission.fetchPermittedUsersFailed,
+    isFetchingPermittedUsers: state.playerPermission.isFetchingPermittedUsers,
+
     isUpdatingPlayerPermission: state.playerPermission.isUpdatingPlayerPermission
 });
 
 const mapDispatchToProps = dispatch => ({
     showLogin: () => dispatch(showLoginModal()),
-    addPlayerPermission: (userId) => dispatch(addPlayerPermission(userId)),
+    addPlayerPermissionById: (userId) => dispatch(addPlayerPermissionById(userId)),
+    addPlayerPermissionByName: (username) => dispatch(addPlayerPermissionByName(username)),
     removePlayerPermission: (userId) => dispatch(removePlayerPermission(userId))
 });
 
