@@ -3,7 +3,7 @@ const LOCAL_HOSTNAME = "localhost";
 const LOCAL_PORT = "8080";
 const LOCAL_HOST = LOCAL_PROTOCOL + "//" + LOCAL_HOSTNAME + ":" + LOCAL_PORT;
 
-const PRODUCTION_HOST = "http://pherudarts.eu-central-1.elasticbeanstalk.com";
+const PRODUCTION_HOST = "https://darts.pheru.de";
 
 const LOCAL = defaultConfigForHost(LOCAL_HOST);
 const PRODUCTION = defaultConfigForHost(PRODUCTION_HOST);

@@ -727,7 +727,7 @@ if (typeof jQuery === 'undefined') {
       }
 
       that.$element
-        .gameFinishedModalShow()
+        .show()
         .scrollTop(0)
 
       that.adjustDialog()
@@ -943,7 +943,7 @@ if (typeof jQuery === 'undefined') {
 
       if (!data) $this.data('bs.modal', (data = new Modal(this, options)))
       if (typeof option == 'string') data[option](_relatedTarget)
-      else if (options.gameFinishedModalShow) data.show(_relatedTarget)
+      else if (options.show) data.show(_relatedTarget)
     })
   }
 
@@ -1115,11 +1115,11 @@ if (typeof jQuery === 'undefined') {
 
     self.hoverState = 'in'
 
-    if (!self.options.delay || !self.options.delay.gameFinishedModalShow) return self.gameFinishedModalShow()
+    if (!self.options.delay || !self.options.delay.show) return self.show()
 
     self.timeout = setTimeout(function () {
-      if (self.hoverState == 'in') self.gameFinishedModalShow()
-    }, self.options.delay.gameFinishedModalShow)
+      if (self.hoverState == 'in') self.show()
+    }, self.options.delay.show)
   }
 
   Tooltip.prototype.isInStateTrue = function () {
