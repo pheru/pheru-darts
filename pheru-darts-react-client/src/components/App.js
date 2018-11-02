@@ -63,7 +63,7 @@ class App extends React.Component {
     render() {
         return <div>
             {this.createNavbar()}
-            <div style={{paddingTop: 60}}>
+            <div style={{paddingTop: 50}}>
                 <Switch>
                     <Route path={NEW_GAME_ROUTE} component={NewGameConfigContainer}/>
                     <Route path={GAME_ROUTE}
