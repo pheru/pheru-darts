@@ -2,17 +2,24 @@ const LOCAL_PROTOCOL = "http:";
 const LOCAL_HOSTNAME = "localhost";
 const LOCAL_PORT = "8080";
 const LOCAL_HOST = LOCAL_PROTOCOL + "//" + LOCAL_HOSTNAME + ":" + LOCAL_PORT;
-const LOCAL = {
-    resourceUrls: {
-        user: LOCAL_HOST + "/user",
-        playerPermission: LOCAL_HOST + "/playerPermission",
-        game: LOCAL_HOST + "/game",
-        statistic: LOCAL_HOST + "/statistic"
-    },
-    loginUrl: LOCAL_HOST + "/login",
-    logoutUrl: LOCAL_HOST + "/logout"
-};
-const PRODUCTION = LOCAL;
+
+const PRODUCTION_HOST = "PheruDartsBackend-env.muphrptmk9.eu-central-1.elasticbeanstalk.com";
+
+const LOCAL = defaultConfigForHost(LOCAL_HOST);
+const PRODUCTION = defaultConfigForHost(PRODUCTION_HOST);
+
+function defaultConfigForHost(host){
+    return {
+        resourceUrls: {
+            user: host + "/user",
+            playerPermission: host+ "/playerPermission",
+            game: host + "/game",
+            statistic: host+ "/statistic"
+        },
+        loginUrl: host + "/login",
+        logoutUrl: host + "/logout"
+    };
+}
 
 export function getConfig() {
     switch (window.location.hostname) {

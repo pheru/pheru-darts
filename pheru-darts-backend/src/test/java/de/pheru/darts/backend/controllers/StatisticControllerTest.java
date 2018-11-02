@@ -7,6 +7,7 @@ import de.pheru.darts.backend.testutil.AufnahmeDocumentBuilder;
 import de.pheru.darts.backend.testutil.DartDocumentBuilder;
 import de.pheru.darts.backend.testutil.GameEntityBuilder;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.text.DateFormat;
@@ -190,6 +191,7 @@ public class StatisticControllerTest extends ControllerTest {
     }
 
     @Test
+    @Ignore("TODO")
     public void getNoGamesPlayed() {
         fail("Not implemented");
     }

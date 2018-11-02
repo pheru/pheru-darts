@@ -1,163 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="545a966a-dd6d-4c4e-b5a7-ec8869cd94b8" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__ch_qos_logback_logback_classic_1_1_11.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__ch_qos_logback_logback_core_1_1_11.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_amazonaws_aws_java_sdk_core_1_11_64.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_amazonaws_aws_java_sdk_dynamodb_1_11_64.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_amazonaws_aws_java_sdk_kms_1_11_64.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_amazonaws_aws_java_sdk_s3_1_11_64.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_amazonaws_jmespath_java_1_11_64.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_classmate_1_3_3.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_annotations_2_8_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_core_2_8_8.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_databind_2_8_8.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_dataformat_jackson_dataformat_cbor_2_8_8.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_github_spring_data_dynamodb_spring_data_dynamodb_4_5_5.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_jayway_jsonpath_json_path_2_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_vaadin_external_google_android_json_0_0_20131108_vaadin1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_codec_commons_codec_1_10.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_logging_commons_logging_1_1_3.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_jsonwebtoken_jjwt_0_9_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__javax_el_javax_el_api_3_0_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__javax_enterprise_cdi_api_1_2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__javax_inject_javax_inject_1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__javax_interceptor_javax_interceptor_api_1_2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__javax_validation_validation_api_1_1_0_Final.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__joda_time_joda_time_2_9_9.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__junit_junit_4_12.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_minidev_accessors_smart_1_1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_minidev_json_smart_2_2_1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_httpcomponents_httpclient_4_5_3.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_httpcomponents_httpcore_4_4_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_tomcat_embed_tomcat_embed_core_8_5_14.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_tomcat_embed_tomcat_embed_el_8_5_14.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_tomcat_embed_tomcat_embed_websocket_8_5_14.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_assertj_assertj_core_2_6_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_hamcrest_hamcrest_core_1_3.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_hamcrest_hamcrest_library_1_3.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_hibernate_hibernate_validator_5_3_5_Final.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_jboss_logging_jboss_logging_3_3_1_Final.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_mockito_mockito_core_1_10_19.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_objenesis_objenesis_2_1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_ow2_asm_asm_5_0_3.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_skyscreamer_jsonassert_1_4_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_jcl_over_slf4j_1_7_25.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_jul_to_slf4j_1_7_25.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_log4j_over_slf4j_1_7_25.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_slf4j_api_1_7_25.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_1_5_3_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_autoconfigure_1_5_3_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_1_5_3_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_logging_1_5_3_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_security_1_5_3_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_test_1_5_3_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_tomcat_1_5_3_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_web_1_5_3_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_test_1_5_3_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_test_autoconfigure_1_5_3_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_data_spring_data_commons_1_13_13_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_security_spring_security_config_4_2_2_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_security_spring_security_core_4_2_2_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_security_spring_security_web_4_2_2_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_aop_4_3_8_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_beans_4_3_8_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_context_4_3_8_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_core_4_3_8_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_expression_4_3_8_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_test_4_3_8_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_tx_4_3_8_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_web_4_3_8_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_webmvc_4_3_8_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_yaml_snakeyaml_1_17.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__software_amazon_ion_ion_java_1_0_1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/pheru-darts.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/.idea/libraries/Maven__ch_qos_logback_logback_classic_1_2_3.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/.idea/libraries/Maven__ch_qos_logback_logback_core_1_2_3.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/.idea/libraries/Maven__com_fasterxml_classmate_1_3_4.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_annotations_2_9_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_core_2_9_5.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_databind_2_9_5.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/.idea/libraries/Maven__com_fasterxml_jackson_datatype_jackson_datatype_jdk8_2_9_5.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/.idea/libraries/Maven__com_fasterxml_jackson_datatype_jackson_datatype_jsr310_2_9_5.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/.idea/libraries/Maven__com_fasterxml_jackson_module_jackson_module_parameter_names_2_9_5.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/.idea/libraries/Maven__com_jayway_jsonpath_json_path_2_4_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/.idea/libraries/Maven__com_vaadin_external_google_android_json_0_0_20131108_vaadin1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/.idea/libraries/Maven__javax_annotation_javax_annotation_api_1_3_2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/.idea/libraries/Maven__javax_validation_validation_api_2_0_1_Final.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/.idea/libraries/Maven__junit_junit_4_12.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/.idea/libraries/Maven__net_bytebuddy_byte_buddy_1_7_11.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/.idea/libraries/Maven__net_bytebuddy_byte_buddy_agent_1_7_11.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/.idea/libraries/Maven__net_minidev_accessors_smart_1_2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/.idea/libraries/Maven__net_minidev_json_smart_2_3.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/.idea/libraries/Maven__org_apache_logging_log4j_log4j_api_2_10_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/.idea/libraries/Maven__org_apache_logging_log4j_log4j_to_slf4j_2_10_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/.idea/libraries/Maven__org_apache_tomcat_embed_tomcat_embed_core_8_5_31.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/.idea/libraries/Maven__org_apache_tomcat_embed_tomcat_embed_el_8_5_31.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/.idea/libraries/Maven__org_apache_tomcat_embed_tomcat_embed_websocket_8_5_31.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/.idea/libraries/Maven__org_assertj_assertj_core_3_9_1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/.idea/libraries/Maven__org_hamcrest_hamcrest_core_1_3.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/.idea/libraries/Maven__org_hamcrest_hamcrest_library_1_3.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/.idea/libraries/Maven__org_hibernate_validator_hibernate_validator_6_0_9_Final.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/.idea/libraries/Maven__org_jboss_logging_jboss_logging_3_3_2_Final.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/.idea/libraries/Maven__org_mockito_mockito_core_2_15_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/.idea/libraries/Maven__org_objenesis_objenesis_2_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/.idea/libraries/Maven__org_ow2_asm_asm_5_0_4.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/.idea/libraries/Maven__org_skyscreamer_jsonassert_1_5_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/.idea/libraries/Maven__org_slf4j_jul_to_slf4j_1_7_25.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/.idea/libraries/Maven__org_slf4j_slf4j_api_1_7_25.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/.idea/libraries/Maven__org_springframework_boot_spring_boot_2_0_2_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/.idea/libraries/Maven__org_springframework_boot_spring_boot_autoconfigure_2_0_2_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_2_0_2_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_json_2_0_2_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_logging_2_0_2_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_test_2_0_2_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_tomcat_2_0_2_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_web_2_0_2_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/.idea/libraries/Maven__org_springframework_boot_spring_boot_test_2_0_2_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/.idea/libraries/Maven__org_springframework_boot_spring_boot_test_autoconfigure_2_0_2_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/.idea/libraries/Maven__org_springframework_spring_aop_5_0_6_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/.idea/libraries/Maven__org_springframework_spring_beans_5_0_6_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/.idea/libraries/Maven__org_springframework_spring_context_5_0_6_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/.idea/libraries/Maven__org_springframework_spring_core_5_0_6_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/.idea/libraries/Maven__org_springframework_spring_expression_5_0_6_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/.idea/libraries/Maven__org_springframework_spring_jcl_5_0_6_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/.idea/libraries/Maven__org_springframework_spring_test_5_0_6_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/.idea/libraries/Maven__org_springframework_spring_web_5_0_6_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/.idea/libraries/Maven__org_springframework_spring_webmvc_5_0_6_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/.idea/libraries/Maven__org_xmlunit_xmlunit_core_2_5_1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/.idea/libraries/Maven__org_yaml_snakeyaml_1_19.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/pheru-darts-backend.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-react-client/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-react-client/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-react-client/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-react-client/.idea/pheru-darts.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-react-client/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-react-client/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pheru-darts-react-client/pheru-darts-react-client.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pheru-darts-backend/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/pheru-darts-backend/.gitignore" afterDir="false" />
+    <list default="true" id="545a966a-dd6d-4c4e-b5a7-ec8869cd94b8" name="Default" comment="IDEA-Files mit eingecheckt">
+      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/src/main/resources/application-production.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pheru-darts-backend/src/test/java/de/pheru/darts/backend/controllers/StatisticControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/pheru-darts-backend/src/test/java/de/pheru/darts/backend/controllers/StatisticControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pheru-darts-react-client/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/pheru-darts-react-client/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pheru-darts-react-client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/pheru-darts-react-client/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pheru-darts-react-client/src/components/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/pheru-darts-react-client/src/components/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pheru-darts-react-client/src/services/configService.js" beforeDir="false" afterPath="$PROJECT_DIR$/pheru-darts-react-client/src/services/configService.js" afterDir="false" />
     </list>
-    <list id="87fde6c8-3a2d-42ff-b032-e6af9fea22a8" name="#36 Backend bereitstellen" comment="" />
     <list id="d132b405-1568-4011-ace3-8d3010c63b8e" name="#1 Tests ergänzen" comment="#1 Test umgezogen" />
+    <list id="87fde6c8-3a2d-42ff-b032-e6af9fea22a8" name="#36 Backend bereitstellen" comment="" />
     <list id="472b2096-f92f-44d7-b72a-0b71d420fb11" name="NICHT COMMITTEN" comment="" />
     <ignored path="$PROJECT_DIR$/pheru-darts-backend/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -197,7 +51,93 @@
     <option name="myAutoScrollFromSource" value="true" />
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file leaf-file-name="App.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/components/App.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="173">
+              <caret line="98" column="28" selection-start-line="98" selection-start-column="28" selection-end-line="98" selection-end-column="28" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="createTableGame.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/local_dynamodb/scripts/games/createTableGame.js">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file leaf-file-name="createTableUser.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/local_dynamodb/scripts/users/createTableUser.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="252">
+              <caret line="18" column="3" selection-start-line="18" selection-start-column="3" selection-end-line="18" selection-end-column="3" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="createTablePlayerPermission.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/local_dynamodb/scripts/playerPermissions/createTablePlayerPermission.js">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file leaf-file-name="application-production.properties" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pheru-darts-backend/src/main/resources/application-production.properties">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="42">
+              <caret line="3" column="16" lean-forward="true" selection-start-line="3" selection-start-column="16" selection-end-line="3" selection-end-column="16" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DynamoDBConfig.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pheru-darts-backend/src/main/java/de/pheru/darts/backend/DynamoDBConfig.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="14">
+              <caret line="21" column="30" lean-forward="true" selection-start-line="21" selection-start-column="30" selection-end-line="21" selection-end-column="30" />
+              <folding>
+                <element signature="e#781#806#1" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="configService.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/services/configService.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="154">
+              <caret line="11" column="12" lean-forward="true" selection-start-line="11" selection-start-column="12" selection-end-line="11" selection-end-column="12" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="StatisticControllerTest.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pheru-darts-backend/src/test/java/de/pheru/darts/backend/controllers/StatisticControllerTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="162">
+              <caret line="190" column="5" lean-forward="true" selection-start-line="190" selection-start-column="5" selection-end-line="190" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="UserController.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pheru-darts-backend/src/main/java/de/pheru/darts/backend/controllers/UserController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-84">
+              <caret line="19" column="13" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="UserRepository.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pheru-darts-backend/src/main/java/de/pheru/darts/backend/repositories/UserRepository.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="112">
+              <caret line="12" column="7" selection-start-line="12" selection-start-column="7" selection-end-line="12" selection-end-column="7" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -211,8 +151,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>, 0</find>
-      <find>totald</find>
       <find>siegr</find>
       <find>spinner</find>
       <find>sort</find>
@@ -240,6 +178,8 @@
       <find>message</find>
       <find>alert</find>
       <find>checkou</find>
+      <find>plus-si</find>
+      <find>delete</find>
       <find>TODO</find>
     </findStrings>
     <replaceStrings>
@@ -274,14 +214,11 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/pheru-darts-react-client/src/components/loaders/PlayerPermissionLoader.js" />
-        <option value="$PROJECT_DIR$/pheru-darts-react-client/src/components/loaders/playerpermissionloader.css" />
         <option value="$PROJECT_DIR$/pheru-darts-react-client/src/components/loaders/StatisticsLoader.js" />
         <option value="$PROJECT_DIR$/pheru-darts-react-client/src/components/loaders/statisticsloader.css" />
         <option value="$PROJECT_DIR$/pheru-darts-backend/src/test/java/de/pheru/darts/backend/controllers/GameControllerTest.java" />
         <option value="$PROJECT_DIR$/pheru-darts-backend/src/main/java/de/pheru/darts/backend/controllers/PlayerPermissionController.java" />
         <option value="$PROJECT_DIR$/pheru-darts-backend/src/test/java/de/pheru/darts/backend/controllers/PlayerPermissionControllerTest.java" />
-        <option value="$PROJECT_DIR$/pheru-darts-react-client/src/services/configService.js" />
         <option value="$PROJECT_DIR$/pheru-darts-backend/src/test/java/de/pheru/darts/backend/testutil/GameBuilder.java" />
         <option value="$PROJECT_DIR$/pheru-darts-backend/src/test/java/de/pheru/darts/backend/testutil/GameDtoBuilder.java" />
         <option value="$PROJECT_DIR$/pheru-darts-backend/src/test/java/de/pheru/darts/backend/testutil/DartDocumentBuilder.java" />
@@ -291,7 +228,6 @@
         <option value="$PROJECT_DIR$/pheru-darts-react-client/src/services/gameInformationService.js" />
         <option value="$PROJECT_DIR$/pheru-darts-backend/src/main/java/de/pheru/darts/backend/dtos/statistics/DartStatisticDto.java" />
         <option value="$PROJECT_DIR$/pheru-darts-backend/src/main/java/de/pheru/darts/backend/controllers/StatisticController.java" />
-        <option value="$PROJECT_DIR$/pheru-darts-backend/src/test/java/de/pheru/darts/backend/controllers/StatisticControllerTest.java" />
         <option value="$PROJECT_DIR$/pheru-darts-react-client/src/containers/StatisticsContainer.js" />
         <option value="$PROJECT_DIR$/pheru-darts-react-client/src/__tests__/services/sortService.test.js" />
         <option value="$PROJECT_DIR$/pheru-darts-react-client/src/services/sortService.js" />
@@ -311,7 +247,6 @@
         <option value="$PROJECT_DIR$/pheru-darts-react-client/src/reducers/user.js" />
         <option value="$PROJECT_DIR$/pheru-darts-react-client/src/components/modals/SignUpModal.js" />
         <option value="$PROJECT_DIR$/pheru-darts-react-client/src/containers/modals/SignUpModalContainer.js" />
-        <option value="$PROJECT_DIR$/pheru-darts-react-client/src/components/App.js" />
         <option value="$PROJECT_DIR$/pheru-darts-react-client/src/components/Timer.java" />
         <option value="$PROJECT_DIR$/pheru-darts-react-client/src/components/Timer.js" />
         <option value="$PROJECT_DIR$/pheru-darts-react-client/package.json" />
@@ -325,11 +260,18 @@
         <option value="$PROJECT_DIR$/pheru-darts-react-client/src/__tests__/services/gameInformationService.test.js" />
         <option value="$PROJECT_DIR$/docs/index.html" />
         <option value="$APPLICATION_CONFIG_DIR$/scratches/scratch.html" />
+        <option value="$PROJECT_DIR$/pheru-darts-react-client/src/components/App.js" />
+        <option value="$PROJECT_DIR$/pheru-darts-backend/src/test/java/de/pheru/darts/backend/controllers/UserControllerTest.java" />
+        <option value="$PROJECT_DIR$/pheru-darts-backend/src/test/java/de/pheru/darts/backend/controllers/StatisticControllerTest.java" />
+        <option value="$PROJECT_DIR$/pheru-darts-react-client/src/services/configService.js" />
+        <option value="$PROJECT_DIR$/pheru-darts-backend/src/main/resources/application-production.properties" />
       </list>
     </option>
   </component>
   <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
-  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER">
+    <package-json value="$PROJECT_DIR$/pheru-darts-react-client/package.json" />
+  </component>
   <component name="JsFlowSettings">
     <service-enabled>true</service-enabled>
     <exe-path />
@@ -366,6 +308,9 @@
   <component name="NamedScopeManager">
     <scope name="Web-Sourcen" pattern="file[pheru-darts-react-client]:src//*" />
   </component>
+  <component name="NodeModulesDirectoryManager">
+    <handled-path value="$PROJECT_DIR$/pheru-darts-react-client/node_modules" />
+  </component>
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths>
       <path value="$PROJECT_DIR$/pheru-darts-react-client/package.json" />
@@ -381,6 +326,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="AndroidView" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -389,12 +335,47 @@
               <item name="pheru-darts" type="b2602c69:ProjectViewProjectNode" />
               <item name="pheru-darts" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="pheru-darts" type="b2602c69:ProjectViewProjectNode" />
+              <item name="pheru-darts" type="462c0819:PsiDirectoryNode" />
+              <item name="local_dynamodb" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="pheru-darts" type="b2602c69:ProjectViewProjectNode" />
+              <item name="pheru-darts" type="462c0819:PsiDirectoryNode" />
+              <item name="pheru-darts-backend" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="pheru-darts" type="b2602c69:ProjectViewProjectNode" />
+              <item name="pheru-darts" type="462c0819:PsiDirectoryNode" />
+              <item name="pheru-darts-backend" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="pheru-darts" type="b2602c69:ProjectViewProjectNode" />
+              <item name="pheru-darts" type="462c0819:PsiDirectoryNode" />
+              <item name="pheru-darts-backend" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="pheru-darts" type="b2602c69:ProjectViewProjectNode" />
+              <item name="pheru-darts" type="462c0819:PsiDirectoryNode" />
+              <item name="pheru-darts-backend" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="pheru-darts" type="b2602c69:ProjectViewProjectNode" />
+              <item name="pheru-darts" type="462c0819:PsiDirectoryNode" />
+              <item name="pheru-darts-react-client" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
       <pane id="PackagesPane" />
-      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -415,6 +396,9 @@
     <property name="settings.editor.selected.configurable" value="JavaScript.Libraries" />
   </component>
   <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="de.pheru.darts.backend" />
+    </key>
     <key name="ExtractSuperBase.RECENT_KEYS">
       <recent name="de.pheru.darts.backend.validation" />
     </key>
@@ -429,13 +413,6 @@
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="de.pheru.darts.backend.controllers" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\workspace\webapps\pheru-darts\local_dynamodb\scripts" />
-      <recent name="D:\workspace\webapps\pheru-darts\pheru-darts-react-client\src\services" />
-      <recent name="D:\workspace\webapps\pheru-darts\pheru-darts-react-client\src\components\charts" />
-      <recent name="D:\workspace\webapps\pheru-darts\pheru-darts-react-client\src\test\services" />
-      <recent name="D:\workspace\webapps\pheru-darts\local_dynamodb" />
-    </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="de.pheru.darts.backend.testutil" />
       <recent name="de.pheru.darts.backend.dtos" />
@@ -444,14 +421,18 @@
       <recent name="de.pheru.darts.backend.exceptions" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\workspace\pheru-darts\pheru-darts-backend\src\main\resources" />
       <recent name="D:\workspace\webapps\pheru-darts\pheru-darts-react-client\src\components\loaders" />
       <recent name="D:\workspace\webapps\pheru-darts\pheru-darts-react-client\src\components\loader" />
       <recent name="D:\workspace\webapps\pheru-darts\pheru-darts-react-client\public" />
       <recent name="D:\workspace\webapps\pheru-darts\pheru-darts-react-client\src\actions" />
-      <recent name="D:\workspace\webapps\pheru-darts\pheru-darts-react-client\src\reducers" />
     </key>
-    <key name="CreateClassDialog.RecentsKey">
-      <recent name="de.pheru.darts.backend" />
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\workspace\webapps\pheru-darts\local_dynamodb\scripts" />
+      <recent name="D:\workspace\webapps\pheru-darts\pheru-darts-react-client\src\services" />
+      <recent name="D:\workspace\webapps\pheru-darts\pheru-darts-react-client\src\components\charts" />
+      <recent name="D:\workspace\webapps\pheru-darts\pheru-darts-react-client\src\test\services" />
+      <recent name="D:\workspace\webapps\pheru-darts\local_dynamodb" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -469,29 +450,6 @@
   <component name="RunManager" selected="Jest.gameInformationService">
     <configuration default="true" type="Application" factoryName="Application">
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-    </configuration>
-    <configuration name="StatisticControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="pheru-darts-backend" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="de.pheru.darts.backend.controllers.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="de.pheru.darts.backend.controllers" />
-      <option name="MAIN_CLASS_NAME" value="de.pheru.darts.backend.controllers.StatisticControllerTest" />
-      <option name="METHOD_NAME" />
-      <option name="TEST_OBJECT" value="class" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <patterns />
     </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -628,23 +586,32 @@
       <node-interpreter value="project" />
       <envs />
     </configuration>
+    <configuration name="start" type="js.build_tools.npm" factoryName="npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/pheru-darts-react-client/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="start" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+    </configuration>
     <list>
       <item itemvalue="Maven.backend: clean install" />
       <item itemvalue="Maven.backend: run" />
       <item itemvalue="Spring Boot.PheruDartsBackendApplication" />
-      <item itemvalue="JUnit.StatisticControllerTest" />
       <item itemvalue="Jest.sortService.sortDartDataByScoreBoardOrder" />
       <item itemvalue="Jest.gameInformationService" />
       <item itemvalue="Jest.gameInformationService.getTurnInformation checkout fehlgeschlagen da singleout" />
       <item itemvalue="npm.build" />
+      <item itemvalue="npm.start" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="npm.start" />
         <item itemvalue="npm.build" />
         <item itemvalue="Jest.gameInformationService.getTurnInformation checkout fehlgeschlagen da singleout" />
         <item itemvalue="Jest.gameInformationService" />
         <item itemvalue="Jest.sortService.sortDartDataByScoreBoardOrder" />
-        <item itemvalue="JUnit.StatisticControllerTest" />
       </list>
     </recent_temporary>
   </component>
@@ -704,7 +671,8 @@
       <workItem from="1539887724326" duration="12150000" />
       <workItem from="1540492362378" duration="20090000" />
       <workItem from="1540763753357" duration="56624000" />
-      <workItem from="1541120107225" duration="387000" />
+      <workItem from="1541120107225" duration="584000" />
+      <workItem from="1541120945555" duration="5110000" />
     </task>
     <task id="LOCAL-00001" summary="#24: Projekt unterteilt, Backend-Rahmen">
       <created>1528229363172</created>
@@ -923,7 +891,14 @@
       <option name="project" value="LOCAL" />
       <updated>1541118573434</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="IDEA-Files mit eingecheckt">
+      <created>1541120611450</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1541120611450</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -959,7 +934,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="403975000" />
+    <option name="totallyTimeSpent" value="409282000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -972,10 +947,11 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="1" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.30656934" side_tool="true" weight="0.38053098" />
-      <window_info anchor="right" id="Maven Projects" order="4" sideWeight="0.67863554" side_tool="true" weight="0.14412956" />
+      <window_info anchor="right" id="Maven Projects" order="4" sideWeight="0.679646" side_tool="true" visible="true" weight="0.15708502" />
       <window_info anchor="bottom" id="Database Changes" order="11" show_stripe_button="false" />
       <window_info anchor="right" id="CDI" order="11" sideWeight="0.49911505" weight="0.32955465" />
       <window_info id="Capture Tool" order="1" />
@@ -989,24 +965,24 @@
       <window_info id="Image Layers" order="0" />
       <window_info anchor="bottom" id="Java Enterprise" order="0" />
       <window_info anchor="right" id="Capture Analysis" order="3" />
-      <window_info active="true" anchor="bottom" id="Version Control" order="12" sideWeight="0.69343066" visible="true" weight="0.38053098" />
-      <window_info anchor="bottom" id="Run" order="3" sideWeight="0.8254172" weight="0.33097345" />
+      <window_info anchor="bottom" id="Version Control" order="12" sideWeight="0.69343066" weight="0.38053098" />
+      <window_info active="true" anchor="bottom" id="Run" order="3" sideWeight="0.8254172" visible="true" weight="0.33097345" />
+      <window_info anchor="right" id="npm" order="5" sideWeight="0.32035398" visible="true" weight="0.15708502" />
       <window_info anchor="bottom" id="Spring" order="13" />
       <window_info anchor="bottom" id="Terminal" order="8" weight="0.32920355" />
-      <window_info content_ui="combo" id="Project" order="5" sideWeight="0.70265484" visible="true" weight="0.23643725" />
+      <window_info content_ui="combo" id="Project" order="5" sideWeight="0.70265484" visible="true" weight="0.24048583" />
       <window_info anchor="right" id="Bean Validation" order="12" />
       <window_info id="Web" order="6" side_tool="true" />
+      <window_info anchor="bottom" id="Find" order="2" weight="0.32920355" />
       <window_info anchor="right" id="Theme Preview" order="7" />
       <window_info id="Favorites" order="4" side_tool="true" />
       <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="8" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="npm" order="5" sideWeight="0.32136446" visible="true" weight="0.21295546" />
       <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="9" weight="0.25" />
       <window_info anchor="bottom" id="Messages" order="10" weight="0.32920355" />
       <window_info anchor="bottom" id="Message" order="1" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="10" sideWeight="0.49911505" weight="0.24939272" />
-      <window_info anchor="bottom" id="Find" order="2" weight="0.32920355" />
       <window_info anchor="right" id="Coverage" order="0" sideWeight="0.67079645" side_tool="true" weight="0.28825912" />
     </layout>
   </component>
@@ -1054,7 +1030,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <confirmRemoveEmptyChangelist value="1" />
-    <MESSAGE value="#42: fixed" />
     <MESSAGE value="#38: Body in Respone wenn nicht angemeldet" />
     <MESSAGE value="#38, S&#10;#38: REST-Schnittstelle für aktuellen User&#10;S: Exception-Text in Response-body" />
     <MESSAGE value="#23, #25, #38, #39, #40, #41, S&#10;#23: View für Einstellungen&#10;#25: Code für DynamoDB-Anbindung&#10;#38: Login und Signup implementiert&#10;#39: Cookie bei logout serverseitig löschen&#10;#40: Erste UI-Elemente&#10;#41: Erste UI-Elemente&#10;S: Style angepasst (border-radius: 0), PlayerPermissions implementiert" />
@@ -1079,14 +1054,15 @@
     <MESSAGE value="update githup-page" />
     <MESSAGE value="update githup-page (fehlende Dateien ergänzt)" />
     <MESSAGE value="#31: gh-pages branch statt /docs in master" />
-    <option name="LAST_COMMIT_MESSAGE" value="#31: gh-pages branch statt /docs in master" />
+    <MESSAGE value="IDEA-Files mit eingecheckt" />
+    <option name="LAST_COMMIT_MESSAGE" value="IDEA-Files mit eingecheckt" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/pheru-darts-backend/src/test/java/de/pheru/darts/backend/controllers/StatisticControllerTest.java</url>
-          <line>176</line>
+          <line>177</line>
           <properties />
           <option name="timeStamp" value="30" />
         </line-breakpoint>
@@ -1159,14 +1135,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/reducers/index.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/actions/game.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-94" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/actions/errors.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="112">
@@ -1209,18 +1177,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/reducers/game.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/reducers/games.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="224">
           <caret line="16" column="24" selection-start-line="16" selection-start-column="24" selection-end-line="16" selection-end-column="24" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/reducers/playerPermission.js">
-      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/containers/modals/LoginModalContainer.js">
       <provider selected="true" editor-type-id="text-editor">
@@ -1252,20 +1214,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/__tests__/services/fetchService.test.js" />
-    <entry file="file://$PROJECT_DIR$/pheru-darts-backend/src/test/java/de/pheru/darts/backend/controllers/StatisticControllerTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="599">
-          <caret line="161" column="57" selection-start-line="161" selection-start-column="57" selection-end-line="161" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pheru-darts-backend/src/main/java/de/pheru/darts/backend/repositories/UserRepository.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pheru-darts-backend/src/main/java/de/pheru/darts/backend/controllers/StatisticController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
@@ -1299,13 +1247,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-79">
           <caret line="18" column="25" lean-forward="true" selection-start-line="18" selection-start-column="25" selection-end-line="18" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/components/App.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="229">
-          <caret line="159" column="33" selection-start-line="159" selection-start-column="33" selection-end-line="159" selection-end-column="33" />
         </state>
       </provider>
     </entry>
@@ -1399,9 +1340,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/components/loaders/NavbarLoginLoader.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/components/modals/SignUpModal.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="186">
@@ -1438,6 +1376,85 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/docs/index.html" />
+    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/components/App.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="173">
+          <caret line="98" column="28" selection-start-line="98" selection-start-column="28" selection-end-line="98" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pheru-darts-backend/src/test/java/de/pheru/darts/backend/controllers/UserControllerTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="25">
+          <caret line="160" column="52" selection-start-line="160" selection-start-column="52" selection-end-line="160" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pheru-darts-backend/src/test/java/de/pheru/darts/backend/controllers/ControllerTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="52" column="25" selection-start-line="52" selection-start-column="25" selection-end-line="52" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pheru-darts-backend/src/main/java/de/pheru/darts/backend/repositories/UserRepository.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="112">
+          <caret line="12" column="7" selection-start-line="12" selection-start-column="7" selection-end-line="12" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/local_dynamodb/scripts/games/createTableGame.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/local_dynamodb/scripts/users/createTableUser.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="18" column="3" selection-start-line="18" selection-start-column="3" selection-end-line="18" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/local_dynamodb/scripts/playerPermissions/createTablePlayerPermission.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pheru-darts-backend/src/test/java/de/pheru/darts/backend/controllers/StatisticControllerTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="190" column="5" lean-forward="true" selection-start-line="190" selection-start-column="5" selection-end-line="190" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pheru-darts-backend/src/main/java/de/pheru/darts/backend/controllers/UserController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-84">
+          <caret line="19" column="13" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pheru-darts-backend/src/main/java/de/pheru/darts/backend/DynamoDBConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="14">
+          <caret line="21" column="30" lean-forward="true" selection-start-line="21" selection-start-column="30" selection-end-line="21" selection-end-column="30" />
+          <folding>
+            <element signature="e#781#806#1" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pheru-darts-backend/src/main/resources/application-production.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="42">
+          <caret line="3" column="16" lean-forward="true" selection-start-line="3" selection-start-column="16" selection-end-line="3" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/services/configService.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="154">
+          <caret line="11" column="12" lean-forward="true" selection-start-line="11" selection-start-column="12" selection-end-line="11" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
   </component>
   <component name="masterDetails">
     <states>

@@ -100,7 +100,7 @@ class App extends React.Component {
             <Navbar.Collapse>
                 <Nav>
                     <LinkContainer to={NEW_GAME_ROUTE}>
-                        <NavItem><Glyphicon glyph="plus-sign"/> Neues Spiel</NavItem>
+                        <NavItem><Glyphicon glyph="edit"/> Neues Spiel</NavItem>
                     </LinkContainer>
                     {this.props.gameRunning &&
                     <LinkContainer to={GAME_ROUTE}>
