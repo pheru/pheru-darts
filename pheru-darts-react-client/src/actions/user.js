@@ -2,6 +2,7 @@ import {fetchGet, fetchPost} from "../services/fetchService";
 import {getConfig} from "../services/configService";
 import {fetchPermittedUsers, fetchPlayableUsers} from "./playerPermission";
 import {showError} from "./errors";
+import {defaultErrorHandling} from "../util/actionUtil";
 
 export const SHOW_LOGIN_MODAL = "SHOW_LOGIN_MODAL";
 export const HIDE_LOGIN_MODAL = "HIDE_LOGIN_MODAL";
@@ -87,7 +88,7 @@ export function signUp(name, password) {
             },
             responseNotOk => {
                 dispatch(signUpFailed(responseNotOk.message));
-                dispatch(showError("Sign-up failed", responseNotOk.message));
+                defaultErrorHandling(dispatch, responseNotOk, showError("Sign-up failed", responseNotOk.message));
             },
             error => {
                 dispatch(signUpFailed(error.message));
@@ -104,11 +105,11 @@ export function login(name, password) {
             {name, password},
             json => {
                 dispatch(loginSuccessful());
-                dispatch(loginByToken());
+                dispatch(loginByToken(true));
             },
             responseNotOk => {
                 dispatch(loginFailed(responseNotOk.message));
-                dispatch(showError("Login failed", responseNotOk.message));
+                defaultErrorHandling(dispatch, responseNotOk, showError("Login failed", responseNotOk.message));
             },
             error => {
                 dispatch(loginFailed(error.message));
@@ -118,7 +119,7 @@ export function login(name, password) {
     };
 }
 
-export function loginByToken() {
+export function loginByToken(showErrorOnFailure) {
     return function (dispatch) {
         dispatch(requestLoginByToken());
         return fetchGet(getConfig().resourceUrls.user,
@@ -129,11 +130,13 @@ export function loginByToken() {
             },
             responseNotOk => {
                 dispatch(loginByTokenFailed());
-                dispatch(showError("Login failed", responseNotOk.message));
+                if (showErrorOnFailure) {
+                    defaultErrorHandling(dispatch, responseNotOk, showError("Login by token failed", responseNotOk.message));
+                }
             },
             error => {
                 dispatch(loginByTokenFailed());
-                dispatch(showError("Login failed", error.message));
+                dispatch(showError("Login by token failed", error.message));
             }
         );
     };
@@ -146,7 +149,7 @@ export function logout() {
             json => dispatch(logoutSuccessful()),
             responseNotOk => {
                 dispatch(logoutFailed());
-                dispatch(showError("Logout failed", responseNotOk.message));
+                defaultErrorHandling(dispatch, responseNotOk, showError("Logout failed", responseNotOk.message));
             },
             error => {
                 dispatch(logoutFailed());

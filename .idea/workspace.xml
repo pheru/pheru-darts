@@ -1,17 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="545a966a-dd6d-4c4e-b5a7-ec8869cd94b8" name="Default" comment="IDEA-Files mit eingecheckt">
-      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/src/main/resources/application-production.properties" afterDir="false" />
+    <list id="008f543e-ac41-491a-90ce-73584774f09f" name="ignore?" comment="" />
+    <list default="true" id="545a966a-dd6d-4c4e-b5a7-ec8869cd94b8" name="Default" comment="&#10;#17: &#10;#36: &#10;- Cookie auf secured gesetzt -&gt; HTTPS für lokalen Client &amp; Backend&#10;- Secret und Expire nicht mehr im Projekt&#10;#80: fixed&#10;#81: about-Route mit Versions-Informationen">
+      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/src/main/java/de/pheru/darts/backend/controllers/ServerInformationController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/src/main/resources/application-local.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pheru-darts-backend/src/main/resources/keystore.p12" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pheru-darts-react-client/.env" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pheru-darts-react-client/src/actions/serverInformation.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pheru-darts-react-client/src/components/About.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pheru-darts-react-client/src/containers/AboutContainer.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pheru-darts-react-client/src/reducers/serverInformation.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pheru-darts-react-client/src/util/actionUtil.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pheru-darts-backend/src/test/java/de/pheru/darts/backend/controllers/StatisticControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/pheru-darts-backend/src/test/java/de/pheru/darts/backend/controllers/StatisticControllerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pheru-darts-react-client/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/pheru-darts-react-client/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pheru-darts-backend/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pheru-darts-backend/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pheru-darts-backend/src/main/java/de/pheru/darts/backend/security/DefaultLogoutHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/pheru-darts-backend/src/main/java/de/pheru/darts/backend/security/DefaultLogoutHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pheru-darts-backend/src/main/java/de/pheru/darts/backend/security/JWTAuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/pheru-darts-backend/src/main/java/de/pheru/darts/backend/security/JWTAuthenticationFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pheru-darts-backend/src/main/java/de/pheru/darts/backend/security/JWTAuthorizationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/pheru-darts-backend/src/main/java/de/pheru/darts/backend/security/JWTAuthorizationFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pheru-darts-backend/src/main/java/de/pheru/darts/backend/security/SecurityConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/pheru-darts-backend/src/main/java/de/pheru/darts/backend/security/SecurityConstants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pheru-darts-backend/src/main/java/de/pheru/darts/backend/security/WebSecurity.java" beforeDir="false" afterPath="$PROJECT_DIR$/pheru-darts-backend/src/main/java/de/pheru/darts/backend/security/WebSecurity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pheru-darts-backend/src/main/resources/application-production.properties" beforeDir="false" afterPath="$PROJECT_DIR$/pheru-darts-backend/src/main/resources/application-production.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pheru-darts-backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/pheru-darts-backend/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pheru-darts-react-client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/pheru-darts-react-client/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pheru-darts-react-client/src/actions/games.js" beforeDir="false" afterPath="$PROJECT_DIR$/pheru-darts-react-client/src/actions/games.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pheru-darts-react-client/src/actions/playerPermission.js" beforeDir="false" afterPath="$PROJECT_DIR$/pheru-darts-react-client/src/actions/playerPermission.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pheru-darts-react-client/src/actions/statistics.js" beforeDir="false" afterPath="$PROJECT_DIR$/pheru-darts-react-client/src/actions/statistics.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pheru-darts-react-client/src/actions/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/pheru-darts-react-client/src/actions/user.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pheru-darts-react-client/src/components/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/pheru-darts-react-client/src/components/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pheru-darts-react-client/src/constants/routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/pheru-darts-react-client/src/constants/routes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pheru-darts-react-client/src/containers/AppContainer.js" beforeDir="false" afterPath="$PROJECT_DIR$/pheru-darts-react-client/src/containers/AppContainer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pheru-darts-react-client/src/reducers/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pheru-darts-react-client/src/reducers/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pheru-darts-react-client/src/services/configService.js" beforeDir="false" afterPath="$PROJECT_DIR$/pheru-darts-react-client/src/services/configService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pheru-darts-react-client/src/services/fetchService.js" beforeDir="false" afterPath="$PROJECT_DIR$/pheru-darts-react-client/src/services/fetchService.js" afterDir="false" />
     </list>
-    <list id="d132b405-1568-4011-ace3-8d3010c63b8e" name="#1 Tests ergänzen" comment="#1 Test umgezogen" />
-    <list id="87fde6c8-3a2d-42ff-b032-e6af9fea22a8" name="#36 Backend bereitstellen" comment="" />
     <list id="472b2096-f92f-44d7-b72a-0b71d420fb11" name="NICHT COMMITTEN" comment="" />
     <ignored path="$PROJECT_DIR$/pheru-darts-backend/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -51,93 +72,7 @@
     <option name="myAutoScrollFromSource" value="true" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="App.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/components/App.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="173">
-              <caret line="98" column="28" selection-start-line="98" selection-start-column="28" selection-end-line="98" selection-end-column="28" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="createTableGame.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/local_dynamodb/scripts/games/createTableGame.js">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file leaf-file-name="createTableUser.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/local_dynamodb/scripts/users/createTableUser.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="252">
-              <caret line="18" column="3" selection-start-line="18" selection-start-column="3" selection-end-line="18" selection-end-column="3" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="createTablePlayerPermission.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/local_dynamodb/scripts/playerPermissions/createTablePlayerPermission.js">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file leaf-file-name="application-production.properties" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pheru-darts-backend/src/main/resources/application-production.properties">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="42">
-              <caret line="3" column="16" lean-forward="true" selection-start-line="3" selection-start-column="16" selection-end-line="3" selection-end-column="16" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DynamoDBConfig.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pheru-darts-backend/src/main/java/de/pheru/darts/backend/DynamoDBConfig.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="14">
-              <caret line="21" column="30" lean-forward="true" selection-start-line="21" selection-start-column="30" selection-end-line="21" selection-end-column="30" />
-              <folding>
-                <element signature="e#781#806#1" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="configService.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/services/configService.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="154">
-              <caret line="11" column="12" lean-forward="true" selection-start-line="11" selection-start-column="12" selection-end-line="11" selection-end-column="12" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="StatisticControllerTest.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pheru-darts-backend/src/test/java/de/pheru/darts/backend/controllers/StatisticControllerTest.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="162">
-              <caret line="190" column="5" lean-forward="true" selection-start-line="190" selection-start-column="5" selection-end-line="190" selection-end-column="5" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="UserController.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pheru-darts-backend/src/main/java/de/pheru/darts/backend/controllers/UserController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-84">
-              <caret line="19" column="13" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="UserRepository.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pheru-darts-backend/src/main/java/de/pheru/darts/backend/repositories/UserRepository.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="112">
-              <caret line="12" column="7" selection-start-line="12" selection-start-column="7" selection-end-line="12" selection-end-column="7" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -151,29 +86,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>siegr</find>
-      <find>spinner</find>
-      <find>sort</find>
-      <find>score</find>
-      <find>didup</find>
-      <find>data2</find>
-      <find>radar</find>
-      <find>nur</find>
-      <find>style={{marginTop: 0}}</find>
-      <find>darts</find>
-      <find>spiele</find>
-      <find>100%</find>
-      <find>consl</find>
-      <find>well</find>
-      <find>primar</find>
-      <find>car</find>
-      <find>didu</find>
-      <find>button</find>
-      <find>fetchplay</find>
-      <find>fetch</find>
-      <find>fetchPlayableUsers</find>
-      <find>failed</find>
-      <find>login</find>
       <find>loginfailedme</find>
       <find>message</find>
       <find>alert</find>
@@ -181,6 +93,29 @@
       <find>plus-si</find>
       <find>delete</find>
       <find>TODO</find>
+      <find>-stag</find>
+      <find>stagin</find>
+      <find>certdomain</find>
+      <find>.navbar-nav&gt;li&gt;a</find>
+      <find>60</find>
+      <find>config</find>
+      <find>secret</find>
+      <find>todo</find>
+      <find>expire</find>
+      <find>jwt</find>
+      <find>/log</find>
+      <find>&quot;/&quot;</find>
+      <find>@va</find>
+      <find>c</find>
+      <find>parent</find>
+      <find>@value</find>
+      <find>ARCHIVE_GAME</find>
+      <find>produ</find>
+      <find>archive</find>
+      <find>Confirmmodal</find>
+      <find>memor</find>
+      <find>Relogmodal</find>
+      <find>login</find>
     </findStrings>
     <replaceStrings>
       <replace>log</replace>
@@ -198,58 +133,27 @@
       <replace>2s</replace>
       <replace>stack</replace>
       <replace>, null</replace>
+      <replace>FETCH_SERVER_VERSION</replace>
     </replaceStrings>
     <dirStrings>
       <dir>D:\workspace\webapps\pheru-darts\pheru-darts-react-client</dir>
+      <dir>D:\workspace\pheru-darts\pheru-darts-backend</dir>
     </dirStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="RB_1_0_0" />
       </map>
     </option>
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/pheru-darts-react-client/src/components/loaders/StatisticsLoader.js" />
-        <option value="$PROJECT_DIR$/pheru-darts-react-client/src/components/loaders/statisticsloader.css" />
-        <option value="$PROJECT_DIR$/pheru-darts-backend/src/test/java/de/pheru/darts/backend/controllers/GameControllerTest.java" />
-        <option value="$PROJECT_DIR$/pheru-darts-backend/src/main/java/de/pheru/darts/backend/controllers/PlayerPermissionController.java" />
-        <option value="$PROJECT_DIR$/pheru-darts-backend/src/test/java/de/pheru/darts/backend/controllers/PlayerPermissionControllerTest.java" />
-        <option value="$PROJECT_DIR$/pheru-darts-backend/src/test/java/de/pheru/darts/backend/testutil/GameBuilder.java" />
-        <option value="$PROJECT_DIR$/pheru-darts-backend/src/test/java/de/pheru/darts/backend/testutil/GameDtoBuilder.java" />
-        <option value="$PROJECT_DIR$/pheru-darts-backend/src/test/java/de/pheru/darts/backend/testutil/DartDocumentBuilder.java" />
-        <option value="$PROJECT_DIR$/pheru-darts-backend/src/test/java/de/pheru/darts/backend/testutil/GameEntityBuilder.java" />
-        <option value="$PROJECT_DIR$/pheru-darts-backend/src/test/java/de/pheru/darts/backend/testutil/PlayerDocumentBuilder.java" />
-        <option value="$PROJECT_DIR$/pheru-darts-backend/src/test/java/de/pheru/darts/backend/testutil/AufnahmeDocumentBuilder.java" />
-        <option value="$PROJECT_DIR$/pheru-darts-react-client/src/services/gameInformationService.js" />
-        <option value="$PROJECT_DIR$/pheru-darts-backend/src/main/java/de/pheru/darts/backend/dtos/statistics/DartStatisticDto.java" />
-        <option value="$PROJECT_DIR$/pheru-darts-backend/src/main/java/de/pheru/darts/backend/controllers/StatisticController.java" />
-        <option value="$PROJECT_DIR$/pheru-darts-react-client/src/containers/StatisticsContainer.js" />
-        <option value="$PROJECT_DIR$/pheru-darts-react-client/src/__tests__/services/sortService.test.js" />
-        <option value="$PROJECT_DIR$/pheru-darts-react-client/src/services/sortService.js" />
-        <option value="$PROJECT_DIR$/pheru-darts-react-client/src/components/Settings.js" />
-        <option value="$PROJECT_DIR$/pheru-darts-react-client/src/components/charts/DartsBarChart.js" />
-        <option value="$PROJECT_DIR$/pheru-darts-react-client/public/index.html" />
-        <option value="$PROJECT_DIR$/pheru-darts-react-client/src/reducers/errors.js" />
-        <option value="$PROJECT_DIR$/pheru-darts-react-client/src/reducers/games.js" />
-        <option value="$PROJECT_DIR$/pheru-darts-react-client/src/actions/errors.js" />
-        <option value="$PROJECT_DIR$/pheru-darts-react-client/src/services/fetchService.js" />
-        <option value="$PROJECT_DIR$/pheru-darts-react-client/src/actions/user.js" />
-        <option value="$PROJECT_DIR$/pheru-darts-react-client/src/actions/statistics.js" />
-        <option value="$PROJECT_DIR$/pheru-darts-react-client/src/actions/playerPermission.js" />
-        <option value="$PROJECT_DIR$/pheru-darts-react-client/src/actions/games.js" />
-        <option value="$PROJECT_DIR$/pheru-darts-react-client/src/components/modals/LoginModal.js" />
-        <option value="$PROJECT_DIR$/pheru-darts-react-client/src/containers/modals/LoginModalContainer.js" />
-        <option value="$PROJECT_DIR$/pheru-darts-react-client/src/reducers/user.js" />
-        <option value="$PROJECT_DIR$/pheru-darts-react-client/src/components/modals/SignUpModal.js" />
         <option value="$PROJECT_DIR$/pheru-darts-react-client/src/containers/modals/SignUpModalContainer.js" />
         <option value="$PROJECT_DIR$/pheru-darts-react-client/src/components/Timer.java" />
         <option value="$PROJECT_DIR$/pheru-darts-react-client/src/components/Timer.js" />
-        <option value="$PROJECT_DIR$/pheru-darts-react-client/package.json" />
         <option value="$PROJECT_DIR$/pheru-darts-backend/src/main/java/de/pheru/darts/backend/SleepConfig.java" />
         <option value="$PROJECT_DIR$/pheru-darts-react-client/src/reducers/statistics.js" />
         <option value="$PROJECT_DIR$/pheru-darts-react-client/src/components/Game.js" />
@@ -260,11 +164,44 @@
         <option value="$PROJECT_DIR$/pheru-darts-react-client/src/__tests__/services/gameInformationService.test.js" />
         <option value="$PROJECT_DIR$/docs/index.html" />
         <option value="$APPLICATION_CONFIG_DIR$/scratches/scratch.html" />
-        <option value="$PROJECT_DIR$/pheru-darts-react-client/src/components/App.js" />
         <option value="$PROJECT_DIR$/pheru-darts-backend/src/test/java/de/pheru/darts/backend/controllers/UserControllerTest.java" />
         <option value="$PROJECT_DIR$/pheru-darts-backend/src/test/java/de/pheru/darts/backend/controllers/StatisticControllerTest.java" />
-        <option value="$PROJECT_DIR$/pheru-darts-react-client/src/services/configService.js" />
+        <option value="$PROJECT_DIR$/.ebextensions/AWS_Single_LetsEncrypt.yaml" />
+        <option value="$PROJECT_DIR$/pheru-darts-backend/src/main/resources/ebextensions/AWS_Single_LetsEncrypt.config" />
+        <option value="$PROJECT_DIR$/pheru-darts-react-client/src/actions/statistics.js" />
+        <option value="$PROJECT_DIR$/pheru-darts-react-client/src/actions/playerPermission.js" />
+        <option value="$PROJECT_DIR$/pheru-darts-backend/src/main/java/de/pheru/darts/backend/security/SecurityConstants.java" />
+        <option value="$PROJECT_DIR$/pheru-darts-backend/src/main/java/de/pheru/darts/backend/security/JWTAuthorizationFilter.java" />
         <option value="$PROJECT_DIR$/pheru-darts-backend/src/main/resources/application-production.properties" />
+        <option value="$PROJECT_DIR$/pheru-darts-backend/src/main/java/de/pheru/darts/backend/security/WebSecurity.java" />
+        <option value="$PROJECT_DIR$/pheru-darts-backend/src/main/java/de/pheru/darts/backend/security/JWTAuthenticationFilter.java" />
+        <option value="$PROJECT_DIR$/pheru-darts-backend/src/main/java/de/pheru/darts/backend/security/SecurityUtil.java" />
+        <option value="$PROJECT_DIR$/pheru-darts-backend/src/main/java/de/pheru/darts/backend/security/DefaultLogoutHandler.java" />
+        <option value="$PROJECT_DIR$/pheru-darts-backend/pom.xml" />
+        <option value="$PROJECT_DIR$/pheru-darts-react-client/package.json" />
+        <option value="$PROJECT_DIR$/pheru-darts-backend/src/main/resources/application.properties" />
+        <option value="$PROJECT_DIR$/pheru-darts-react-client/.env" />
+        <option value="$PROJECT_DIR$/pheru-darts-react-client/src/containers/FooterContainer.js" />
+        <option value="$PROJECT_DIR$/pheru-darts-react-client/src/components/Footer.js" />
+        <option value="$PROJECT_DIR$/pheru-darts-react-client/src/containers/SettingsContainer.js" />
+        <option value="$PROJECT_DIR$/pheru-darts-react-client/src/services/configService.js" />
+        <option value="$PROJECT_DIR$/pheru-darts-react-client/src/services/fetchService.js" />
+        <option value="$PROJECT_DIR$/pheru-darts-react-client/src/actions/serverInformation.js" />
+        <option value="$PROJECT_DIR$/pheru-darts-react-client/src/reducers/index.js" />
+        <option value="$PROJECT_DIR$/pheru-darts-backend/src/main/java/de/pheru/darts/backend/controllers/ServerInformationController.java" />
+        <option value="$PROJECT_DIR$/pheru-darts-react-client/src/reducers/serverInformation.js" />
+        <option value="$PROJECT_DIR$/pheru-darts-react-client/src/containers/AboutContainer.js" />
+        <option value="$PROJECT_DIR$/pheru-darts-react-client/src/constants/routes.js" />
+        <option value="$PROJECT_DIR$/pheru-darts-react-client/src/components/Settings.js" />
+        <option value="$PROJECT_DIR$/pheru-darts-react-client/src/actions/games.js" />
+        <option value="$PROJECT_DIR$/pheru-darts-react-client/src/components/modals/RelogModal.js" />
+        <option value="$PROJECT_DIR$/pheru-darts-react-client/src/containers/modals/RelogModalContainer.js" />
+        <option value="$PROJECT_DIR$/pheru-darts-backend/src/main/resources/application-local.properties" />
+        <option value="$PROJECT_DIR$/pheru-darts-react-client/src/util/actionUtil.js" />
+        <option value="$PROJECT_DIR$/pheru-darts-react-client/src/components/About.js" />
+        <option value="$PROJECT_DIR$/pheru-darts-react-client/src/actions/user.js" />
+        <option value="$PROJECT_DIR$/pheru-darts-react-client/src/containers/AppContainer.js" />
+        <option value="$PROJECT_DIR$/pheru-darts-react-client/src/components/App.js" />
       </list>
     </option>
   </component>
@@ -326,8 +263,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="AndroidView" />
       <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -335,47 +272,11 @@
               <item name="pheru-darts" type="b2602c69:ProjectViewProjectNode" />
               <item name="pheru-darts" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="pheru-darts" type="b2602c69:ProjectViewProjectNode" />
-              <item name="pheru-darts" type="462c0819:PsiDirectoryNode" />
-              <item name="local_dynamodb" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="pheru-darts" type="b2602c69:ProjectViewProjectNode" />
-              <item name="pheru-darts" type="462c0819:PsiDirectoryNode" />
-              <item name="pheru-darts-backend" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="pheru-darts" type="b2602c69:ProjectViewProjectNode" />
-              <item name="pheru-darts" type="462c0819:PsiDirectoryNode" />
-              <item name="pheru-darts-backend" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="pheru-darts" type="b2602c69:ProjectViewProjectNode" />
-              <item name="pheru-darts" type="462c0819:PsiDirectoryNode" />
-              <item name="pheru-darts-backend" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="pheru-darts" type="b2602c69:ProjectViewProjectNode" />
-              <item name="pheru-darts" type="462c0819:PsiDirectoryNode" />
-              <item name="pheru-darts-backend" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="pheru-darts" type="b2602c69:ProjectViewProjectNode" />
-              <item name="pheru-darts" type="462c0819:PsiDirectoryNode" />
-              <item name="pheru-darts-react-client" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
+      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -396,9 +297,6 @@
     <property name="settings.editor.selected.configurable" value="JavaScript.Libraries" />
   </component>
   <component name="RecentsManager">
-    <key name="CreateClassDialog.RecentsKey">
-      <recent name="de.pheru.darts.backend" />
-    </key>
     <key name="ExtractSuperBase.RECENT_KEYS">
       <recent name="de.pheru.darts.backend.validation" />
     </key>
@@ -413,26 +311,29 @@
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="de.pheru.darts.backend.controllers" />
     </key>
-    <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="de.pheru.darts.backend.testutil" />
-      <recent name="de.pheru.darts.backend.dtos" />
-      <recent name="de.pheru.darts.backend.controllers" />
-      <recent name="de.pheru.darts.backend.mocks.repositories" />
-      <recent name="de.pheru.darts.backend.exceptions" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\workspace\pheru-darts\pheru-darts-backend\src\main\resources" />
-      <recent name="D:\workspace\webapps\pheru-darts\pheru-darts-react-client\src\components\loaders" />
-      <recent name="D:\workspace\webapps\pheru-darts\pheru-darts-react-client\src\components\loader" />
-      <recent name="D:\workspace\webapps\pheru-darts\pheru-darts-react-client\public" />
-      <recent name="D:\workspace\webapps\pheru-darts\pheru-darts-react-client\src\actions" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\workspace\pheru-darts\pheru-darts-backend" />
       <recent name="D:\workspace\webapps\pheru-darts\local_dynamodb\scripts" />
       <recent name="D:\workspace\webapps\pheru-darts\pheru-darts-react-client\src\services" />
       <recent name="D:\workspace\webapps\pheru-darts\pheru-darts-react-client\src\components\charts" />
       <recent name="D:\workspace\webapps\pheru-darts\pheru-darts-react-client\src\test\services" />
-      <recent name="D:\workspace\webapps\pheru-darts\local_dynamodb" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="de.pheru.darts.backend.controllers" />
+      <recent name="de.pheru.darts.backend.testutil" />
+      <recent name="de.pheru.darts.backend.dtos" />
+      <recent name="de.pheru.darts.backend.mocks.repositories" />
+      <recent name="de.pheru.darts.backend.exceptions" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\workspace\pheru-darts\pheru-darts-react-client\src\containers\modals" />
+      <recent name="D:\workspace\pheru-darts\pheru-darts-react-client\src\components\modals" />
+      <recent name="D:\workspace\pheru-darts\pheru-darts-react-client\src\containers" />
+      <recent name="D:\workspace\pheru-darts\pheru-darts-react-client\src\components" />
+      <recent name="D:\workspace\pheru-darts\pheru-darts-react-client\src\reducers" />
+    </key>
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="de.pheru.darts.backend" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -447,7 +348,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Jest.gameInformationService">
+  <component name="RunManager" selected="Maven.backend: run">
     <configuration default="true" type="Application" factoryName="Application">
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
     </configuration>
@@ -539,6 +440,7 @@
             <option name="goals">
               <list>
                 <option value="spring-boot:run" />
+                <option value="-Dspring.profiles.active=local" />
               </list>
             </option>
             <option name="pomFileName" value="pom.xml" />
@@ -621,9 +523,8 @@
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="545a966a-dd6d-4c4e-b5a7-ec8869cd94b8" name="Default" comment="" />
-      <changelist id="d132b405-1568-4011-ace3-8d3010c63b8e" name="#1 Tests ergänzen" comment="" />
-      <changelist id="87fde6c8-3a2d-42ff-b032-e6af9fea22a8" name="#36 Backend bereitstellen" comment="" />
       <changelist id="472b2096-f92f-44d7-b72a-0b71d420fb11" name="NICHT COMMITTEN" comment="" />
+      <changelist id="008f543e-ac41-491a-90ce-73584774f09f" name="ignore?" comment="" />
       <created>1528226070971</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -672,7 +573,9 @@
       <workItem from="1540492362378" duration="20090000" />
       <workItem from="1540763753357" duration="56624000" />
       <workItem from="1541120107225" duration="584000" />
-      <workItem from="1541120945555" duration="5110000" />
+      <workItem from="1541120945555" duration="29529000" />
+      <workItem from="1541355710023" duration="10226000" />
+      <workItem from="1541442055950" duration="1641000" />
     </task>
     <task id="LOCAL-00001" summary="#24: Projekt unterteilt, Backend-Rahmen">
       <created>1528229363172</created>
@@ -898,7 +801,63 @@
       <option name="project" value="LOCAL" />
       <updated>1541120611450</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="#36, S&#10;#36: Properties für AWS / DynamoDB; Client-Config Production&#10;S: Neues-Spiel-Icon">
+      <created>1541171148658</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1541171148658</updated>
+    </task>
+    <task id="LOCAL-00034" summary="#36: Anpassungen für Bereitstellung">
+      <created>1541190770523</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1541190770523</updated>
+    </task>
+    <task id="LOCAL-00035" summary="#36: Anpassungen für Bereitstellung">
+      <created>1541191003165</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1541191003165</updated>
+    </task>
+    <task id="LOCAL-00036" summary="RB_1.0.0">
+      <created>1541200613322</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1541200613322</updated>
+    </task>
+    <task id="LOCAL-00037" summary="1.0.0-SNAPSHOT">
+      <created>1541200707568</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1541200707568</updated>
+    </task>
+    <task id="LOCAL-00038" summary="Client-1.0.0, #36, S&#10;#36: Production-Backend angebunden&#10;S: Navbar etwas schmaler">
+      <created>1541201815475</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1541201815475</updated>
+    </task>
+    <task id="LOCAL-00039" summary="Client-1.0.0, #36, S&#10;#36: Production-Backend angebunden&#10;S: Navbar etwas schmaler&#10;&#10;(cherry picked from commit f8a50a0)">
+      <created>1541201890714</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1541201890714</updated>
+    </task>
+    <task id="LOCAL-00040" summary="Client 1.1.0-SNAPSHOT">
+      <created>1541201924604</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1541201924604</updated>
+    </task>
+    <option name="localTasksCounter" value="41" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -934,7 +893,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="409282000" />
+    <option name="totallyTimeSpent" value="445568000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -947,11 +906,10 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="1" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.30656934" side_tool="true" weight="0.38053098" />
-      <window_info anchor="right" id="Maven Projects" order="4" sideWeight="0.679646" side_tool="true" visible="true" weight="0.15708502" />
+      <window_info anchor="right" id="Maven Projects" order="4" sideWeight="0.6831858" side_tool="true" visible="true" weight="0.15708502" />
       <window_info anchor="bottom" id="Database Changes" order="11" show_stripe_button="false" />
       <window_info anchor="right" id="CDI" order="11" sideWeight="0.49911505" weight="0.32955465" />
       <window_info id="Capture Tool" order="1" />
@@ -965,12 +923,12 @@
       <window_info id="Image Layers" order="0" />
       <window_info anchor="bottom" id="Java Enterprise" order="0" />
       <window_info anchor="right" id="Capture Analysis" order="3" />
-      <window_info anchor="bottom" id="Version Control" order="12" sideWeight="0.69343066" weight="0.38053098" />
-      <window_info active="true" anchor="bottom" id="Run" order="3" sideWeight="0.8254172" visible="true" weight="0.33097345" />
-      <window_info anchor="right" id="npm" order="5" sideWeight="0.32035398" visible="true" weight="0.15708502" />
+      <window_info active="true" anchor="bottom" id="Version Control" order="12" sideWeight="0.69343066" visible="true" weight="0.38053098" />
+      <window_info anchor="bottom" id="Run" order="3" sideWeight="0.8254172" weight="0.33097345" />
+      <window_info anchor="right" id="npm" order="5" sideWeight="0.31681415" visible="true" weight="0.15708502" />
       <window_info anchor="bottom" id="Spring" order="13" />
       <window_info anchor="bottom" id="Terminal" order="8" weight="0.32920355" />
-      <window_info content_ui="combo" id="Project" order="5" sideWeight="0.70265484" visible="true" weight="0.24048583" />
+      <window_info content_ui="combo" id="Project" order="5" sideWeight="0.70265484" visible="true" weight="0.25587043" />
       <window_info anchor="right" id="Bean Validation" order="12" />
       <window_info id="Web" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Find" order="2" weight="0.32920355" />
@@ -988,6 +946,10 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.env" />
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.config" />
   </component>
   <component name="Vcs.Log.History.Properties">
     <option name="COLUMN_ORDER">
@@ -1030,13 +992,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <confirmRemoveEmptyChangelist value="1" />
-    <MESSAGE value="#38: Body in Respone wenn nicht angemeldet" />
-    <MESSAGE value="#38, S&#10;#38: REST-Schnittstelle für aktuellen User&#10;S: Exception-Text in Response-body" />
-    <MESSAGE value="#23, #25, #38, #39, #40, #41, S&#10;#23: View für Einstellungen&#10;#25: Code für DynamoDB-Anbindung&#10;#38: Login und Signup implementiert&#10;#39: Cookie bei logout serverseitig löschen&#10;#40: Erste UI-Elemente&#10;#41: Erste UI-Elemente&#10;S: Style angepasst (border-radius: 0), PlayerPermissions implementiert" />
-    <MESSAGE value="Fehlende Dateien aus letztem Commit nachgezogen und ignores angepasst" />
-    <MESSAGE value="#30 Navbar-Reihenfolge und Einrückung gefixed" />
-    <MESSAGE value="#51, #52: Backend für Games" />
-    <MESSAGE value="#53, S&#10;#53: Fertiges Spiel an backend senden&#10;S: Spieler bei Rematch auswählbar; Dart rückgängig machen bei Matchende möglich" />
     <MESSAGE value="#13: Spiel-Einstellungen nach unmount behalten" />
     <MESSAGE value="#27 href-Angaben bei build anpassen" />
     <MESSAGE value="#54: Ansatz für Statistiken am backend" />
@@ -1055,7 +1010,14 @@
     <MESSAGE value="update githup-page (fehlende Dateien ergänzt)" />
     <MESSAGE value="#31: gh-pages branch statt /docs in master" />
     <MESSAGE value="IDEA-Files mit eingecheckt" />
-    <option name="LAST_COMMIT_MESSAGE" value="IDEA-Files mit eingecheckt" />
+    <MESSAGE value="#36, S&#10;#36: Properties für AWS / DynamoDB; Client-Config Production&#10;S: Neues-Spiel-Icon" />
+    <MESSAGE value="#36: Anpassungen für Bereitstellung" />
+    <MESSAGE value="RB_1.0.0" />
+    <MESSAGE value="1.0.0-SNAPSHOT" />
+    <MESSAGE value="Client-1.0.0, #36, S&#10;#36: Production-Backend angebunden&#10;S: Navbar etwas schmaler" />
+    <MESSAGE value="Client-1.0.0, #36, S&#10;#36: Production-Backend angebunden&#10;S: Navbar etwas schmaler&#10;&#10;(cherry picked from commit f8a50a0)" />
+    <MESSAGE value="Client 1.1.0-SNAPSHOT" />
+    <option name="LAST_COMMIT_MESSAGE" value="Client 1.1.0-SNAPSHOT" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1067,7 +1029,7 @@
           <option name="timeStamp" value="30" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="31" />
+      <option name="time" value="32" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="JUnit">
@@ -1135,323 +1097,392 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/actions/errors.js">
+    <entry file="file://$PROJECT_DIR$/pheru-darts-backend/src/main/resources/ebextensions/AWS_Single_LetsEncrypt.config" />
+    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/public/custom_bootstrap/css/bootstrap.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="112">
-          <caret line="8" column="20" selection-start-line="8" selection-start-column="20" selection-end-line="8" selection-end-column="20" />
+        <state relative-caret-position="84">
+          <caret line="6" column="3" lean-forward="true" selection-start-line="6" selection-start-column="3" selection-end-line="6" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pheru-darts-backend/src/main/java/de/pheru/darts/backend/controllers/GameController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="33" column="5" lean-forward="true" selection-start-line="33" selection-start-column="5" selection-end-line="33" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pheru-darts-backend/src/main/java/de/pheru/darts/backend/controllers/StatisticController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="44">
+          <caret line="17" column="27" selection-start-line="17" selection-start-column="18" selection-end-line="17" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pheru-darts-backend/src/main/java/de/pheru/darts/backend/exceptions/PermissionAlreadyGrantedException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="98">
+          <caret line="8" column="11" selection-start-line="8" selection-start-column="11" selection-end-line="8" selection-end-column="11" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/actions/statistics.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="227">
-          <caret line="30" column="60" selection-start-line="30" selection-start-column="60" selection-end-line="30" selection-end-column="60" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/actions/user.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="73">
-          <caret line="78" column="40" lean-forward="true" selection-start-line="78" selection-start-column="40" selection-end-line="78" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/services/fetchService.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="42" column="21" lean-forward="true" selection-start-line="42" selection-start-column="21" selection-end-line="42" selection-end-column="21" />
+        <state relative-caret-position="120">
+          <caret line="28" column="25" lean-forward="true" selection-start-line="28" selection-start-column="25" selection-end-line="28" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#52#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/actions/playerPermission.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="437">
-          <caret line="141" column="22" lean-forward="true" selection-start-line="141" selection-start-column="22" selection-end-line="141" selection-end-column="22" />
+        <state relative-caret-position="209">
+          <caret line="63" column="62" selection-start-line="63" selection-start-column="62" selection-end-line="63" selection-end-column="62" />
+          <folding>
+            <element signature="e#0#52#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/actions/games.js">
+    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/actions/game.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="84">
-          <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
-        </state>
+        <state relative-caret-position="-141" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/reducers/games.js">
+    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/actions/errors.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="224">
-          <caret line="16" column="24" selection-start-line="16" selection-start-column="24" selection-end-line="16" selection-end-column="24" />
+        <state relative-caret-position="154">
+          <caret line="11" column="3" lean-forward="true" selection-start-line="11" selection-start-column="3" selection-end-line="11" selection-end-column="3" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/containers/modals/LoginModalContainer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="98">
-          <caret line="7" column="39" selection-start-line="7" selection-start-column="39" selection-end-line="7" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/reducers/user.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="139">
-          <caret line="80" column="20" lean-forward="true" selection-start-line="80" selection-start-column="20" selection-end-line="80" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/containers/modals/SignUpModalContainer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="98">
-          <caret line="7" column="39" lean-forward="true" selection-start-line="7" selection-start-column="39" selection-end-line="7" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/components/Timer.js" />
-    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="9" column="14" selection-start-line="9" selection-start-column="14" selection-end-line="9" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/__tests__/services/fetchService.test.js" />
-    <entry file="file://$PROJECT_DIR$/pheru-darts-backend/src/main/java/de/pheru/darts/backend/controllers/StatisticController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="154" column="20" selection-start-line="154" selection-start-column="20" selection-end-line="154" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/services/gameInformationService.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="254">
-          <caret line="90" column="14" lean-forward="true" selection-start-line="90" selection-start-column="14" selection-end-line="90" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pheru-darts-backend/src/main/java/de/pheru/darts/backend/SleepConfig.java" />
-    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/containers/StatisticsContainer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="112">
-          <caret line="8" column="41" lean-forward="true" selection-start-line="8" selection-start-column="41" selection-end-line="8" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/reducers/statistics.js">
+    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/components/modals/ErrorModal.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
-          <caret line="17" column="11" selection-start-line="17" selection-start-column="11" selection-end-line="17" selection-end-column="11" />
+          <caret line="23" column="5" lean-forward="true" selection-start-line="23" selection-start-column="5" selection-end-line="23" selection-end-column="5" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/components/charts/DartsBarChart.js">
+    <entry file="file://$PROJECT_DIR$/pheru-darts-backend/src/main/java/de/pheru/darts/backend/DynamoDBConfig.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-79">
-          <caret line="18" column="25" lean-forward="true" selection-start-line="18" selection-start-column="25" selection-end-line="18" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/components/DropdownTextfield.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-359">
-          <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pheru-darts-backend/src/main/java/de/pheru/darts/backend/security/JWTAuthenticationFilter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="43" column="14" selection-start-line="43" selection-start-column="14" selection-end-line="43" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/components/Game.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1190">
-          <caret line="33" column="53" selection-start-line="33" selection-start-column="53" selection-end-line="33" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/components/NewGameConfig.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1218">
-          <caret line="156" lean-forward="true" selection-start-line="156" selection-end-line="156" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pheru-darts-backend/src/main/java/de/pheru/darts/backend/security/DefaultLogoutHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="21" column="10" selection-start-line="21" selection-start-column="10" selection-end-line="21" selection-end-column="10" />
+        <state relative-caret-position="56">
+          <caret line="17" column="41" lean-forward="true" selection-start-line="17" selection-start-column="4" selection-end-line="17" selection-end-column="41" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/pheru-darts-backend/src/main/java/de/pheru/darts/backend/security/SecurityConstants.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="42">
-          <caret line="3" column="6" selection-start-line="3" selection-start-column="6" selection-end-line="3" selection-end-column="6" />
+          <caret line="3" selection-start-line="3" selection-end-line="3" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/components/Player.js">
+    <entry file="file://$PROJECT_DIR$/pheru-darts-backend/src/main/java/de/pheru/darts/backend/security/JWTAuthorizationFilter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1307" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/components/ScoreButtons.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-873" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/components/charts/DartsRadarChart.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-619">
-          <caret line="14" column="11" selection-start-line="14" selection-start-column="11" selection-end-line="14" selection-end-column="11" />
+        <state relative-caret-position="185">
+          <caret line="63" column="58" selection-start-line="63" selection-start-column="58" selection-end-line="63" selection-end-column="58" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/components/charts/GamesBarChart.js">
+    <entry file="file://$PROJECT_DIR$/pheru-darts-backend/src/main/java/de/pheru/darts/backend/security/SecurityUtil.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-201" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/components/Settings.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1377">
-          <caret line="137" column="18" selection-start-line="137" selection-start-column="18" selection-end-line="137" selection-end-column="18" />
+        <state relative-caret-position="210">
+          <caret line="16" selection-start-line="16" selection-end-line="16" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/components/Statistics.js">
+    <entry file="file://$PROJECT_DIR$/pheru-darts-backend/src/main/java/de/pheru/darts/backend/security/DefaultLogoutHandler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-565">
-          <caret line="135" column="17" lean-forward="true" selection-start-line="135" selection-start-column="17" selection-end-line="135" selection-end-column="17" />
+        <state relative-caret-position="168">
+          <caret line="18" column="28" lean-forward="true" selection-start-line="18" selection-start-column="28" selection-end-line="18" selection-end-column="28" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/components/modals/ConfirmModal.js">
+    <entry file="file://$PROJECT_DIR$/pheru-darts-backend/src/main/java/de/pheru/darts/backend/security/JWTAuthenticationFilter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-150" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/components/loaders/StackLoader.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="196">
-          <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
+        <state relative-caret-position="56">
+          <caret line="21" column="36" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="36" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/components/modals/SignUpModal.js">
+    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/package.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="186">
-          <caret line="81" column="36" lean-forward="true" selection-start-line="81" selection-start-column="4" selection-end-line="81" selection-end-column="36" />
+        <state relative-caret-position="28">
+          <caret line="2" column="19" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/components/modals/LoginModal.js">
+    <entry file="file://$PROJECT_DIR$/pheru-darts-backend/src/main/java/de/pheru/darts/backend/controllers/PlayerPermissionController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="65" column="5" selection-start-line="65" selection-end-line="65" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/components/modals/ErrorModal.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="77">
-          <caret line="23" column="5" lean-forward="true" selection-start-line="23" selection-start-column="5" selection-end-line="23" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/__tests__/services/gameInformationService.test.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="224">
-          <caret line="16" column="64" selection-start-line="16" selection-start-column="64" selection-end-line="16" selection-end-column="64" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="213">
-          <caret line="17" column="7" selection-end-line="17" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/index.html" />
-    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/components/App.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="173">
-          <caret line="98" column="28" selection-start-line="98" selection-start-column="28" selection-end-line="98" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pheru-darts-backend/src/test/java/de/pheru/darts/backend/controllers/UserControllerTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="25">
-          <caret line="160" column="52" selection-start-line="160" selection-start-column="52" selection-end-line="160" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pheru-darts-backend/src/test/java/de/pheru/darts/backend/controllers/ControllerTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="52" column="25" selection-start-line="52" selection-start-column="25" selection-end-line="52" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pheru-darts-backend/src/main/java/de/pheru/darts/backend/repositories/UserRepository.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="112">
-          <caret line="12" column="7" selection-start-line="12" selection-start-column="7" selection-end-line="12" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/local_dynamodb/scripts/games/createTableGame.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/local_dynamodb/scripts/users/createTableUser.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="18" column="3" selection-start-line="18" selection-start-column="3" selection-end-line="18" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/local_dynamodb/scripts/playerPermissions/createTablePlayerPermission.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pheru-darts-backend/src/test/java/de/pheru/darts/backend/controllers/StatisticControllerTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="190" column="5" lean-forward="true" selection-start-line="190" selection-start-column="5" selection-end-line="190" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pheru-darts-backend/src/main/java/de/pheru/darts/backend/controllers/UserController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-84">
-          <caret line="19" column="13" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pheru-darts-backend/src/main/java/de/pheru/darts/backend/DynamoDBConfig.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="14">
-          <caret line="21" column="30" lean-forward="true" selection-start-line="21" selection-start-column="30" selection-end-line="21" selection-end-column="30" />
-          <folding>
-            <element signature="e#781#806#1" expanded="true" />
-          </folding>
+        <state relative-caret-position="1050">
+          <caret line="88" column="37" selection-start-line="88" selection-start-column="37" selection-end-line="88" selection-end-column="37" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/pheru-darts-backend/src/main/resources/application-production.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="42">
-          <caret line="3" column="16" lean-forward="true" selection-start-line="3" selection-start-column="16" selection-end-line="3" selection-end-column="16" />
+        <state relative-caret-position="14">
+          <caret line="1" column="43" selection-start-line="1" selection-start-column="43" selection-end-line="1" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pheru-darts-backend/src/main/java/de/pheru/darts/backend/security/WebSecurity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="196">
+          <caret line="28" column="74" selection-start-line="28" selection-start-column="23" selection-end-line="28" selection-end-column="74" />
+          <folding>
+            <element signature="e#1584#1604#1" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/containers/FooterContainer.js" />
+    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/components/Footer.js" />
+    <entry file="file://$PROJECT_DIR$/pheru-darts-backend/src/main/resources/application.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="21" selection-start-column="21" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-web/4.3.8.RELEASE/spring-web-4.3.8.RELEASE-sources.jar!/org/springframework/web/bind/annotation/GetMapping.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="326">
+          <caret line="86" column="44" selection-start-line="86" selection-start-column="39" selection-end-line="86" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/reducers/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="154">
+          <caret line="11" column="91" selection-start-line="11" selection-start-column="91" selection-end-line="11" selection-end-column="91" />
+          <folding>
+            <element signature="e#0#37#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/services/configService.js">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="28">
+          <caret line="2" column="24" selection-start-line="2" selection-start-column="24" selection-end-line="2" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/services/fetchService.js">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="154">
-          <caret line="11" column="12" lean-forward="true" selection-start-line="11" selection-start-column="12" selection-end-line="11" selection-end-column="12" />
+          <caret line="32" column="32" selection-start-line="32" selection-start-column="32" selection-end-line="32" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/containers/SettingsContainer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="31" column="22" selection-start-line="31" selection-start-column="4" selection-end-line="31" selection-end-column="22" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/actions/serverInformation.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="182">
+          <caret line="25" column="20" selection-start-line="25" selection-start-column="20" selection-end-line="25" selection-end-column="20" />
+          <folding>
+            <element signature="e#0#50#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pheru-darts-backend/src/main/java/de/pheru/darts/backend/controllers/ServerInformationController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="112">
+          <caret line="11" selection-start-line="11" selection-end-line="11" />
+          <folding>
+            <element signature="e#566#582#1" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/reducers/serverInformation.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="167">
+          <caret line="18" column="20" selection-start-line="18" selection-start-column="20" selection-end-line="18" selection-end-column="20" />
+          <folding>
+            <element signature="e#0#144#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/.env">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="6" selection-start-column="6" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/containers/AboutContainer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="224">
+          <caret line="16" column="7" selection-start-line="16" selection-start-column="7" selection-end-line="16" selection-end-column="7" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/constants/routes.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="56">
+          <caret line="4" column="34" selection-start-line="4" selection-start-column="34" selection-end-line="4" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/components/Settings.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="249" selection-start-line="249" selection-end-line="249" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/components/Game.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1190">
+          <caret line="89" column="46" selection-start-line="89" selection-start-column="39" selection-end-line="89" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/containers/GameContainer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="322">
+          <caret line="26" column="39" selection-start-line="26" selection-start-column="39" selection-end-line="26" selection-end-column="39" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/actions/games.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="392">
+          <caret line="31" column="14" selection-start-line="31" selection-start-column="14" selection-end-line="31" selection-end-column="14" />
+          <folding>
+            <element signature="e#0#51#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/containers/modals/LoginModalContainer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/reducers/user.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#381#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/components/NewGameConfig.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3318">
+          <caret line="254" column="9" selection-start-line="254" selection-start-column="4" selection-end-line="254" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/containers/NewGameConfigContainer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="224">
+          <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/containers/modals/RelogModalContainer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="10" column="20" selection-start-line="10" selection-start-column="20" selection-end-line="10" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/components/modals/RelogModal.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="15" column="33" lean-forward="true" selection-end-line="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pheru-darts-backend/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="224">
+          <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pheru-darts-backend/src/main/resources/application-local.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="154">
+          <caret line="11" column="26" lean-forward="true" selection-start-line="11" selection-start-column="26" selection-end-line="11" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/components/About.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="70">
+          <caret line="5" selection-start-line="5" selection-end-line="5" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/containers/AppContainer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="24" column="37" selection-start-line="24" selection-start-column="37" selection-end-line="24" selection-end-column="37" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/components/App.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="161">
+          <caret line="28" column="40" selection-start-line="28" selection-start-column="40" selection-end-line="28" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/util/actionUtil.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pheru-darts-react-client/src/actions/user.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="196">
+          <caret line="107" column="42" selection-start-line="107" selection-start-column="42" selection-end-line="107" selection-end-column="42" />
+          <folding>
+            <element signature="e#0#61#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -1,5 +1,6 @@
 package de.pheru.darts.backend.security;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -20,10 +21,17 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsService userDetailsService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final String jwtSecret;
+    private final long jwtExpirationTime;
 
-    public WebSecurity(final UserDetailsService userDetailsService, final BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public WebSecurity(final UserDetailsService userDetailsService,
+                       final BCryptPasswordEncoder bCryptPasswordEncoder,
+                       @Value("${auth.jwt.secret}") final String jwtSecret,
+                       @Value("${auth.jwt.expiration.time}") final long jwtExpirationTime) {
         this.userDetailsService = userDetailsService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.jwtSecret = jwtSecret;
+        this.jwtExpirationTime = jwtExpirationTime;
     }
 
     @Override
@@ -34,8 +42,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/user").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .addFilter(new JWTAuthenticationFilter(authenticationManager()))
-                .addFilter(new JWTAuthorizationFilter(authenticationManager()))
+                .addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtSecret, jwtExpirationTime))
+                .addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtSecret))
                 // this disables session creation on Spring Security
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()

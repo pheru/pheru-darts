@@ -1,6 +1,7 @@
 import {getConfig} from "../services/configService";
 import {fetchDelete, fetchGet, fetchPost} from "../services/fetchService";
 import {showError} from "./errors";
+import {defaultErrorHandling} from "../util/actionUtil";
 
 export const REQUEST_FETCH_PERMITTED_USERS = 'REQUEST_FETCH_PERMITTED_USERS';
 export const FETCH_PERMITTED_USERS_SUCCESSFUL = 'FETCH_PERMITTED_USERS_SUCCESSFUL';
@@ -60,7 +61,7 @@ export function fetchPlayableUsers() {
             json => dispatch(fetchPlayableUsersSuccessful(json)),
             responseNotOk => {
                 dispatch(fetchPlayableUsersFailed(responseNotOk.message));
-                dispatch(showError("Failed to fetch playable users", responseNotOk.message));
+                defaultErrorHandling(dispatch, responseNotOk, showError("Failed to fetch playable users", responseNotOk.message));
             },
             error => {
                 dispatch(fetchPlayableUsersFailed(error.message));
@@ -77,7 +78,7 @@ export function fetchPermittedUsers() {
             json => dispatch(fetchPermittedUsersSuccessful(json)),
             responseNotOk => {
                 dispatch(fetchPermittedUsersFailed(responseNotOk.message));
-                dispatch(showError("Failed to fetch permitted users", responseNotOk.message));
+                defaultErrorHandling(dispatch, responseNotOk, showError("Failed to fetch permitted users", responseNotOk.message));
             },
             error => {
                 dispatch(fetchPermittedUsersFailed(error.message));
@@ -97,7 +98,7 @@ export function addPlayerPermissionById(userIdToPermit) {
             json => dispatch(addPlayerPermissionSuccessful(json)),
             responseNotOk => {
                 dispatch(updatePlayerPermissionFailed(responseNotOk.message));
-                dispatch(showError("Failed to update permissions", responseNotOk.message));
+                defaultErrorHandling(dispatch, responseNotOk, showError("Failed to update permissions", responseNotOk.message));
             },
             error => {
                 dispatch(updatePlayerPermissionFailed(error.message));
@@ -117,7 +118,7 @@ export function addPlayerPermissionByName(userNameToPermit) {
             json => dispatch(addPlayerPermissionSuccessful(json)),
             responseNotOk => {
                 dispatch(updatePlayerPermissionFailed(responseNotOk.message));
-                dispatch(showError("Failed to update permissions", responseNotOk.message));
+                defaultErrorHandling(dispatch, responseNotOk, showError("Failed to update permissions", responseNotOk.message));
             },
             error => {
                 dispatch(updatePlayerPermissionFailed(error.message));
@@ -137,7 +138,7 @@ export function removePlayerPermission(userIdToRemove) {
             json => dispatch(removePlayerPermissionSuccessful(userIdToRemove)),
             responseNotOk => {
                 dispatch(updatePlayerPermissionFailed(responseNotOk.message));
-                dispatch(showError("Failed to update permissions", responseNotOk.message));
+                defaultErrorHandling(dispatch, responseNotOk, showError("Failed to update permissions", responseNotOk.message));
             },
             error => {
                 dispatch(updatePlayerPermissionFailed(error.message));

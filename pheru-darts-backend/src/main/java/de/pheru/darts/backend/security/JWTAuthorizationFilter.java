@@ -1,6 +1,8 @@
 package de.pheru.darts.backend.security;
 
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,8 +19,11 @@ import java.util.ArrayList;
 
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
-    public JWTAuthorizationFilter(final AuthenticationManager authManager) {
+    private final String jwtSecret;
+
+    public JWTAuthorizationFilter(final AuthenticationManager authManager, final String jwtSecret) {
         super(authManager);
+        this.jwtSecret = jwtSecret;
     }
 
     @Override
@@ -29,15 +34,19 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
             chain.doFilter(req, res);
             return;
         }
-        final Authentication authentication = getAuthentication(jwtCookie.getValue());
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        chain.doFilter(req, res);
+        try {
+            final Authentication authentication = getAuthentication(jwtCookie.getValue());
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            chain.doFilter(req, res);
+        } catch (final ExpiredJwtException e) {
+            res.sendError(HttpStatus.UNAUTHORIZED.value(), "JWT expired!");
+        }
     }
 
     private Authentication getAuthentication(final String token) {
         // parse the token.
         final String userId = Jwts.parser()
-                .setSigningKey(SecurityConstants.SECRET.getBytes())
+                .setSigningKey(jwtSecret.getBytes())
                 .parseClaimsJws(token)
                 .getBody()
                 .getSubject();

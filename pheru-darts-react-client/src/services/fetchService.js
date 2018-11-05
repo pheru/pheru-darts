@@ -32,6 +32,8 @@ function baseFetch(url, method, data, onSuccess, onResponseNotOK, onError) {
                 const contentType = response.headers.get("content-type");
                 if (contentType && contentType.indexOf("application/json") !== -1) {
                     return response.json();
+                } else if (contentType && contentType.indexOf("text/plain") !== -1) {
+                    return response.text();
                 }
                 return "";
             }

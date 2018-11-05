@@ -1,6 +1,6 @@
-const LOCAL_PROTOCOL = "http:";
+const LOCAL_PROTOCOL = "https:";
 const LOCAL_HOSTNAME = "localhost";
-const LOCAL_PORT = "8080";
+const LOCAL_PORT = "8443";
 const LOCAL_HOST = LOCAL_PROTOCOL + "//" + LOCAL_HOSTNAME + ":" + LOCAL_PORT;
 
 const PRODUCTION_HOST = "https://darts.pheru.de";
@@ -8,13 +8,14 @@ const PRODUCTION_HOST = "https://darts.pheru.de";
 const LOCAL = defaultConfigForHost(LOCAL_HOST);
 const PRODUCTION = defaultConfigForHost(PRODUCTION_HOST);
 
-function defaultConfigForHost(host){
+function defaultConfigForHost(host) {
     return {
         resourceUrls: {
             user: host + "/user",
-            playerPermission: host+ "/playerPermission",
+            playerPermission: host + "/playerPermission",
             game: host + "/game",
-            statistic: host+ "/statistic"
+            statistic: host + "/statistic",
+            serverInformation: host + "/serverInformation"
         },
         loginUrl: host + "/login",
         logoutUrl: host + "/logout"

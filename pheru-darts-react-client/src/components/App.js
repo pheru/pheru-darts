@@ -4,7 +4,7 @@ import {LinkContainer} from "react-router-bootstrap";
 import {Glyphicon, Nav, Navbar, NavItem} from "react-bootstrap";
 import NewGameConfigContainer from "../containers/NewGameConfigContainer";
 import GameContainer from "../containers/GameContainer";
-import {GAME_ROUTE, NEW_GAME_ROUTE, SETTINGS_ROUTE, STATISTICS_ROUTE} from "../constants/routes";
+import {ABOUT_ROUTE, GAME_ROUTE, NEW_GAME_ROUTE, SETTINGS_ROUTE, STATISTICS_ROUTE} from "../constants/routes";
 import StatisticsContainer from "../containers/StatisticsContainer";
 import SettingsContainer from "../containers/SettingsContainer";
 import LoginModalContainer from "../containers/modals/LoginModalContainer";
@@ -12,6 +12,7 @@ import SignUpModalContainer from "../containers/modals/SignUpModalContainer";
 import PropTypes from 'prop-types';
 import ErrorModalContainer from "../containers/modals/ErrorModalContainer";
 import NavbarLoginLoader from "./loaders/NavbarLoginLoader";
+import AboutContainer from "../containers/AboutContainer";
 
 class App extends React.Component {
 
@@ -31,7 +32,7 @@ class App extends React.Component {
 
     componentDidMount() {
         window.onbeforeunload = this.onBeforeUnload;
-        this.props.loginByToken();
+        this.props.loginByToken(false);
     }
 
     onBeforeUnload(e) {
@@ -74,6 +75,7 @@ class App extends React.Component {
                     />
                     <Route path={STATISTICS_ROUTE} component={StatisticsContainer}/>
                     <Route path={SETTINGS_ROUTE} component={SettingsContainer}/>
+                    <Route path={ABOUT_ROUTE} component={AboutContainer}/>
                     {/*no-match-route*/}
                     <Route render={() => <Redirect to={NEW_GAME_ROUTE}/>}/>
                 </Switch>

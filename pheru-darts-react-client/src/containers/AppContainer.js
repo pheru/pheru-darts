@@ -22,7 +22,7 @@ const mapDispatchToProps = dispatch => ({
     fetchPlayableUsers : () => dispatch(fetchPlayableUsers()),
     fetchPermittedUsers : () => dispatch(fetchPermittedUsers()),
     showLogin: () => dispatch(showLoginModal()),
-    loginByToken: () => dispatch(loginByToken()),
+    loginByToken: (showErrorOnFailure) => dispatch(loginByToken(showErrorOnFailure)),
     logout: () => dispatch(logout())
 });
 

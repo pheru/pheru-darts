@@ -1,6 +1,7 @@
 import {fetchPost} from "../services/fetchService";
 import {getConfig} from "../services/configService";
 import {showError} from "./errors";
+import {defaultErrorHandling} from "../util/actionUtil";
 
 export const REQUEST_ARCHIVE_GAME = 'REQUEST_ARCHIVE_GAME';
 export const ARCHIVE_GAME_SUCCESSFUL = 'ARCHIVE_GAME_SUCCESSFUL';
@@ -25,7 +26,7 @@ export function archiveGame(game) {
             json => dispatch(archiveGameSuccessful()),
             responseNotOk => {
                 dispatch(archiveGameFailed(responseNotOk.message));
-                dispatch(showError("Could not archive game", responseNotOk.message));
+                defaultErrorHandling(dispatch, responseNotOk, showError("Could not archive game", responseNotOk.message));
             },
             error => {
                 dispatch(archiveGameFailed(error.message));

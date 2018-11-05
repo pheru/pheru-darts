@@ -16,11 +16,9 @@ public class DefaultLogoutHandler implements LogoutHandler {
     public void logout(final HttpServletRequest request, final HttpServletResponse response, final Authentication authentication) {
         LOGGER.debug("logout aufgerufen");
         final Cookie cookie = new Cookie(SecurityConstants.JWT_COOKIE_NAME, "");
-        cookie.setPath("/");
         cookie.setMaxAge(0);
         cookie.setHttpOnly(true);
-        //TODO funktioniert nicht gegen localhost, da kein https
-//        cookie.setSecure(true);
+        cookie.setSecure(true);
         response.addCookie(cookie);
         LOGGER.debug("logout: erfolgreich");
     }

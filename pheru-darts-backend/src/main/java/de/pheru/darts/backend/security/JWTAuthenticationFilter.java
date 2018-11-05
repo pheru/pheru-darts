@@ -5,7 +5,6 @@ import de.pheru.darts.backend.Logger;
 import de.pheru.darts.backend.exceptions.BadRequestException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -25,9 +24,15 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     private static final Logger LOGGER = new Logger();
 
     private final AuthenticationManager authenticationManager;
+    private final String jwtSecret;
+    private final long jwtExpirationTime;
 
-    public JWTAuthenticationFilter(final AuthenticationManager authenticationManager) {
+    public JWTAuthenticationFilter(final AuthenticationManager authenticationManager,
+                                   final String jwtSecret,
+                                   final long jwtExpirationTime) {
         this.authenticationManager = authenticationManager;
+        this.jwtSecret = jwtSecret;
+        this.jwtExpirationTime = jwtExpirationTime;
     }
 
     @Override
@@ -51,13 +56,12 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                             final FilterChain chain, final Authentication auth) {
         final String token = Jwts.builder()
                 .setSubject(((IdUser) auth.getPrincipal()).getId())
-                .setExpiration(new Date(System.currentTimeMillis() + SecurityConstants.EXPIRATION_TIME))
-                .signWith(SignatureAlgorithm.HS512, SecurityConstants.SECRET.getBytes())
+                .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationTime))
+                .signWith(SignatureAlgorithm.HS512, jwtSecret.getBytes())
                 .compact();
         final Cookie cookie = new Cookie(SecurityConstants.JWT_COOKIE_NAME, token);
         cookie.setHttpOnly(true);
-        //TODO funktioniert nicht gegen localhost, da kein https
-//        cookie.setSecure(true);
+        cookie.setSecure(true);
         res.addCookie(cookie);
     }
 
