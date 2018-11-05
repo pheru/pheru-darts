@@ -92,7 +92,7 @@ class Statistics extends React.Component {
                 marginBottom: 5,
                 textAlign: 'center'
             }}>
-                <Table responsive style={{textAlign: 'center', tableLayout: 'fixed'}}>
+                <Table responsive style={{textAlign: 'center'}}>
                     <tbody>
                     <tr>
                         <th style={this.tableStyle}>Gesamt:</th>
