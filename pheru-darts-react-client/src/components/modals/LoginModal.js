@@ -3,16 +3,25 @@ import {Modal, Button, FormControl} from "react-bootstrap";
 import PropTypes from 'prop-types';
 import {ifEnterKey} from "../../util/functionUtil";
 
+const initialState = {
+    name: "",
+    password: ""
+};
+
 class LoginModal extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            name: "",
-            password: ""
-        };
+        this.state = initialState;
         this.handleNameChange = this.handleNameChange.bind(this);
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.show !== this.props.show
+            && this.props.show === false) {
+            this.setState(initialState);
+        }
     }
 
     handleNameChange(value) {
@@ -26,7 +35,7 @@ class LoginModal extends React.Component {
     render() {
         return <Modal bsSize="small" backdrop='static' show={this.props.show} onHide={this.props.hide}>
             <Modal.Body style={{textAlign: 'center', paddingBottom: 0}}>
-                <Modal.Title style={{marginBottom:10}}>Anmelden</Modal.Title>
+                <Modal.Title style={{marginBottom: 10}}>Anmelden</Modal.Title>
                 <FormControl style={{marginBottom: 5}} type="text" value={this.state.name}
                              onChange={(e) => this.handleNameChange(e.target.value)}
                              placeholder="Benutzername" autoFocus/>

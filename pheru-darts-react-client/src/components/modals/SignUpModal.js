@@ -3,20 +3,29 @@ import {Button, FormControl, Glyphicon, Modal} from "react-bootstrap";
 import PropTypes from 'prop-types';
 import {ifEnterKey} from "../../util/functionUtil";
 
+const initialState = {
+    name: "",
+    password: "",
+    passwordRepeat: "",
+    passwordsMatch: true
+};
+
 class SignUpModal extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            name: "",
-            password: "",
-            passwordRepeat: "",
-            passwordsMatch: true
-        };
+        this.state = initialState;
         this.handleNameChange = this.handleNameChange.bind(this);
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
         this.handlePasswordRepeatChange = this.handlePasswordRepeatChange.bind(this);
         this.clearInputFields = this.clearInputFields.bind(this);
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.show !== this.props.show
+            && this.props.show === false) {
+            this.setState(initialState);
+        }
     }
 
     handleNameChange(value) {
