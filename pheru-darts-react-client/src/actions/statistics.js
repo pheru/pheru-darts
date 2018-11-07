@@ -1,6 +1,6 @@
 import {getConfig} from "../services/configService";
 import {fetchGet} from "../services/fetchService";
-import {showError} from "./errors";
+import {showError} from "./modal";
 import {defaultErrorHandling} from "../util/actionUtil";
 
 export const REQUEST_FETCH_STATISTICS = 'REQUEST_FETCH_STATISTICS';

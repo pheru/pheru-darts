@@ -127,23 +127,34 @@ class NewGameConfig extends React.Component {
     }
 
     onStartNewGameButtonClicked(e) {
-        let allPlayersChosen = true;
-        for (let i = 0; i < this.state.selectedPlayers.length; i++) {
-            if (this.state.selectedPlayers[i].id === undefined && this.state.selectedPlayers[i].name === "") {
-                allPlayersChosen = false;
-                break;
-            }
-        }
-        if (!allPlayersChosen) {
-            alert("Zuerst Spieler auswählen!");
+        if (!this.validateGameConfig()) {
             e.preventDefault();
-        } else if (this.props.gameRunning) {
+            return;
+        }
+        if (this.props.gameRunning) {
             this.setState({showNewGameModal: true});
             // Um routing zu verhindern
             e.preventDefault();
         } else {
             this.startNewGame();
         }
+    }
+
+    validateGameConfig() {
+        let players = this.state.selectedPlayers;
+        for (let i = 0; i < players.length; i++) {
+            if (players[i].id === undefined && players[i].name === "") {
+                this.props.showWarning("Ungültige Spielkonfiguration", "Es wurden nicht alle benötigten Spieler ausgewählt");
+                return false;
+            }
+            for (let j = i + 1; j < players.length; j++) {
+                if (players[i].name === players[j].name) {
+                    this.props.showWarning("Ungültige Spielkonfiguration", "Spieler dürfen nicht mehrfach vorkommen");
+                    return false;
+                }
+            }
+        }
+        return true
     }
 
     hideNewGameModal() {
@@ -164,7 +175,8 @@ class NewGameConfig extends React.Component {
         }
         return <OverlayTrigger placement='bottom'
                                overlay={<Tooltip id="tooltip">
-                                   Dieser Spieler ist entweder kein registrierter Benutzer oder Du bist nicht berechtigt worden, ein Spiel mit ihm zu erstellen.<br/>
+                                   Dieser Spieler ist entweder kein registrierter Benutzer oder Du bist nicht berechtigt
+                                   worden, ein Spiel mit ihm zu erstellen.<br/>
                                    In den Statistiken wird dieser Spieler als "Unregistrierter Benutzer" gelistet.
                                </Tooltip>}>
             <Glyphicon glyph='exclamation-sign' style={{color: 'orange'}}/>
@@ -238,7 +250,11 @@ class NewGameConfig extends React.Component {
                 </Row>
             </Grid>
             <ConfirmModal text="Es läuft bereits ein Spiel. Dennoch ein neues Spiel starten?"
-                          show={this.state.showNewGameModal} onConfirm={this.startNewGame}
+                          show={this.state.showNewGameModal}
+                          onConfirm={() => {
+                              this.hideNewGameModal();
+                              this.startNewGame();
+                          }}
                           onCancel={this.hideNewGameModal}/>
         </div>
     }
@@ -252,7 +268,8 @@ NewGameConfig.propTypes = {
     fetchAllUsersFailed: PropTypes.bool.isRequired,
     isFetchingUsers: PropTypes.bool.isRequired,
     startNewGame: PropTypes.func.isRequired,
-    memorizeState: PropTypes.func.isRequired
+    memorizeState: PropTypes.func.isRequired,
+    showWarning: PropTypes.func.isRequired
 };
 
 export default NewGameConfig

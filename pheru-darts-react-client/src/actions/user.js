@@ -1,7 +1,7 @@
 import {fetchGet, fetchPost} from "../services/fetchService";
 import {getConfig} from "../services/configService";
 import {fetchPermittedUsers, fetchPlayableUsers} from "./playerPermission";
-import {showError} from "./errors";
+import {showError} from "./modal";
 import {defaultErrorHandling} from "../util/actionUtil";
 
 export const SHOW_LOGIN_MODAL = "SHOW_LOGIN_MODAL";

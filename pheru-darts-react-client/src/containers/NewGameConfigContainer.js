@@ -3,6 +3,7 @@ import {startNewGame} from "../actions/game";
 import NewGameConfig from "../components/NewGameConfig";
 import {memorizeNewGameConfigState} from "../actions/stateMemory";
 import {sortPlayerByNameAsc} from "../services/sortService";
+import {showWarning} from "../actions/modal";
 
 const mapStateToProps = state => ({
     initialState: state.stateMemory.newGameConfigState,
@@ -15,7 +16,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     startNewGame: (players, score, checkOutMode) => dispatch(startNewGame(players, score, checkOutMode)),
-    memorizeState: (state) => dispatch(memorizeNewGameConfigState(state))
+    memorizeState: (state) => dispatch(memorizeNewGameConfigState(state)),
+    showWarning: (title, message) => dispatch(showWarning(title, message))
 });
 
 export default connect(

@@ -10,9 +10,9 @@ import SettingsContainer from "../containers/SettingsContainer";
 import LoginModalContainer from "../containers/modals/LoginModalContainer";
 import SignUpModalContainer from "../containers/modals/SignUpModalContainer";
 import PropTypes from 'prop-types';
-import ErrorModalContainer from "../containers/modals/ErrorModalContainer";
 import NavbarLoginLoader from "./loaders/NavbarLoginLoader";
 import AboutContainer from "../containers/AboutContainer";
+import SimpleModalContainer from "../containers/modals/SimpleModalContainer";
 
 class App extends React.Component {
 
@@ -82,7 +82,7 @@ class App extends React.Component {
             </div>
             <LoginModalContainer/>
             <SignUpModalContainer/>
-            <ErrorModalContainer/>
+            <SimpleModalContainer/>
         </div>
     }
 

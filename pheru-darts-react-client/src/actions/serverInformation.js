@@ -1,6 +1,6 @@
 import {fetchGet} from "../services/fetchService";
 import {getConfig} from "../services/configService";
-import {showError} from "./errors";
+import {showError} from "./modal";
 import {defaultErrorHandling} from "../util/actionUtil";
 
 export const REQUEST_SERVER_VERSION = 'REQUEST_SERVER_VERSION';

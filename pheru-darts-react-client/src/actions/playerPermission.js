@@ -1,6 +1,6 @@
 import {getConfig} from "../services/configService";
 import {fetchDelete, fetchGet, fetchPost} from "../services/fetchService";
-import {showError} from "./errors";
+import {showError} from "./modal";
 import {defaultErrorHandling} from "../util/actionUtil";
 
 export const REQUEST_FETCH_PERMITTED_USERS = 'REQUEST_FETCH_PERMITTED_USERS';

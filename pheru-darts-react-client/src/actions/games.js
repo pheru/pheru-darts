@@ -1,6 +1,6 @@
 import {fetchPost} from "../services/fetchService";
 import {getConfig} from "../services/configService";
-import {showError} from "./errors";
+import {showError} from "./modal";
 import {defaultErrorHandling} from "../util/actionUtil";
 
 export const REQUEST_ARCHIVE_GAME = 'REQUEST_ARCHIVE_GAME';
