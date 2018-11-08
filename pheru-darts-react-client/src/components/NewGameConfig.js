@@ -17,6 +17,8 @@ import {GAME_ROUTE} from "../constants/routes";
 import DropdownTextfield from "./DropdownTextfield";
 import PropTypes from "prop-types";
 
+const SCORE_CHOICES = ["101", "201", "301", "401", "501", "1001"];
+
 class NewGameConfig extends React.Component {
 
     constructor(props) {
@@ -25,7 +27,7 @@ class NewGameConfig extends React.Component {
             this.state = {...props.initialState, showNewGameModal: false};
         } else {
             this.state = {
-                score: 501,
+                score: SCORE_CHOICES[4],
                 selectedPlayers: [
                     {name: ""},
                     {name: ""}
@@ -41,7 +43,6 @@ class NewGameConfig extends React.Component {
             ...this.colStyle,
             padding: 0
         };
-        this.scoreChoices = [101, 201, 301, 401, 501, 1001];
 
         this.swapPlayerSelection = this.swapPlayerSelection.bind(this);
         this.handleScoreChange = this.handleScoreChange.bind(this);
@@ -112,7 +113,7 @@ class NewGameConfig extends React.Component {
     }
 
     handleScoreChange(value) {
-        if (Number.isNaN(value)) {
+        if (value !== "" && Number.isNaN(parseInt(value, 10))) {
             return;
         }
         this.setState({
@@ -141,20 +142,38 @@ class NewGameConfig extends React.Component {
     }
 
     validateGameConfig() {
+        let validationMessages = [];
         let players = this.state.selectedPlayers;
         for (let i = 0; i < players.length; i++) {
             if (players[i].id === undefined && players[i].name === "") {
-                this.props.showWarning("Ungültige Spielkonfiguration", "Es wurden nicht alle benötigten Spieler ausgewählt");
-                return false;
+                validationMessages.push("Es wurden nicht alle benötigten Spieler ausgewählt");
+                break;
             }
             for (let j = i + 1; j < players.length; j++) {
                 if (players[i].name === players[j].name) {
-                    this.props.showWarning("Ungültige Spielkonfiguration", "Spieler dürfen nicht mehrfach vorkommen");
-                    return false;
+                    validationMessages.push("Spieler dürfen nicht mehrfach vorkommen");
+                    break;
                 }
             }
         }
+        if (Number.isNaN(parseInt(this.state.score, 10))) {
+            validationMessages.push("Es wurde kein Score angegeben");
+        }
+        if (validationMessages.length > 0) {
+            this.props.showWarning("Ungültige Spielkonfiguration",
+                <ul>{this.validationMessagesToListEntries(validationMessages)}</ul>
+            );
+            return false;
+        }
         return true
+    }
+
+    validationMessagesToListEntries(validationMessages) {
+        let listEntries = [];
+        for (let i = 0; i < validationMessages.length; i++) {
+            listEntries.push(<li key={"validationMessage_" + i}>{validationMessages[i]}</li>)
+        }
+        return listEntries;
     }
 
     hideNewGameModal() {
@@ -162,7 +181,7 @@ class NewGameConfig extends React.Component {
     }
 
     startNewGame() {
-        this.props.startNewGame(this.state.selectedPlayers, this.state.score, this.state.checkOutMode);
+        this.props.startNewGame(this.state.selectedPlayers, parseInt(this.state.score, 10), this.state.checkOutMode);
         this.props.history.push(GAME_ROUTE);
     }
 
@@ -224,9 +243,9 @@ class NewGameConfig extends React.Component {
                 </Row>
                 <Row className="show-grid  text-center">
                     <Col xs={12} sm={12} style={this.colStyle}>
-                        <DropdownTextfield id="score-dropdown" value={this.state.score} choices={this.scoreChoices}
+                        <DropdownTextfield id="score-dropdown" value={this.state.score} choices={SCORE_CHOICES}
                                            onDropdownClick={(newValue) => this.handleScoreChange(newValue)}
-                                           onInputChange={(newValue) => this.handleScoreChange(parseInt(newValue, 10))}/>
+                                           onInputChange={(newValue) => this.handleScoreChange(newValue)}/>
                     </Col>
                 </Row>
                 <Row className="show-grid  text-center">
