@@ -73,7 +73,8 @@ class Statistics extends React.Component {
                          style={{marginLeft: 15, marginRight: 15, marginBottom: 5, textAlign: 'center'}}>
                     <strong>Statistiken können nur für angemeldete Benutzer erstellt und eingesehen werden</strong>
                     <br/>
-                    <Button bsStyle="primary" style={{marginTop: 10}} onClick={this.props.showLogin}>
+                    <Button bsStyle="primary" style={{marginTop: 10}} onClick={this.props.showLogin}
+                            disabled={this.props.isLoggingIn}>
                         <Glyphicon glyph="log-in"/> Anmelden
                     </Button>
                 </Alert>
@@ -179,6 +180,7 @@ class Statistics extends React.Component {
 
 Statistics.propTypes = {
     isLoggedIn: PropTypes.bool.isRequired,
+    isLoggingIn: PropTypes.bool.isRequired,
     isFetchingStatistics: PropTypes.bool.isRequired,
     gamesWon: PropTypes.number.isRequired,
     gamesLost: PropTypes.number.isRequired,

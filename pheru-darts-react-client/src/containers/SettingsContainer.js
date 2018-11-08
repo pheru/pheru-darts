@@ -8,6 +8,7 @@ const mapStateToProps = state => ({
     userId: state.user.id,
     userName: state.user.name,
     isLoggedIn: state.user.isLoggedIn,
+    isLoggingIn: state.user.isLoggingIn,
 
     playableUsers: state.playerPermission.playableUsers.sort(sortPlayerByNameAsc),
     fetchPlayableUsersFailed: state.playerPermission.fetchPlayableUsersFailed,

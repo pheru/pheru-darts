@@ -5,6 +5,7 @@ import {fetchStatistics} from "../actions/statistics";
 
 const mapStateToProps = state => ({
     isLoggedIn: state.user.isLoggedIn,
+    isLoggingIn: state.user.isLoggingIn,
     isFetchingStatistics: state.statistics.isFetching,
     gamesWon : state.statistics.gamesWon,
     gamesLost : state.statistics.gamesLost,

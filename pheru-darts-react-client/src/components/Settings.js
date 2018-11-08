@@ -99,8 +99,9 @@ class Settings extends React.Component {
                 : <Alert bsStyle="warning" style={{marginLeft: 15, marginRight: 15, marginBottom: 5, textAlign:'center'}}>
                     <strong>Einstellungen können nur von angemeldeten Benutzern vorgenommen werden</strong>
                     <br/>
-                    <Button style={{marginTop: 10}} bsStyle="primary" onClick={this.props.showLogin}><Glyphicon
-                        glyph="log-in"/> Anmelden</Button>
+                    <Button style={{marginTop: 10}} bsStyle="primary" onClick={this.props.showLogin}
+                            disabled={this.props.isLoggingIn}>
+                        <Glyphicon glyph="log-in"/> Anmelden</Button>
                 </Alert>
             }
         </div>
@@ -233,6 +234,7 @@ Settings.propTypes = {
     userId: PropTypes.string,
     userName: PropTypes.string,
     isLoggedIn: PropTypes.bool.isRequired,
+    isLoggingIn: PropTypes.bool.isRequired,
 
     playableUsers: PropTypes.array.isRequired,
     fetchPlayableUsersFailed: PropTypes.bool.isRequired,
