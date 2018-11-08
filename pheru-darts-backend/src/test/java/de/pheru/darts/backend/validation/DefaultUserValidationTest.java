@@ -4,12 +4,11 @@ import de.pheru.darts.backend.entities.UserEntity;
 import de.pheru.darts.backend.exceptions.UsernameAlreadyExistsException;
 import de.pheru.darts.backend.exceptions.ValidationException;
 import de.pheru.darts.backend.mocks.repositories.MockedUserRepository;
+import de.pheru.darts.backend.util.ReservedUser;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-
-import static org.junit.Assert.fail;
 
 public class DefaultUserValidationTest {
 
@@ -58,6 +57,22 @@ public class DefaultUserValidationTest {
         userRepository.save(userEntity);
 
         userValidation.validateName(name);
+    }
+
+    @Test
+    public void validateNameNotOkReserved() {
+        expectedException.expect(ValidationException.class);
+        expectedException.expectMessage(DefaultUserValidation.USERNAME_IS_NOT_ALLOWED);
+
+        userValidation.validateName(ReservedUser.DELETED_USER.getName());
+    }
+
+    @Test
+    public void validateNameNotOkReservedIgnoreCase() {
+        expectedException.expect(ValidationException.class);
+        expectedException.expectMessage(DefaultUserValidation.USERNAME_IS_NOT_ALLOWED);
+
+        userValidation.validateName(ReservedUser.UNREGISTERED_USER.getName().toUpperCase());
     }
 
     @Test

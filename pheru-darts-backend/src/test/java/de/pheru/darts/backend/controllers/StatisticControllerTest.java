@@ -6,6 +6,7 @@ import de.pheru.darts.backend.entities.UserEntity;
 import de.pheru.darts.backend.testutil.AufnahmeDocumentBuilder;
 import de.pheru.darts.backend.testutil.DartDocumentBuilder;
 import de.pheru.darts.backend.testutil.GameEntityBuilder;
+import de.pheru.darts.backend.util.ReservedUser;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -178,10 +179,10 @@ public class StatisticControllerTest extends ControllerTest {
         assertEquals(1, gamesStatistics.getLostCount().longValue());
         assertEquals(1, countsPerPlayer.get(savedUser.getName()).getWonCount().longValue());
         assertEquals(1, countsPerPlayer.get(savedUser.getName()).getLostCount().longValue());
-        assertEquals(1, countsPerPlayer.get(StatisticController.UNREGISTERED_PLAYER_NAME).getWonCount().longValue());
-        assertEquals(0, countsPerPlayer.get(StatisticController.UNREGISTERED_PLAYER_NAME).getLostCount().longValue());
-        assertEquals(1, countsPerPlayer.get(StatisticController.DELETED_PLAYER_NAME).getWonCount().longValue());
-        assertEquals(0, countsPerPlayer.get(StatisticController.DELETED_PLAYER_NAME).getLostCount().longValue());
+        assertEquals(1, countsPerPlayer.get(ReservedUser.UNREGISTERED_USER.getName()).getWonCount().longValue());
+        assertEquals(0, countsPerPlayer.get(ReservedUser.UNREGISTERED_USER.getName()).getLostCount().longValue());
+        assertEquals(1, countsPerPlayer.get(ReservedUser.DELETED_USER.getName()).getWonCount().longValue());
+        assertEquals(0, countsPerPlayer.get(ReservedUser.DELETED_USER.getName()).getLostCount().longValue());
     }
 
     private void assertDartCount(final DartCountStatisticDto dartStatistic, final long singleCount, final long doubleCount, final long tripleCount) {

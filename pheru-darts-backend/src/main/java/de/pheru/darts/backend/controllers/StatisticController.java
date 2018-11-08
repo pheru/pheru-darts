@@ -6,6 +6,7 @@ import de.pheru.darts.backend.entities.*;
 import de.pheru.darts.backend.repositories.GameRepository;
 import de.pheru.darts.backend.repositories.UserRepository;
 import de.pheru.darts.backend.security.SecurityUtil;
+import de.pheru.darts.backend.util.ReservedUser;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,9 +20,6 @@ import java.util.Map;
 public class StatisticController {
 
     private static final Logger LOGGER = new Logger();
-
-    public static final String UNREGISTERED_PLAYER_NAME = "Unregistrierter Benutzer";
-    public static final String DELETED_PLAYER_NAME = "Gelöschter Benutzer";
 
     private final GameRepository gameRepository;
     private final UserRepository userRepository;
@@ -96,14 +94,14 @@ public class StatisticController {
                         if (!playerCache.containsKey(playerDocument.getId())) {
                             final UserEntity userEntity = userRepository.findById(playerDocument.getId());
                             if (userEntity == null) {
-                                playerCache.put(playerDocument.getId(), DELETED_PLAYER_NAME);
+                                playerCache.put(playerDocument.getId(), ReservedUser.DELETED_USER.getName());
                             } else {
                                 playerCache.put(playerDocument.getId(), userEntity.getName());
                             }
                         }
                         playerName = playerCache.get(playerDocument.getId());
                     } else {
-                        playerName = UNREGISTERED_PLAYER_NAME;
+                        playerName = ReservedUser.UNREGISTERED_USER.getName();
                     }
                     gameCountsPerPlayer.putIfAbsent(playerName, new GameCountStatisticDto());
                     final GameCountStatisticDto gameCountStatisticDto = gameCountsPerPlayer.get(playerName);
