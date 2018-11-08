@@ -52,16 +52,25 @@ class SignUpModal extends React.Component {
                 <Modal.Title style={{marginBottom: 10}}>Registrieren</Modal.Title>
                 <FormControl style={{marginBottom: 5}} type="text" value={this.state.name}
                              onChange={(e) => this.handleNameChange(e.target.value)}
+                             onKeyDown={ifEnterKey(() => {
+                                 if (!this.isSignupDisabled()) {
+                                     this.doSignUp()
+                                 }
+                             })}
                              placeholder="Benutzername" autoFocus/>
                 <FormControl style={{marginBottom: 5}} type="password" value={this.state.password}
                              onChange={(e) => this.handlePasswordChange(e.target.value)}
+                             onKeyDown={ifEnterKey(() => {
+                                 if (!this.isSignupDisabled()) {
+                                     this.doSignUp()
+                                 }
+                             })}
                              placeholder="Passwort"/>
                 <FormControl type="password" value={this.state.passwordRepeat}
                              onChange={(e) => this.handlePasswordRepeatChange(e.target.value)}
                              onKeyDown={ifEnterKey(() => {
-                                 if (this.state.passwordsMatch && !this.props.isSigningUp) {
-                                     this.props.signUp(this.state.name, this.state.password);
-                                     this.clearInputFields();
+                                 if (!this.isSignupDisabled()) {
+                                     this.doSignUp()
                                  }
                              })}
                              placeholder="Passwort wiederholen"/>
@@ -73,16 +82,23 @@ class SignUpModal extends React.Component {
             </Modal.Body>
             <Modal.Footer style={{textAlign: 'center'}}>
                 <Button style={{width: 100}} bsStyle="primary"
-                        disabled={!this.state.passwordsMatch || this.props.isSigningUp}
-                        onClick={() => {
-                            this.props.signUp(this.state.name, this.state.password);
-                            this.clearInputFields();
-                        }}>
+                        disabled={this.isSignupDisabled()}
+                        onClick={() => this.doSignUp()}>
                     Registrieren
                 </Button>
                 <Button style={{width: 100}} bsStyle='primary' onClick={this.props.hide}>Abbrechen</Button>
             </Modal.Footer>
         </Modal>;
+    }
+
+    isSignupDisabled() {
+        return !this.state.passwordsMatch || this.props.isSigningUp || this.state.name === ""
+            || this.state.password === "" || this.state.passwordRepeat === "";
+    }
+
+    doSignUp() {
+        this.props.signUp(this.state.name, this.state.password);
+        this.clearInputFields();
     }
 }
 

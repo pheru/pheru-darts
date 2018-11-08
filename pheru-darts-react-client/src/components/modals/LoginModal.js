@@ -1,5 +1,5 @@
 import React from 'react'
-import {Modal, Button, FormControl} from "react-bootstrap";
+import {Button, FormControl, Modal} from "react-bootstrap";
 import PropTypes from 'prop-types';
 import {ifEnterKey} from "../../util/functionUtil";
 
@@ -33,19 +33,25 @@ class LoginModal extends React.Component {
     }
 
     render() {
-        return <Modal bsSize="small" backdrop='static' show={this.props.show} onHide={this.props.hide}>
+        // restoreFocus auf false, da sonst beim Öffnen des SignUpModals der Fokus verloren geht
+        // (der LoginModal wird geschlossen und setzt den Fokus auf das zuletzt fokusierte Element)
+        return <Modal restoreFocus={false} bsSize="small" backdrop='static' show={this.props.show}
+                      onHide={this.props.hide}>
             <Modal.Body style={{textAlign: 'center', paddingBottom: 0}}>
                 <Modal.Title style={{marginBottom: 10}}>Anmelden</Modal.Title>
                 <FormControl style={{marginBottom: 5}} type="text" value={this.state.name}
                              onChange={(e) => this.handleNameChange(e.target.value)}
+                             onKeyDown={ifEnterKey(() => {
+                                 if (!this.isLoginDisabled()) {
+                                     this.doLogin();
+                                 }
+                             })}
                              placeholder="Benutzername" autoFocus/>
                 <FormControl type="password" value={this.state.password}
                              onChange={(e) => this.handlePasswordChange(e.target.value)}
                              onKeyDown={ifEnterKey(() => {
-                                 if (!this.props.isLoggingIn) {
-                                     this.props.login(this.state.name, this.state.password);
-                                     this.handleNameChange("");
-                                     this.handlePasswordChange("");
+                                 if (!this.isLoginDisabled()) {
+                                     this.doLogin();
                                  }
                              })}
                              placeholder="Passwort"/>
@@ -55,12 +61,9 @@ class LoginModal extends React.Component {
                 }}>Registrieren</Button>
             </Modal.Body>
             <Modal.Footer style={{textAlign: 'center'}}>
-                <Button style={{width: 100}} bsStyle="primary" disabled={this.props.isLoggingIn}
-                        onClick={() => {
-                            this.props.login(this.state.name, this.state.password);
-                            this.handleNameChange("");
-                            this.handlePasswordChange("");
-                        }}>
+                <Button style={{width: 100}} bsStyle="primary"
+                        disabled={this.isLoginDisabled()}
+                        onClick={() => this.doLogin()}>
                     Anmelden
                 </Button>
                 <Button style={{width: 100}} bsStyle='primary' onClick={this.props.hide}
@@ -69,6 +72,16 @@ class LoginModal extends React.Component {
                 </Button>
             </Modal.Footer>
         </Modal>;
+    }
+
+    isLoginDisabled() {
+        return this.props.isLoggingIn || this.state.name === "" || this.state.password === "";
+    }
+
+    doLogin() {
+        this.props.login(this.state.name, this.state.password);
+        this.handleNameChange("");
+        this.handlePasswordChange("");
     }
 }
 
