@@ -16,7 +16,7 @@ public class ServerInformationController {
     }
 
     @GetMapping
-    public String version() {
+    public String publicInformation() {
         return appVersion;
     }
 
