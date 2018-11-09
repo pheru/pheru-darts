@@ -2,6 +2,10 @@
     border-radius: 0 !important;
 }
 
+.fullscreen-button {
+    border-radius: 4px !important;
+}
+
 .form-control {
     border-radius: 0;
 }

@@ -13,6 +13,7 @@ import PropTypes from 'prop-types';
 import NavbarLoginLoader from "./loaders/NavbarLoginLoader";
 import AboutContainer from "../containers/AboutContainer";
 import SimpleModalContainer from "../containers/modals/SimpleModalContainer";
+import FullscreenButton from "./FullscreenButton";
 
 class App extends React.Component {
 
@@ -63,6 +64,7 @@ class App extends React.Component {
 
     render() {
         return <div>
+            <FullscreenButton/>
             {this.createNavbar()}
             <div style={{paddingTop: 50}}>
                 <Switch>
@@ -93,7 +95,8 @@ class App extends React.Component {
                     color: '#8b8d8f', cursor: 'default',
                     fontVariant: 'small-caps',
                     fontStyle: 'italic',
-                    textDecoration: 'underline'
+                    textDecoration: 'underline',
+                    paddingLeft: 45
                 }}>
                     Pheru-Darts
                 </Navbar.Brand>
