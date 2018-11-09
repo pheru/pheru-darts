@@ -8,6 +8,7 @@ import {showWarning} from "../actions/modal";
 const mapStateToProps = state => ({
     initialState: state.stateMemory.newGameConfigState,
     isLoggedIn: state.user.isLoggedIn,
+    isLoggingIn: state.user.isLoggingIn,
     playableUsers: state.playerPermission.playableUsers.sort(sortPlayerByNameAsc),
     gameRunning: state.game !== null,
     fetchAllUsersFailed: state.playerPermission.fetchPlayableUsersFailed,

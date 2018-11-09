@@ -113,12 +113,16 @@ class NewGameConfig extends React.Component {
     }
 
     handleScoreChange(value) {
-        if (value !== "" && Number.isNaN(parseInt(value, 10))) {
+        if (value !== "" && !this.isValidScore(value)) {
             return;
         }
         this.setState({
             score: value
         });
+    }
+
+    isValidScore(value){
+        return /^[1-9]+\d*$/.test(value);
     }
 
     handleCheckOutModeChange(e) {
@@ -156,8 +160,8 @@ class NewGameConfig extends React.Component {
                 }
             }
         }
-        if (Number.isNaN(parseInt(this.state.score, 10))) {
-            validationMessages.push("Es wurde kein Score angegeben");
+        if (!this.isValidScore(this.state.score)) {
+            validationMessages.push("Es wurde kein gültiger Score angegeben");
         }
         if (validationMessages.length > 0) {
             this.props.showWarning("Ungültige Spielkonfiguration",
@@ -181,7 +185,7 @@ class NewGameConfig extends React.Component {
     }
 
     startNewGame() {
-        this.props.startNewGame(this.state.selectedPlayers, parseInt(this.state.score, 10), this.state.checkOutMode);
+        this.props.startNewGame(this.state.selectedPlayers, Number(this.state.score), this.state.checkOutMode);
         this.props.history.push(GAME_ROUTE);
     }
 
@@ -193,7 +197,7 @@ class NewGameConfig extends React.Component {
             return <Glyphicon glyph='ok' style={{color: 'green'}}/>;
         }
         return <OverlayTrigger placement='bottom'
-                               overlay={<Tooltip id="tooltip">
+                               overlay={<Tooltip id="user-tooltip">
                                    Dieser Spieler ist entweder kein registrierter Benutzer oder Du bist nicht berechtigt
                                    worden, ein Spiel mit ihm zu erstellen.<br/>
                                    In den Statistiken wird dieser Spieler als "Unregistrierter Benutzer" gelistet.
@@ -262,6 +266,7 @@ class NewGameConfig extends React.Component {
                     <Col xs={12} sm={12} style={this.colStyleButton}>
                         <LinkContainer to={GAME_ROUTE}>
                             <Button bsStyle="primary" bsSize="large" block
+                                    disabled={this.props.isLoggingIn}
                                     onClick={this.onStartNewGameButtonClicked}
                             >Neues Spiel starten</Button>
                         </LinkContainer>
@@ -282,6 +287,7 @@ class NewGameConfig extends React.Component {
 NewGameConfig.propTypes = {
     initialState: PropTypes.object,
     isLoggedIn: PropTypes.bool.isRequired,
+    isLoggingIn: PropTypes.bool.isRequired,
     playableUsers: PropTypes.array.isRequired,
     gameRunning: PropTypes.bool.isRequired,
     fetchAllUsersFailed: PropTypes.bool.isRequired,
