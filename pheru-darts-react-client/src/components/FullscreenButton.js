@@ -1,5 +1,5 @@
 import React from 'react'
-import {Button, Glyphicon, OverlayTrigger, Tooltip} from "react-bootstrap";
+import {Button, Glyphicon} from "react-bootstrap";
 
 class FullscreenButton extends React.Component {
 
@@ -61,18 +61,12 @@ class FullscreenButton extends React.Component {
     }
 
     render() {
-        return <OverlayTrigger placement='bottom'
-                               overlay={<Tooltip id="fullscreen-tooltip">
-                                   Vollbildmodus {this.state.fullscreen ? "beenden" : "aktivieren"}
-                               </Tooltip>}>
-            <Button className="fullscreen-button"
-                    onClick={this.toggleFullscreen}>
-                {this.state.fullscreen
-                    ? <Glyphicon className="fullscreen-icon" glyph="resize-small"/>
-                    : <Glyphicon className="fullscreen-icon" glyph="resize-full"/>
-                }
-            </Button>
-        </OverlayTrigger>
+        return <Button className="fullscreen-button" onClick={this.toggleFullscreen}>
+            {this.state.fullscreen
+                ? <Glyphicon className="fullscreen-icon" glyph="resize-small"/>
+                : <Glyphicon className="fullscreen-icon" glyph="resize-full"/>
+            }
+        </Button>
     }
 }
 
