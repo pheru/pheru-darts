@@ -132,7 +132,7 @@
       <replace>stats-layer</replace>
       <replace>2s</replace>
       <replace>stack</replace>
-      <replace>, null</replace>
+      <replace />
       <replace>FETCH_SERVER_VERSION</replace>
     </replaceStrings>
     <dirStrings>
@@ -1070,7 +1070,7 @@
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>this.attributeConditions.size() == 0</expression-string>
+        <expression-string />
         <language-id>JAVA</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
