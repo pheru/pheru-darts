@@ -10,6 +10,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import static org.junit.Assert.fail;
+
 public class DefaultUserValidationTest {
 
     private UserValidation userValidation;
@@ -43,6 +45,28 @@ public class DefaultUserValidationTest {
         expectedException.expectMessage(DefaultUserValidation.USERNAME_EMPTY_OR_NULL);
 
         userValidation.validateName("");
+    }
+
+    @Test
+    public void validateNameLength() {
+        expectedException.expect(ValidationException.class);
+        expectedException.expectMessage(DefaultUserValidation.USERNAME_IS_TOO_LONG);
+
+        final StringBuilder s = new StringBuilder();
+        for (int i = 0; i < DefaultUserValidation.USERNAME_MAX_LENGTH; i++) {
+            s.append("X");
+        }
+
+        // length == max length -> OK
+        try {
+            userValidation.validateName(s.toString());
+        }catch (final ValidationException e){
+            fail("No Exception expected");
+        }
+
+        // length > max length -> NOK
+        s.append("X");
+        userValidation.validateName(s.toString());
     }
 
     @Test
