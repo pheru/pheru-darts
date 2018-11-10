@@ -5,6 +5,7 @@ public class GameDto {
     private PlayerDto[] players;
     private int score;
     private CheckOutDto checkOutMode;
+    private Boolean training;
 
     public PlayerDto[] getPlayers() {
         return players;
@@ -30,4 +31,11 @@ public class GameDto {
         this.checkOutMode = checkOutMode;
     }
 
+    public Boolean isTraining() {
+        return training;
+    }
+
+    public void setTraining(final Boolean training) {
+        this.training = training;
+    }
 }

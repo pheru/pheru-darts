@@ -4,7 +4,14 @@ import {LinkContainer} from "react-router-bootstrap";
 import {Glyphicon, Nav, Navbar, NavItem} from "react-bootstrap";
 import NewGameConfigContainer from "../containers/NewGameConfigContainer";
 import GameContainer from "../containers/GameContainer";
-import {ABOUT_ROUTE, GAME_ROUTE, NEW_GAME_ROUTE, SETTINGS_ROUTE, STATISTICS_ROUTE} from "../constants/routes";
+import {
+    ABOUT_ROUTE,
+    GAME_ROUTE,
+    NEW_GAME_ROUTE,
+    NEW_TRAINING_ROUTE,
+    SETTINGS_ROUTE,
+    STATISTICS_ROUTE
+} from "../constants/routes";
 import StatisticsContainer from "../containers/StatisticsContainer";
 import SettingsContainer from "../containers/SettingsContainer";
 import LoginModalContainer from "../containers/modals/LoginModalContainer";
@@ -68,7 +75,10 @@ class App extends React.Component {
             {this.createNavbar()}
             <div style={{paddingTop: 50}}>
                 <Switch>
-                    <Route path={NEW_GAME_ROUTE} component={NewGameConfigContainer}/>
+                    <Route path={NEW_GAME_ROUTE}
+                           render={(props) => <NewGameConfigContainer {...props} key="newgameconfig" />}/>
+                    <Route path={NEW_TRAINING_ROUTE}
+                           render={(props) => <NewGameConfigContainer {...props} key="newgameconfig_training" training/>}/>
                     <Route path={GAME_ROUTE}
                            render={() => this.props.gameRunning
                                ? <div style={{paddingTop: 10}}><GameContainer/></div>
@@ -106,6 +116,9 @@ class App extends React.Component {
                 <Nav>
                     <LinkContainer to={NEW_GAME_ROUTE}>
                         <NavItem><Glyphicon glyph="edit"/> Neues Spiel</NavItem>
+                    </LinkContainer>
+                    <LinkContainer to={NEW_TRAINING_ROUTE}>
+                        <NavItem><Glyphicon glyph="upload"/> Training</NavItem>
                     </LinkContainer>
                     {this.props.gameRunning &&
                     <LinkContainer to={GAME_ROUTE}>

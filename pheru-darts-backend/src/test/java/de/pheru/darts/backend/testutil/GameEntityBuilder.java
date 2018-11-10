@@ -35,6 +35,11 @@ public class GameEntityBuilder {
         return this;
     }
 
+    public GameEntityBuilder training(final boolean training) {
+        entity.setTraining(training);
+        return this;
+    }
+
     public GameEntityBuilder timestamp(final Long timestamp) {
         entity.setTimestamp(timestamp);
         return this;

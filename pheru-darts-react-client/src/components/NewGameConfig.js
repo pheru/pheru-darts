@@ -11,7 +11,6 @@ import {
     Tooltip
 } from "react-bootstrap";
 import {ALL_MODES, DOUBLE_OUT} from "../constants/checkoutModes";
-import {LinkContainer} from "react-router-bootstrap";
 import ConfirmModal from "./modals/ConfirmModal";
 import {GAME_ROUTE} from "../constants/routes";
 import DropdownTextfield from "./DropdownTextfield";
@@ -40,8 +39,7 @@ class NewGameConfig extends React.Component {
             marginBottom: 15
         };
         this.colStyleButton = {
-            ...this.colStyle,
-            padding: 0
+            ...this.colStyle
         };
 
         this.swapPlayerSelection = this.swapPlayerSelection.bind(this);
@@ -121,7 +119,7 @@ class NewGameConfig extends React.Component {
         });
     }
 
-    isValidScore(value){
+    isValidScore(value) {
         return /^[1-9]+\d*$/.test(value);
     }
 
@@ -148,15 +146,17 @@ class NewGameConfig extends React.Component {
     validateGameConfig() {
         let validationMessages = [];
         let players = this.state.selectedPlayers;
-        for (let i = 0; i < players.length; i++) {
-            if (players[i].id === undefined && players[i].name === "") {
-                validationMessages.push("Es wurden nicht alle benötigten Spieler ausgewählt");
-                break;
-            }
-            for (let j = i + 1; j < players.length; j++) {
-                if (players[i].name === players[j].name) {
-                    validationMessages.push("Spieler dürfen nicht mehrfach vorkommen");
+        if (!this.props.training) {
+            for (let i = 0; i < players.length; i++) {
+                if (players[i].id === undefined && players[i].name === "") {
+                    validationMessages.push("Es wurden nicht alle benötigten Spieler ausgewählt");
                     break;
+                }
+                for (let j = i + 1; j < players.length; j++) {
+                    if (players[i].name === players[j].name) {
+                        validationMessages.push("Spieler dürfen nicht mehrfach vorkommen");
+                        break;
+                    }
                 }
             }
         }
@@ -185,7 +185,13 @@ class NewGameConfig extends React.Component {
     }
 
     startNewGame() {
-        this.props.startNewGame(this.state.selectedPlayers, Number(this.state.score), this.state.checkOutMode);
+        let players;
+        if (this.props.training) {
+            players = [{id: this.props.userId, name: "Training"}];
+        } else {
+            players = this.state.selectedPlayers;
+        }
+        this.props.startNewGame(players, Number(this.state.score), this.state.checkOutMode, this.props.training);
         this.props.history.push(GAME_ROUTE);
     }
 
@@ -218,6 +224,7 @@ class NewGameConfig extends React.Component {
     render() {
         return <div>
             <Grid>
+                {!this.props.training &&
                 <Row className="show-grid text-center">
                     <Col xs={12} sm={5} style={this.colStyle}>
                         <DropdownTextfield id="player-1-dropdown" placeholder="Spieler 1"
@@ -245,14 +252,15 @@ class NewGameConfig extends React.Component {
                                            onInputChange={(newValue) => this.handleUnregisteredUserChange(1, newValue)}/>
                     </Col>
                 </Row>
-                <Row className="show-grid  text-center">
+                }
+                <Row className="show-grid text-center">
                     <Col xs={12} sm={12} style={this.colStyle}>
                         <DropdownTextfield id="score-dropdown" value={this.state.score} choices={SCORE_CHOICES}
                                            onDropdownClick={(newValue) => this.handleScoreChange(newValue)}
                                            onInputChange={(newValue) => this.handleScoreChange(newValue)}/>
                     </Col>
                 </Row>
-                <Row className="show-grid  text-center">
+                <Row className="show-grid text-center">
                     <Col xs={12} sm={12} style={this.colStyle}>
                         <ToggleButtonGroup type="radio" name="options" defaultValue={this.state.checkOutMode}
                                            onChange={this.handleCheckOutModeChange}>
@@ -262,14 +270,13 @@ class NewGameConfig extends React.Component {
                         </ToggleButtonGroup>
                     </Col>
                 </Row>
-                <Row className="show-grid  text-center">
+                <Row className="show-grid text-center">
                     <Col xs={12} sm={12} style={this.colStyleButton}>
-                        <LinkContainer to={GAME_ROUTE}>
-                            <Button bsStyle="primary" bsSize="large" block
-                                    disabled={this.props.isLoggingIn}
-                                    onClick={this.onStartNewGameButtonClicked}
-                            >Neues Spiel starten</Button>
-                        </LinkContainer>
+                        <Button bsStyle="primary" bsSize="large" block
+                                disabled={this.props.isLoggingIn}
+                                onClick={this.onStartNewGameButtonClicked}>
+                            Neues {this.props.training ? "Trainingsspiel" : "Spiel"} starten
+                        </Button>
                     </Col>
                 </Row>
             </Grid>
@@ -286,8 +293,10 @@ class NewGameConfig extends React.Component {
 
 NewGameConfig.propTypes = {
     initialState: PropTypes.object,
+    training: PropTypes.bool,
     isLoggedIn: PropTypes.bool.isRequired,
     isLoggingIn: PropTypes.bool.isRequired,
+    userId: PropTypes.string,
     playableUsers: PropTypes.array.isRequired,
     gameRunning: PropTypes.bool.isRequired,
     fetchAllUsersFailed: PropTypes.bool.isRequired,

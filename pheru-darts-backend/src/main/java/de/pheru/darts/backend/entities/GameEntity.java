@@ -25,6 +25,9 @@ public class GameEntity {
     private CheckOutMode checkOutMode;
 
     @DynamoDBAttribute
+    private Boolean training;
+
+    @DynamoDBAttribute
     private List<PlayerDocument> players;
 
     public String getId() {
@@ -65,6 +68,14 @@ public class GameEntity {
 
     public void setCheckOutMode(final CheckOutMode checkOutMode) {
         this.checkOutMode = checkOutMode;
+    }
+
+    public Boolean isTraining() {
+        return training;
+    }
+
+    public void setTraining(final Boolean training) {
+        this.training = training;
     }
 
     public List<PlayerDocument> getPlayers() {

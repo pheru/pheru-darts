@@ -1,25 +1,30 @@
 import {connect} from 'react-redux'
 import {startNewGame} from "../actions/game";
 import NewGameConfig from "../components/NewGameConfig";
-import {memorizeNewGameConfigState} from "../actions/stateMemory";
+import {memorizeState} from "../actions/stateMemory";
 import {sortPlayerByNameAsc} from "../services/sortService";
 import {showWarning} from "../actions/modal";
 
-const mapStateToProps = state => ({
-    initialState: state.stateMemory.newGameConfigState,
+const mapStateToProps = (state, ownProps) => ({
+    initialState: state.stateMemory.states[getMemoryKeyByProps(ownProps)],
     isLoggedIn: state.user.isLoggedIn,
     isLoggingIn: state.user.isLoggingIn,
+    userId: state.user.id,
     playableUsers: state.playerPermission.playableUsers.sort(sortPlayerByNameAsc),
     gameRunning: state.game !== null,
     fetchAllUsersFailed: state.playerPermission.fetchPlayableUsersFailed,
     isFetchingUsers: state.playerPermission.isFetchingPlayableUsers
 });
 
-const mapDispatchToProps = dispatch => ({
-    startNewGame: (players, score, checkOutMode) => dispatch(startNewGame(players, score, checkOutMode)),
-    memorizeState: (state) => dispatch(memorizeNewGameConfigState(state)),
+const mapDispatchToProps = (dispatch, ownProps) => ({
+    startNewGame: (players, score, checkOutMode, training) => dispatch(startNewGame(players, score, checkOutMode, training)),
+    memorizeState: (state) => dispatch(memorizeState(getMemoryKeyByProps(ownProps), state)),
     showWarning: (title, message) => dispatch(showWarning(title, message))
 });
+
+function getMemoryKeyByProps(ownProps) {
+    return ownProps.training ? "newgameconfig_training" : "newgameconfig";
+}
 
 export default connect(
     mapStateToProps,

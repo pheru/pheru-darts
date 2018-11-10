@@ -9,14 +9,16 @@ const mapStateToProps = function (state) {
     let players = state.game.players;
     let winner = state.game.winner;
     let game = state.game;
-    let isArchiving = state.games.isArchiving;
+    let training = state.game.training;
+    let isLoggedIn = state.user.isLoggedIn;
     return {
         startScore,
         checkOutMode,
         players,
         winner,
         game,
-        isArchiving
+        training,
+        isLoggedIn
     };
 };
 

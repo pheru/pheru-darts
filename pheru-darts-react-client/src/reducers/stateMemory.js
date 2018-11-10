@@ -1,13 +1,15 @@
-import {MEMORIZE_NEW_GAME_CONFIG_STATE} from "../actions/stateMemory";
+import {MEMORIZE_STATE} from "../actions/stateMemory";
 
 function stateMemory(state = {
-    newGameConfigState: undefined
+    states: {}
 }, action) {
     switch (action.type) {
-        case MEMORIZE_NEW_GAME_CONFIG_STATE:
+        case MEMORIZE_STATE:
+            let newStates = {...state.states};
+            newStates[action.key] = action.state;
             return {
                 ...state,
-                newGameConfigState: action.state
+                states: newStates
             };
         default:
             return state

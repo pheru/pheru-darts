@@ -10,7 +10,7 @@ class Game extends React.Component {
         super(props);
         this.state = {
             gameFinishedModalShow: props.winner !== undefined,
-            rematchStartingPlayer: props.players[1]
+            rematchStartingPlayer: props.players[props.players.length > 1 ? 1 : 0]
         };
         this.colStyle = {
             marginBottom: 15
@@ -33,7 +33,7 @@ class Game extends React.Component {
         if (this.props.players !== prevProps.players
             || this.props.winner !== prevProps.winner) {
             this.setState({
-                rematchStartingPlayer: this.props.players[1],
+                rematchStartingPlayer: this.props.players[this.props.players.length > 1 ? 1 : 0],
                 gameFinishedModalShow: this.props.winner !== undefined
             });
         }
@@ -68,12 +68,14 @@ class Game extends React.Component {
                             </Col>
                         </Row>
                     </Col>
-                    <Col xs={12} xsPull={0} sm={5} smPull={2} style={this.colStyle}>
+                    <Col xs={12} xsPull={0} sm={this.props.training ? 10 : 5} smPull={2} style={this.colStyle}>
                         <PlayerContainer index={0}/>
                     </Col>
+                    {!this.props.training &&
                     <Col xs={12} xsPull={0} sm={5} smPull={2} style={this.colStyle}>
                         <PlayerContainer index={1}/>
                     </Col>
+                    }
                 </Row>
             </Grid>
             <ScoreButtonsContainer/>
@@ -87,7 +89,9 @@ class Game extends React.Component {
                 <Modal.Footer style={{textAlign: 'center'}}>
                     <Dropdown style={{display: 'inline-flex'}} id="rematch_player_dropdown">
                         <Button bsStyle='primary' onClick={() => {
-                            this.props.archiveGame(this.props.game);
+                            if (this.props.isLoggedIn) {
+                                this.props.archiveGame(this.props.game);
+                            }
                             this.props.rematch(this.state.rematchStartingPlayer);
                         }}>
                             Rematch ({this.state.rematchStartingPlayer.name} beginnt)
@@ -103,7 +107,9 @@ class Game extends React.Component {
                         </Dropdown.Menu>
                     </Dropdown>
                     <Button style={{marginLeft: 10}} bsStyle='primary' onClick={() => {
-                        this.props.archiveGame(this.props.game);
+                        if (this.props.isLoggedIn) {
+                            this.props.archiveGame(this.props.game);
+                        }
                         this.props.exit();
                     }}>
                         Zurück zum Menü
@@ -124,11 +130,12 @@ Game.propTypes = {
     players: PropTypes.array.isRequired,
     winner: PropTypes.object,
     game: PropTypes.object.isRequired,
-    isArchiving: PropTypes.bool.isRequired,
     undoDart: PropTypes.func.isRequired,
     exit: PropTypes.func.isRequired,
     rematch: PropTypes.func.isRequired,
-    archiveGame: PropTypes.func.isRequired
+    archiveGame: PropTypes.func.isRequired,
+    training: PropTypes.bool,
+    isLoggedIn: PropTypes.bool.isRequired
 };
 
 export default Game

@@ -112,10 +112,12 @@ public class StatisticController {
                     }
                 }
             }
-            if (gameWon) {
-                gamesWon++;
-            } else {
-                gamesLost++;
+            if (game.isTraining() == null || !game.isTraining()) {
+                if (gameWon) {
+                    gamesWon++;
+                } else {
+                    gamesLost++;
+                }
             }
         }
         final GameStatisticDto gameStatisticDto = new GameStatisticDto();

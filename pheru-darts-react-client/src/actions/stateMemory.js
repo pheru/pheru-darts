@@ -1,7 +1,8 @@
-export const MEMORIZE_NEW_GAME_CONFIG_STATE = 'MEMORIZE_NEW_GAME_CONFIG_STATE';
+export const MEMORIZE_STATE = 'MEMORIZE_STATE';
 
-export const memorizeNewGameConfigState = (state) => ({
-    type: MEMORIZE_NEW_GAME_CONFIG_STATE,
+export const memorizeState = (key, state) => ({
+    type: MEMORIZE_STATE,
+    key,
     state
 });
 

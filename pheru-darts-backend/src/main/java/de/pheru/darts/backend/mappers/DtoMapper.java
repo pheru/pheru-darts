@@ -20,6 +20,7 @@ public final class DtoMapper {
         gameEntity.setScore(gameDto.getScore());
         gameEntity.setCheckOutMode(CheckOutMode.forString(gameDto.getCheckOutMode().getKey()));
         gameEntity.setPlayers(toPlayerDocument(Arrays.asList(gameDto.getPlayers())));
+        gameEntity.setTraining(gameDto.isTraining());
         return gameEntity;
     }
 

@@ -4,11 +4,12 @@ export const UNDO_DART = 'UNDO_DART';
 export const EXIT_GAME = 'EXIT_GAME';
 export const REMATCH = 'REMATCH';
 
-export const startNewGame = (players, score, checkOutMode) => ({
+export const startNewGame = (players, score, checkOutMode, training) => ({
     type: START_NEW_GAME,
     players,
     score,
-    checkOutMode
+    checkOutMode,
+    training
 });
 export const addDart = (value, multiplier) => ({
     type: ADD_DART,

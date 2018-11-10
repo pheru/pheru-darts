@@ -10,7 +10,8 @@ function game(state = null, action) {
                 ...state,
                 players: players,
                 score: action.score,
-                checkOutMode: action.checkOutMode
+                checkOutMode: action.checkOutMode,
+                training: action.training
             };
         case ADD_DART:
             return addDart(state, {value: action.value, multiplier: action.multiplier});

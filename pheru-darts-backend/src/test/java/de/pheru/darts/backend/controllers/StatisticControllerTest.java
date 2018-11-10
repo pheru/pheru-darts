@@ -153,20 +153,40 @@ public class StatisticControllerTest extends ControllerTest {
                         .build())
                 .build());
 
+        /*
+        Trainingsspiel
+        2 Darts
+        - 1x D25
+        - 1x T17
+        Checkout: 1/1
+         */
+        gamesRepository.save(new GameEntityBuilder()
+                .userId(LOGIN_ID)
+                .checkOutMode(CheckOutMode.DOUBLE_OUT)
+                .score(101)
+                .training(true)
+                .player(LOGIN_ID)
+                .timestamp(dateFormat.parse("01.01.2001 01:00:00").getTime())
+                .neueAufnahme(new AufnahmeDocumentBuilder()
+                        .dart(new DartDocumentBuilder().value(17).multiplier(3).build()) // 51
+                        .dart(new DartDocumentBuilder().value(25).multiplier(2).build()) // 101
+                        .build())
+                .build());
+
         final StatisticDto statistics = statisticController.get();
         final DartStatisticDto dartStatistics = statistics.getDarts();
         final Map<Integer, DartCountStatisticDto> countsPerScore = dartStatistics.getCountsPerScore();
         final GameStatisticDto gamesStatistics = statistics.getGames();
         final Map<String, GameCountStatisticDto> countsPerPlayer = gamesStatistics.getCountsPerPlayer();
 
-        assertEquals(19, dartStatistics.getTotalCount().longValue());
-        assertEquals(6, dartStatistics.getPossibleCheckoutCount().longValue());
-        assertEquals(3, dartStatistics.getCheckoutCount().longValue());
-        assertDartCount(countsPerScore.get(25), 0, 2, 0);
+        assertEquals(21, dartStatistics.getTotalCount().longValue());
+        assertEquals(7, dartStatistics.getPossibleCheckoutCount().longValue());
+        assertEquals(4, dartStatistics.getCheckoutCount().longValue());
+        assertDartCount(countsPerScore.get(25), 0, 3, 0);
         assertDartCount(countsPerScore.get(20), 4, 1, 4);
         assertNull(countsPerScore.get(19));
         assertDartCount(countsPerScore.get(18), 0, 1, 0);
-        assertDartCount(countsPerScore.get(17), 1, 0, 2);
+        assertDartCount(countsPerScore.get(17), 1, 0, 3);
         assertNull(countsPerScore.get(16));
         assertDartCount(countsPerScore.get(15), 0, 1, 0);
         assertDartCount(countsPerScore.get(10), 1, 0, 0);
@@ -192,9 +212,22 @@ public class StatisticControllerTest extends ControllerTest {
     }
 
     @Test
-    @Ignore("TODO")
     public void getNoGamesPlayed() {
-        fail("Not implemented");
+        final StatisticDto statistics = statisticController.get();
+        final DartStatisticDto dartStatistics = statistics.getDarts();
+        final Map<Integer, DartCountStatisticDto> countsPerScore = dartStatistics.getCountsPerScore();
+        final GameStatisticDto gamesStatistics = statistics.getGames();
+        final Map<String, GameCountStatisticDto> countsPerPlayer = gamesStatistics.getCountsPerPlayer();
+
+        assertEquals(0, dartStatistics.getTotalCount().longValue());
+        assertEquals(0, dartStatistics.getPossibleCheckoutCount().longValue());
+        assertEquals(0, dartStatistics.getCheckoutCount().longValue());
+        assertTrue(countsPerScore.isEmpty());
+
+
+        assertEquals(0, gamesStatistics.getWonCount().longValue());
+        assertEquals(0, gamesStatistics.getLostCount().longValue());
+        assertTrue(countsPerPlayer.isEmpty());
     }
 
 }
