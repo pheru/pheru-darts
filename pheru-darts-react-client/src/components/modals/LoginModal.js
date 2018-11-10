@@ -80,8 +80,6 @@ class LoginModal extends React.Component {
 
     doLogin() {
         this.props.login(this.state.name, this.state.password);
-        this.handleNameChange("");
-        this.handlePasswordChange("");
     }
 }
 

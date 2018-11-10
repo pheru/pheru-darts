@@ -18,7 +18,6 @@ class SignUpModal extends React.Component {
         this.handleNameChange = this.handleNameChange.bind(this);
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
         this.handlePasswordRepeatChange = this.handlePasswordRepeatChange.bind(this);
-        this.clearInputFields = this.clearInputFields.bind(this);
     }
 
     componentDidUpdate(prevProps) {
@@ -40,10 +39,6 @@ class SignUpModal extends React.Component {
     handlePasswordRepeatChange(value) {
         let match = value === this.state.password;
         this.setState({passwordRepeat: value, passwordsMatch: match});
-    }
-
-    clearInputFields() {
-        this.setState({name: "", password: "", passwordRepeat: "", passwordsMatch: true});
     }
 
     render() {
@@ -98,7 +93,6 @@ class SignUpModal extends React.Component {
 
     doSignUp() {
         this.props.signUp(this.state.name, this.state.password);
-        this.clearInputFields();
     }
 }
 
