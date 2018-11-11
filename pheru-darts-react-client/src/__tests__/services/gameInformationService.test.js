@@ -1,5 +1,6 @@
 import {DOUBLE_OUT, SINGLE_OUT} from "../../constants/checkoutModes";
 import getTurnInformation from "../../services/gameInformationService";
+import {DOUBLE_IN, SINGLE_IN} from "../../constants/checkinModes";
 
 describe('gameInformationService', () => {
 
@@ -12,7 +13,7 @@ describe('gameInformationService', () => {
             [{value: 1, multiplier: 1}, {value: 1, multiplier: 1}]
         ];
 
-        let turnInfo = getTurnInformation(players, 101, DOUBLE_OUT);
+        let turnInfo = getTurnInformation(players, 101, SINGLE_IN, DOUBLE_OUT);
 
         expect(turnInfo.playerInformation[0].score).toEqual(98);
         expect(turnInfo.playerInformation[1].score).toEqual(99);
@@ -37,7 +38,7 @@ describe('gameInformationService', () => {
         ];
         players[1].aufnahmen = [];
 
-        let turnInfo = getTurnInformation(players, 101, DOUBLE_OUT);
+        let turnInfo = getTurnInformation(players, 101, SINGLE_IN, DOUBLE_OUT);
 
         expect(turnInfo.turnInformation.current.playerIndex).toEqual(1);
         expect(turnInfo.turnInformation.current.aufnahmeIndex).toEqual(0);
@@ -59,7 +60,7 @@ describe('gameInformationService', () => {
             [{value: 11, multiplier: 1}, {value: 11, multiplier: 1}]
         ];
 
-        let turnInfo = getTurnInformation(players, 101, DOUBLE_OUT);
+        let turnInfo = getTurnInformation(players, 101, SINGLE_IN, DOUBLE_OUT);
 
         expect(turnInfo.playerInformation[0].score).toEqual(95);
         expect(turnInfo.playerInformation[1].score).toEqual(76);
@@ -84,7 +85,7 @@ describe('gameInformationService', () => {
         ];
         players[1].aufnahmen = [];
 
-        let turnInfo = getTurnInformation(players, 101, DOUBLE_OUT);
+        let turnInfo = getTurnInformation(players, 101, SINGLE_IN, DOUBLE_OUT);
 
         expect(turnInfo.playerInformation[0].score).toEqual(0);
         expect(turnInfo.playerInformation[1].score).toEqual(101);
@@ -109,7 +110,7 @@ describe('gameInformationService', () => {
         ];
         players[1].aufnahmen = [];
 
-        let turnInfo = getTurnInformation(players, 101, DOUBLE_OUT);
+        let turnInfo = getTurnInformation(players, 101, SINGLE_IN, DOUBLE_OUT);
 
         expect(turnInfo.playerInformation[0].score).toEqual(101);
         expect(turnInfo.playerInformation[1].score).toEqual(101);
@@ -134,7 +135,7 @@ describe('gameInformationService', () => {
         ];
         players[1].aufnahmen = [];
 
-        let turnInfo = getTurnInformation(players, 101, SINGLE_OUT);
+        let turnInfo = getTurnInformation(players, 101, SINGLE_IN, SINGLE_OUT);
 
         expect(turnInfo.playerInformation[0].score).toEqual(0);
         expect(turnInfo.playerInformation[1].score).toEqual(101);
@@ -159,7 +160,7 @@ describe('gameInformationService', () => {
         ];
         players[1].aufnahmen = [];
 
-        let turnInfo = getTurnInformation(players, 101, SINGLE_OUT);
+        let turnInfo = getTurnInformation(players, 101, SINGLE_IN, SINGLE_OUT);
 
         expect(turnInfo.playerInformation[0].score).toEqual(0);
         expect(turnInfo.playerInformation[1].score).toEqual(101);
@@ -188,7 +189,7 @@ describe('gameInformationService', () => {
             [{value: 20, multiplier: 3}, {value: 20, multiplier: 3}]
         ];
 
-        let turnInfo = getTurnInformation(players, 101, DOUBLE_OUT);
+        let turnInfo = getTurnInformation(players, 101, SINGLE_IN, DOUBLE_OUT);
 
         expect(turnInfo.playerInformation[0].score).toEqual(95);
         expect(turnInfo.playerInformation[1].score).toEqual(98);
@@ -213,7 +214,7 @@ describe('gameInformationService', () => {
         ];
         players[1].aufnahmen = [];
 
-        let turnInfo = getTurnInformation(players, 101, DOUBLE_OUT);
+        let turnInfo = getTurnInformation(players, 101, SINGLE_IN, DOUBLE_OUT);
 
         expect(turnInfo.playerInformation[0].score).toEqual(101);
         expect(turnInfo.playerInformation[1].score).toEqual(101);
@@ -231,6 +232,89 @@ describe('gameInformationService', () => {
         expect(turnInfo.turnInformation.previous.dartIndex).toEqual(1);
     });
 
+    it('getTurnInformation Double-In keine Punkte für Single oder Triple', () => {
+        let players = defaultPlayers();
+        players[0].aufnahmen = [
+            [{value: 1, multiplier: 1}, {value: 1, multiplier: 3}, {value: 1, multiplier: 1}]
+        ];
+        players[1].aufnahmen = [
+            [{value: 1, multiplier: 1}, {value: 1, multiplier: 1}]
+        ];
+
+        let turnInfo = getTurnInformation(players, 101, DOUBLE_IN, DOUBLE_OUT);
+
+        expect(turnInfo.playerInformation[0].score).toEqual(101);
+        expect(turnInfo.playerInformation[1].score).toEqual(101);
+        expect(turnInfo.playerInformation[0].dartCount).toEqual(3);
+        expect(turnInfo.playerInformation[1].dartCount).toEqual(2);
+        expect(turnInfo.playerInformation[0].average).toEqual("0.00");
+        expect(turnInfo.playerInformation[1].average).toEqual("0.00");
+
+        expect(turnInfo.turnInformation.current.playerIndex).toEqual(1);
+        expect(turnInfo.turnInformation.current.aufnahmeIndex).toEqual(0);
+        expect(turnInfo.turnInformation.current.dartIndex).toEqual(2);
+
+        expect(turnInfo.turnInformation.previous.playerIndex).toEqual(1);
+        expect(turnInfo.turnInformation.previous.aufnahmeIndex).toEqual(0);
+        expect(turnInfo.turnInformation.previous.dartIndex).toEqual(1);
+    });
+
+    it('getTurnInformation Double-In standard', () => {
+        let players = defaultPlayers();
+        players[0].aufnahmen = [
+            [{value: 1, multiplier: 1}, {value: 1, multiplier: 1}, {value: 1, multiplier: 1}],
+            [{value: 20, multiplier: 2}, {value: 11, multiplier: 1}, {value: 25, multiplier: 2}]
+        ];
+        players[1].aufnahmen = [
+            [{value: 1, multiplier: 1}, {value: 1, multiplier: 1}, {value: 1, multiplier: 1}]
+        ];
+
+        let turnInfo = getTurnInformation(players, 101, DOUBLE_IN, DOUBLE_OUT);
+
+        expect(turnInfo.playerInformation[0].score).toEqual(0);
+        expect(turnInfo.playerInformation[1].score).toEqual(101);
+        expect(turnInfo.playerInformation[0].dartCount).toEqual(6);
+        expect(turnInfo.playerInformation[1].dartCount).toEqual(3);
+        expect(turnInfo.playerInformation[0].average).toEqual("50.50");
+        expect(turnInfo.playerInformation[1].average).toEqual("0.00");
+
+        expect(turnInfo.turnInformation.current.playerIndex).toEqual(1);
+        expect(turnInfo.turnInformation.current.aufnahmeIndex).toEqual(1);
+        expect(turnInfo.turnInformation.current.dartIndex).toEqual(0);
+
+        expect(turnInfo.turnInformation.previous.playerIndex).toEqual(0);
+        expect(turnInfo.turnInformation.previous.aufnahmeIndex).toEqual(1);
+        expect(turnInfo.turnInformation.previous.dartIndex).toEqual(2);
+    });
+
+    it('getTurnInformation Double-In condition auch wenn überworfen', () => {
+        let players = defaultPlayers();
+        players[0].aufnahmen = [
+            [{value: 25, multiplier: 2}, {value: 20, multiplier: 3}],
+            [{value: 17, multiplier: 3}, {value: 25, multiplier: 2}]
+        ];
+        players[1].aufnahmen = [
+            [{value: 1, multiplier: 2}, {value: 1, multiplier: 1}, {value: 1, multiplier: 1}]
+        ];
+
+        let turnInfo = getTurnInformation(players, 101, DOUBLE_IN, DOUBLE_OUT);
+
+        expect(turnInfo.playerInformation[0].score).toEqual(0);
+        expect(turnInfo.playerInformation[1].score).toEqual(97);
+        expect(turnInfo.playerInformation[0].dartCount).toEqual(4);
+        expect(turnInfo.playerInformation[1].dartCount).toEqual(3);
+        expect(turnInfo.playerInformation[0].average).toEqual("50.50");
+        expect(turnInfo.playerInformation[1].average).toEqual("0.00");
+
+        expect(turnInfo.turnInformation.current.playerIndex).toEqual(1);
+        expect(turnInfo.turnInformation.current.aufnahmeIndex).toEqual(1);
+        expect(turnInfo.turnInformation.current.dartIndex).toEqual(0);
+
+        expect(turnInfo.turnInformation.previous.playerIndex).toEqual(0);
+        expect(turnInfo.turnInformation.previous.aufnahmeIndex).toEqual(1);
+        expect(turnInfo.turnInformation.previous.dartIndex).toEqual(1);
+    });
+
     it('Bug #11 fehlerhafte average-berechnung', () => {
         let players = defaultPlayers();
         players[0].aufnahmen = [
@@ -241,7 +325,7 @@ describe('gameInformationService', () => {
             [{value: 20, multiplier: 1}, {value: 20, multiplier: 1}, {value: 20, multiplier: 1}]
         ];
 
-        let turnInfo = getTurnInformation(players, 101, DOUBLE_OUT);
+        let turnInfo = getTurnInformation(players, 101, SINGLE_IN, DOUBLE_OUT);
 
         expect(turnInfo.playerInformation[0].average).toEqual("60.00");
     });

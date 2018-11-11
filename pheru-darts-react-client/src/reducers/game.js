@@ -10,6 +10,7 @@ function game(state = null, action) {
                 ...state,
                 players: players,
                 score: action.score,
+                checkInMode: action.checkInMode,
                 checkOutMode: action.checkOutMode,
                 training: action.training
             };
@@ -45,7 +46,6 @@ function initPlayers(players) {
 function addDart(state, dart) {
     let multiplier = dart.multiplier;
     if (dart.value === 25 && multiplier > 2) {
-        alert("Dart ungültig: " + JSON.stringify(dart));
         return state;
     }
     if (dart.value === 0 && multiplier !== 1) {
@@ -54,11 +54,11 @@ function addDart(state, dart) {
     let validatedDart = {...dart, multiplier};
     let players = state.players;
 
-    let currentTurnInfo = getTurnInformation(players, state.score, state.checkOutMode).turnInformation.current;
+    let currentTurnInfo = getTurnInformation(players, state.score, state.checkInMode, state.checkOutMode).turnInformation.current;
 
     players[currentTurnInfo.playerIndex].aufnahmen[currentTurnInfo.aufnahmeIndex][currentTurnInfo.dartIndex] = validatedDart;
 
-    let turnInfo = getTurnInformation(players, state.score, state.checkOutMode);
+    let turnInfo = getTurnInformation(players, state.score, state.checkInMode, state.checkOutMode);
     currentTurnInfo = turnInfo.turnInformation.current;
     if (players[currentTurnInfo.playerIndex].aufnahmen[currentTurnInfo.aufnahmeIndex] === undefined) {
         players[currentTurnInfo.playerIndex].aufnahmen[currentTurnInfo.aufnahmeIndex] = [];
@@ -82,7 +82,7 @@ function addDart(state, dart) {
 function undoDart(state) {
     let players = state.players;
 
-    let currentTurnInfo = getTurnInformation(players, state.score, state.checkOutMode).turnInformation.current;
+    let currentTurnInfo = getTurnInformation(players, state.score, state.checkInMode, state.checkOutMode).turnInformation.current;
     if (currentTurnInfo.playerIndex === 0 && currentTurnInfo.aufnahmeIndex === 0 && currentTurnInfo.dartIndex === 0) {
         console.log("undo beim ersten Dart nicht möglich");
         return state;
@@ -91,7 +91,7 @@ function undoDart(state) {
         players[currentTurnInfo.playerIndex].aufnahmen.splice(currentTurnInfo.aufnahmeIndex, 1);
     }
 
-    let previousTurnInfo = getTurnInformation(players, state.score, state.checkOutMode).turnInformation.previous;
+    let previousTurnInfo = getTurnInformation(players, state.score, state.checkInMode, state.checkOutMode).turnInformation.previous;
     players[previousTurnInfo.playerIndex].aufnahmen[previousTurnInfo.aufnahmeIndex].splice(previousTurnInfo.dartIndex, 1);
 
     return {

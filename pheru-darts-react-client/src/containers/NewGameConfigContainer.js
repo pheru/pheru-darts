@@ -17,7 +17,8 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    startNewGame: (players, score, checkOutMode, training) => dispatch(startNewGame(players, score, checkOutMode, training)),
+    startNewGame: (players, score, checkInMode, checkOutMode, training) =>
+        dispatch(startNewGame(players, score, checkInMode, checkOutMode, training)),
     memorizeState: (state) => dispatch(memorizeState(getMemoryKeyByProps(ownProps), state)),
     showWarning: (title, message) => dispatch(showWarning(title, message))
 });

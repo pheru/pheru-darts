@@ -10,11 +10,12 @@ import {
     ToggleButtonGroup,
     Tooltip
 } from "react-bootstrap";
-import {ALL_MODES, DOUBLE_OUT} from "../constants/checkoutModes";
+import {ALL_CHECKOUT_MODES, DOUBLE_OUT} from "../constants/checkoutModes";
 import ConfirmModal from "./modals/ConfirmModal";
 import {GAME_ROUTE} from "../constants/routes";
 import DropdownTextfield from "./DropdownTextfield";
 import PropTypes from "prop-types";
+import {ALL_CHECKIN_MODES, SINGLE_IN} from "../constants/checkinModes";
 
 const SCORE_CHOICES = ["101", "201", "301", "401", "501", "1001"];
 
@@ -32,6 +33,7 @@ class NewGameConfig extends React.Component {
                     {name: ""}
                 ],
                 checkOutMode: DOUBLE_OUT,
+                checkInMode: SINGLE_IN,
                 showNewGameModal: false
             };
         }
@@ -45,6 +47,7 @@ class NewGameConfig extends React.Component {
         this.swapPlayerSelection = this.swapPlayerSelection.bind(this);
         this.handleScoreChange = this.handleScoreChange.bind(this);
         this.handleUnregisteredUserChange = this.handleUnregisteredUserChange.bind(this);
+        this.handleCheckInModeChange = this.handleCheckInModeChange.bind(this);
         this.handleCheckOutModeChange = this.handleCheckOutModeChange.bind(this);
         this.onStartNewGameButtonClicked = this.onStartNewGameButtonClicked.bind(this);
         this.startNewGame = this.startNewGame.bind(this);
@@ -123,6 +126,12 @@ class NewGameConfig extends React.Component {
         return /^[1-9]+\d*$/.test(value);
     }
 
+    handleCheckInModeChange(e) {
+        this.setState({
+            checkInMode: e
+        });
+    }
+
     handleCheckOutModeChange(e) {
         this.setState({
             checkOutMode: e
@@ -191,7 +200,7 @@ class NewGameConfig extends React.Component {
         } else {
             players = this.state.selectedPlayers;
         }
-        this.props.startNewGame(players, Number(this.state.score), this.state.checkOutMode, this.props.training);
+        this.props.startNewGame(players, Number(this.state.score), this.state.checkInMode, this.state.checkOutMode, this.props.training);
         this.props.history.push(GAME_ROUTE);
     }
 
@@ -262,9 +271,20 @@ class NewGameConfig extends React.Component {
                 </Row>
                 <Row className="show-grid text-center">
                     <Col xs={12} sm={12} style={this.colStyle}>
+                        <ToggleButtonGroup type="radio" name="options" defaultValue={this.state.checkInMode}
+                                           onChange={this.handleCheckInModeChange}>
+                            {ALL_CHECKIN_MODES.map(mode =>
+                                <ToggleButton
+                                    style={{width: '50%'}} key={mode.key} value={mode}>{mode.text}</ToggleButton>
+                            )}
+                        </ToggleButtonGroup>
+                    </Col>
+                </Row>
+                <Row className="show-grid text-center">
+                    <Col xs={12} sm={12} style={this.colStyle}>
                         <ToggleButtonGroup type="radio" name="options" defaultValue={this.state.checkOutMode}
                                            onChange={this.handleCheckOutModeChange}>
-                            {ALL_MODES.map(mode =>
+                            {ALL_CHECKOUT_MODES.map(mode =>
                                 <ToggleButton key={mode.key} value={mode}>{mode.text}</ToggleButton>
                             )}
                         </ToggleButtonGroup>

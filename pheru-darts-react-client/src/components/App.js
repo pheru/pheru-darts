@@ -1,7 +1,7 @@
 import React from 'react'
-import {Redirect, Route, Switch} from "react-router-dom";
+import {Route, Switch} from "react-router-dom";
 import {LinkContainer} from "react-router-bootstrap";
-import {Glyphicon, Nav, Navbar, NavItem} from "react-bootstrap";
+import {Glyphicon, Nav, Navbar, NavDropdown, NavItem} from "react-bootstrap";
 import NewGameConfigContainer from "../containers/NewGameConfigContainer";
 import GameContainer from "../containers/GameContainer";
 import {
@@ -21,6 +21,7 @@ import NavbarLoginLoader from "./loaders/NavbarLoginLoader";
 import AboutContainer from "../containers/AboutContainer";
 import SimpleModalContainer from "../containers/modals/SimpleModalContainer";
 import FullscreenButton from "./FullscreenButton";
+import MainContainer from "../containers/MainContainer";
 
 class App extends React.Component {
 
@@ -75,21 +76,20 @@ class App extends React.Component {
             {this.createNavbar()}
             <div style={{paddingTop: 50}}>
                 <Switch>
-                    <Route path={NEW_GAME_ROUTE}
-                           render={(props) => <NewGameConfigContainer {...props} key="newgameconfig" />}/>
-                    <Route path={NEW_TRAINING_ROUTE}
-                           render={(props) => <NewGameConfigContainer {...props} key="newgameconfig_training" training/>}/>
-                    <Route path={GAME_ROUTE}
-                           render={() => this.props.gameRunning
-                               ? <div style={{paddingTop: 10}}><GameContainer/></div>
-                               : <Redirect to={NEW_GAME_ROUTE}/>
-                           }
+                    <Route path={NEW_GAME_ROUTE} render={(props) =>
+                        <NewGameConfigContainer {...props} key="newgameconfig"/>}
                     />
+                    <Route path={NEW_TRAINING_ROUTE} render={(props) =>
+                        <NewGameConfigContainer {...props} key="newgameconfig_training" training/>}
+                    />
+                    {this.props.gameRunning &&
+                    <Route path={GAME_ROUTE} component={GameContainer}/>
+                    }
                     <Route path={STATISTICS_ROUTE} component={StatisticsContainer}/>
                     <Route path={SETTINGS_ROUTE} component={SettingsContainer}/>
                     <Route path={ABOUT_ROUTE} component={AboutContainer}/>
                     {/*no-match-route*/}
-                    <Route render={() => <Redirect to={NEW_GAME_ROUTE}/>}/>
+                    <Route component={MainContainer}/>
                 </Switch>
             </div>
             <LoginModalContainer/>
@@ -101,15 +101,9 @@ class App extends React.Component {
     createNavbar() {
         return <Navbar inverse collapseOnSelect fixedTop>
             <Navbar.Header>
-                <Navbar.Brand style={{
-                    color: '#8b8d8f', cursor: 'default',
-                    fontVariant: 'small-caps',
-                    fontStyle: 'italic',
-                    textDecoration: 'underline',
-                    paddingLeft: 45
-                }}>
-                    Pheru-Darts
-                </Navbar.Brand>
+                <LinkContainer to={"/"} style={{paddingLeft: 45}}>
+                    <Navbar.Brand>Pheru-Darts</Navbar.Brand>
+                </LinkContainer>
                 <Navbar.Toggle/>
             </Navbar.Header>
             <Navbar.Collapse>
@@ -127,16 +121,18 @@ class App extends React.Component {
                     }
                 </Nav>
                 <Nav pullRight>
-                    <LinkContainer to={STATISTICS_ROUTE}>
-                        <NavItem>
-                            <Glyphicon glyph="stats"/> Statistiken
-                        </NavItem>
-                    </LinkContainer>
-                    <LinkContainer to={SETTINGS_ROUTE}>
-                        <NavItem>
-                            <Glyphicon glyph="cog"/> Einstellungen
-                        </NavItem>
-                    </LinkContainer>
+                    <NavDropdown title={this.createDropdownTitle("user", "Benutzer")} id="user-nav-dropdown">
+                        <LinkContainer to={STATISTICS_ROUTE}>
+                            <NavItem>
+                                <Glyphicon glyph="stats"/> Statistiken
+                            </NavItem>
+                        </LinkContainer>
+                        <LinkContainer to={SETTINGS_ROUTE}>
+                            <NavItem>
+                                <Glyphicon glyph="cog"/> Einstellungen
+                            </NavItem>
+                        </LinkContainer>
+                    </NavDropdown>
                     {!this.props.isLoggedIn &&
                     <NavItem onClick={this.props.showLogin} disabled={this.props.isLoggingIn}>
                         <div style={{position: "relative"}}>
@@ -156,6 +152,12 @@ class App extends React.Component {
             </Navbar.Collapse>
         </Navbar>;
     }
+
+    createDropdownTitle(glyph, text) {
+        return <div style={{display: "initial"}}>
+            <Glyphicon glyph={glyph}/> {text}
+        </div>
+    };
 }
 
 App.propTypes = {

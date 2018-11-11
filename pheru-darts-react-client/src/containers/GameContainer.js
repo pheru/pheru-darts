@@ -5,6 +5,7 @@ import {archiveGame} from "../actions/games";
 
 const mapStateToProps = function (state) {
     let startScore = state.game.score;
+    let checkInMode = state.game.checkInMode;
     let checkOutMode = state.game.checkOutMode;
     let players = state.game.players;
     let winner = state.game.winner;
@@ -13,6 +14,7 @@ const mapStateToProps = function (state) {
     let isLoggedIn = state.user.isLoggedIn;
     return {
         startScore,
+        checkInMode,
         checkOutMode,
         players,
         winner,

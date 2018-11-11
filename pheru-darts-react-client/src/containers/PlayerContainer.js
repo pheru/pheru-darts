@@ -7,7 +7,8 @@ const mapStateToProps = function (state, ownProps) {
     let player = players[ownProps.index];
     let startScore = state.game.score;
     let checkOutMode = state.game.checkOutMode;
-    let turnInfo = getTurnInformation(players, startScore, checkOutMode);
+    let checkInMode = state.game.checkInMode;
+    let turnInfo = getTurnInformation(players, startScore, checkInMode, checkOutMode);
 
     let score = turnInfo.playerInformation[ownProps.index].score;
     let darts = getDarts(player);

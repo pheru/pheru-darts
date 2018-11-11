@@ -53,14 +53,14 @@ class Game extends React.Component {
                 <Row className="show-grid text-center">
                     <Col xs={12} xsPush={0} sm={2} smPush={10} style={{...this.colStyle, marginBottom: 0}}>
                         <Row className="show-grid text-center">
-                            <Col xs={5} xsOffset={1} sm={12} smOffset={0}
+                            <Col xs={6} sm={12}
                                  style={{...this.colStyleButton, fontWeight: 'bold'}}>
                                 <Well style={{margin: 0, padding: 2}}>
                                     <div style={{borderBottom: '0.5px black solid'}}>{this.props.startScore}</div>
-                                    <div>{this.props.checkOutMode.text}</div>
+                                    <div>{this.props.checkInMode.text} {this.props.checkOutMode.text}</div>
                                 </Well>
                             </Col>
-                            <Col xs={5} sm={12} style={this.colStyleButton}>
+                            <Col xs={6} sm={12} style={this.colStyleButton}>
                                 <Button bsStyle='warning' bsSize='large' block
                                         onClick={() => this.props.undoDart()}>
                                     <Glyphicon glyph="erase"/>
@@ -126,6 +126,7 @@ class Game extends React.Component {
 
 Game.propTypes = {
     startScore: PropTypes.number.isRequired,
+    checkInMode: PropTypes.object.isRequired,
     checkOutMode: PropTypes.object.isRequired,
     players: PropTypes.array.isRequired,
     winner: PropTypes.object,

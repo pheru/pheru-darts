@@ -1,12 +1,14 @@
 import {DOUBLE_OUT, SINGLE_OUT} from "../constants/checkoutModes";
+import {DOUBLE_IN, SINGLE_IN} from "../constants/checkinModes";
 
-function getTurnInformation(players, startScore, checkOutMode) {
+function getTurnInformation(players, startScore, checkInMode, checkOutMode) {
     let playerInformationList = [];
     for (let i = 0; i < players.length; i++) {
         playerInformationList[i] = {
             score: startScore,
             dartCount: 0,
-            average: 0.0
+            average: 0.0,
+            checkInCondition: false
         };
     }
 
@@ -31,17 +33,24 @@ function getTurnInformation(players, startScore, checkOutMode) {
         let dartScore = dart.value * dart.multiplier;
         let checkOutCondition = checkOutMode === SINGLE_OUT || (checkOutMode === DOUBLE_OUT && dart.multiplier === 2);
         let score = playerInformationList[playerIndex].score;
+        let checkInCondition = playerInformationList[playerIndex].checkInCondition;
         if (dartIndex === 0) {
             aufnahmeStartScore = score;
         }
         let thrownOver = isThrownOver(score, dart, checkOutMode);
 
-        if (score - dartScore === 0 && checkOutCondition) { // ausgecheckt
-            score = 0;
-        } else if (thrownOver) { // ueberworfen
-            score = aufnahmeStartScore;
-        } else {
-            score -= dartScore;
+        if (!checkInCondition) {
+            checkInCondition = checkInMode === SINGLE_IN || (checkInMode === DOUBLE_IN && dart.multiplier === 2);
+            playerInformationList[playerIndex].checkInCondition = checkInCondition;
+        }
+        if (checkInCondition) {
+            if (score - dartScore === 0 && checkOutCondition) { // ausgecheckt
+                score = 0;
+            } else if (thrownOver) { // ueberworfen
+                score = aufnahmeStartScore;
+            } else {
+                score -= dartScore;
+            }
         }
         playerInformationList[playerIndex].score = score;
 
@@ -70,6 +79,10 @@ function getTurnInformation(players, startScore, checkOutMode) {
             }
             let scoreDifference = startScore - (playerInformationList[i].score + currentAufnahmeScore);
             average = scoreDifference / aufnahmenCount;
+        }
+        // Bis zum erfolgreichen Check-In kann ansonsten ein negativer Average rauskommen
+        if (average < 0.0) {
+            average = 0.0;
         }
         average = average.toFixed(2);
         playerInformationList[i].average = average;
