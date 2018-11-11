@@ -1,6 +1,6 @@
 package de.pheru.darts.backend.mappers;
 
-import de.pheru.darts.backend.dtos.UserDto;
+import de.pheru.darts.backend.dtos.user.UserDto;
 import de.pheru.darts.backend.entities.playerpermission.PlayerPermissionEntity;
 import de.pheru.darts.backend.entities.user.UserEntity;
 

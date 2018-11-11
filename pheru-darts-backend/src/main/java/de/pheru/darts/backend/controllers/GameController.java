@@ -1,9 +1,9 @@
 package de.pheru.darts.backend.controllers;
 
 import de.pheru.darts.backend.Logger;
-import de.pheru.darts.backend.dtos.DartDto;
-import de.pheru.darts.backend.dtos.GameDto;
-import de.pheru.darts.backend.dtos.PlayerDto;
+import de.pheru.darts.backend.dtos.game.DartDto;
+import de.pheru.darts.backend.dtos.game.GameDto;
+import de.pheru.darts.backend.dtos.game.PlayerDto;
 import de.pheru.darts.backend.entities.game.GameEntity;
 import de.pheru.darts.backend.exceptions.ForbiddenException;
 import de.pheru.darts.backend.mappers.DtoMapper;

@@ -1,6 +1,6 @@
-package de.pheru.darts.backend.dtos;
+package de.pheru.darts.backend.dtos.game;
 
-public class CheckOutDto {
+public class CheckInDto {
 
     private String key;
 

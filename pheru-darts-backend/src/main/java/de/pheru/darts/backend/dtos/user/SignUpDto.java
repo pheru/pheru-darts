@@ -1,4 +1,4 @@
-package de.pheru.darts.backend.dtos;
+package de.pheru.darts.backend.dtos.user;
 
 public class SignUpDto {
 
