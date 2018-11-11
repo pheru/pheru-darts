@@ -1,6 +1,6 @@
 package de.pheru.darts.backend.security;
 
-import de.pheru.darts.backend.entities.UserEntity;
+import de.pheru.darts.backend.entities.user.UserEntity;
 import de.pheru.darts.backend.repositories.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

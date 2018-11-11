@@ -1,4 +1,4 @@
-package de.pheru.darts.backend.entities;
+package de.pheru.darts.backend.entities.game;
 
 public enum CheckInMode {
     SINGLE_IN, DOUBLE_IN;

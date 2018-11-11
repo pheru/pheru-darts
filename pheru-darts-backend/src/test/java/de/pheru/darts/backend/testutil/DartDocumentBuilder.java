@@ -1,6 +1,6 @@
 package de.pheru.darts.backend.testutil;
 
-import de.pheru.darts.backend.entities.DartDocument;
+import de.pheru.darts.backend.entities.game.DartDocument;
 
 public class DartDocumentBuilder {
 

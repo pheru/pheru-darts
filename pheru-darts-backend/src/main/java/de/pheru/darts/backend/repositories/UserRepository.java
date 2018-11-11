@@ -1,6 +1,6 @@
 package de.pheru.darts.backend.repositories;
 
-import de.pheru.darts.backend.entities.UserEntity;
+import de.pheru.darts.backend.entities.user.UserEntity;
 import org.socialsignin.spring.data.dynamodb.repository.EnableScan;
 import org.springframework.data.repository.CrudRepository;
 

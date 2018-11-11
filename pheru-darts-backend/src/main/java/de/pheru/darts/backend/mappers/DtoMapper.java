@@ -3,7 +3,7 @@ package de.pheru.darts.backend.mappers;
 import de.pheru.darts.backend.dtos.DartDto;
 import de.pheru.darts.backend.dtos.GameDto;
 import de.pheru.darts.backend.dtos.PlayerDto;
-import de.pheru.darts.backend.entities.*;
+import de.pheru.darts.backend.entities.game.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;

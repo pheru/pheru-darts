@@ -1,6 +1,6 @@
 package de.pheru.darts.backend.repositories;
 
-import de.pheru.darts.backend.entities.GameEntity;
+import de.pheru.darts.backend.entities.game.GameEntity;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

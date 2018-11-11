@@ -1,7 +1,7 @@
 package de.pheru.darts.backend.mocks.repositories;
 
 
-import de.pheru.darts.backend.entities.PlayerPermissionEntity;
+import de.pheru.darts.backend.entities.playerpermission.PlayerPermissionEntity;
 import de.pheru.darts.backend.repositories.PlayerPermissionRepository;
 
 import java.util.ArrayList;

@@ -1,8 +1,8 @@
 package de.pheru.darts.backend.controllers;
 
-import de.pheru.darts.backend.entities.GameEntity;
-import de.pheru.darts.backend.entities.PlayerPermissionEntity;
-import de.pheru.darts.backend.entities.UserEntity;
+import de.pheru.darts.backend.entities.game.GameEntity;
+import de.pheru.darts.backend.entities.playerpermission.PlayerPermissionEntity;
+import de.pheru.darts.backend.entities.user.UserEntity;
 import de.pheru.darts.backend.mocks.repositories.MockedGameRepository;
 import de.pheru.darts.backend.mocks.repositories.MockedPlayerPermissionRepository;
 import de.pheru.darts.backend.mocks.repositories.MockedUserRepository;

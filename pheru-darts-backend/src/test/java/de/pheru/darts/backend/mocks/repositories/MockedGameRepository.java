@@ -1,7 +1,7 @@
 package de.pheru.darts.backend.mocks.repositories;
 
 
-import de.pheru.darts.backend.entities.GameEntity;
+import de.pheru.darts.backend.entities.game.GameEntity;
 import de.pheru.darts.backend.repositories.GameRepository;
 
 import java.util.ArrayList;

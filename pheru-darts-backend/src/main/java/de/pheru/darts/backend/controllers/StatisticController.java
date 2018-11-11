@@ -2,7 +2,8 @@ package de.pheru.darts.backend.controllers;
 
 import de.pheru.darts.backend.Logger;
 import de.pheru.darts.backend.dtos.statistics.*;
-import de.pheru.darts.backend.entities.*;
+import de.pheru.darts.backend.entities.game.*;
+import de.pheru.darts.backend.entities.user.UserEntity;
 import de.pheru.darts.backend.repositories.GameRepository;
 import de.pheru.darts.backend.repositories.UserRepository;
 import de.pheru.darts.backend.security.SecurityUtil;

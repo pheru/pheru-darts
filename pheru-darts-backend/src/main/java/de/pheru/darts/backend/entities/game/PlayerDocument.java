@@ -1,4 +1,4 @@
-package de.pheru.darts.backend.entities;
+package de.pheru.darts.backend.entities.game;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBDocument;

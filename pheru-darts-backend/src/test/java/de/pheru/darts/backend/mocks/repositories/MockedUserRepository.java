@@ -1,7 +1,7 @@
 package de.pheru.darts.backend.mocks.repositories;
 
 
-import de.pheru.darts.backend.entities.UserEntity;
+import de.pheru.darts.backend.entities.user.UserEntity;
 import de.pheru.darts.backend.repositories.UserRepository;
 
 import java.util.ArrayList;

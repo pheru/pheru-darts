@@ -1,6 +1,6 @@
 package de.pheru.darts.backend.validation;
 
-import de.pheru.darts.backend.entities.UserEntity;
+import de.pheru.darts.backend.entities.user.UserEntity;
 import de.pheru.darts.backend.exceptions.UsernameAlreadyExistsException;
 import de.pheru.darts.backend.exceptions.ValidationException;
 import de.pheru.darts.backend.mocks.repositories.MockedUserRepository;

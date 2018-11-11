@@ -1,4 +1,4 @@
-package de.pheru.darts.backend.entities;
+package de.pheru.darts.backend.entities.user;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.*;
 

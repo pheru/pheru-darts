@@ -4,7 +4,7 @@ import de.pheru.darts.backend.Logger;
 import de.pheru.darts.backend.dtos.DartDto;
 import de.pheru.darts.backend.dtos.GameDto;
 import de.pheru.darts.backend.dtos.PlayerDto;
-import de.pheru.darts.backend.entities.GameEntity;
+import de.pheru.darts.backend.entities.game.GameEntity;
 import de.pheru.darts.backend.exceptions.ForbiddenException;
 import de.pheru.darts.backend.mappers.DtoMapper;
 import de.pheru.darts.backend.repositories.GameRepository;

@@ -1,15 +1,14 @@
 package de.pheru.darts.backend.controllers;
 
 import de.pheru.darts.backend.dtos.statistics.*;
-import de.pheru.darts.backend.entities.CheckInMode;
-import de.pheru.darts.backend.entities.CheckOutMode;
-import de.pheru.darts.backend.entities.UserEntity;
+import de.pheru.darts.backend.entities.game.CheckInMode;
+import de.pheru.darts.backend.entities.game.CheckOutMode;
+import de.pheru.darts.backend.entities.user.UserEntity;
 import de.pheru.darts.backend.testutil.AufnahmeDocumentBuilder;
 import de.pheru.darts.backend.testutil.DartDocumentBuilder;
 import de.pheru.darts.backend.testutil.GameEntityBuilder;
 import de.pheru.darts.backend.util.ReservedUser;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.text.DateFormat;

@@ -1,4 +1,4 @@
-package de.pheru.darts.backend.entities;
+package de.pheru.darts.backend.entities.game;
 
 public enum CheckOutMode {
     SINGLE_OUT, DOUBLE_OUT;

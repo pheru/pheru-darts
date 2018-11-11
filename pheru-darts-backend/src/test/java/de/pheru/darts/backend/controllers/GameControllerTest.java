@@ -1,7 +1,8 @@
 package de.pheru.darts.backend.controllers;
 
 import de.pheru.darts.backend.dtos.*;
-import de.pheru.darts.backend.entities.*;
+import de.pheru.darts.backend.entities.game.*;
+import de.pheru.darts.backend.entities.playerpermission.PlayerPermissionEntity;
 import de.pheru.darts.backend.exceptions.ForbiddenException;
 import org.junit.Before;
 import org.junit.Test;

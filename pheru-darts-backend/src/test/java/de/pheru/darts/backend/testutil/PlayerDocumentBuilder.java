@@ -1,7 +1,7 @@
 package de.pheru.darts.backend.testutil;
 
-import de.pheru.darts.backend.entities.AufnahmeDocument;
-import de.pheru.darts.backend.entities.PlayerDocument;
+import de.pheru.darts.backend.entities.game.AufnahmeDocument;
+import de.pheru.darts.backend.entities.game.PlayerDocument;
 
 import java.util.ArrayList;
 

@@ -1,8 +1,8 @@
 package de.pheru.darts.backend.mappers;
 
 import de.pheru.darts.backend.dtos.UserDto;
-import de.pheru.darts.backend.entities.PlayerPermissionEntity;
-import de.pheru.darts.backend.entities.UserEntity;
+import de.pheru.darts.backend.entities.playerpermission.PlayerPermissionEntity;
+import de.pheru.darts.backend.entities.user.UserEntity;
 
 import java.util.ArrayList;
 import java.util.List;

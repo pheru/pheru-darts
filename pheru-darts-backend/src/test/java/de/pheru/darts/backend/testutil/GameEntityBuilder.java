@@ -1,9 +1,9 @@
 package de.pheru.darts.backend.testutil;
 
-import de.pheru.darts.backend.entities.AufnahmeDocument;
-import de.pheru.darts.backend.entities.CheckInMode;
-import de.pheru.darts.backend.entities.CheckOutMode;
-import de.pheru.darts.backend.entities.GameEntity;
+import de.pheru.darts.backend.entities.game.AufnahmeDocument;
+import de.pheru.darts.backend.entities.game.CheckInMode;
+import de.pheru.darts.backend.entities.game.CheckOutMode;
+import de.pheru.darts.backend.entities.game.GameEntity;
 
 import java.util.ArrayList;
 
