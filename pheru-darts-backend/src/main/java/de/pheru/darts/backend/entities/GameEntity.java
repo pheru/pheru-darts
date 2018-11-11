@@ -25,6 +25,10 @@ public class GameEntity {
     private CheckOutMode checkOutMode;
 
     @DynamoDBAttribute
+    @DynamoDBTyped(DynamoDBMapperFieldModel.DynamoDBAttributeType.S)
+    private CheckInMode checkInMode;
+
+    @DynamoDBAttribute
     private Boolean training;
 
     @DynamoDBAttribute
@@ -60,6 +64,14 @@ public class GameEntity {
 
     public void setScore(final int score) {
         this.score = score;
+    }
+
+    public CheckInMode getCheckInMode() {
+        return checkInMode;
+    }
+
+    public void setCheckInMode(final CheckInMode checkInMode) {
+        this.checkInMode = checkInMode;
     }
 
     public CheckOutMode getCheckOutMode() {

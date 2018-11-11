@@ -1,6 +1,7 @@
 package de.pheru.darts.backend.testutil;
 
 import de.pheru.darts.backend.entities.AufnahmeDocument;
+import de.pheru.darts.backend.entities.CheckInMode;
 import de.pheru.darts.backend.entities.CheckOutMode;
 import de.pheru.darts.backend.entities.GameEntity;
 
@@ -27,6 +28,11 @@ public class GameEntityBuilder {
 
     public GameEntityBuilder score(final int score) {
         entity.setScore(score);
+        return this;
+    }
+
+    public GameEntityBuilder checkInMode(final CheckInMode checkInMode) {
+        entity.setCheckInMode(checkInMode);
         return this;
     }
 

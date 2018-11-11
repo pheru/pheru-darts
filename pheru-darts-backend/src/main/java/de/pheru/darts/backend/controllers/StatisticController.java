@@ -39,17 +39,22 @@ public class StatisticController {
         long gamesWon = 0;
         long gamesLost = 0;
         long totalDarts = 0;
+        long possibleCheckinCount = 0;
+        long checkinCount = 0;
         long possibleCheckoutCount = 0;
         long checkoutCount = 0;
         final Map<Integer, DartCountStatisticDto> dartCountsPerScore = new HashMap<>();
         final Map<String, GameCountStatisticDto> gameCountsPerPlayer = new HashMap<>();
 
         for (final GameEntity game : games) {
+            final boolean training = game.isTraining() != null && game.isTraining();
+            final CheckInMode checkInMode = game.getCheckInMode() != null ? game.getCheckInMode() : CheckInMode.defaultValue();
             final CheckOutMode checkOutMode = game.getCheckOutMode();
             int score = game.getScore();
             boolean gameWon = false;
             for (final PlayerDocument playerDocument : game.getPlayers()) {
                 if (playerDocument.getId() != null && playerDocument.getId().equals(SecurityUtil.getLoggedInUserId())) {
+                    boolean checkInCondition = false;
                     for (final AufnahmeDocument aufnahmeDocument : playerDocument.getAufnahmen()) {
                         final int aufnahmeStartScore = score;
                         for (final DartDocument dartDocument : aufnahmeDocument.getDarts()) {
@@ -73,14 +78,24 @@ public class StatisticController {
                             final boolean checkOutCondition = checkOutMode == CheckOutMode.SINGLE_OUT
                                     || (checkOutMode == CheckOutMode.DOUBLE_OUT && dartDocument.getMultiplier() == 2);
                             final boolean thrownOver = isThrownOver(score, dartScore, game.getCheckOutMode());
-                            if (score - dartScore == 0 && checkOutCondition) { // ausgecheckt
-                                score = 0;
-                                checkoutCount++;
-                                gameWon = true;
-                            } else if (thrownOver) { // ueberworfen
-                                score = aufnahmeStartScore;
-                            } else {
-                                score -= dartScore;
+                            if (!checkInCondition) {
+                                possibleCheckinCount++;
+                                checkInCondition = checkInMode == CheckInMode.SINGLE_IN
+                                        || (checkInMode == CheckInMode.DOUBLE_IN && dartDocument.getMultiplier() == 2);
+                                if (checkInCondition) {
+                                    checkinCount++;
+                                }
+                            }
+                            if (checkInCondition) {
+                                if (score - dartScore == 0 && checkOutCondition) { // ausgecheckt
+                                    score = 0;
+                                    checkoutCount++;
+                                    gameWon = true;
+                                } else if (thrownOver) { // ueberworfen
+                                    score = aufnahmeStartScore;
+                                } else {
+                                    score -= dartScore;
+                                }
                             }
                         }
                     }
@@ -112,7 +127,7 @@ public class StatisticController {
                     }
                 }
             }
-            if (game.isTraining() == null || !game.isTraining()) {
+            if (!training) {
                 if (gameWon) {
                     gamesWon++;
                 } else {
@@ -129,6 +144,8 @@ public class StatisticController {
         dartStatisticDto.setTotalCount(totalDarts);
         dartStatisticDto.setPossibleCheckoutCount(possibleCheckoutCount);
         dartStatisticDto.setCheckoutCount(checkoutCount);
+        dartStatisticDto.setPossibleCheckinCount(possibleCheckinCount);
+        dartStatisticDto.setCheckinCount(checkinCount);
         dartStatisticDto.setCountsPerScore(dartCountsPerScore);
 
         final StatisticDto statisticDto = new StatisticDto();

@@ -18,6 +18,9 @@ public final class DtoMapper {
     public static GameEntity toGameEntity(final GameDto gameDto) {
         final GameEntity gameEntity = new GameEntity();
         gameEntity.setScore(gameDto.getScore());
+        gameEntity.setCheckInMode(gameDto.getCheckInMode() == null
+                ? CheckInMode.defaultValue()
+                : CheckInMode.forString(gameDto.getCheckInMode().getKey()));
         gameEntity.setCheckOutMode(CheckOutMode.forString(gameDto.getCheckOutMode().getKey()));
         gameEntity.setPlayers(toPlayerDocument(Arrays.asList(gameDto.getPlayers())));
         gameEntity.setTraining(gameDto.isTraining());

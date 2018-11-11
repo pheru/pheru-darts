@@ -1,9 +1,6 @@
 package de.pheru.darts.backend.controllers;
 
-import de.pheru.darts.backend.dtos.CheckOutDto;
-import de.pheru.darts.backend.dtos.DartDto;
-import de.pheru.darts.backend.dtos.GameDto;
-import de.pheru.darts.backend.dtos.PlayerDto;
+import de.pheru.darts.backend.dtos.*;
 import de.pheru.darts.backend.entities.*;
 import de.pheru.darts.backend.exceptions.ForbiddenException;
 import org.junit.Before;
@@ -18,6 +15,7 @@ import static org.junit.Assert.*;
 public class GameControllerTest extends ControllerTest {
 
     private static final String ID_2 = "id-2";
+    private static final String CHECKOUT_IN = "SINGLE_IN";
     private static final String CHECKOUT_MODE = "DOUBLE_OUT";
     private static final int SCORE = 501;
 
@@ -48,6 +46,7 @@ public class GameControllerTest extends ControllerTest {
         final GameEntity savedGame = allAfterSave.get(0);
         assertEquals(LOGIN_ID, savedGame.getUserId());
         assertEquals(CheckOutMode.DOUBLE_OUT, savedGame.getCheckOutMode());
+        assertEquals(CheckInMode.SINGLE_IN, savedGame.getCheckInMode());
         assertEquals(game.getScore(), savedGame.getScore());
         assertTrue(savedGame.getTimestamp() >= postGameDate.getTime()
                 && savedGame.getTimestamp() < postGameDate.getTime() + 100);
@@ -61,6 +60,28 @@ public class GameControllerTest extends ControllerTest {
         final AufnahmeDocument savedAufnahme = savedGame.getPlayers().get(0).getAufnahmen().get(1);
         assertEquals(aufnahme[1].getValue(), savedAufnahme.getDarts().get(1).getValue());
         assertEquals(aufnahme[1].getMultiplier(), savedAufnahme.getDarts().get(1).getMultiplier());
+    }
+
+    @Test
+    public void postGameWithoutCheckInMode() {
+        final PlayerPermissionEntity permissionLL = createPlayerPermissionEntity(LOGIN_ID, LOGIN_ID);
+        playerPermissionRepository.save(permissionLL);
+        final PlayerPermissionEntity permission2L = createPlayerPermissionEntity(ID_2, LOGIN_ID);
+        playerPermissionRepository.save(permission2L);
+
+        final Iterable<GameEntity> allBeforeSave = gamesRepository.findAll();
+        assertFalse(allBeforeSave.iterator().hasNext());
+
+        final GameDto game = createDefaultGame();
+        game.setCheckInMode(null);
+        gameController.postGame(game);
+
+        final List<GameEntity> allAfterSave = (List<GameEntity>) gamesRepository.findAll();
+        assertEquals(2, allAfterSave.size());
+
+        final GameEntity savedGame = allAfterSave.get(0);
+        assertEquals(LOGIN_ID, savedGame.getUserId());
+        assertEquals(CheckInMode.defaultValue(), savedGame.getCheckInMode());
     }
 
     @Test
@@ -191,6 +212,9 @@ public class GameControllerTest extends ControllerTest {
         final CheckOutDto checkOutDto = new CheckOutDto();
         checkOutDto.setKey(CHECKOUT_MODE);
         gameDto.setCheckOutMode(checkOutDto);
+        final CheckInDto checkInDto = new CheckInDto();
+        checkInDto.setKey(CHECKOUT_IN);
+        gameDto.setCheckInMode(checkInDto);
         gameDto.setScore(SCORE);
         return gameDto;
     }

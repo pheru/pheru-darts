@@ -4,6 +4,7 @@ public class GameDto {
 
     private PlayerDto[] players;
     private int score;
+    private CheckInDto checkInMode;
     private CheckOutDto checkOutMode;
     private Boolean training;
 
@@ -21,6 +22,14 @@ public class GameDto {
 
     public void setScore(final int score) {
         this.score = score;
+    }
+
+    public CheckInDto getCheckInMode() {
+        return checkInMode;
+    }
+
+    public void setCheckInMode(final CheckInDto checkInMode) {
+        this.checkInMode = checkInMode;
     }
 
     public CheckOutDto getCheckOutMode() {

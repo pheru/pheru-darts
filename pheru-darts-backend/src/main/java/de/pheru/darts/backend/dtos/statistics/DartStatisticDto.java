@@ -9,6 +9,8 @@ public class DartStatisticDto {
     private Map<Integer, DartCountStatisticDto> countsPerScore = new HashMap<>();
     private Long possibleCheckoutCount = 0L;
     private Long checkoutCount = 0L;
+    private Long possibleCheckinCount = 0L;
+    private Long checkinCount = 0L;
 
     public Long getTotalCount() {
         return totalCount;
@@ -40,5 +42,21 @@ public class DartStatisticDto {
 
     public void setCheckoutCount(final Long checkoutCount) {
         this.checkoutCount = checkoutCount;
+    }
+
+    public Long getPossibleCheckinCount() {
+        return possibleCheckinCount;
+    }
+
+    public void setPossibleCheckinCount(final Long possibleCheckinCount) {
+        this.possibleCheckinCount = possibleCheckinCount;
+    }
+
+    public Long getCheckinCount() {
+        return checkinCount;
+    }
+
+    public void setCheckinCount(final Long checkinCount) {
+        this.checkinCount = checkinCount;
     }
 }
