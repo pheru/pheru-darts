@@ -1,9 +1,9 @@
 package de.pheru.darts.backend.controllers;
 
-import de.pheru.darts.backend.entities.game.GameEntity;
 import de.pheru.darts.backend.entities.playerpermission.PlayerPermissionEntity;
 import de.pheru.darts.backend.entities.user.UserEntity;
 import de.pheru.darts.backend.mocks.repositories.MockedGameRepository;
+import de.pheru.darts.backend.mocks.repositories.MockedNotificationRepository;
 import de.pheru.darts.backend.mocks.repositories.MockedPlayerPermissionRepository;
 import de.pheru.darts.backend.mocks.repositories.MockedUserRepository;
 import de.pheru.darts.backend.security.IdAuthentication;
@@ -15,17 +15,19 @@ import java.util.ArrayList;
 public class ControllerTest {
 
     protected static final String LOGIN_ID = "login-id";
-    protected static final String DEFAULT_USER_NAME = "Default-Name";
-    protected static final String DEFAULT_USER_PASSWORD = "Default-Password";
+    protected static final String LOGIN_NAME = "login-name";
+    protected static final String LOGIN_PASSWORD = "login-password";
 
     protected MockedUserRepository userRepository;
     protected MockedGameRepository gamesRepository;
+    protected MockedNotificationRepository notificationRepository;
     protected MockedPlayerPermissionRepository playerPermissionRepository;
 
     @Before
     public void controllerTestSetUp() {
         userRepository = new MockedUserRepository();
         gamesRepository = new MockedGameRepository();
+        notificationRepository = new MockedNotificationRepository();
         playerPermissionRepository = new MockedPlayerPermissionRepository();
         login();
     }
@@ -36,7 +38,7 @@ public class ControllerTest {
     }
 
     protected UserEntity createDefaultUserEntity() {
-        return createUserEntity(DEFAULT_USER_NAME, DEFAULT_USER_PASSWORD);
+        return createUserEntity(LOGIN_NAME, LOGIN_PASSWORD);
     }
 
     protected UserEntity createUserEntity(final String name, final String password) {
@@ -47,7 +49,7 @@ public class ControllerTest {
     }
 
     protected UserEntity createAndSaveDefaultLoginUser() {
-        return createAndSaveLoginUser(DEFAULT_USER_NAME, DEFAULT_USER_PASSWORD);
+        return createAndSaveLoginUser(LOGIN_NAME, LOGIN_PASSWORD);
     }
 
     protected UserEntity createAndSaveLoginUser(final String name, final String password) {
@@ -59,10 +61,6 @@ public class ControllerTest {
         permissionEntity.setUserId(LOGIN_ID);
         permissionEntity.setPermittedUserId(LOGIN_ID);
         playerPermissionRepository.save(permissionEntity);
-
-        final GameEntity gameEntity = new GameEntity();
-        gameEntity.setUserId(LOGIN_ID);
-        gamesRepository.save(gameEntity);
 
         return loggedInUser;
     }

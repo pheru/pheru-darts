@@ -41,17 +41,13 @@ public class UserController {
 
     @GetMapping
     public UserDto getCurrentUser() {
-        LOGGER.debug("GET auf /user aufgerufen");
         final String loggedInUserId = SecurityUtil.getLoggedInUserId();
         final UserEntity userEntity = userRepository.findById(loggedInUserId);
-        LOGGER.debug("GET auf /user erfolgreich");
         return EntityMapper.toUserDto(userEntity);
     }
 
     @PostMapping
     public void postUser(@RequestBody final SignUpDto signUpDto) {
-        LOGGER.debug("POST auf /user aufgerufen");
-
         userValidation.validateName(signUpDto.getName());
         userValidation.validatePassword(signUpDto.getPassword());
 
@@ -65,36 +61,45 @@ public class UserController {
         playerPermissionEntity.setPermittedUserId(savedEntity.getId());
         playerPermissionRepository.save(playerPermissionEntity);
 
-        LOGGER.debug("POST auf /user erfolgreich");
+        LOGGER.info("User " + savedEntity.getId() + " saved.");
     }
 
     @PutMapping
     public UserDto putUser(@RequestBody final UserModificationDto userModificationDto) {
-        LOGGER.debug("PUT auf /user aufgerufen");
         final String loggedInUserId = SecurityUtil.getLoggedInUserId();
         final UserEntity userEntity = userRepository.findById(loggedInUserId);
-        if (userModificationDto.getName() != null) {
+
+        final boolean changeName = userModificationDto.getName() != null;
+        final boolean changePassword = userModificationDto.getPassword() != null;
+
+        if (changeName) {
             userValidation.validateName(userModificationDto.getName());
             userEntity.setName(userModificationDto.getName());
         }
-        if (userModificationDto.getPassword() != null) {
+        if (changePassword) {
             userValidation.validatePassword(userModificationDto.getName());
             userEntity.setPassword(bCryptPasswordEncoder.encode(userModificationDto.getPassword()));
         }
+
         final UserEntity savedEntity = userRepository.save(userEntity);
-        LOGGER.debug("PUT auf /user erfolgreich");
+
+        if (changeName) {
+            LOGGER.info("Name changed for user " + savedEntity.getId());
+        }
+        if (changePassword) {
+            LOGGER.info("Password changed for user " + savedEntity.getId());
+        }
         return EntityMapper.toUserDto(savedEntity);
     }
 
     @DeleteMapping
     public void deleteUser() {
-        LOGGER.debug("DELETE auf /user aufgerufen");
         final String loggedInUserId = SecurityUtil.getLoggedInUserId();
         playerPermissionRepository.deleteAllByUserId(loggedInUserId);
         playerPermissionRepository.deleteAllByPermittedUserId(loggedInUserId);
         gameRepository.deleteAllByUserId(loggedInUserId);
         userRepository.deleteById(loggedInUserId);
-        LOGGER.debug("DELETE auf /user erfolgreich");
+        LOGGER.info("User " + loggedInUserId + " deleted.");
     }
 
 }

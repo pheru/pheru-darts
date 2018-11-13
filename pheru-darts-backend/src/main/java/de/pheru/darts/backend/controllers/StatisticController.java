@@ -1,6 +1,5 @@
 package de.pheru.darts.backend.controllers;
 
-import de.pheru.darts.backend.Logger;
 import de.pheru.darts.backend.dtos.statistics.*;
 import de.pheru.darts.backend.entities.game.*;
 import de.pheru.darts.backend.entities.user.UserEntity;
@@ -20,8 +19,6 @@ import java.util.Map;
 @RequestMapping("/statistic")
 public class StatisticController {
 
-    private static final Logger LOGGER = new Logger();
-
     private final GameRepository gameRepository;
     private final UserRepository userRepository;
 
@@ -32,7 +29,6 @@ public class StatisticController {
 
     @GetMapping
     public StatisticDto get() {
-        LOGGER.debug("GET auf /statistics aufgerufen");
         final List<GameEntity> games = gameRepository.findByUserId(SecurityUtil.getLoggedInUserId());
 
         final Map<String, String> playerCache = new HashMap<>();
@@ -153,7 +149,6 @@ public class StatisticController {
         statisticDto.setGames(gameStatisticDto);
         statisticDto.setDarts(dartStatisticDto);
 
-        LOGGER.debug("GET auf /statistics: erfolgreich");
         return statisticDto;
     }
 

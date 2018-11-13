@@ -2,6 +2,8 @@ package de.pheru.darts.backend.controllers;
 
 import de.pheru.darts.backend.dtos.playerpermission.PlayerPermissionModificationDto;
 import de.pheru.darts.backend.dtos.user.UserDto;
+import de.pheru.darts.backend.entities.notification.NotificationEntity;
+import de.pheru.darts.backend.entities.notification.NotificationType;
 import de.pheru.darts.backend.entities.playerpermission.PlayerPermissionEntity;
 import de.pheru.darts.backend.entities.user.UserEntity;
 import de.pheru.darts.backend.exceptions.PermissionAlreadyGrantedException;
@@ -11,62 +13,84 @@ import org.junit.Test;
 
 import java.util.List;
 
+import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.*;
 
 public class PlayerPermissionControllerTest extends ControllerTest {
+
+    private static final String NAME = "name-to-permit";
+    private static final String PASSWORD = "pw-to-permit";
 
     private PlayerPermissionController playerPermissionController;
 
     @Before
     public void setUp() {
-        playerPermissionController = new PlayerPermissionController(playerPermissionRepository, userRepository);
+        playerPermissionController = new PlayerPermissionController(playerPermissionRepository, userRepository, notificationRepository);
+
+        createAndSaveDefaultLoginUser();
     }
 
     @Test
     public void postWithId() {
-        final UserEntity savedUser = userRepository.save(createDefaultUserEntity());
+        final List<PlayerPermissionEntity> allBeforePost = (List<PlayerPermissionEntity>) playerPermissionRepository.findAll();
+        assertEquals(1, allBeforePost.size());
+
+        final UserEntity savedUser = userRepository.save(createUserEntity(NAME, PASSWORD));
         playerPermissionController.post(createModificationDtoWithId(savedUser.getId()));
 
-        final Iterable<PlayerPermissionEntity> all = playerPermissionRepository.findAll();
-        assertTrue(all.iterator().hasNext());
+        final List<PlayerPermissionEntity> all = (List<PlayerPermissionEntity>) playerPermissionRepository.findAll();
+        assertEquals(2, all.size());
 
-        final PlayerPermissionEntity entity = all.iterator().next();
+        final PlayerPermissionEntity entity = all.get(1);
         assertEquals(LOGIN_ID, entity.getUserId());
         assertEquals(savedUser.getId(), entity.getPermittedUserId());
+
+        final List<NotificationEntity> allNotificationsAfterSave = (List<NotificationEntity>) notificationRepository.findAll();
+        assertEquals(1, allNotificationsAfterSave.size());
+        assertEquals(NotificationType.PLAYERPERMISSION_GRANTED, allNotificationsAfterSave.get(0).getNotificationType());
+        assertEquals(savedUser.getId(), allNotificationsAfterSave.get(0).getUserId());
+        assertTrue(allNotificationsAfterSave.get(0).getMessage().contains(LOGIN_NAME));
     }
 
     @Test
     public void postWithName() {
-        final UserEntity savedUser = userRepository.save(createDefaultUserEntity());
+        final List<PlayerPermissionEntity> allBeforePost = (List<PlayerPermissionEntity>) playerPermissionRepository.findAll();
+        assertEquals(1, allBeforePost.size());
+
+        final UserEntity savedUser = userRepository.save(createUserEntity(NAME, PASSWORD));
         playerPermissionController.post(createModificationDtoWithUserName(savedUser.getName()));
 
-        final Iterable<PlayerPermissionEntity> all = playerPermissionRepository.findAll();
-        assertTrue(all.iterator().hasNext());
+        final List<PlayerPermissionEntity> all = (List<PlayerPermissionEntity>) playerPermissionRepository.findAll();
+        assertEquals(2, all.size());
 
-        final PlayerPermissionEntity entity = all.iterator().next();
+        final PlayerPermissionEntity entity = all.get(1);
         assertEquals(LOGIN_ID, entity.getUserId());
         assertEquals(savedUser.getId(), entity.getPermittedUserId());
     }
 
     @Test
     public void postWithIdUserDoesNotExist() {
+        final List<PlayerPermissionEntity> allBeforePost = (List<PlayerPermissionEntity>) playerPermissionRepository.findAll();
+        assertEquals(1, allBeforePost.size());
         try {
             playerPermissionController.post(createModificationDtoWithId("gibtsnicht"));
             fail("Exception expected");
         } catch (final UserNotFoundException e) {
-            final Iterable<PlayerPermissionEntity> all = playerPermissionRepository.findAll();
-            assertFalse(all.iterator().hasNext());
+            final List<PlayerPermissionEntity> all = (List<PlayerPermissionEntity>) playerPermissionRepository.findAll();
+            assertEquals(1, all.size());
         }
     }
 
     @Test
     public void postWithUserNameUserDoesNotExist() {
+        final List<PlayerPermissionEntity> allBeforePost = (List<PlayerPermissionEntity>) playerPermissionRepository.findAll();
+        assertEquals(1, allBeforePost.size());
         try {
             playerPermissionController.post(createModificationDtoWithUserName("gibtsnicht"));
             fail("Exception expected");
         } catch (final UserNotFoundException e) {
-            final Iterable<PlayerPermissionEntity> all = playerPermissionRepository.findAll();
-            assertFalse(all.iterator().hasNext());
+            final List<PlayerPermissionEntity> all = (List<PlayerPermissionEntity>) playerPermissionRepository.findAll();
+            assertEquals(1, all.size());
         }
     }
 
@@ -75,12 +99,14 @@ public class PlayerPermissionControllerTest extends ControllerTest {
         final UserEntity savedUser = userRepository.save(createDefaultUserEntity());
         savePlayerPermission(LOGIN_ID, savedUser.getId());
 
+        final List<PlayerPermissionEntity> allBeforePost = (List<PlayerPermissionEntity>) playerPermissionRepository.findAll();
+        assertEquals(2, allBeforePost.size());
         try {
             playerPermissionController.post(createModificationDtoWithId(savedUser.getId()));
             fail("Exception expected");
         } catch (final PermissionAlreadyGrantedException e) {
             final List<PlayerPermissionEntity> all = (List<PlayerPermissionEntity>) playerPermissionRepository.findAll();
-            assertEquals(1, all.size());
+            assertEquals(2, all.size());
         }
     }
 
@@ -89,13 +115,18 @@ public class PlayerPermissionControllerTest extends ControllerTest {
         final UserEntity savedUser = userRepository.save(createDefaultUserEntity());
         savePlayerPermission(LOGIN_ID, savedUser.getId());
 
-        final Iterable<PlayerPermissionEntity> allBefore = playerPermissionRepository.findAll();
-        assertTrue(allBefore.iterator().hasNext());
+        final List<PlayerPermissionEntity> allBeforePost = (List<PlayerPermissionEntity>) playerPermissionRepository.findAll();
+        assertEquals(2, allBeforePost.size());
 
         playerPermissionController.delete(createModificationDtoWithId(savedUser.getId()));
 
-        final Iterable<PlayerPermissionEntity> allAfter = playerPermissionRepository.findAll();
-        assertFalse(allAfter.iterator().hasNext());
+        final List<PlayerPermissionEntity> all = (List<PlayerPermissionEntity>) playerPermissionRepository.findAll();
+        assertEquals(1, all.size());
+
+        final List<NotificationEntity> allNotificationsAfterSave = (List<NotificationEntity>) notificationRepository.findAll();
+        assertEquals(1, allNotificationsAfterSave.size());
+        assertEquals(NotificationType.PLAYERPERMISSION_REMOVED, allNotificationsAfterSave.get(0).getNotificationType());
+        assertEquals(savedUser.getId(), allNotificationsAfterSave.get(0).getUserId());
     }
 
     @Test
@@ -103,22 +134,17 @@ public class PlayerPermissionControllerTest extends ControllerTest {
         final UserEntity savedUser = userRepository.save(createDefaultUserEntity());
         savePlayerPermission(LOGIN_ID, savedUser.getId());
 
-        final Iterable<PlayerPermissionEntity> allBefore = playerPermissionRepository.findAll();
-        assertTrue(allBefore.iterator().hasNext());
+        final List<PlayerPermissionEntity> allBeforePost = (List<PlayerPermissionEntity>) playerPermissionRepository.findAll();
+        assertEquals(2, allBeforePost.size());
 
         playerPermissionController.delete(createModificationDtoWithUserName(savedUser.getName()));
 
-        final Iterable<PlayerPermissionEntity> allAfter = playerPermissionRepository.findAll();
-        assertFalse(allAfter.iterator().hasNext());
+        final List<PlayerPermissionEntity> all = (List<PlayerPermissionEntity>) playerPermissionRepository.findAll();
+        assertEquals(1, all.size());
     }
 
     @Test
     public void getPermittedUsers() {
-        final UserEntity loggedInUser = createDefaultUserEntity();
-        loggedInUser.setId(LOGIN_ID);
-        userRepository.save(loggedInUser);
-        savePlayerPermission(LOGIN_ID, LOGIN_ID);
-
         final List<UserDto> permittedUsers = playerPermissionController.getPermittedUsers();
         assertEquals(1, permittedUsers.size());
         assertEquals(LOGIN_ID, permittedUsers.get(0).getId());
@@ -140,11 +166,6 @@ public class PlayerPermissionControllerTest extends ControllerTest {
 
     @Test
     public void getPlayableUsers() {
-        final UserEntity loggedInUser = createDefaultUserEntity();
-        loggedInUser.setId(LOGIN_ID);
-        userRepository.save(loggedInUser);
-        savePlayerPermission(LOGIN_ID, LOGIN_ID);
-
         final List<UserDto> playableUsers = playerPermissionController.getPlayableUsers();
         assertEquals(1, playableUsers.size());
         assertEquals(LOGIN_ID, playableUsers.get(0).getId());
@@ -164,20 +185,20 @@ public class PlayerPermissionControllerTest extends ControllerTest {
         assertEquals(savedUser3.getId(), playableUsersAfterSave.get(3).getId());
     }
 
-    private void savePlayerPermission(final String userId, final String idToPermit){
+    private void savePlayerPermission(final String userId, final String idToPermit) {
         final PlayerPermissionEntity playerPermissionEntity = new PlayerPermissionEntity();
         playerPermissionEntity.setUserId(userId);
         playerPermissionEntity.setPermittedUserId(idToPermit);
         playerPermissionRepository.save(playerPermissionEntity);
     }
 
-    private PlayerPermissionModificationDto createModificationDtoWithId(final String permittedId){
+    private PlayerPermissionModificationDto createModificationDtoWithId(final String permittedId) {
         final PlayerPermissionModificationDto modificationDto = new PlayerPermissionModificationDto();
         modificationDto.setPermittedId(permittedId);
         return modificationDto;
     }
 
-    private PlayerPermissionModificationDto createModificationDtoWithUserName(final String name){
+    private PlayerPermissionModificationDto createModificationDtoWithUserName(final String name) {
         final PlayerPermissionModificationDto modificationDto = new PlayerPermissionModificationDto();
         modificationDto.setPermittedUsername(name);
         return modificationDto;

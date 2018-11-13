@@ -22,7 +22,7 @@ public class MockedUserRepository extends MockedRepository implements UserReposi
     }
 
     @Override
-    public List<UserEntity> findByIdIn(final List<String> ids) {
+    public List<UserEntity> findAll(final Iterable<String> ids) {
         final List<UserEntity> users = new ArrayList<>();
         for (final String id : ids) {
             final UserEntity user = findById(id);
@@ -79,11 +79,6 @@ public class MockedUserRepository extends MockedRepository implements UserReposi
     @Override
     public List<UserEntity> findAll() {
         return users;
-    }
-
-    @Override
-    public Iterable<UserEntity> findAll(final Iterable<String> iterable) {
-        throw new UnsupportedOperationException("Not implemented");
     }
 
     @Override

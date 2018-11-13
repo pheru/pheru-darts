@@ -2,6 +2,8 @@ package de.pheru.darts.backend.controllers;
 
 import de.pheru.darts.backend.dtos.game.*;
 import de.pheru.darts.backend.entities.game.*;
+import de.pheru.darts.backend.entities.notification.NotificationEntity;
+import de.pheru.darts.backend.entities.notification.NotificationType;
 import de.pheru.darts.backend.entities.playerpermission.PlayerPermissionEntity;
 import de.pheru.darts.backend.exceptions.ForbiddenException;
 import org.junit.Before;
@@ -24,18 +26,20 @@ public class GameControllerTest extends ControllerTest {
 
     @Before
     public void setUp() {
-        gameController = new GameController(playerPermissionRepository, gamesRepository);
+        gameController = new GameController(playerPermissionRepository, gamesRepository, userRepository, notificationRepository);
+
+        createAndSaveDefaultLoginUser();
     }
 
     @Test
     public void postGame() {
-        final PlayerPermissionEntity permissionLL = createPlayerPermissionEntity(LOGIN_ID, LOGIN_ID);
-        playerPermissionRepository.save(permissionLL);
         final PlayerPermissionEntity permission2L = createPlayerPermissionEntity(ID_2, LOGIN_ID);
         playerPermissionRepository.save(permission2L);
 
         final Iterable<GameEntity> allBeforeSave = gamesRepository.findAll();
         assertFalse(allBeforeSave.iterator().hasNext());
+        final Iterable<NotificationEntity> allNotificationsBeforeSave = notificationRepository.findAll();
+        assertFalse(allNotificationsBeforeSave.iterator().hasNext());
 
         final GameDto game = createDefaultGame();
         final Date postGameDate = new Date();
@@ -43,6 +47,11 @@ public class GameControllerTest extends ControllerTest {
 
         final List<GameEntity> allAfterSave = (List<GameEntity>) gamesRepository.findAll();
         assertEquals(2, allAfterSave.size());
+        final List<NotificationEntity> allNotificationsAfterSave = (List<NotificationEntity>) notificationRepository.findAll();
+        assertEquals(1, allNotificationsAfterSave.size());
+        assertEquals(NotificationType.GAME_SAVED, allNotificationsAfterSave.get(0).getNotificationType());
+        assertEquals(ID_2, allNotificationsAfterSave.get(0).getUserId());
+        assertTrue(allNotificationsAfterSave.get(0).getMessage().contains(LOGIN_NAME));
 
         final GameEntity savedGame = allAfterSave.get(0);
         assertEquals(LOGIN_ID, savedGame.getUserId());
@@ -65,8 +74,6 @@ public class GameControllerTest extends ControllerTest {
 
     @Test
     public void postGameWithoutCheckInMode() {
-        final PlayerPermissionEntity permissionLL = createPlayerPermissionEntity(LOGIN_ID, LOGIN_ID);
-        playerPermissionRepository.save(permissionLL);
         final PlayerPermissionEntity permission2L = createPlayerPermissionEntity(ID_2, LOGIN_ID);
         playerPermissionRepository.save(permission2L);
 
@@ -87,11 +94,10 @@ public class GameControllerTest extends ControllerTest {
 
     @Test
     public void postGameOneUnregisteredPlayer() {
-        final PlayerPermissionEntity permissionLL = createPlayerPermissionEntity(LOGIN_ID, LOGIN_ID);
-        playerPermissionRepository.save(permissionLL);
-
         final Iterable<GameEntity> allBeforeSave = gamesRepository.findAll();
         assertFalse(allBeforeSave.iterator().hasNext());
+        final Iterable<NotificationEntity> allNotificationsBeforeSave = notificationRepository.findAll();
+        assertFalse(allNotificationsBeforeSave.iterator().hasNext());
 
         final GameDto game = createDefaultGame();
         game.getPlayers()[1].setId(null);
@@ -99,6 +105,8 @@ public class GameControllerTest extends ControllerTest {
 
         final List<GameEntity> allAfterSave = (List<GameEntity>) gamesRepository.findAll();
         assertEquals(1, allAfterSave.size());
+        final List<NotificationEntity> allNotificationsAfterSave = (List<NotificationEntity>) notificationRepository.findAll();
+        assertTrue(allNotificationsAfterSave.isEmpty());
 
         final GameEntity savedGame = allAfterSave.get(0);
         assertEquals(LOGIN_ID, savedGame.getUserId());
@@ -120,9 +128,6 @@ public class GameControllerTest extends ControllerTest {
 
     @Test
     public void postGameFailedNotAllowed() {
-        final PlayerPermissionEntity permissionLL = createPlayerPermissionEntity(LOGIN_ID, LOGIN_ID);
-        playerPermissionRepository.save(permissionLL);
-
         final GameDto game = createDefaultGame();
         try {
             gameController.postGame(game);
@@ -135,8 +140,6 @@ public class GameControllerTest extends ControllerTest {
 
     @Test
     public void postGameRemoveEmptyAufnahme() {
-        final PlayerPermissionEntity permissionLL = createPlayerPermissionEntity(LOGIN_ID, LOGIN_ID);
-        playerPermissionRepository.save(permissionLL);
         final PlayerPermissionEntity permission2L = createPlayerPermissionEntity(ID_2, LOGIN_ID);
         playerPermissionRepository.save(permission2L);
 
