@@ -3,6 +3,7 @@ import {getConfig} from "../services/configService";
 import {fetchPermittedUsers, fetchPlayableUsers} from "./playerPermission";
 import {showError} from "./modal";
 import {defaultErrorHandling} from "../util/actionUtil";
+import {fetchNotifications} from "./notifications";
 
 export const SHOW_LOGIN_MODAL = "SHOW_LOGIN_MODAL";
 export const HIDE_LOGIN_MODAL = "HIDE_LOGIN_MODAL";
@@ -127,6 +128,7 @@ export function loginByToken(showErrorOnFailure) {
                 dispatch(loginByTokenSuccessful(json));
                 dispatch(fetchPlayableUsers());
                 dispatch(fetchPermittedUsers());
+                dispatch(fetchNotifications());
             },
             responseNotOk => {
                 dispatch(loginByTokenFailed());

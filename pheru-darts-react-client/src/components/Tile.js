@@ -11,6 +11,7 @@ class Tile extends React.Component {
                        onClick={this.props.onClick}>
             <Glyphicon glyph={this.props.glyph}/>
             {this.props.text}
+            {this.props.children}
         </Button>
     }
 }

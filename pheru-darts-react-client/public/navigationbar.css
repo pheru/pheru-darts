@@ -10,3 +10,34 @@
     color: white;
     text-decoration: underline;
 }
+
+.navbar-inverse .navbar-nav > .open > .dropdown-menu {
+    min-width: 180px;
+    width: 100%;
+    background-color: #222;
+    border: 1px solid black
+}
+
+.navbar-inverse .navbar-nav > .open > .dropdown-menu > li > a {
+    color: #9d9d9d;
+}
+
+.navbar-inverse .navbar-nav > .open > .dropdown-menu > li:hover > a {
+    background-color: #222;
+    color: white;
+}
+
+.navbar-inverse .navbar-nav > .open > .dropdown-menu > .active > a {
+    background-color: #080808;
+    color: white;
+}
+
+.navbar-inverse .navbar-nav > .open > .dropdown-menu > .active:hover > a {
+    background-color: #080808;
+}
+
+.navbar-inverse .navbar-nav > .open > a,
+.navbar-inverse .navbar-nav > .open > a:hover,
+.navbar-inverse .navbar-nav > .open > a:focus {
+    background-color: #222;
+}

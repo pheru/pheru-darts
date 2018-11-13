@@ -11,7 +11,6 @@ import {
     Tooltip
 } from "react-bootstrap";
 import {ALL_CHECKOUT_MODES, DOUBLE_OUT} from "../constants/checkoutModes";
-import ConfirmModal from "./modals/ConfirmModal";
 import {GAME_ROUTE} from "../constants/routes";
 import DropdownTextfield from "./DropdownTextfield";
 import PropTypes from "prop-types";
@@ -24,7 +23,7 @@ class NewGameConfig extends React.Component {
     constructor(props) {
         super(props);
         if (props.initialState !== undefined) {
-            this.state = {...props.initialState, showNewGameModal: false};
+            this.state = {...props.initialState};
         } else {
             this.state = {
                 score: SCORE_CHOICES[4],
@@ -33,8 +32,7 @@ class NewGameConfig extends React.Component {
                     {name: ""}
                 ],
                 checkOutMode: DOUBLE_OUT,
-                checkInMode: SINGLE_IN,
-                showNewGameModal: false
+                checkInMode: SINGLE_IN
             };
         }
         this.colStyle = {
@@ -51,7 +49,6 @@ class NewGameConfig extends React.Component {
         this.handleCheckOutModeChange = this.handleCheckOutModeChange.bind(this);
         this.onStartNewGameButtonClicked = this.onStartNewGameButtonClicked.bind(this);
         this.startNewGame = this.startNewGame.bind(this);
-        this.hideNewGameModal = this.hideNewGameModal.bind(this);
         this.playerIconFactory = this.playerIconFactory.bind(this);
     }
 
@@ -144,9 +141,10 @@ class NewGameConfig extends React.Component {
             return;
         }
         if (this.props.gameRunning) {
-            this.setState({showNewGameModal: true});
-            // Um routing zu verhindern
-            e.preventDefault();
+            this.props.showConfirmation(
+                "Neues Spiel starten?",
+                "Das aktuelle Spiel wird dadurch abgebrochen.",
+                () => this.startNewGame());
         } else {
             this.startNewGame();
         }
@@ -187,10 +185,6 @@ class NewGameConfig extends React.Component {
             listEntries.push(<li key={"validationMessage_" + i}>{validationMessages[i]}</li>)
         }
         return listEntries;
-    }
-
-    hideNewGameModal() {
-        this.setState({showNewGameModal: false})
     }
 
     startNewGame() {
@@ -300,13 +294,6 @@ class NewGameConfig extends React.Component {
                     </Col>
                 </Row>
             </Grid>
-            <ConfirmModal text="Es läuft bereits ein Spiel. Dennoch ein neues Spiel starten?"
-                          show={this.state.showNewGameModal}
-                          onConfirm={() => {
-                              this.hideNewGameModal();
-                              this.startNewGame();
-                          }}
-                          onCancel={this.hideNewGameModal}/>
         </div>
     }
 }
@@ -323,7 +310,8 @@ NewGameConfig.propTypes = {
     isFetchingUsers: PropTypes.bool.isRequired,
     startNewGame: PropTypes.func.isRequired,
     memorizeState: PropTypes.func.isRequired,
-    showWarning: PropTypes.func.isRequired
+    showWarning: PropTypes.func.isRequired,
+    showConfirmation: PropTypes.func.isRequired
 };
 
 export default NewGameConfig

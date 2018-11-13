@@ -6,6 +6,7 @@ import {ifEnterKey, ifEscKey} from "../../util/functionUtil";
 export const TYPE_INFORMATION = "TYPE_INFORMATION";
 export const TYPE_WARNING = "TYPE_WARNING";
 export const TYPE_ERROR = "TYPE_ERROR";
+export const TYPE_CONFIRMATION = "TYPE_CONFIRMATION";
 
 class SimpleModal extends React.Component {
 
@@ -45,9 +46,24 @@ class SimpleModal extends React.Component {
             </Modal.Body>
             <Modal.Footer>
                 <Button style={{width: 100}} bsStyle={this.state.appearance.bsStyle}
-                        onClick={this.props.hide}>
-                    OK
+                        onClick={() => {
+                            if (this.props.item.onConfirm) {
+                                this.props.item.onConfirm();
+                            }
+                            this.props.hide();
+                        }}>
+                    {this.props.item.modalType === TYPE_CONFIRMATION ? "Ja" : "OK"}
                 </Button>
+                {this.props.item.modalType === TYPE_CONFIRMATION &&
+                <Button style={{width: 100}} bsStyle={this.state.appearance.bsStyle}
+                        onClick={() => {
+                            if (this.props.item.onCancel) {
+                                this.props.item.onCancel();
+                            }
+                            this.props.hide();
+                        }}>
+                    Nein
+                </Button>}
             </Modal.Footer>
         </Modal>;
     }
@@ -71,6 +87,12 @@ class SimpleModal extends React.Component {
                     glyph: "info-sign",
                     color: "#5bc0de",
                     bsStyle: "info"
+                };
+            case TYPE_CONFIRMATION:
+                return {
+                    glyph: "question-sign",
+                    color: "#337ab7",
+                    bsStyle: "primary"
                 };
             default:
                 return null;

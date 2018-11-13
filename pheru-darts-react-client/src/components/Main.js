@@ -5,9 +5,11 @@ import {
     GAME_ROUTE,
     NEW_GAME_ROUTE,
     NEW_TRAINING_ROUTE,
+    NOTIFICATIONS_ROUTE,
     SETTINGS_ROUTE,
     STATISTICS_ROUTE
 } from "../constants/routes";
+import {Badge} from "react-bootstrap";
 
 const TILE_CONTAINER_STYLE = {
     display: 'grid',
@@ -33,6 +35,20 @@ class Main extends React.Component {
                 }
             </div>
             <div style={TILE_CONTAINER_STYLE}>
+                <Tile onClick={() => this.props.history.push(NOTIFICATIONS_ROUTE)}
+                      style={{...TILE_STYLE, position: "relative"}} glyph="bell" text="Mitteilungen">
+                    {this.props.unreadNotificationsCount > 0 &&
+                    <Badge style={{
+                        backgroundColor: "#222",
+                        color: "white",
+                        position: "absolute",
+                        top: 5,
+                        right: "40%"
+                    }}>
+                        {this.props.unreadNotificationsCount}
+                    </Badge>
+                    }
+                </Tile>
                 <Tile onClick={() => this.props.history.push(STATISTICS_ROUTE)}
                       style={TILE_STYLE} glyph="stats" text="Statistiken"/>
                 <Tile onClick={() => this.props.history.push(SETTINGS_ROUTE)}
@@ -55,6 +71,7 @@ Main.propTypes = {
     isLoggingIn: PropTypes.bool.isRequired,
     isLoggingOut: PropTypes.bool.isRequired,
     gameRunning: PropTypes.bool.isRequired,
+    unreadNotificationsCount: PropTypes.number.isRequired,
     showLogin: PropTypes.func.isRequired,
     logout: PropTypes.func.isRequired,
 };

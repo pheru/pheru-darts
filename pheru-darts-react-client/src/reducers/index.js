@@ -7,7 +7,8 @@ import stateMemory from "./stateMemory";
 import statistics from "./statistics";
 import modal from "./modal";
 import serverInformation from "./serverInformation";
+import notifications from "./notifications";
 
 export default combineReducers({
-    game, games, user, playerPermission, stateMemory, statistics, modal, serverInformation
+    game, games, user, playerPermission, stateMemory, statistics, modal, serverInformation, notifications
 })

@@ -225,7 +225,7 @@ class Settings extends React.Component {
             &&
             <StackLoader label="Lade Spieler-Berechtigungen..."/>
             }
-        </Well>;
+        </Well>
     }
 
 }

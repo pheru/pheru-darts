@@ -118,7 +118,7 @@
     "@screen-xs": "320px",
     "@screen-xs-min": "@screen-xs",
     "@screen-phone": "@screen-xs-min",
-    "@screen-sm": "540px",
+    "@screen-sm": "510px",
     "@screen-sm-min": "@screen-sm",
     "@screen-tablet": "@screen-sm-min",
     "@screen-md": "992px",

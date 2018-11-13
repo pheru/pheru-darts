@@ -10,7 +10,9 @@ function modal(state = {
             newItems.push({
                 modalType: action.modalType,
                 title: action.title,
-                message: action.message
+                message: action.message,
+                onConfirm: action.onConfirm,
+                onCancel: action.onCancel
             });
             return {
                 ...state,

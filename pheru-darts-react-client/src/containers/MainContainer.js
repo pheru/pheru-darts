@@ -7,7 +7,8 @@ const mapStateToProps = state => ({
     isLoggingIn: state.user.isLoggingIn,
     isLoggingOut: state.user.isLoggingOut,
 
-    gameRunning: state.game !== null
+    gameRunning: state.game !== null,
+    unreadNotificationsCount: state.notifications.unreadNotifications.length
 });
 
 const mapDispatchToProps = dispatch => ({

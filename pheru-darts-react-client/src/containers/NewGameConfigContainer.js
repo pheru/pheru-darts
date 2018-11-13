@@ -3,7 +3,7 @@ import {startNewGame} from "../actions/game";
 import NewGameConfig from "../components/NewGameConfig";
 import {memorizeState} from "../actions/stateMemory";
 import {sortPlayerByNameAsc} from "../services/sortService";
-import {showWarning} from "../actions/modal";
+import {showConfirmation, showWarning} from "../actions/modal";
 
 const mapStateToProps = (state, ownProps) => ({
     initialState: state.stateMemory.states[getMemoryKeyByProps(ownProps)],
@@ -20,7 +20,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     startNewGame: (players, score, checkInMode, checkOutMode, training) =>
         dispatch(startNewGame(players, score, checkInMode, checkOutMode, training)),
     memorizeState: (state) => dispatch(memorizeState(getMemoryKeyByProps(ownProps), state)),
-    showWarning: (title, message) => dispatch(showWarning(title, message))
+    showWarning: (title, message) => dispatch(showWarning(title, message)),
+    showConfirmation: (title, message, onConfirm, onCancel) => dispatch(showConfirmation(title, message, onConfirm, onCancel))
 });
 
 function getMemoryKeyByProps(ownProps) {

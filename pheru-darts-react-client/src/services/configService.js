@@ -15,7 +15,8 @@ function defaultConfigForHost(host) {
             playerPermission: host + "/playerPermission",
             game: host + "/game",
             statistic: host + "/statistic",
-            serverInformation: host + "/serverInformation"
+            serverInformation: host + "/serverInformation",
+            notification: host + "/notification"
         },
         loginUrl: host + "/login",
         logoutUrl: host + "/logout"
