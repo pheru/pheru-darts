@@ -1,0 +1,36 @@
+.fullscreen-button {
+    position: fixed;
+    z-index: 1049;
+    top: 5px;
+    left: 4px;
+    padding: 4px 9px 4px 9px;
+    border-color: #333;
+    background-color: transparent;
+}
+
+.fullscreen-button:hover {
+    background-color: transparent;
+}
+
+.fullscreen-button:focus {
+    outline: none;
+    background-color: transparent;
+}
+
+.fullscreen-button:active {
+    background-color: transparent;
+}
+
+.fullscreen-button:active:focus {
+    outline: none;
+    background-color: transparent;
+}
+
+.fullscreen-icon {
+    top: 2px;
+    color: #8b8d8f;
+}
+
+.fullscreen-button:hover > .fullscreen-icon {
+    color: white;
+}
