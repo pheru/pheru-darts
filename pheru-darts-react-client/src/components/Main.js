@@ -34,6 +34,7 @@ class Main extends React.Component {
                       style={TILE_STYLE} glyph="play-circle" text="Aktuelles Spiel"/>
                 }
             </div>
+            {this.props.isLoggedIn &&
             <div style={TILE_CONTAINER_STYLE}>
                 <Tile onClick={() => this.props.history.push(NOTIFICATIONS_ROUTE)}
                       style={{...TILE_STYLE, position: "relative"}} glyph="bell" text="Mitteilungen">
@@ -54,6 +55,7 @@ class Main extends React.Component {
                 <Tile onClick={() => this.props.history.push(SETTINGS_ROUTE)}
                       style={TILE_STYLE} glyph="cog" text="Einstellungen"/>
             </div>
+            }
             <div style={TILE_CONTAINER_STYLE}>
                 {this.props.isLoggedIn
                     ? <Tile onClick={this.props.logout} disabled={this.props.isLoggingOut}
