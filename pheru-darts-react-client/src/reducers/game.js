@@ -84,7 +84,6 @@ function undoDart(state) {
 
     let currentTurnInfo = getTurnInformation(players, state.score, state.checkInMode, state.checkOutMode).turnInformation.current;
     if (currentTurnInfo.playerIndex === 0 && currentTurnInfo.aufnahmeIndex === 0 && currentTurnInfo.dartIndex === 0) {
-        console.log("undo beim ersten Dart nicht möglich");
         return state;
     }
     if (currentTurnInfo.dartIndex === 0) {
