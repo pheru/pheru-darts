@@ -237,7 +237,9 @@ class NewGameConfig extends React.Component {
                                            style={{width: '100%'}}
                                            iconFactory={this.playerIconFactory}
                                            onDropdownClick={(newValue) => this.changeSelectedPlayer(0, newValue)}
-                                           onInputChange={(newValue) => this.handleUnregisteredUserChange(0, newValue)}/>
+                                           onInputChange={(newValue) => this.handleUnregisteredUserChange(0, newValue)}
+                                           autoFocus
+                        />
                     </Col>
                     <Col xs={6} xsOffset={3} sm={2} smOffset={0} style={this.colStyleButton}>
                         <Button block bsStyle="primary" onClick={this.swapPlayerSelection}>

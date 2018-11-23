@@ -29,7 +29,9 @@ class DropdownTextfield extends React.Component {
             </div>
             <FormControl type="text" value={this.props.value} placeholder={this.props.placeholder}
                          onChange={(e) => this.props.onInputChange(e.target.value)}
-                         style={{borderTopRightRadius: 0, borderBottomRightRadius: 0, textAlign: 'center'}}/>
+                         style={{borderTopRightRadius: 0, borderBottomRightRadius: 0, textAlign: 'center'}}
+                        autoFocus={this.props.autoFocus}
+            />
             <Dropdown.Toggle style={{borderLeftWidth: 0, display: showDropdownToggle ? "" : "none"}}/>
             <Dropdown.Menu style={{minWidth: 'calc(100% - 34px)', textAlign: 'center'}}>
                 {this.props.choices.map(choice =>
@@ -54,7 +56,8 @@ DropdownTextfield.propTypes = {
     iconFactory: PropTypes.func,
     onDropdownClick: PropTypes.func,
     onInputChange: PropTypes.func,
-    placeholder: PropTypes.string
+    placeholder: PropTypes.string,
+    autoFocus: PropTypes.bool
 };
 
 export default DropdownTextfield
