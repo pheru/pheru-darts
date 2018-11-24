@@ -48,7 +48,7 @@ class Game extends React.Component {
     }
 
     render() {
-        return <div>
+        return <div style={{height: "100%"}}>
             <Grid>
                 <Row className="show-grid text-center">
                     <Col xs={12} xsPush={0} sm={2} smPush={10} style={{...this.colStyle, marginBottom: 0}}>

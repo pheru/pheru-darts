@@ -23,7 +23,7 @@ const TILE_STYLE = {
 class Main extends React.Component {
 
     render() {
-        return <div>
+        return <div style={{height: "100%"}}>
             <div style={TILE_CONTAINER_STYLE}>
                 <Tile onClick={() => this.props.history.push(NEW_GAME_ROUTE)}
                       style={TILE_STYLE} glyph="edit" text="Neues Spiel"/>

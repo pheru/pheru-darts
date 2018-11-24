@@ -25,29 +25,31 @@ class ScoreButtons extends React.Component {
         let cols = [];
         for (let i = 1; i <= 20; i++) {
             cols.push(<Col key={"scorebuttons_col_" + i} xs={3} sm={2} style={this.colStyle}>
-                <Button onClick={() => this.addDart(i)} key={"scorebuttons_button_" + i} bsSize="large" bsStyle="primary" block>{i}</Button>
+                <Button className="score-button" onClick={() => this.addDart(i)} key={"scorebuttons_button_" + i} bsSize="large" bsStyle="primary" block>{i}</Button>
             </Col>)
         }
         return <Grid>
             <Row className="show-grid text-center">
                 {cols}
                 <Col xs={3} sm={2} style={this.colStyle}>
-                    <Button onClick={() => this.addDart(25)} bsSize="large" bsStyle="primary" block>Bull</Button>
+                    <Button className="score-button" onClick={() => this.addDart(25)} bsSize="large" bsStyle="primary" block>Bull</Button>
                 </Col>
                 <Col xs={3} sm={2} style={this.colStyle}>
                     <ToggleButtonGroup type="checkbox" value={this.state.multiplier} onChange={this.toggleDouble} block vertical>
-                        <ToggleButton value={2} bsSize="large" bsStyle="success" block
-                        >Double</ToggleButton>
+                        <ToggleButton className="score-button" value={2} bsSize="large" bsStyle="success" block>
+                            Double
+                        </ToggleButton>
                     </ToggleButtonGroup>
                 </Col>
                 <Col xs={3} sm={2} style={this.colStyle}>
                     <ToggleButtonGroup type="checkbox" value={this.state.multiplier} onChange={this.toggleTriple} block vertical>
-                        <ToggleButton value={3} bsSize="large" bsStyle="success" block
-                        >Triple</ToggleButton>
+                        <ToggleButton className="score-button" value={3} bsSize="large" bsStyle="success" block>
+                            Triple
+                        </ToggleButton>
                     </ToggleButtonGroup>
                 </Col>
                 <Col xs={3} sm={2} style={this.colStyle}>
-                    <Button onClick={() => this.addDart(0)} bsSize="large" bsStyle="danger" block>0</Button>
+                    <Button className="score-button" onClick={() => this.addDart(0)} bsSize="large" bsStyle="danger" block>0</Button>
                 </Col>
             </Row>
         </Grid>

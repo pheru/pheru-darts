@@ -7,7 +7,7 @@ class Player extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
-        this.borderRadius = 0;
+        this.borderRadius = 6;
         this.activeBorder = '4px solid #2196f3';
         this.blackBorder = '1px solid black';
         this.rowStyle = {
@@ -38,21 +38,7 @@ class Player extends React.Component {
     }
 
     render() {
-        return <Row className={"show-grid text-center" + (this.props.current ? " blink-border" : "")}
-                    style={this.props.current ? {
-                            backgroundColor: 'white',
-                            borderRadius: this.borderRadius,
-                            margin: 0,
-                            border: this.activeBorder,
-                            boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)'
-                        }
-                        : {
-                            backgroundColor: '#bfcecc',
-                            borderRadius: this.borderRadius,
-                            padding: 0,
-                            border: '4px solid #bfcecc',
-                            margin: 0
-                        }}>
+        return <Row className={"show-grid text-center player" + (this.props.current ? " blink-border player-current" : "")}>
             <Col xs={12} sm={12} style={{...this.colStyle, borderRadius: this.borderRadius}}>
                 <Row className="show-grid text-center" style={this.rowStyle}>
                     <Col xs={12} sm={12} style={{...this.colStyle, borderTopLeftRadius: this.borderRadius, borderTopRightRadius: this.borderRadius}}>

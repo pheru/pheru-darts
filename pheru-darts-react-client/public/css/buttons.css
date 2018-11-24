@@ -34,3 +34,7 @@
 .fullscreen-button:hover > .fullscreen-icon {
     color: white;
 }
+
+.score-button {
+    border-radius: 0;
+}

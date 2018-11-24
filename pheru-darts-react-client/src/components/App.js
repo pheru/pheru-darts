@@ -74,10 +74,10 @@ class App extends React.Component {
     }
 
     render() {
-        return <div>
+        return <div style={{height: "100%"}}>
             <FullscreenButton/>
             {this.createNavbar()}
-            <div style={{paddingTop: 50}}>
+            <div style={{height: "100%", paddingTop: 50}}>
                 <Switch>
                     <Route path={NEW_GAME_ROUTE} render={(props) =>
                         <NewGameConfigContainer {...props} key="newgameconfig"/>}
