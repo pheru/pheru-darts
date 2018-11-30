@@ -1,5 +1,5 @@
 import {connect} from 'react-redux'
-import ScoreButtons from "../components/ScoreButtons";
+import ScoreButtons from "../components/views/game/ScoreButtons";
 import {addDart} from "../actions/game";
 
 const mapStateToProps = state => ({});

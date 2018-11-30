@@ -1,5 +1,5 @@
 import {connect} from 'react-redux'
-import App from "../components/App";
+import App from "../components/app/App";
 import {withRouter} from "react-router-dom";
 import {loginByToken, logout, showLoginModal} from "../actions/user";
 import {fetchPermittedUsers, fetchPlayableUsers} from "../actions/playerPermission";

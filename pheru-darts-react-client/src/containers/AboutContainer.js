@@ -1,6 +1,6 @@
 import {connect} from 'react-redux'
 import {fetchServerVersion} from "../actions/serverInformation";
-import About from "../components/About";
+import About from "../components/views/about/About";
 
 const mapStateToProps = state => ({
     serverVersion: state.serverInformation.version,

@@ -1,5 +1,5 @@
 import {connect} from 'react-redux'
-import Settings from "../components/Settings";
+import Settings from "../components/views/settings/Settings";
 import {showLoginModal} from "../actions/user";
 import {addPlayerPermissionById, addPlayerPermissionByName, removePlayerPermission} from "../actions/playerPermission";
 import {sortPlayerByNameAsc} from "../services/sortService";

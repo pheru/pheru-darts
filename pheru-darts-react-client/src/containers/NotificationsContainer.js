@@ -1,5 +1,5 @@
 import {connect} from 'react-redux'
-import Notifications from "../components/Notifications";
+import Notifications from "../components/views/notifications/Notifications";
 import {fetchNotifications, markNotificationsAsRead} from "../actions/notifications";
 import {showLoginModal} from "../actions/user";
 

@@ -1,10 +1,10 @@
 import React from 'react'
 import {Alert, Button, Glyphicon, Table, ToggleButton, ToggleButtonGroup, Well} from "react-bootstrap";
-import GamesBarChart from "./charts/GamesBarChart";
-import DartsBarChart from "./charts/DartsBarChart";
+import GamesBarChart from "./GamesBarChart";
+import DartsBarChart from "./DartsBarChart";
 import PropTypes from "prop-types";
-import StackLoader from "./loaders/StackLoader";
-import DartsRadarChart from "./charts/DartsRadarChart";
+import StackLoader from "../../general/loaders/StackLoader";
+import DartsRadarChart from "./DartsRadarChart";
 import scrollToComponent from 'react-scroll-to-component';
 
 const DART_CHART_TYPE_BAR = "bar";

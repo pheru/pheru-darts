@@ -1,6 +1,6 @@
 import React from 'react'
-import ScoreButtonsContainer from "../containers/ScoreButtonsContainer";
-import PlayerContainer from "../containers/PlayerContainer";
+import ScoreButtonsContainer from "../../../containers/ScoreButtonsContainer";
+import PlayerContainer from "../../../containers/PlayerContainer";
 import {Button, Col, Dropdown, Glyphicon, Grid, MenuItem, Modal, Row, Well} from "react-bootstrap";
 import PropTypes from "prop-types";
 

@@ -1,8 +1,8 @@
 import React from 'react'
 import {Alert, Button, FormControl, Glyphicon, OverlayTrigger, Table, Tooltip, Well} from "react-bootstrap";
-import {ifEnterKey} from "../util/functionUtil";
+import {ifEnterKey} from "../../../util/functionUtil";
 import PropTypes from "prop-types";
-import StackLoader from "./loaders/StackLoader";
+import StackLoader from "../../general/loaders/StackLoader";
 
 class Settings extends React.Component {
 

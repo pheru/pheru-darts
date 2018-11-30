@@ -2,8 +2,8 @@ import React from 'react'
 import {Route, Switch} from "react-router-dom";
 import {LinkContainer} from "react-router-bootstrap";
 import {Badge, Glyphicon, Nav, Navbar, NavDropdown, NavItem} from "react-bootstrap";
-import NewGameConfigContainer from "../containers/NewGameConfigContainer";
-import GameContainer from "../containers/GameContainer";
+import NewGameConfigContainer from "../../containers/NewGameConfigContainer";
+import GameContainer from "../../containers/GameContainer";
 import {
     ABOUT_ROUTE,
     GAME_ROUTE,
@@ -12,18 +12,18 @@ import {
     NOTIFICATIONS_ROUTE,
     SETTINGS_ROUTE,
     STATISTICS_ROUTE
-} from "../constants/routes";
-import StatisticsContainer from "../containers/StatisticsContainer";
-import SettingsContainer from "../containers/SettingsContainer";
-import LoginModalContainer from "../containers/modals/LoginModalContainer";
-import SignUpModalContainer from "../containers/modals/SignUpModalContainer";
+} from "../../constants/routes";
+import StatisticsContainer from "../../containers/StatisticsContainer";
+import SettingsContainer from "../../containers/SettingsContainer";
+import LoginModalContainer from "../../containers/modals/LoginModalContainer";
+import SignUpModalContainer from "../../containers/modals/SignUpModalContainer";
 import PropTypes from 'prop-types';
-import NavbarLoginLoader from "./loaders/NavbarLoginLoader";
-import AboutContainer from "../containers/AboutContainer";
-import SimpleModalContainer from "../containers/modals/SimpleModalContainer";
+import NavbarLoginLoader from "../general/loaders/NavbarLoginLoader";
+import AboutContainer from "../../containers/AboutContainer";
+import SimpleModalContainer from "../../containers/modals/SimpleModalContainer";
 import FullscreenButton from "./FullscreenButton";
-import MainContainer from "../containers/MainContainer";
-import NotificationsContainer from "../containers/NotificationsContainer";
+import MainContainer from "../../containers/MainContainer";
+import NotificationsContainer from "../../containers/NotificationsContainer";
 import MediaQuery from "react-responsive";
 
 class App extends React.Component {

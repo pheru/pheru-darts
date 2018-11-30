@@ -8,7 +8,7 @@ import {
     NOTIFICATIONS_ROUTE,
     SETTINGS_ROUTE,
     STATISTICS_ROUTE
-} from "../constants/routes";
+} from "../../../constants/routes";
 import {Badge} from "react-bootstrap";
 
 const TILE_CONTAINER_STYLE = {

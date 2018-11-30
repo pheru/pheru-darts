@@ -1,5 +1,5 @@
 import {connect} from 'react-redux'
-import Game from "../components/Game";
+import Game from "../components/views/game/Game";
 import {exitGame, rematch, undoDart} from "../actions/game";
 import {archiveGame} from "../actions/games";
 

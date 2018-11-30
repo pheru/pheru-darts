@@ -10,11 +10,11 @@ import {
     ToggleButtonGroup,
     Tooltip
 } from "react-bootstrap";
-import {ALL_CHECKOUT_MODES, DOUBLE_OUT} from "../constants/checkoutModes";
-import {GAME_ROUTE} from "../constants/routes";
-import DropdownTextfield from "./DropdownTextfield";
+import {ALL_CHECKOUT_MODES, DOUBLE_OUT} from "../../../constants/checkoutModes";
+import {GAME_ROUTE} from "../../../constants/routes";
+import DropdownTextfield from "../../general/input/DropdownTextfield";
 import PropTypes from "prop-types";
-import {ALL_CHECKIN_MODES, SINGLE_IN} from "../constants/checkinModes";
+import {ALL_CHECKIN_MODES, SINGLE_IN} from "../../../constants/checkinModes";
 
 const SCORE_CHOICES = ["101", "201", "301", "401", "501", "1001"];
 

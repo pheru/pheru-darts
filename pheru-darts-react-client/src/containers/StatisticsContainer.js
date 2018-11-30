@@ -1,5 +1,5 @@
 import {connect} from 'react-redux'
-import Statistics from "../components/Statistics";
+import Statistics from "../components/views/statistics/Statistics";
 import {showLoginModal} from "../actions/user";
 import {fetchStatistics} from "../actions/statistics";
 

@@ -1,5 +1,5 @@
 import {connect} from 'react-redux'
-import Player from "../components/Player";
+import Player from "../components/views/game/Player";
 import getTurnInformation from "../services/gameInformationService";
 
 const mapStateToProps = function (state, ownProps) {

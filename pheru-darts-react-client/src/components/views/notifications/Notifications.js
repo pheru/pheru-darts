@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from "prop-types";
-import StackLoader from "./loaders/StackLoader";
+import StackLoader from "../../general/loaders/StackLoader";
 import {Alert, Badge, Button, Glyphicon, Table, Well} from "react-bootstrap";
-import {toDate, toTime} from "../util/dateUtil";
+import {toDate, toTime} from "../../../util/dateUtil";
 
 class Notifications extends React.Component {
 

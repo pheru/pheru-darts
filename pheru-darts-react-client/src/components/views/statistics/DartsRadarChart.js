@@ -10,7 +10,7 @@ import {
     Tooltip
 } from "recharts";
 import PropTypes from "prop-types";
-import {sortDartDataByScoreBoardOrder} from "../../services/sortService";
+import {sortDartDataByScoreBoardOrder} from "../../../services/sortService";
 
 class DartsRadarChart extends React.Component {
 
