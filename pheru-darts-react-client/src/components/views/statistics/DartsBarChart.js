@@ -17,9 +17,9 @@ class DartsBarChart extends React.Component {
                 <YAxis/>
                 <Tooltip labelFormatter={() => ""}/>
                 <Legend/>
-                <Bar name="Single" dataKey="singleCount" stackId="a" fill="#333"/>
-                <Bar name="Double" dataKey="doubleCount" stackId="a" fill="#08965f"/>
-                <Bar name="Triple" dataKey="tripleCount" stackId="a" fill="#e01d36"/>
+                <Bar isAnimationActive={false} name="Single" dataKey="singleCount" stackId="a" fill="#333"/>
+                <Bar isAnimationActive={false} name="Double" dataKey="doubleCount" stackId="a" fill="#08965f"/>
+                <Bar isAnimationActive={false} name="Triple" dataKey="tripleCount" stackId="a" fill="#e01d36"/>
             </BarChart>
         </ResponsiveContainer>
     }

@@ -17,12 +17,11 @@ class GamesBarChart extends React.Component {
                 <YAxis/>
                 <Tooltip labelFormatter={() => ""}/>
                 <Legend/>
-                <Bar name="Gewonnen" dataKey="wonCount" stackId="a" fill="#08965f"/>
-                <Bar name="Verloren" dataKey="lostCount" stackId="a" fill="#e01d36"/>
+                <Bar isAnimationActive={false} name="Gewonnen" dataKey="wonCount" stackId="a" fill="#08965f"/>
+                <Bar isAnimationActive={false} name="Verloren" dataKey="lostCount" stackId="a" fill="#e01d36"/>
             </BarChart>
         </ResponsiveContainer>
     }
-
 }
 
 GamesBarChart.propTypes = {

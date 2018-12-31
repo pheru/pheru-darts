@@ -58,14 +58,16 @@ class DartsRadarChart extends React.Component {
     }
 
     render() {
-        return <ResponsiveContainer width="100%" height={500}>
+        let windowWidth = (window.innerWidth > 0) ? window.innerWidth : window.screen.width;
+        let windowHeight = (window.innerHeight > 0) ? window.innerHeight : window.screen.height;
+        return <ResponsiveContainer width="100%" height={windowWidth > windowHeight ? 500 : windowWidth}>
             <RadarChart cx="50%" cy="50%" outerRadius="90%" data={this.state.data}>
                 <PolarGrid/>
                 <PolarAngleAxis dataKey="score"/>
                 <PolarRadiusAxis angle={90} scale="sqrt"/>
-                <Radar name="Single" dataKey="singleCount" stroke="#222222" fill="#222222" fillOpacity={0.6}/>
-                <Radar name="Double" dataKey="doubleCount" stroke="#08965f" fill="#08965f" fillOpacity={0.6}/>
-                <Radar name="Triple" dataKey="tripleCount" stroke="#e01d36" fill="#e01d36" fillOpacity={0.6}/>
+                <Radar isAnimationActive={false} name="Single" dataKey="singleCount" stroke="#222222" fill="#222222" fillOpacity={0.6}/>
+                <Radar isAnimationActive={false} name="Double" dataKey="doubleCount" stroke="#08965f" fill="#08965f" fillOpacity={0.6}/>
+                <Radar isAnimationActive={false} name="Triple" dataKey="tripleCount" stroke="#e01d36" fill="#e01d36" fillOpacity={0.6}/>
                 <Legend/>
                 <Tooltip labelFormatter={() => ""}/>
             </RadarChart>
