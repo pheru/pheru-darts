@@ -5,9 +5,9 @@ import {loginByToken, logout, showLoginModal} from "../actions/user";
 import {fetchPermittedUsers, fetchPlayableUsers} from "../actions/playerPermission";
 import {showConfirmation} from "../actions/modal";
 import {exitGame} from "../actions/game";
+import {setPossibleVoices, setSelectedVoiceByName} from "../actions/speech";
 
 const mapStateToProps = state => ({
-    userId: state.user.id,
     userName: state.user.name,
 
     isLoggedIn: state.user.isLoggedIn,
@@ -19,7 +19,9 @@ const mapStateToProps = state => ({
     fetchPlayableUsersFailed: state.playerPermission.fetchPlayableUsersFailed,
     fetchPermittedUsersFailed: state.playerPermission.fetchPermittedUsersFailed,
 
-    unreadNotificationsCount: state.notifications.unreadNotifications.length
+    unreadNotificationsCount: state.notifications.unreadNotifications.length,
+
+    selectedVoice: state.speech.selectedVoice
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -30,6 +32,8 @@ const mapDispatchToProps = dispatch => ({
     logout: () => dispatch(logout()),
     showConfirmation: (title, message, onConfirm, onCancel) => dispatch(showConfirmation(title, message, onConfirm, onCancel)),
     exitGame: () => dispatch(exitGame()),
+    setPossibleVoices: (voices) => dispatch(setPossibleVoices(voices)),
+    setSelectedVoiceByName: (voice) => dispatch(setSelectedVoiceByName(voice))
 });
 
 export default withRouter(connect(

@@ -7,7 +7,12 @@ class Tile extends React.Component {
     render() {
         return <Button bsStyle="primary"
                        disabled={this.props.disabled}
-                       style={{...this.props.style, fontSize: 40, display: "inherit"}}
+                       style={{
+                           margin: 5,
+                           fontSize: 40,
+                           display: "inherit",
+                           ...this.props.style
+                       }}
                        onClick={this.props.onClick}>
             <Glyphicon glyph={this.props.glyph}/>
             {this.props.text}

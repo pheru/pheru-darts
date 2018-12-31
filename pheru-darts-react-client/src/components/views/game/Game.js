@@ -3,6 +3,7 @@ import ScoreButtonsContainer from "../../../containers/ScoreButtonsContainer";
 import PlayerContainer from "../../../containers/PlayerContainer";
 import {Button, Col, Dropdown, Glyphicon, Grid, MenuItem, Modal, Row, Well} from "react-bootstrap";
 import PropTypes from "prop-types";
+import {speak} from "../../../services/speechSynthService";
 
 class Game extends React.Component {
 
@@ -37,6 +38,10 @@ class Game extends React.Component {
                 gameFinishedModalShow: this.props.winner !== undefined
             });
         }
+        if (this.props.speechOutputActive && this.props.announcementText
+            && this.props.announcementText !== prevProps.announcementText) {
+            speak(this.props.announcementText, this.props.selectedVoice);
+        }
     }
 
     handleRematchStartingPlayerChanged(player) {
@@ -53,17 +58,23 @@ class Game extends React.Component {
                 <Row className="show-grid text-center">
                     <Col xs={12} xsPush={0} sm={2} smPush={10} style={{...this.colStyle, marginBottom: 0}}>
                         <Row className="show-grid text-center">
-                            <Col xs={6} sm={12}
+                            <Col xs={5} sm={12}
                                  style={{...this.colStyleButton, fontWeight: 'bold'}}>
                                 <Well style={{margin: 0, padding: 2}}>
                                     <div style={{borderBottom: '0.5px black solid'}}>{this.props.startScore}</div>
                                     <div>{this.props.checkInMode.text} {this.props.checkOutMode.text}</div>
                                 </Well>
                             </Col>
-                            <Col xs={6} sm={12} style={this.colStyleButton}>
+                            <Col xs={5} sm={12} style={this.colStyleButton}>
                                 <Button bsStyle='warning' bsSize='large' block
                                         onClick={() => this.props.undoDart()}>
                                     <Glyphicon glyph="erase"/>
+                                </Button>
+                            </Col>
+                            <Col xs={2} sm={12} style={this.colStyleButton}>
+                                <Button bsStyle='info' bsSize='large' block
+                                        onClick={() => this.props.toggleSpeechOutput()}>
+                                    <Glyphicon glyph={this.props.speechOutputActive ? "volume-up" : "volume-off"}/>
                                 </Button>
                             </Col>
                         </Row>
@@ -135,8 +146,11 @@ Game.propTypes = {
     exit: PropTypes.func.isRequired,
     rematch: PropTypes.func.isRequired,
     archiveGame: PropTypes.func.isRequired,
+    toggleSpeechOutput: PropTypes.func.isRequired,
     training: PropTypes.bool,
-    isLoggedIn: PropTypes.bool.isRequired
+    isLoggedIn: PropTypes.bool.isRequired,
+    announcementText: PropTypes.string,
+    speechOutputActive: PropTypes.bool.isRequired
 };
 
 export default Game

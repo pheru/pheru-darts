@@ -1,8 +1,9 @@
 import React from 'react'
-import {Alert, Button, FormControl, Glyphicon, OverlayTrigger, Table, Tooltip, Well} from "react-bootstrap";
+import {Button, FormControl, Glyphicon, OverlayTrigger, Table, Tooltip, Well} from "react-bootstrap";
 import {ifEnterKey} from "../../../util/functionUtil";
 import PropTypes from "prop-types";
 import StackLoader from "../../general/loaders/StackLoader";
+import SpeechSettings from "./SpeechSettings";
 
 class Settings extends React.Component {
 
@@ -66,23 +67,22 @@ class Settings extends React.Component {
     }
 
     render() {
-        return <div>
+        return <div style={{textAlign: 'center'}}>
+            <h3 style={{marginTop: 0}}><strong>Spracheinstellungen</strong></h3>
+            <p style={{marginBottom: 0}}><strong>Sprachausgabe:</strong></p>
+            <SpeechSettings style={{marginBottom: 5}}
+                            selectedVoice={this.props.selectedVoice}
+                            possibleVoices={this.props.possibleVoices}
+                            onSelectedVoiceChange={this.props.setSelectedVoiceByName}/>
             {this.props.isLoggedIn
-                ? this.createUserSettings()
-                : <Alert bsStyle="warning" style={{marginLeft: 15, marginRight: 15, marginBottom: 5, textAlign:'center'}}>
-                    <strong>Einstellungen können nur von angemeldeten Benutzern vorgenommen werden</strong>
-                    <br/>
-                    <Button style={{marginTop: 10}} bsStyle="primary" onClick={this.props.showLogin}
-                            disabled={this.props.isLoggingIn}>
-                        <Glyphicon glyph="log-in"/> Anmelden</Button>
-                </Alert>
+            && this.createUserSettings()
             }
         </div>
     }
 
     createUserSettings() {
-        return <div style={{textAlign: 'center'}}>
-            <h3 style={{marginTop: 0}}><strong>Spieler-Berechtigungen</strong></h3>
+        return <div>
+            <h3 style={{marginTop: 25}}><strong>Spieler-Berechtigungen</strong></h3>
             <div>
                 <p><strong>Hier siehst Du welche Spieler Dir erlaubt haben ein Spiel mit ihnen zu erstellen und
                     kannst einstellen wer dich in einem Spiel auswählen darf.</strong></p>
@@ -108,7 +108,7 @@ class Settings extends React.Component {
     }
 
     createAuthorizationTable() {
-        return <Well style={{marginLeft: 20, marginRight: 20, paddingBottom: 0, textAlign: 'center'}}>
+        return <Well style={{marginLeft: 20, marginRight: 20, marginTop: 25, paddingBottom: 0, textAlign: 'center'}}>
             <Table responsive hover style={{textAlign: 'center'}}>
                 <thead>
                 <tr>
@@ -185,6 +185,10 @@ Settings.propTypes = {
     addPlayerPermissionById: PropTypes.func.isRequired,
     addPlayerPermissionByName: PropTypes.func.isRequired,
     removePlayerPermission: PropTypes.func.isRequired,
+
+    possibleVoices: PropTypes.array.isRequired,
+    selectedVoice: PropTypes.object,
+    setSelectedVoiceByName: PropTypes.func.isRequired
 };
 
 export default Settings;

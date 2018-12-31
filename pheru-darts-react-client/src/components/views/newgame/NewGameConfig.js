@@ -11,7 +11,7 @@ import {
     Tooltip
 } from "react-bootstrap";
 import {ALL_CHECKOUT_MODES, DOUBLE_OUT} from "../../../constants/checkoutModes";
-import {GAME_ROUTE} from "../../../constants/routes";
+import {NAVIGATION_ITEM} from "../../../constants/navigationItems";
 import DropdownTextfield from "../../general/input/DropdownTextfield";
 import PropTypes from "prop-types";
 import {ALL_CHECKIN_MODES, SINGLE_IN} from "../../../constants/checkinModes";
@@ -190,12 +190,12 @@ class NewGameConfig extends React.Component {
     startNewGame() {
         let players;
         if (this.props.training) {
-            players = [{id: this.props.userId, name: "Training"}];
+            players = [{id: this.props.userId, name: this.props.userName ? this.props.userName : "Training"}];
         } else {
             players = this.state.selectedPlayers;
         }
         this.props.startNewGame(players, Number(this.state.score), this.state.checkInMode, this.state.checkOutMode, this.props.training);
-        this.props.history.push(GAME_ROUTE);
+        this.props.history.push(NAVIGATION_ITEM.GAME.route);
     }
 
     playerIconFactory(playerName) {
@@ -306,6 +306,7 @@ NewGameConfig.propTypes = {
     isLoggedIn: PropTypes.bool.isRequired,
     isLoggingIn: PropTypes.bool.isRequired,
     userId: PropTypes.string,
+    userName: PropTypes.string,
     playableUsers: PropTypes.array.isRequired,
     gameRunning: PropTypes.bool.isRequired,
     fetchAllUsersFailed: PropTypes.bool.isRequired,

@@ -3,6 +3,7 @@ import Settings from "../components/views/settings/Settings";
 import {showLoginModal} from "../actions/user";
 import {addPlayerPermissionById, addPlayerPermissionByName, removePlayerPermission} from "../actions/playerPermission";
 import {sortPlayerByNameAsc} from "../services/sortService";
+import {setSelectedVoiceByName} from "../actions/speech";
 
 const mapStateToProps = state => ({
     userId: state.user.id,
@@ -18,14 +19,18 @@ const mapStateToProps = state => ({
     fetchPermittedUsersFailed: state.playerPermission.fetchPermittedUsersFailed,
     isFetchingPermittedUsers: state.playerPermission.isFetchingPermittedUsers,
 
-    isUpdatingPlayerPermission: state.playerPermission.isUpdatingPlayerPermission
+    isUpdatingPlayerPermission: state.playerPermission.isUpdatingPlayerPermission,
+
+    possibleVoices: state.speech.possibleVoices,
+    selectedVoice: state.speech.selectedVoice
 });
 
 const mapDispatchToProps = dispatch => ({
     showLogin: () => dispatch(showLoginModal()),
     addPlayerPermissionById: (userId) => dispatch(addPlayerPermissionById(userId)),
     addPlayerPermissionByName: (username) => dispatch(addPlayerPermissionByName(username)),
-    removePlayerPermission: (userId) => dispatch(removePlayerPermission(userId))
+    removePlayerPermission: (userId) => dispatch(removePlayerPermission(userId)),
+    setSelectedVoiceByName: (voiceName) => dispatch(setSelectedVoiceByName(voiceName))
 });
 
 export default connect(

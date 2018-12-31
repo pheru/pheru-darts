@@ -38,7 +38,7 @@ class Player extends React.Component {
     }
 
     render() {
-        return <Row className={"show-grid text-center player" + (this.props.current ? " blink-border player-current" : "")}>
+        return <Row className={"show-grid text-center player" + (this.props.current ? " player-current" : "")}>
             <Col xs={12} sm={12} style={{...this.colStyle, borderRadius: this.borderRadius}}>
                 <Row className="show-grid text-center" style={this.rowStyle}>
                     <Col xs={12} sm={12} style={{...this.colStyle, borderTopLeftRadius: this.borderRadius, borderTopRightRadius: this.borderRadius}}>

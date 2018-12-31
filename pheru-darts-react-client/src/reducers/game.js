@@ -7,7 +7,6 @@ function game(state = null, action) {
             let players = action.players;
             initPlayers(players);
             return {
-                ...state,
                 players: players,
                 score: action.score,
                 checkInMode: action.checkInMode,
@@ -29,6 +28,7 @@ function game(state = null, action) {
             return {
                 ...state,
                 players: playersCopy,
+                announcementText: undefined,
                 winner: undefined
             };
         default:
@@ -60,8 +60,13 @@ function addDart(state, dart) {
 
     let turnInfo = getTurnInformation(players, state.score, state.checkInMode, state.checkOutMode);
     currentTurnInfo = turnInfo.turnInformation.current;
+
+    let announcementText = undefined;
     if (players[currentTurnInfo.playerIndex].aufnahmen[currentTurnInfo.aufnahmeIndex] === undefined) {
         players[currentTurnInfo.playerIndex].aufnahmen[currentTurnInfo.aufnahmeIndex] = [];
+
+        announcementText = state.players[currentTurnInfo.playerIndex].name + " "
+            + turnInfo.playerInformation[currentTurnInfo.playerIndex].score;
     }
 
     // Pruefen, ob jemand gewonnen hat
@@ -75,6 +80,7 @@ function addDart(state, dart) {
     return {
         ...state,
         players: players,
+        announcementText,
         winner
     };
 }
@@ -96,6 +102,7 @@ function undoDart(state) {
     return {
         ...state,
         players: players,
+        announcementText: undefined,
         winner: undefined
     };
 }

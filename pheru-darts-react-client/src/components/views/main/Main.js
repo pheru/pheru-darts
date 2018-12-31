@@ -1,69 +1,52 @@
 import React from 'react'
 import Tile from "./Tile";
 import PropTypes from 'prop-types';
-import {
-    GAME_ROUTE,
-    NEW_GAME_ROUTE,
-    NEW_TRAINING_ROUTE,
-    NOTIFICATIONS_ROUTE,
-    SETTINGS_ROUTE,
-    STATISTICS_ROUTE
-} from "../../../constants/routes";
+import {NAVIGATION_ITEM} from "../../../constants/navigationItems";
 import {Badge} from "react-bootstrap";
-
-const TILE_CONTAINER_STYLE = {
-    display: 'grid',
-    gridGap: 0,
-    gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))"
-};
-const TILE_STYLE = {
-    margin: 5
-};
+import NavigationTile from "./NavigationTile";
+import TileRow from "./TileRow";
 
 class Main extends React.Component {
 
     render() {
         return <div style={{height: "100%"}}>
-            <div style={TILE_CONTAINER_STYLE}>
-                <Tile onClick={() => this.props.history.push(NEW_GAME_ROUTE)}
-                      style={TILE_STYLE} glyph="edit" text="Neues Spiel"/>
-                <Tile onClick={() => this.props.history.push(NEW_TRAINING_ROUTE)}
-                      style={TILE_STYLE} glyph="upload" text="Training"/>
+            <TileRow>
+                <NavigationTile navigationItem={NAVIGATION_ITEM.NEW_GAME} history={this.props.history}/>
+                <NavigationTile navigationItem={NAVIGATION_ITEM.NEW_TRAINING} history={this.props.history}/>
                 {this.props.gameRunning &&
-                <Tile onClick={() => this.props.history.push(GAME_ROUTE)}
-                      style={TILE_STYLE} glyph="play-circle" text="Aktuelles Spiel"/>
+                <NavigationTile navigationItem={NAVIGATION_ITEM.GAME} history={this.props.history}/>
                 }
-            </div>
-            {this.props.isLoggedIn &&
-            <div style={TILE_CONTAINER_STYLE}>
-                <Tile onClick={() => this.props.history.push(NOTIFICATIONS_ROUTE)}
-                      style={{...TILE_STYLE, position: "relative"}} glyph="bell" text="Mitteilungen">
+            </TileRow>
+            <TileRow>
+                <NavigationTile navigationItem={NAVIGATION_ITEM.SETTINGS} history={this.props.history}/>
+                {this.props.isLoggedIn &&
+                <NavigationTile navigationItem={NAVIGATION_ITEM.NOTIFICATIONS} history={this.props.history}
+                                style={{position: "relative"}}>
                     {this.props.unreadNotificationsCount > 0 &&
                     <Badge style={{
                         backgroundColor: "#222",
                         color: "white",
                         position: "absolute",
                         top: 5,
-                        right: "40%"
+                        left: "54%"
                     }}>
                         {this.props.unreadNotificationsCount}
                     </Badge>
                     }
-                </Tile>
-                <Tile onClick={() => this.props.history.push(STATISTICS_ROUTE)}
-                      style={TILE_STYLE} glyph="stats" text="Statistiken"/>
-                <Tile onClick={() => this.props.history.push(SETTINGS_ROUTE)}
-                      style={TILE_STYLE} glyph="cog" text="Einstellungen"/>
-            </div>
-            }
-            <div style={TILE_CONTAINER_STYLE}>
+                </NavigationTile>
+                }
+                {this.props.isLoggedIn &&
+                <NavigationTile navigationItem={NAVIGATION_ITEM.STATISTICS} history={this.props.history}/>
+                }
+            </TileRow>
+            <TileRow>
                 {this.props.isLoggedIn
                     ? <Tile onClick={this.props.logout} disabled={this.props.isLoggingOut}
-                            style={TILE_STYLE} glyph="log-out" text="Abmelden"/>
+                            glyph={NAVIGATION_ITEM.LOGOUT.icon} text={NAVIGATION_ITEM.LOGOUT.text}/>
                     : <Tile onClick={this.props.showLogin} disabled={this.props.isLoggingIn}
-                            style={TILE_STYLE} glyph="log-in" text="Anmelden"/>
+                            glyph={NAVIGATION_ITEM.LOGIN.icon} text={NAVIGATION_ITEM.LOGIN.text}/>
                 }
-            </div>
+            </TileRow>
         </div>
     }
 }
