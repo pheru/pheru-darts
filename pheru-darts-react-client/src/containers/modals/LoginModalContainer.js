@@ -1,5 +1,4 @@
 import {connect} from 'react-redux'
-import {withRouter} from "react-router-dom";
 import LoginModal from "../../components/modals/LoginModal";
 import {hideLoginModal, login, showSignUpModal} from "../../actions/user";
 
@@ -14,7 +13,7 @@ const mapDispatchToProps = dispatch => ({
     showSignUp: () => dispatch(showSignUpModal())
 });
 
-export default withRouter(connect(
+export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(LoginModal))
+)(LoginModal)

@@ -1,5 +1,4 @@
 import {connect} from 'react-redux'
-import {withRouter} from "react-router-dom";
 import SimpleModal from "../../components/modals/SimpleModal";
 import {hideCurrent} from "../../actions/modal";
 
@@ -12,7 +11,7 @@ const mapDispatchToProps = dispatch => ({
     hide: () => dispatch(hideCurrent())
 });
 
-export default withRouter(connect(
+export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(SimpleModal))
+)(SimpleModal)
