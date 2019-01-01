@@ -14,7 +14,7 @@ class ButtonTile extends React.Component {
                            ...this.props.style
                        }}
                        onClick={this.props.onClick}>
-            <Glyphicon glyph={this.props.glyph}/>
+            {this.props.icon}
             {this.props.text}
             {this.props.children}
         </Button>
@@ -23,7 +23,7 @@ class ButtonTile extends React.Component {
 
 ButtonTile.propTypes = {
     onClick: PropTypes.func,
-    glyph: PropTypes.string,
+    icon: PropTypes.element,
     text: PropTypes.string,
     route: PropTypes.string,
     disabled: PropTypes.bool

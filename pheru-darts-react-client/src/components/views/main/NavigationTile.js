@@ -7,7 +7,7 @@ class NavigationTile extends React.Component {
     render() {
         return <ButtonTile style={this.props.style}
                            onClick={() => this.props.history.push(this.props.navigationItem.route)}
-                           glyph={this.props.navigationItem.icon}
+                           icon={this.props.navigationItem.icon}
                            text={this.props.navigationItem.text}
                            disabled={this.props.disabled}>
             {this.props.children}

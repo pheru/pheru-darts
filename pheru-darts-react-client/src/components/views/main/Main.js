@@ -44,9 +44,9 @@ class Main extends React.Component {
             <TileRow columns={COLUMNS}>
                 {this.props.isLoggedIn
                     ? <ButtonTile onClick={this.props.logout} disabled={this.props.isLoggingOut}
-                                  glyph={NAVIGATION_ITEM.LOGOUT.icon} text={NAVIGATION_ITEM.LOGOUT.text}/>
+                                  icon={NAVIGATION_ITEM.LOGOUT.icon} text={NAVIGATION_ITEM.LOGOUT.text}/>
                     : <ButtonTile onClick={this.props.showLogin} disabled={this.props.isLoggingIn}
-                                  glyph={NAVIGATION_ITEM.LOGIN.icon} text={NAVIGATION_ITEM.LOGIN.text}/>
+                                  icon={NAVIGATION_ITEM.LOGIN.icon} text={NAVIGATION_ITEM.LOGIN.text}/>
                 }
             </TileRow>
         </div>
