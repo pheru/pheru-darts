@@ -74,6 +74,7 @@ function addDart(state, dart) {
     for (let i = 0; i < turnInfo.playerInformation.length; i++) {
         if (turnInfo.playerInformation[i].score === 0) {
             winner = players[i];
+            announcementText = players[i].name + " hat gewonnen!";
             break;
         }
     }
