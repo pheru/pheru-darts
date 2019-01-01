@@ -13,7 +13,6 @@ class TileRow extends React.Component {
             }
             columnsValue += " ";
         }
-        console.log(columnsValue);
         return <div style={{
             display: 'grid',
             gridGap: this.props.gridGap ? this.props.gridGap + "px" : 0,
