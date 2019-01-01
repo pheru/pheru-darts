@@ -86,29 +86,27 @@ class Settings extends React.Component {
             <div>
                 <p><strong>Hier siehst Du welche Spieler Dir erlaubt haben ein Spiel mit ihnen zu erstellen und
                     kannst einstellen wer dich in einem Spiel auswählen darf.</strong></p>
-                <div style={{display: "inline-flex", marginBottom: 5}}>
-                    <FormControl style={{width: 300, display: 'inline', marginRight: 5}} type="text"
-                                 value={this.state.userNameToPermit}
-                                 onChange={(e) => this.handleUserNameToPermitChange(e.target.value)}
-                                 onKeyDown={ifEnterKey(() => {
-                                         if (!this.state.permitButtonDisabled && !this.props.isUpdatingPlayerPermission) {
-                                             this.props.addPlayerPermissionByName(this.state.userNameToPermit)
-                                         }
+                <FormControl style={{marginBottom: 5, width: 300, maxWidth: "95%", display: 'inline'}} type="text"
+                             value={this.state.userNameToPermit}
+                             onChange={(e) => this.handleUserNameToPermitChange(e.target.value)}
+                             onKeyDown={ifEnterKey(() => {
+                                     if (!this.state.permitButtonDisabled && !this.props.isUpdatingPlayerPermission) {
+                                         this.props.addPlayerPermissionByName(this.state.userNameToPermit)
                                      }
-                                 )}
-                                 placeholder="Spieler berechtigen"/>
-                    <Button bsStyle="success"
-                            disabled={this.state.permitButtonDisabled || this.props.isUpdatingPlayerPermission}
-                            onClick={() => this.props.addPlayerPermissionByName(this.state.userNameToPermit)}
-                    >Berechtigen</Button>
-                </div>
+                                 }
+                             )}
+                             placeholder="Spieler berechtigen"/>
+                <Button bsStyle="success" style={{marginLeft: 2}}
+                        disabled={this.state.permitButtonDisabled || this.props.isUpdatingPlayerPermission}
+                        onClick={() => this.props.addPlayerPermissionByName(this.state.userNameToPermit)}
+                >Berechtigen</Button>
             </div>
             {this.createAuthorizationTable()}
         </div>
     }
 
     createAuthorizationTable() {
-        return <Well style={{marginLeft: 20, marginRight: 20, marginTop: 25, paddingBottom: 0, textAlign: 'center'}}>
+        return <Well style={{marginLeft: 20, marginRight: 20, marginTop: 20, paddingBottom: 0, textAlign: 'center'}}>
             <Table responsive hover style={{textAlign: 'center'}}>
                 <thead>
                 <tr>

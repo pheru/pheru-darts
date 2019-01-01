@@ -2,7 +2,7 @@ import React from 'react'
 import {Button, Glyphicon} from "react-bootstrap";
 import PropTypes from 'prop-types';
 
-class Tile extends React.Component {
+class ButtonTile extends React.Component {
 
     render() {
         return <Button bsStyle="primary"
@@ -21,7 +21,7 @@ class Tile extends React.Component {
     }
 }
 
-Tile.propTypes = {
+ButtonTile.propTypes = {
     onClick: PropTypes.func,
     glyph: PropTypes.string,
     text: PropTypes.string,
@@ -29,4 +29,4 @@ Tile.propTypes = {
     disabled: PropTypes.bool
 };
 
-export default Tile
+export default ButtonTile

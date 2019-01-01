@@ -6,7 +6,7 @@ class SpeechSettings extends React.Component {
 
     render() {
         return <div style={{...this.props.style}}>
-            <FormControl componentClass="select" style={{width: 400, display: "initial"}}
+            <FormControl componentClass="select" style={{width: 400, maxWidth: "95%", display: "initial"}}
                          onChange={(e) => {
                              this.props.onSelectedVoiceChange(e.target.value);
                          }}
