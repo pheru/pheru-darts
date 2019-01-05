@@ -7,6 +7,7 @@ import PropTypes from "prop-types";
 import NavbarLoginLoader from "../general/loaders/NavbarLoginLoader";
 import NavigationBarItem from "./NavigationBarItem";
 
+//TODO Funktionen == Konstanten?
 const GAME_DROPDOWN = (items) =>
     <Dropdown id="game_dropdown">
         <Dropdown.Toggle className="navigation-bar-dropdown-toggle">
@@ -109,7 +110,9 @@ const USER_LINKS = (props, showOptionalText) => [
     </Button>
 ];
 
-// TODO focus(?)-selector auf menuitems -> weißer background
+// + 1 für merge in SINGLE_DROPDOWN
+const MAX_MERGE_COUNT = (props) => GAME_LINKS(props).length + USER_LINKS(props).length + 1;
+
 class NavigationBar extends React.Component {
 
     constructor(props) {
@@ -127,10 +130,7 @@ class NavigationBar extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        // + 1 für merge in SINGLE_DROPDOWN
-        //TODO eine stelle
-        let maxMergeCount = GAME_LINKS(this.props).length + USER_LINKS(this.props).length + 1;
-        if (this.shouldMerge() && this.state.mergeCount < maxMergeCount) {
+        if (this.shouldMerge() && this.state.mergeCount < MAX_MERGE_COUNT(this.props)) {
             let prevCount = this.state.mergeCount;
             this.setState({mergeCount: prevCount + 1});
         } else if (prevProps.isLoggedIn !== this.props.isLoggedIn) {
@@ -165,10 +165,7 @@ class NavigationBar extends React.Component {
 
         let allLinks = [];
 
-        // + 1 für merge in SINGLE_DROPDOWN
-        //TODO eine stelle
-        let maxMergeCount = GAME_LINKS(this.props).length + USER_LINKS(this.props).length + 1;
-        if (this.state.mergeCount < maxMergeCount) {
+        if (this.state.mergeCount < MAX_MERGE_COUNT(this.props)) {
             let mergeUserLengthDiff = userLinks.length - this.state.mergeCount;
             let userSliceIndex = mergeUserLengthDiff >= 0 ? mergeUserLengthDiff : 0;
             mergedUserLinks = userLinks.slice(userSliceIndex, userLinks.length);
