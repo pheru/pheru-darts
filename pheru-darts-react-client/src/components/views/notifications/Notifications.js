@@ -46,18 +46,18 @@ class Notifications extends React.Component {
                 <tbody>
                 {this.props.notifications.map(notification =>
                     <tr key={"notification_row_" + notification.id}>
-                        <td style={{whiteSpace: 'normal', width: 100}}>
+                        <td style={{whiteSpace: 'normal', width: 100, verticalAlign: "middle", textAlign: "center"}}>
                             {toDate(new Date(notification.timestamp), {
                                 replaceToday: true, replaceYesterday: true
                             })}
                             <br/>
                             {toTime(new Date(notification.timestamp))}
-                        </td>
-                        <td>
+                            <br/>
                             {!notification.read &&
                             <Badge style={{backgroundColor: "#337ab7"}}>Neu</Badge>
                             }
-                            {" "}
+                        </td>
+                        <td style={{verticalAlign: "middle"}}>
                             {notification.message}
                         </td>
                     </tr>
