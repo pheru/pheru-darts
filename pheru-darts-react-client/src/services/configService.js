@@ -1,14 +1,22 @@
-const LOCAL_PROTOCOL = "https:";
-const LOCAL_HOSTNAME = "localhost";
-const LOCAL_PORT = "8443";
-const LOCAL_HOST = LOCAL_PROTOCOL + "//" + LOCAL_HOSTNAME + ":" + LOCAL_PORT;
-
+const PRODUCTION_CLIENT_HOSTNAME = "pheru.github.io";
 const PRODUCTION_HOST = "https://darts.pheru.de";
 
-const LOCAL = defaultConfigForHost(LOCAL_HOST);
-const PRODUCTION = defaultConfigForHost(PRODUCTION_HOST);
+const DEV_PROTOCOL = "https:";
+const DEV_PORT = "8443";
 
-function defaultConfigForHost(host) {
+export function getConfig() {
+    if (window.location.hostname === PRODUCTION_CLIENT_HOSTNAME) {
+        return configForHost(PRODUCTION_HOST);
+    } else {
+        return configForHost(devHostForHostname(window.location.hostname));
+    }
+}
+
+function devHostForHostname(hostname) {
+    return DEV_PROTOCOL + "//" + hostname + ":" + DEV_PORT;
+}
+
+function configForHost(host) {
     return {
         resourceUrls: {
             user: host + "/user",
@@ -21,13 +29,4 @@ function defaultConfigForHost(host) {
         loginUrl: host + "/login",
         logoutUrl: host + "/logout"
     };
-}
-
-export function getConfig() {
-    switch (window.location.hostname) {
-        case LOCAL_HOSTNAME:
-            return LOCAL;
-        default:
-            return PRODUCTION;
-    }
 }
