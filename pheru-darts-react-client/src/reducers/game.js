@@ -65,7 +65,7 @@ function addDart(state, dart) {
     if (players[currentTurnInfo.playerIndex].aufnahmen[currentTurnInfo.aufnahmeIndex] === undefined) {
         players[currentTurnInfo.playerIndex].aufnahmen[currentTurnInfo.aufnahmeIndex] = [];
 
-        announcementText = state.players[currentTurnInfo.playerIndex].name + " "
+        announcementText = state.players[currentTurnInfo.playerIndex].name + ", "
             + turnInfo.playerInformation[currentTurnInfo.playerIndex].score;
     }
 
