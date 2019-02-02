@@ -2,13 +2,13 @@ package de.pheru.darts.backend.dtos.user;
 
 public class UserDeletionDto {
 
-    private String password;
+    private String currentPassword;
 
-    public String getPassword() {
-        return password;
+    public String getCurrentPassword() {
+        return currentPassword;
     }
 
-    public void setPassword(final String password) {
-        this.password = password;
+    public void setCurrentPassword(final String currentPassword) {
+        this.currentPassword = currentPassword;
     }
 }

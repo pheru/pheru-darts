@@ -230,12 +230,12 @@ public class UserControllerTest extends ControllerTest {
     @Test
     public void deletetUserFailedCurrentPasswordInvalid() {
         expectedException.expect(UnauthorizedException.class);
-        expectedException.expectMessage(UserController.INVALID_PASSWORD);
+        expectedException.expectMessage(UserController.INVALID_CURRENT_PASSWORD);
 
         createAndSaveDefaultLoginUser();
 
         final UserDeletionDto userDeletionDto = new UserDeletionDto();
-        userDeletionDto.setPassword("Das Passwort ist wohl nicht richtig");
+        userDeletionDto.setCurrentPassword("Das Passwort ist wohl nicht richtig");
 
         userController.deleteUser(userDeletionDto);
     }
@@ -243,7 +243,7 @@ public class UserControllerTest extends ControllerTest {
     @Test
     public void deletetUserFailedCurrentPasswordNull() {
         expectedException.expect(UnauthorizedException.class);
-        expectedException.expectMessage(UserController.INVALID_PASSWORD);
+        expectedException.expectMessage(UserController.INVALID_CURRENT_PASSWORD);
 
         createAndSaveDefaultLoginUser();
 
@@ -261,7 +261,7 @@ public class UserControllerTest extends ControllerTest {
 
     private UserDeletionDto createUserDeletionDto(final String password) {
         final UserDeletionDto userDeletionDto = new UserDeletionDto();
-        userDeletionDto.setPassword(password);
+        userDeletionDto.setCurrentPassword(password);
         return userDeletionDto;
     }
 

@@ -25,7 +25,6 @@ public class UserController {
     private static final Logger LOGGER = new Logger();
 
     public static final String INVALID_CURRENT_PASSWORD = "Invalid current password!";
-    public static final String INVALID_PASSWORD = "Invalid password!";
 
     private final UserRepository userRepository;
     private final PlayerPermissionRepository playerPermissionRepository;
@@ -77,8 +76,7 @@ public class UserController {
     public UserDto putUser(@RequestBody final UserModificationDto userModificationDto) {
         final String loggedInUserId = SecurityUtil.getLoggedInUserId();
         final UserEntity userEntity = userRepository.findById(loggedInUserId);
-        if (userModificationDto.getCurrentPassword() == null
-                || !bCryptPasswordEncoder.matches(userModificationDto.getCurrentPassword(), userEntity.getPassword())) {
+        if (!matchesCurrentPassword(userModificationDto.getCurrentPassword(), userEntity)) {
             throw new UnauthorizedException(INVALID_CURRENT_PASSWORD);
         }
 
@@ -109,9 +107,8 @@ public class UserController {
     public void deleteUser(@RequestBody final UserDeletionDto userDeletionDto) {
         final String loggedInUserId = SecurityUtil.getLoggedInUserId();
         final UserEntity userEntity = userRepository.findById(loggedInUserId);
-        if (userDeletionDto.getPassword() == null
-                || !bCryptPasswordEncoder.matches(userDeletionDto.getPassword(), userEntity.getPassword())) {
-            throw new UnauthorizedException(INVALID_PASSWORD);
+        if (!matchesCurrentPassword(userDeletionDto.getCurrentPassword(), userEntity)) {
+            throw new UnauthorizedException(INVALID_CURRENT_PASSWORD);
         }
 
         playerPermissionRepository.deleteAllByUserId(loggedInUserId);
@@ -120,5 +117,9 @@ public class UserController {
         notificationRepository.deleteAllByUserId(loggedInUserId);
         userRepository.deleteById(loggedInUserId);
         LOGGER.info("User " + loggedInUserId + " deleted.");
+    }
+
+    private boolean matchesCurrentPassword(final String password, final UserEntity userEntity){
+        return password != null && bCryptPasswordEncoder.matches(password, userEntity.getPassword());
     }
 }
