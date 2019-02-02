@@ -91,13 +91,13 @@ public class UserControllerTest extends ControllerTest {
 
         // Name
         final UserModificationDto nameModificationDto = new UserModificationDto();
-        nameModificationDto.setName("Neuer Name");
+        nameModificationDto.setNewName("Neuer Name");
         nameModificationDto.setCurrentPassword(LOGIN_PASSWORD);
         UserDto putUserDto = userController.putUser(nameModificationDto);
 
-        assertEquals(nameModificationDto.getName(), putUserDto.getName());
+        assertEquals(nameModificationDto.getNewName(), putUserDto.getName());
         UserEntity savedUser = userRepository.findById(loggedInUser.getId());
-        assertEquals(nameModificationDto.getName(), savedUser.getName());
+        assertEquals(nameModificationDto.getNewName(), savedUser.getName());
 
         // Passwort
         final UserModificationDto pwModificationDto = new UserModificationDto();
@@ -112,14 +112,14 @@ public class UserControllerTest extends ControllerTest {
 
         // Name und Passwort
         final UserModificationDto namePwModificationDto = new UserModificationDto();
-        namePwModificationDto.setName("Ganz neuer Name");
+        namePwModificationDto.setNewName("Ganz neuer Name");
         namePwModificationDto.setNewPassword("Ganz neues Passwort");
         namePwModificationDto.setCurrentPassword(newPassword);
         putUserDto = userController.putUser(namePwModificationDto);
 
-        assertEquals(namePwModificationDto.getName(), putUserDto.getName());
+        assertEquals(namePwModificationDto.getNewName(), putUserDto.getName());
         savedUser = userRepository.findById(loggedInUser.getId());
-        assertEquals(namePwModificationDto.getName(), savedUser.getName());
+        assertEquals(namePwModificationDto.getNewName(), savedUser.getName());
         assertNotEquals(namePwModificationDto.getNewPassword(), savedUser.getPassword());
         assertTrue(passwordEncoder.matches(namePwModificationDto.getNewPassword(), savedUser.getPassword()));
     }
@@ -132,7 +132,7 @@ public class UserControllerTest extends ControllerTest {
         createAndSaveDefaultLoginUser();
 
         final UserModificationDto nameModificationDto = new UserModificationDto();
-        nameModificationDto.setName("Neuer Name");
+        nameModificationDto.setNewName("Neuer Name");
         nameModificationDto.setCurrentPassword("Auf jeden Fall falsch");
 
         userController.putUser(nameModificationDto);
@@ -146,7 +146,7 @@ public class UserControllerTest extends ControllerTest {
         createAndSaveDefaultLoginUser();
 
         final UserModificationDto nameModificationDto = new UserModificationDto();
-        nameModificationDto.setName("Neuer Name");
+        nameModificationDto.setNewName("Neuer Name");
 
         userController.putUser(nameModificationDto);
     }
@@ -164,7 +164,7 @@ public class UserControllerTest extends ControllerTest {
         userController.putUser(modificationDto);
 
         // Name -> Validierung -> Aufruf nicht erfolgreich
-        modificationDto.setName("Toller neuer Name");
+        modificationDto.setNewName("Toller neuer Name");
         modificationDto.setCurrentPassword(newPassword);
         try {
             userController.putUser(modificationDto);
@@ -172,7 +172,7 @@ public class UserControllerTest extends ControllerTest {
         } catch (final ValidationException e) {
             final UserEntity savedUser = userRepository.findById(loggedInUser.getId());
             assertEquals(loggedInUser.getName(), savedUser.getName());
-            assertNotEquals(modificationDto.getName(), savedUser.getName());
+            assertNotEquals(modificationDto.getNewName(), savedUser.getName());
         }
     }
 
@@ -183,7 +183,7 @@ public class UserControllerTest extends ControllerTest {
 
         // Kein Passwort -> Keine Validierung -> Aufruf erfolgreich
         final UserModificationDto modificationDto = new UserModificationDto();
-        modificationDto.setName("Was für ein toller neuer Name");
+        modificationDto.setNewName("Was für ein toller neuer Name");
         modificationDto.setCurrentPassword(LOGIN_PASSWORD);
         userController.putUser(modificationDto);
 
@@ -194,6 +194,7 @@ public class UserControllerTest extends ControllerTest {
             fail("ValidationException expected");
         } catch (final ValidationException e) {
             final UserEntity savedUser = userRepository.findById(loggedInUser.getId());
+            assertEquals(MockedUserValidation.VALIDATE_PASSWORD_FAILED, e.getMessage());
             assertEquals(loggedInUser.getPassword(), savedUser.getPassword());
             assertNotEquals(modificationDto.getNewPassword(), savedUser.getPassword());
         }

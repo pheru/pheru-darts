@@ -82,15 +82,15 @@ public class UserController {
             throw new UnauthorizedException(INVALID_CURRENT_PASSWORD);
         }
 
-        final boolean changeName = userModificationDto.getName() != null;
+        final boolean changeName = userModificationDto.getNewName() != null;
         final boolean changePassword = userModificationDto.getNewPassword() != null;
 
         if (changeName) {
-            userValidation.validateName(userModificationDto.getName());
-            userEntity.setName(userModificationDto.getName());
+            userValidation.validateName(userModificationDto.getNewName());
+            userEntity.setName(userModificationDto.getNewName());
         }
         if (changePassword) {
-            userValidation.validatePassword(userModificationDto.getName());
+            userValidation.validatePassword(userModificationDto.getNewPassword());
             userEntity.setPassword(bCryptPasswordEncoder.encode(userModificationDto.getNewPassword()));
         }
 
