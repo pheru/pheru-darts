@@ -91,6 +91,8 @@ class Settings extends React.Component {
             <div style={{
                 marginTop: 31,
                 paddingTop: 10,
+                paddingLeft: 20,
+                paddingRight: 20,
                 overflowY: "auto",
                 position: "absolute",
                 top: 0,
@@ -155,7 +157,7 @@ class Settings extends React.Component {
     }
 
     createAuthorizationTable() {
-        return <Well style={{marginLeft: 20, marginRight: 20, marginTop: 20, paddingBottom: 0, textAlign: 'center'}}>
+        return <Well style={{marginTop: 20, paddingBottom: 0, textAlign: 'center'}}>
             <Table responsive hover style={{textAlign: 'center'}}>
                 <thead>
                 <tr>

@@ -7,7 +7,7 @@ class OnlyForLoggedInUsers extends React.Component {
         return this.props.isLoggedIn
             ? this.props.children
             : <Alert bsStyle="warning"
-                     style={{marginLeft: 15, marginRight: 15, marginBottom: 5, textAlign: 'center'}}>
+                     style={{marginBottom: 5, textAlign: 'center'}}>
                 <strong>{this.props.text}</strong>
                 <br/>
                 <Button bsStyle="primary" style={{marginTop: 10}} onClick={this.props.showLogin}

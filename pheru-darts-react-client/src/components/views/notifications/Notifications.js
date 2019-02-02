@@ -10,7 +10,7 @@ class Notifications extends React.Component {
     render() {
         return <OnlyForLoggedInUsersContainer
             text="Mitteilungen können nur von angemeldeten Benutzern eingesehen werden">
-            <Well style={{marginLeft: 20, marginRight: 20, paddingBottom: 0, textAlign: "center"}}>
+            <Well style={{paddingBottom: 0, textAlign: "center"}}>
                 <Button bsStyle="primary" style={{marginRight: 5}}
                         onClick={this.props.fetchNotifications}
                         disabled={this.props.isFetchingNotifications}>

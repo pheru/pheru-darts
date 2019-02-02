@@ -115,7 +115,7 @@ class UserSettings extends React.Component {
                 Änderungen speichern
             </Button>
 
-            <Alert bsStyle="danger" style={{margin: 15}}>
+            <Alert bsStyle="danger" style={{marginTop: 25}}>
                 <h3 style={{marginTop: 0}}><strong>Benutzerkonto löschen</strong></h3>
                 <Button style={{display: "block", margin: "auto"}} bsStyle="danger" disabled={this.props.disabled}
                         onClick={() => this.showDeletionConfirmationModal(true)}>

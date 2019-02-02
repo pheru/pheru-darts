@@ -84,13 +84,13 @@ class Statistics extends React.Component {
             <h2><strong>Darts</strong></h2>
             {this.props.dartData.length > 0
                 ? this.createDartsView()
-                : <Alert bsStyle="warning" style={{marginLeft: 15, marginRight: 15}}>
+                : <Alert bsStyle="warning">
                     <strong>Keine Daten vorhanden</strong>
                 </Alert>}
             <h2><strong>Spiele</strong></h2>
             {this.props.gamesData.length > 0
                 ? this.createGamesView()
-                : <Alert bsStyle="warning" style={{marginLeft: 15, marginRight: 15}}>
+                : <Alert bsStyle="warning">
                     <strong>Keine Daten vorhanden</strong>
                 </Alert>}
         </div>
@@ -98,8 +98,6 @@ class Statistics extends React.Component {
 
     createDartsView() {
         return <Well style={{
-            marginLeft: 20,
-            marginRight: 20,
             paddingBottom: 0,
             marginBottom: 5,
             textAlign: 'center'
@@ -149,8 +147,6 @@ class Statistics extends React.Component {
     createGamesView() {
         return <Well
             style={{
-                marginLeft: 20,
-                marginRight: 20,
                 paddingBottom: 0,
                 marginBottom: 5
             }}>
