@@ -42,10 +42,28 @@ class NavigationBar extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this.shouldMerge() && this.state.mergeCount < this.maxMergeCount()) {
+        let fixedChanged = this.props.fixedItems.filter(this.notFalse).length
+            !== prevProps.fixedItems.filter(this.notFalse).length;
+        let leftMergedChanged = this.props.leftContainer.mergedItems.filter(this.notFalse).length
+            !== prevProps.leftContainer.mergedItems.filter(this.notFalse).length;
+        let leftUnmergedChanged = this.props.leftContainer.unmergedItems.filter(this.notFalse).length
+            !== prevProps.leftContainer.unmergedItems.filter(this.notFalse).length;
+        let rightMergedChanged = this.props.rightContainer.mergedItems.filter(this.notFalse).length
+            !== prevProps.rightContainer.mergedItems.filter(this.notFalse).length;
+        let rightUnmergedChanged = this.props.rightContainer.unmergedItems.filter(this.notFalse).length
+            !== prevProps.rightContainer.unmergedItems.filter(this.notFalse).length;
+        if (fixedChanged
+            || leftMergedChanged || leftUnmergedChanged
+            || rightMergedChanged || rightUnmergedChanged) {
+            this.resetMergeCount()
+        } else if (this.shouldMerge() && this.state.mergeCount < this.maxMergeCount()) {
             let prevCount = this.state.mergeCount;
             this.setState({mergeCount: prevCount + 1});
         }
+    }
+
+    notFalse(element){
+        return element !== false;
     }
 
     componentWillUnmount() {
@@ -74,8 +92,10 @@ class NavigationBar extends React.Component {
     }
 
     resetMergeCount(e) {
-        // Nur bei Änderungen an der Breite, nicht bei der Höhe
-        if (e.target.innerWidth !== this.state.lastWidth) {
+        if(e === undefined){
+            this.setState({mergeCount: 0});
+        } else if (e.target.innerWidth !== this.state.lastWidth) {
+            // Nur bei Änderungen an der Breite, nicht bei der Höhe
             this.setState({mergeCount: 0, lastWidth: e.target.innerWidth});
         }
     }
