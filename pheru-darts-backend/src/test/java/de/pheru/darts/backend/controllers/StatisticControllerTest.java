@@ -236,10 +236,10 @@ public class StatisticControllerTest extends ControllerTest {
         assertEquals(1, gamesStatistics.getLostCount().longValue());
         assertEquals(1, countsPerPlayer.get(savedUser.getName()).getWonCount().longValue());
         assertEquals(1, countsPerPlayer.get(savedUser.getName()).getLostCount().longValue());
-        assertEquals(2, countsPerPlayer.get(ReservedUser.UNREGISTERED_USER.getName()).getWonCount().longValue());
-        assertEquals(0, countsPerPlayer.get(ReservedUser.UNREGISTERED_USER.getName()).getLostCount().longValue());
-        assertEquals(1, countsPerPlayer.get(ReservedUser.DELETED_USER.getName()).getWonCount().longValue());
-        assertEquals(0, countsPerPlayer.get(ReservedUser.DELETED_USER.getName()).getLostCount().longValue());
+        assertEquals(2, countsPerPlayer.get(ReservedUser.UNREGISTERED_USERS.getName()).getWonCount().longValue());
+        assertEquals(0, countsPerPlayer.get(ReservedUser.UNREGISTERED_USERS.getName()).getLostCount().longValue());
+        assertEquals(1, countsPerPlayer.get(ReservedUser.DELETED_USERS.getName()).getWonCount().longValue());
+        assertEquals(0, countsPerPlayer.get(ReservedUser.DELETED_USERS.getName()).getLostCount().longValue());
     }
 
     private void assertDartCount(final DartCountStatisticDto dartStatistic, final long singleCount, final long doubleCount, final long tripleCount) {

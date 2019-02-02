@@ -9,5 +9,5 @@ public interface GameRepository extends CrudRepository<GameEntity, String> {
 
     List<GameEntity> findByUserId(final String userId);
 
-    void deleteAllByUserId(final String userId);
+    List<GameEntity> deleteAllByUserId(final String userId);
 }

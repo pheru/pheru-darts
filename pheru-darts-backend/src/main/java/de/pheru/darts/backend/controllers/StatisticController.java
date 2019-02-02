@@ -106,14 +106,14 @@ public class StatisticController {
                         if (!playerCache.containsKey(playerDocument.getId())) {
                             final UserEntity userEntity = userRepository.findById(playerDocument.getId());
                             if (userEntity == null) {
-                                playerCache.put(playerDocument.getId(), ReservedUser.DELETED_USER.getName());
+                                playerCache.put(playerDocument.getId(), ReservedUser.DELETED_USERS.getName());
                             } else {
                                 playerCache.put(playerDocument.getId(), userEntity.getName());
                             }
                         }
                         playerName = playerCache.get(playerDocument.getId());
                     } else {
-                        playerName = ReservedUser.UNREGISTERED_USER.getName();
+                        playerName = ReservedUser.UNREGISTERED_USERS.getName();
                     }
                     gameCountsPerPlayer.putIfAbsent(playerName, new GameCountStatisticDto());
                     final GameCountStatisticDto gameCountStatisticDto = gameCountsPerPlayer.get(playerName);

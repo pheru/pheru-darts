@@ -15,7 +15,7 @@ public interface PlayerPermissionRepository extends CrudRepository<PlayerPermiss
     @EnableScan
     PlayerPermissionEntity findByUserIdAndPermittedUserId(final String userId, final String permittedUserId);
 
-    void deleteAllByUserId(final String userId);
+    List<PlayerPermissionEntity> deleteAllByUserId(final String userId);
 
-    void deleteAllByPermittedUserId(final String permittedUserId);
+    List<PlayerPermissionEntity> deleteAllByPermittedUserId(final String permittedUserId);
 }

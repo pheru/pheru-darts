@@ -24,7 +24,7 @@ public class UserController {
 
     private static final Logger LOGGER = new Logger();
 
-    public static final String INVALID_CURRENT_PASSWORD = "Invalid current password!";
+    public static final String INVALID_CURRENT_PASSWORD = "Invalid current password";
 
     private final UserRepository userRepository;
     private final PlayerPermissionRepository playerPermissionRepository;

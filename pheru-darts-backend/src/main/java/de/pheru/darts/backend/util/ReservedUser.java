@@ -2,8 +2,8 @@ package de.pheru.darts.backend.util;
 
 public enum ReservedUser {
 
-    UNREGISTERED_USER("Unregistrierter Benutzer"),
-    DELETED_USER("Gelöschter Benutzer");
+    UNREGISTERED_USERS("Unregistrierte Benutzer"),
+    DELETED_USERS("Gelöschte Benutzer");
 
     private final String name;
 

@@ -13,6 +13,6 @@ public interface UserRepository extends CrudRepository<UserEntity, String> {
 
     UserEntity findByName(final String name);
 
-    void deleteById(final String id);
+    UserEntity deleteById(final String id);
 
 }
