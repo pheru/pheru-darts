@@ -7,7 +7,7 @@ import de.pheru.darts.backend.dtos.user.UserDto;
 import de.pheru.darts.backend.dtos.user.UserModificationDto;
 import de.pheru.darts.backend.entities.playerpermission.PlayerPermissionEntity;
 import de.pheru.darts.backend.entities.user.UserEntity;
-import de.pheru.darts.backend.exceptions.UnauthorizedException;
+import de.pheru.darts.backend.exceptions.FailedPasswordConfirmationException;
 import de.pheru.darts.backend.mappers.EntityMapper;
 import de.pheru.darts.backend.repositories.GameRepository;
 import de.pheru.darts.backend.repositories.NotificationRepository;
@@ -77,7 +77,7 @@ public class UserController {
         final String loggedInUserId = SecurityUtil.getLoggedInUserId();
         final UserEntity userEntity = userRepository.findById(loggedInUserId);
         if (!matchesCurrentPassword(userModificationDto.getCurrentPassword(), userEntity)) {
-            throw new UnauthorizedException(INVALID_CURRENT_PASSWORD);
+            throw new FailedPasswordConfirmationException(INVALID_CURRENT_PASSWORD);
         }
 
         final boolean changeName = userModificationDto.getNewName() != null && !userModificationDto.getNewName().isEmpty();
@@ -108,7 +108,7 @@ public class UserController {
         final String loggedInUserId = SecurityUtil.getLoggedInUserId();
         final UserEntity userEntity = userRepository.findById(loggedInUserId);
         if (!matchesCurrentPassword(userDeletionDto.getCurrentPassword(), userEntity)) {
-            throw new UnauthorizedException(INVALID_CURRENT_PASSWORD);
+            throw new FailedPasswordConfirmationException(INVALID_CURRENT_PASSWORD);
         }
 
         playerPermissionRepository.deleteAllByUserId(loggedInUserId);
