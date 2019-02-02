@@ -11,11 +11,11 @@ const mapStateToProps = state => ({
     isLoggedIn: state.user.isLoggedIn,
     isLoggingIn: state.user.isLoggingIn,
 
-    playableUsers: state.playerPermission.playableUsers.sort(sortPlayerByNameAsc),
+    playableUsers: state.playerPermission.playableUsers.slice().sort(sortPlayerByNameAsc),
     fetchPlayableUsersFailed: state.playerPermission.fetchPlayableUsersFailed,
     isFetchingPlayableUsers: state.playerPermission.isFetchingPlayableUsers,
 
-    permittedUsers: state.playerPermission.permittedUsers.sort(sortPlayerByNameAsc),
+    permittedUsers: state.playerPermission.permittedUsers.slice().sort(sortPlayerByNameAsc),
     fetchPermittedUsersFailed: state.playerPermission.fetchPermittedUsersFailed,
     isFetchingPermittedUsers: state.playerPermission.isFetchingPermittedUsers,
 

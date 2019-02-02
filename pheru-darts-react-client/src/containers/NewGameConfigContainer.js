@@ -11,7 +11,7 @@ const mapStateToProps = (state, ownProps) => ({
     isLoggingIn: state.user.isLoggingIn,
     userId: state.user.id,
     userName: state.user.name,
-    playableUsers: state.playerPermission.playableUsers.sort(sortPlayerByNameAsc),
+    playableUsers: putPlayerInFront(state.user.name, state.playerPermission.playableUsers.slice().sort(sortPlayerByNameAsc)),
     gameRunning: state.game !== null,
     fetchAllUsersFailed: state.playerPermission.fetchPlayableUsersFailed,
     isFetchingUsers: state.playerPermission.isFetchingPlayableUsers
@@ -27,6 +27,22 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 
 function getMemoryKeyByProps(ownProps) {
     return ownProps.training ? "newgameconfig_training" : "newgameconfig";
+}
+
+function putPlayerInFront(name, players) {
+    let index = -1;
+    let player = undefined;
+    for (let i = 0; i < players.length; i++) {
+        if(players[i].name === name){
+            index = i;
+            player = players[i];
+        }
+    }
+    if(index > -1){
+        players.splice(index, 1);
+        players.unshift(player);
+    }
+    return players;
 }
 
 export default connect(
