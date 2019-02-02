@@ -85,7 +85,9 @@
     font-style: italic;
 }
 
-.navigation-bar-header:hover {
+.navigation-bar-header:hover,
+.navigation-bar-header:focus,
+.navigation-bar-header:focus:hover {
     text-decoration: underline;
 }
 
