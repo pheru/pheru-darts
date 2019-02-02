@@ -156,6 +156,18 @@ public class PlayerPermissionControllerTest extends ControllerTest {
         assertEquals(1, all.size());
     }
 
+    @Test(expected = BadRequestException.class)
+    public void deleteWithoutAnything() {
+        playerPermissionController.delete(new PlayerPermissionModificationDto());
+    }
+
+    @Test(expected = BadRequestException.class)
+    public void deleteWithIdAndNameEmpty() {
+        final PlayerPermissionModificationDto modificationDto = createModificationDtoWithId("");
+        modificationDto.setPermittedUsername("");
+        playerPermissionController.delete(modificationDto);
+    }
+
     @Test
     public void getPermittedUsers() {
         final List<UserDto> permittedUsers = playerPermissionController.getPermittedUsers();
