@@ -42,16 +42,16 @@ class NavigationBar extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        let fixedChanged = this.props.fixedItems.filter(this.notFalse).length
-            !== prevProps.fixedItems.filter(this.notFalse).length;
-        let leftMergedChanged = this.props.leftContainer.mergedItems.filter(this.notFalse).length
-            !== prevProps.leftContainer.mergedItems.filter(this.notFalse).length;
-        let leftUnmergedChanged = this.props.leftContainer.unmergedItems.filter(this.notFalse).length
-            !== prevProps.leftContainer.unmergedItems.filter(this.notFalse).length;
-        let rightMergedChanged = this.props.rightContainer.mergedItems.filter(this.notFalse).length
-            !== prevProps.rightContainer.mergedItems.filter(this.notFalse).length;
-        let rightUnmergedChanged = this.props.rightContainer.unmergedItems.filter(this.notFalse).length
-            !== prevProps.rightContainer.unmergedItems.filter(this.notFalse).length;
+        let fixedChanged = this.props.fixedItems !== undefined &&
+            this.props.fixedItems.filter(this.notFalse).length !== prevProps.fixedItems.filter(this.notFalse).length;
+        let leftMergedChanged = this.props.leftContainer !== undefined &&
+            this.props.leftContainer.mergedItems.filter(this.notFalse).length !== prevProps.leftContainer.mergedItems.filter(this.notFalse).length;
+        let leftUnmergedChanged = this.props.leftContainer !== undefined &&
+            this.props.leftContainer.unmergedItems.filter(this.notFalse).length !== prevProps.leftContainer.unmergedItems.filter(this.notFalse).length;
+        let rightMergedChanged = this.props.rightContainer !== undefined &&
+            this.props.rightContainer.mergedItems.filter(this.notFalse).length !== prevProps.rightContainer.mergedItems.filter(this.notFalse).length;
+        let rightUnmergedChanged = this.props.rightContainer !== undefined &&
+            this.props.rightContainer.unmergedItems.filter(this.notFalse).length !== prevProps.rightContainer.unmergedItems.filter(this.notFalse).length;
         if (fixedChanged
             || leftMergedChanged || leftUnmergedChanged
             || rightMergedChanged || rightUnmergedChanged) {
