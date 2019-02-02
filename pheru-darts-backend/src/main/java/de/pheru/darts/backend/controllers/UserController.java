@@ -80,8 +80,8 @@ public class UserController {
             throw new UnauthorizedException(INVALID_CURRENT_PASSWORD);
         }
 
-        final boolean changeName = userModificationDto.getNewName() != null;
-        final boolean changePassword = userModificationDto.getNewPassword() != null;
+        final boolean changeName = userModificationDto.getNewName() != null && !userModificationDto.getNewName().isEmpty();
+        final boolean changePassword = userModificationDto.getNewPassword() != null && !userModificationDto.getNewPassword().isEmpty();
 
         if (changeName) {
             userValidation.validateName(userModificationDto.getNewName());
