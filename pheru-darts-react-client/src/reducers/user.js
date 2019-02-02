@@ -1,4 +1,6 @@
 import {
+    DELETE_USER_FAILED,
+    DELETE_USER_SUCCESSFUL,
     HIDE_LOGIN_MODAL,
     HIDE_SIGNUP_MODAL,
     LOGIN_BY_TOKEN_FAILED,
@@ -6,10 +8,10 @@ import {
     LOGIN_FAILED,
     LOGIN_SUCCESSFUL,
     LOGOUT_FAILED,
-    LOGOUT_SUCCESSFUL,
+    LOGOUT_SUCCESSFUL, MODIFY_USER_FAILED, MODIFY_USER_SUCCESSFUL, REQUEST_DELETE_USER,
     REQUEST_LOGIN,
     REQUEST_LOGIN_BY_TOKEN,
-    REQUEST_LOGOUT, REQUEST_SIGNUP,
+    REQUEST_LOGOUT, REQUEST_MODIFY_USER, REQUEST_SIGNUP,
     SHOW_LOGIN_MODAL,
     SHOW_SIGNUP_MODAL, SIGNUP_FAILED, SIGNUP_SUCCESSFUL,
 } from "../actions/user";
@@ -22,7 +24,9 @@ function user(state = {
     isLoggedIn: false,
     isLoggingIn: false,
     isLoggingOut: false,
-    isSigningUp: false
+    isSigningUp: false,
+    isModifying: false,
+    isDeletingUser: false
 }, action) {
     switch (action.type) {
         case SHOW_LOGIN_MODAL:
@@ -118,6 +122,28 @@ function user(state = {
             return {
                 ...state,
                 isSigningUp: false
+            };
+        case REQUEST_MODIFY_USER:
+            return {
+                ...state,
+                isModifying: true
+            };
+        case MODIFY_USER_SUCCESSFUL:
+        case MODIFY_USER_FAILED:
+            return {
+                ...state,
+                isModifying: false
+            };
+        case REQUEST_DELETE_USER:
+            return {
+                ...state,
+                isDeletingUser: true
+            };
+        case DELETE_USER_SUCCESSFUL:
+        case DELETE_USER_FAILED:
+            return {
+                ...state,
+                isDeletingUser: false
             };
         default:
             return state

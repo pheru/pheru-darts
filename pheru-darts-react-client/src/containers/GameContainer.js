@@ -14,7 +14,7 @@ const mapStateToProps = function (state) {
     let training = state.game.training;
     let announcementText = state.game.announcementText;
     let isLoggedIn = state.user.isLoggedIn;
-    let selectedVoice = state.speech.selectedVoice;
+    let selectedVoice = state.speech.selectedVoice ? state.speech.selectedVoice : state.speech.defaultVoice;
     let speechOutputActive = state.speech.speechOutputActive;
     return {
         startScore,

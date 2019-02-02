@@ -3,7 +3,7 @@ import {withRouter} from "react-router-dom";
 import {logout, showLoginModal} from "../actions/user";
 import {showConfirmation} from "../actions/modal";
 import {exitGame} from "../actions/game";
-import NavigationBar from "../components/app/NavigationBar";
+import AppNavigationBar from "../components/app/AppNavigationBar";
 
 const mapStateToProps = state => ({
     userName: state.user.name,
@@ -27,4 +27,4 @@ const mapDispatchToProps = dispatch => ({
 export default withRouter(connect(
     mapStateToProps,
     mapDispatchToProps
-)(NavigationBar))
+)(AppNavigationBar))

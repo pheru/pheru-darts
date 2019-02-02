@@ -1,10 +1,11 @@
 import React from 'react'
-import {Alert, Button, Glyphicon, Table, ToggleButton, ToggleButtonGroup, Well} from "react-bootstrap";
+import {Alert, Glyphicon, Table, ToggleButton, ToggleButtonGroup, Well} from "react-bootstrap";
 import GamesBarChart from "./GamesBarChart";
 import DartsBarChart from "./DartsBarChart";
 import PropTypes from "prop-types";
 import StackLoader from "../../general/loaders/StackLoader";
 import DartsRadarChart from "./DartsRadarChart";
+import OnlyForLoggedInUsersContainer from "../../../containers/OnlyForLoggedInUsersContainer";
 
 const DART_CHART_TYPE_BAR = "bar";
 const DART_CHART_TYPE_RADAR = "radar";
@@ -67,24 +68,14 @@ class Statistics extends React.Component {
     }
 
     render() {
-        return <div>
-            {this.props.isLoggedIn ?
-                this.props.isFetchingStatistics ?
-                    <div style={{position: 'absolute', left: '50%', top: '50%'}}>
-                        <StackLoader label="Lade Statistiken..."/>
-                    </div>
-                    : this.createStatisticsView()
-                : <Alert bsStyle="warning"
-                         style={{marginLeft: 15, marginRight: 15, marginBottom: 5, textAlign: 'center'}}>
-                    <strong>Statistiken können nur für angemeldete Benutzer erstellt und eingesehen werden</strong>
-                    <br/>
-                    <Button bsStyle="primary" style={{marginTop: 10}} onClick={this.props.showLogin}
-                            disabled={this.props.isLoggingIn}>
-                        <Glyphicon glyph="log-in"/> Anmelden
-                    </Button>
-                </Alert>
-            }
-        </div>
+        return <OnlyForLoggedInUsersContainer
+            text="Statistiken können nur für angemeldete Benutzer erstellt und eingesehen werden">
+            {this.props.isFetchingStatistics ?
+                <div style={{position: 'absolute', left: '50%', top: '50%'}}>
+                    <StackLoader label="Lade Statistiken..."/>
+                </div>
+                : this.createStatisticsView()}
+        </OnlyForLoggedInUsersContainer>
     }
 
     createStatisticsView() {
@@ -107,7 +98,6 @@ class Statistics extends React.Component {
 
     createDartsView() {
         return <Well style={{
-            backgroundColor: "white",
             marginLeft: 20,
             marginRight: 20,
             paddingBottom: 0,
@@ -159,7 +149,6 @@ class Statistics extends React.Component {
     createGamesView() {
         return <Well
             style={{
-                backgroundColor: "white",
                 marginLeft: 20,
                 marginRight: 20,
                 paddingBottom: 0,

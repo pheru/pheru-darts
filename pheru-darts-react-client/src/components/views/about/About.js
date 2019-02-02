@@ -10,7 +10,7 @@ class About extends React.Component {
     render() {
         return <div>
             Client: {`${process.env.REACT_APP_VERSION}`} <br/>
-            Server: {this.props.serverVersion}
+            Server: {this.props.serverVersion ? this.props.serverVersion : "Lade..."}
         </div>
     }
 

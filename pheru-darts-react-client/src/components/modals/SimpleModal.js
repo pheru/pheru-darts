@@ -33,7 +33,11 @@ class SimpleModal extends React.Component {
 
     render() {
         return <Modal show={this.props.show} onKeyDown={(target) => {
-            ifEnterKey(this.props.hide)(target);
+            if (this.props.item.modalType === TYPE_INFORMATION
+                || this.props.item.modalType === TYPE_WARNING
+                || this.props.item.modalType === TYPE_ERROR) {
+                ifEnterKey(this.props.hide)(target);
+            }
             ifEscKey(this.props.hide)(target);
         }}>
             <Modal.Body style={{paddingTop: 0, paddingBottom: 0}}>

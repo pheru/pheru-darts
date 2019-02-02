@@ -4,6 +4,12 @@ import {ifEnterKey} from "../../../util/functionUtil";
 import PropTypes from "prop-types";
 import StackLoader from "../../general/loaders/StackLoader";
 import SpeechSettings from "./SpeechSettings";
+import {NAVIGATION_ITEM} from "../../../constants/navigationItems";
+import {Redirect, Route} from "react-router-dom";
+import NavigationBar, {DropdownConfig, NavigationBarContainer} from "../../general/navigationbar/NavigationBar";
+import NavigationBarItem from "../../general/navigationbar/NavigationBarItem";
+import OnlyForLoggedInUsersContainer from "../../../containers/OnlyForLoggedInUsersContainer";
+import UserSettingsContainer from "../../../containers/UserSettingsContainer";
 
 class Settings extends React.Component {
 
@@ -67,26 +73,68 @@ class Settings extends React.Component {
     }
 
     render() {
+        let navigationBarItems = [
+            this.props.isLoggedIn &&
+            <NavigationBarItem key="settings_user_link" navigationItem={NAVIGATION_ITEM.SETTINGS_USER}/>,
+
+            this.props.isLoggedIn &&
+            <NavigationBarItem key="settings_permissions_link" navigationItem={NAVIGATION_ITEM.SETTINGS_PERMISSIONS}/>,
+
+            <NavigationBarItem key="settings_speech_link" navigationItem={NAVIGATION_ITEM.SETTINGS_SPEECH}/>,
+        ];
+        let navigationBarDropdown = new DropdownConfig("settings_dropdown",
+            <Glyphicon glyph="cog"/>, "Weitere Einstellungen");
+        let navContainer = new NavigationBarContainer(navigationBarItems, navigationBarItems, navigationBarDropdown);
         return <div style={{textAlign: 'center'}}>
-            <h3 style={{marginTop: 0}}><strong>Spracheinstellungen</strong></h3>
-            <p style={{marginBottom: 0}}><strong>Sprachausgabe:</strong></p>
-            <SpeechSettings style={{marginBottom: 5}}
-                            selectedVoice={this.props.selectedVoice}
-                            possibleVoices={this.props.possibleVoices}
-                            onSelectedVoiceChange={this.props.setSelectedVoiceByName}/>
-            {this.props.isLoggedIn
-            && this.createUserSettings()
-            }
+            <NavigationBar style={{top: 40, borderTop: "1px solid black", minHeight: 31}}
+                           rightContainer={navContainer} alignCenter small/>
+            <div style={{
+                marginTop: 31,
+                paddingTop: 10,
+                overflowY: "auto",
+                position: "absolute",
+                top: 0,
+                bottom: 0,
+                left: 0,
+                right: 0
+            }}>
+                <Route exact path={NAVIGATION_ITEM.SETTINGS.route} render={() => this.props.isLoggedIn
+                    ? <Redirect to={NAVIGATION_ITEM.SETTINGS_USER.route}/>
+                    : <Redirect to={NAVIGATION_ITEM.SETTINGS_SPEECH.route}/>}/>
+                <Route path={NAVIGATION_ITEM.SETTINGS_SPEECH.route} render={() =>
+                    <SpeechSettings style={{marginBottom: 5}}
+                                    selectedVoice={this.props.selectedVoice}
+                                    defaultVoice={this.props.defaultVoice}
+                                    possibleVoices={this.props.possibleVoices}
+                                    onSelectedVoiceChange={this.props.setSelectedVoiceByName}/>
+                }
+                />
+                <Route path={NAVIGATION_ITEM.SETTINGS_USER.route} render={() =>
+                    <OnlyForLoggedInUsersContainer
+                        text="Benutzereinstellungen können nur von angemeldeten Benutzern angepasst werden">
+                        <UserSettingsContainer/>
+                    </OnlyForLoggedInUsersContainer>
+                }
+                />
+                <Route path={NAVIGATION_ITEM.SETTINGS_PERMISSIONS.route} render={() =>
+                    <OnlyForLoggedInUsersContainer
+                        text="Berechtigungen können nur von angemeldeten Benutzern angepasst werden">
+                        {this.createPermissionSettings()}
+                    </OnlyForLoggedInUsersContainer>
+                }
+                />
+            </div>
         </div>
     }
 
-    createUserSettings() {
+    createPermissionSettings() {
         return <div>
-            <h3 style={{marginTop: 25}}><strong>Spieler-Berechtigungen</strong></h3>
+            <h3 style={{marginTop: 0}}><strong>Spieler-Berechtigungen</strong></h3>
             <div>
                 <p><strong>Hier siehst Du welche Spieler Dir erlaubt haben ein Spiel mit ihnen zu erstellen und
                     kannst einstellen wer dich in einem Spiel auswählen darf.</strong></p>
                 <FormControl style={{marginBottom: 5, width: 300, maxWidth: "95%", display: 'inline'}} type="text"
+                             disabled={this.props.isUpdatingPlayerPermission}
                              value={this.state.userNameToPermit}
                              onChange={(e) => this.handleUserNameToPermitChange(e.target.value)}
                              onKeyDown={ifEnterKey(() => {
@@ -98,8 +146,9 @@ class Settings extends React.Component {
                              placeholder="Spieler berechtigen"/>
                 <Button bsStyle="success" style={{marginLeft: 2}}
                         disabled={this.state.permitButtonDisabled || this.props.isUpdatingPlayerPermission}
-                        onClick={() => this.props.addPlayerPermissionByName(this.state.userNameToPermit)}
-                >Berechtigen</Button>
+                        onClick={() => this.props.addPlayerPermissionByName(this.state.userNameToPermit)}>
+                    Berechtigen
+                </Button>
             </div>
             {this.createAuthorizationTable()}
         </div>

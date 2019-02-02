@@ -22,7 +22,8 @@ const mapStateToProps = state => ({
     isUpdatingPlayerPermission: state.playerPermission.isUpdatingPlayerPermission,
 
     possibleVoices: state.speech.possibleVoices,
-    selectedVoice: state.speech.selectedVoice
+    selectedVoice: state.speech.selectedVoice,
+    defaultVoice: state.speech.defaultVoice
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -13,7 +13,7 @@ import AboutContainer from "../../containers/AboutContainer";
 import SimpleModalContainer from "../../containers/modals/SimpleModalContainer";
 import MainContainer from "../../containers/MainContainer";
 import NotificationsContainer from "../../containers/NotificationsContainer";
-import NavigationBarContainer from "../../containers/NavigationBarContainer";
+import AppNavigationBarContainer from "../../containers/AppNavigationBarContainer";
 
 class App extends React.Component {
 
@@ -65,7 +65,7 @@ class App extends React.Component {
 
     render() {
         return <div style={{height: "100%"}}>
-            <NavigationBarContainer/>
+            <AppNavigationBarContainer/>
             <div ref={this.appContainerRef}
                  style={{
                      position: "absolute",

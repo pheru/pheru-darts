@@ -1,4 +1,4 @@
-import {fetchGet, fetchPost} from "../services/fetchService";
+import {fetchDelete, fetchGet, fetchPost, fetchPut} from "../services/fetchService";
 import {getConfig} from "../services/configService";
 import {fetchPermittedUsers, fetchPlayableUsers} from "./playerPermission";
 import {showError} from "./modal";
@@ -25,6 +25,14 @@ export const LOGOUT_FAILED = 'LOGOUT_FAILED';
 export const REQUEST_SIGNUP = 'REQUEST_SIGNUP';
 export const SIGNUP_SUCCESSFUL = 'SIGNUP_SUCCESSFUL';
 export const SIGNUP_FAILED = 'SIGNUP_FAILED';
+
+export const REQUEST_MODIFY_USER = 'REQUEST_MODIFY_USER';
+export const MODIFY_USER_SUCCESSFUL = 'MODIFY_USER_SUCCESSFUL';
+export const MODIFY_USER_FAILED = 'MODIFY_USER_FAILED';
+
+export const REQUEST_DELETE_USER = 'REQUEST_DELETE_USER';
+export const DELETE_USER_SUCCESSFUL = 'DELETE_USER_SUCCESSFUL';
+export const DELETE_USER_FAILED = 'DELETE_USER_FAILED';
 
 export const showLoginModal = () => ({
     type: SHOW_LOGIN_MODAL
@@ -75,6 +83,26 @@ export const signUpSuccessful = () => ({
 });
 export const signUpFailed = (message) => ({
     type: SIGNUP_FAILED,
+    message
+});
+export const requestModifyUser = () => ({
+    type: REQUEST_MODIFY_USER
+});
+export const modifyUserSuccessful = () => ({
+    type: MODIFY_USER_SUCCESSFUL
+});
+export const modifyUserFailed = (message) => ({
+    type: MODIFY_USER_FAILED,
+    message
+});
+export const requestDeleteUser = () => ({
+    type: REQUEST_DELETE_USER
+});
+export const deleteUserSuccessful = () => ({
+    type: DELETE_USER_SUCCESSFUL
+});
+export const deleteUserFailed = (message) => ({
+    type: DELETE_USER_FAILED,
     message
 });
 
@@ -156,6 +184,48 @@ export function logout() {
             error => {
                 dispatch(logoutFailed());
                 dispatch(showError("Logout failed", error.message));
+            }
+        );
+    };
+}
+
+export function modifyUser(currentPassword, newName, newPassword) {
+    return function (dispatch) {
+        dispatch(requestModifyUser());
+        return fetchPut(getConfig().resourceUrls.user,
+            {currentPassword, newName, newPassword},
+            json => {
+                dispatch(modifyUserSuccessful());
+                dispatch(loginByToken(true));
+            },
+            responseNotOk => {
+                dispatch(modifyUserFailed(responseNotOk.message));
+                defaultErrorHandling(dispatch, responseNotOk, showError("Modify user failed", responseNotOk.message));
+            },
+            error => {
+                dispatch(modifyUserFailed(error.message));
+                dispatch(showError("Modify user failed", error.message));
+            }
+        );
+    };
+}
+
+export function deleteUser(currentPassword) {
+    return function (dispatch) {
+        dispatch(requestDeleteUser());
+        return fetchDelete(getConfig().resourceUrls.user,
+            {currentPassword},
+            json => {
+                dispatch(deleteUserSuccessful());
+                dispatch(logout());
+            },
+            responseNotOk => {
+                dispatch(deleteUserFailed(responseNotOk.message));
+                defaultErrorHandling(dispatch, responseNotOk, showError("Delete user failed", responseNotOk.message));
+            },
+            error => {
+                dispatch(deleteUserFailed(error.message));
+                dispatch(showError("Delete user failed", error.message));
             }
         );
     };

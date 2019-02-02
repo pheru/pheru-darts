@@ -5,14 +5,14 @@ import {
 } from "../actions/serverInformation";
 
 function serverInformation(state = {
-    version: "Lade...",
+    version: undefined,
     isFetchingVersion: false
 }, action) {
     switch (action.type) {
         case REQUEST_SERVER_VERSION:
             return {
                 ...state,
-                version: "Lade...",
+                version: undefined,
                 isFetchingVersion: true
             };
         case FETCH_SERVER_VERSION_SUCCESSFUL:

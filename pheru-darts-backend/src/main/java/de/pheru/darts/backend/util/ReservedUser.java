@@ -2,6 +2,7 @@ package de.pheru.darts.backend.util;
 
 public enum ReservedUser {
 
+    PHERU_DARTS("Pheru-Darts"),
     UNREGISTERED_USERS("Unregistrierte Benutzer"),
     DELETED_USERS("Gelöschte Benutzer");
 
