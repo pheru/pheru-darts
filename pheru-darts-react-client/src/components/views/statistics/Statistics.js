@@ -6,6 +6,9 @@ import PropTypes from "prop-types";
 import StackLoader from "../../general/loaders/StackLoader";
 import DartsRadarChart from "./DartsRadarChart";
 import OnlyForLoggedInUsersContainer from "../../../containers/OnlyForLoggedInUsersContainer";
+import documentUtil from "../../../util/documentUtil";
+
+const TITLE = "Statistiken";
 
 const DART_CHART_TYPE_BAR = "bar";
 const DART_CHART_TYPE_RADAR = "radar";
@@ -29,6 +32,7 @@ class Statistics extends React.Component {
     }
 
     componentDidMount() {
+        documentUtil.setTitlePrefix(TITLE);
         if (this.props.isLoggedIn) {
             this.props.fetchStatistics();
         }
@@ -80,7 +84,7 @@ class Statistics extends React.Component {
 
     createStatisticsView() {
         return <div style={{textAlign: 'center'}}>
-            <h1 style={{marginTop: 0}}><strong>Statistiken</strong></h1>
+            <h1 style={{marginTop: 0}}><strong>{TITLE}</strong></h1>
             <h2><strong>Darts</strong></h2>
             {this.props.dartData.length > 0
                 ? this.createDartsView()

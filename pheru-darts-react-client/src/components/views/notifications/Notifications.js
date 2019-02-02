@@ -4,8 +4,13 @@ import StackLoader from "../../general/loaders/StackLoader";
 import {Badge, Button, Glyphicon, Table, Well} from "react-bootstrap";
 import {toDate, toTime} from "../../../util/dateUtil";
 import OnlyForLoggedInUsersContainer from "../../../containers/OnlyForLoggedInUsersContainer";
+import documentUtil from "../../../util/documentUtil";
 
 class Notifications extends React.Component {
+
+    componentDidMount() {
+        documentUtil.setTitlePrefix("Mitteilungen");
+    }
 
     render() {
         return <OnlyForLoggedInUsersContainer

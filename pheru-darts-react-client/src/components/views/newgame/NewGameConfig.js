@@ -15,6 +15,7 @@ import {NAVIGATION_ITEM} from "../../../constants/navigationItems";
 import DropdownTextfield from "../../general/input/DropdownTextfield";
 import PropTypes from "prop-types";
 import {ALL_CHECKIN_MODES, SINGLE_IN} from "../../../constants/checkinModes";
+import documentUtil from "../../../util/documentUtil";
 
 const SCORE_CHOICES = ["101", "201", "301", "401", "501", "1001"];
 
@@ -50,6 +51,10 @@ class NewGameConfig extends React.Component {
         this.onStartNewGameButtonClicked = this.onStartNewGameButtonClicked.bind(this);
         this.startNewGame = this.startNewGame.bind(this);
         this.playerIconFactory = this.playerIconFactory.bind(this);
+    }
+
+    componentDidMount() {
+        documentUtil.setTitlePrefix(this.props.training ? "Training" : "Neues Spiel");
     }
 
     componentDidUpdate(prevProps) {

@@ -4,6 +4,7 @@ import PlayerContainer from "../../../containers/PlayerContainer";
 import {Button, Col, Dropdown, Glyphicon, Grid, MenuItem, Modal, Row, Well} from "react-bootstrap";
 import PropTypes from "prop-types";
 import {speak} from "../../../services/speechSynthService";
+import documentUtil from "../../../util/documentUtil";
 
 class Game extends React.Component {
 
@@ -28,6 +29,10 @@ class Game extends React.Component {
         };
         this.handleGameFinishedModalClose = this.handleGameFinishedModalClose.bind(this);
         this.handleRematchStartingPlayerChanged = this.handleRematchStartingPlayerChanged.bind(this);
+    }
+
+    componentDidMount() {
+        documentUtil.setTitlePrefix("Aktuelles Spiel");
     }
 
     componentDidUpdate(prevProps) {

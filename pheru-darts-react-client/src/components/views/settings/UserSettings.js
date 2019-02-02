@@ -2,6 +2,9 @@ import React from 'react'
 import {Alert, Button, ControlLabel, FormControl, Glyphicon} from "react-bootstrap";
 import PropTypes from 'prop-types';
 import DeletionConfirmationModal from "../../modals/DeletionConfirmationModal";
+import documentUtil from "../../../util/documentUtil";
+
+const TITLE = "Benutzereinstellungen";
 
 class UserSettings extends React.Component {
 
@@ -22,6 +25,10 @@ class UserSettings extends React.Component {
         this.handlePasswordRepeatChange = this.handlePasswordRepeatChange.bind(this);
         this.saveButtonDisabled = this.saveButtonDisabled.bind(this);
         this.showDeletionConfirmationModal = this.showDeletionConfirmationModal.bind(this);
+    }
+
+    componentDidMount() {
+        documentUtil.setTitlePrefix(TITLE);
     }
 
     handleUserNameChange(value) {
@@ -72,7 +79,7 @@ class UserSettings extends React.Component {
                                        hide={() => this.showDeletionConfirmationModal(false)}
                                        name={this.props.userName} isDeleting={this.props.isDeletingUser}
                                        deleteUser={this.props.deleteUser}/>
-            <h3 style={{marginTop: 0}}><strong>Benutzereinstellungen</strong></h3>
+            <h3 style={{marginTop: 0}}><strong>{TITLE}</strong></h3>
             <ControlLabel>Benutzername ändern</ControlLabel>
             <FormControl type="text"
                          className="user-settings-input"

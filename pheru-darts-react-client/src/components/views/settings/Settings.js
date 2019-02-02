@@ -10,6 +10,7 @@ import NavigationBar, {DropdownConfig, NavigationBarContainer} from "../../gener
 import NavigationBarItem from "../../general/navigationbar/NavigationBarItem";
 import OnlyForLoggedInUsersContainer from "../../../containers/OnlyForLoggedInUsersContainer";
 import UserSettingsContainer from "../../../containers/UserSettingsContainer";
+import documentUtil from "../../../util/documentUtil";
 
 class Settings extends React.Component {
 
@@ -130,8 +131,10 @@ class Settings extends React.Component {
     }
 
     createPermissionSettings() {
+        const TITLE = "Berechtigungen";
+        documentUtil.setTitlePrefix(TITLE);
         return <div>
-            <h3 style={{marginTop: 0}}><strong>Spieler-Berechtigungen</strong></h3>
+            <h3 style={{marginTop: 0}}><strong>{TITLE}</strong></h3>
             <div>
                 <p><strong>Hier siehst Du welche Spieler Dir erlaubt haben ein Spiel mit ihnen zu erstellen und
                     kannst einstellen wer dich in einem Spiel auswählen darf.</strong></p>

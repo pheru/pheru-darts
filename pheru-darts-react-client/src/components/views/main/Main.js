@@ -5,10 +5,15 @@ import {NAVIGATION_ITEM} from "../../../constants/navigationItems";
 import {Badge} from "react-bootstrap";
 import NavigationTile from "./NavigationTile";
 import TileRow from "./TileRow";
+import documentUtil from "../../../util/documentUtil";
 
 const COLUMNS = [{width: 300}];
 
 class Main extends React.Component {
+
+    componentDidMount() {
+        documentUtil.setTitlePrefix("")
+    }
 
     render() {
         return <div style={{height: "100%"}}>
