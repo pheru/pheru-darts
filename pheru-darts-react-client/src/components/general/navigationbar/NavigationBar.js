@@ -28,6 +28,7 @@ class NavigationBar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            lastWidth: -1,
             mergeCount: 0
         };
         this.bar = React.createRef();
@@ -72,8 +73,11 @@ class NavigationBar extends React.Component {
         return count;
     }
 
-    resetMergeCount() {
-        this.setState({mergeCount: 0});
+    resetMergeCount(e) {
+        // Nur bei Änderungen an der Breite, nicht bei der Höhe
+        if (e.target.outerWidth !== this.state.lastWidth) {
+            this.setState({mergeCount: 0, lastWidth: e.target.outerWidth});
+        }
     }
 
     render() {
