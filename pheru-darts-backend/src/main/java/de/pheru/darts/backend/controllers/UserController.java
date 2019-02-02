@@ -2,12 +2,15 @@ package de.pheru.darts.backend.controllers;
 
 import de.pheru.darts.backend.Logger;
 import de.pheru.darts.backend.dtos.user.SignUpDto;
+import de.pheru.darts.backend.dtos.user.UserDeletionDto;
 import de.pheru.darts.backend.dtos.user.UserDto;
 import de.pheru.darts.backend.dtos.user.UserModificationDto;
 import de.pheru.darts.backend.entities.playerpermission.PlayerPermissionEntity;
 import de.pheru.darts.backend.entities.user.UserEntity;
+import de.pheru.darts.backend.exceptions.UnauthorizedException;
 import de.pheru.darts.backend.mappers.EntityMapper;
 import de.pheru.darts.backend.repositories.GameRepository;
+import de.pheru.darts.backend.repositories.NotificationRepository;
 import de.pheru.darts.backend.repositories.PlayerPermissionRepository;
 import de.pheru.darts.backend.repositories.UserRepository;
 import de.pheru.darts.backend.security.SecurityUtil;
@@ -21,20 +24,26 @@ public class UserController {
 
     private static final Logger LOGGER = new Logger();
 
+    public static final String INVALID_CURRENT_PASSWORD = "Invalid current password!";
+    public static final String INVALID_PASSWORD = "Invalid password!";
+
     private final UserRepository userRepository;
     private final PlayerPermissionRepository playerPermissionRepository;
     private final GameRepository gameRepository;
+    private final NotificationRepository notificationRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final UserValidation userValidation;
 
     public UserController(final UserRepository userRepository,
                           final PlayerPermissionRepository playerPermissionRepository,
                           final GameRepository gameRepository,
+                          final NotificationRepository notificationRepository,
                           final BCryptPasswordEncoder bCryptPasswordEncoder,
                           final UserValidation userValidation) {
         this.userRepository = userRepository;
         this.playerPermissionRepository = playerPermissionRepository;
         this.gameRepository = gameRepository;
+        this.notificationRepository = notificationRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.userValidation = userValidation;
     }
@@ -68,9 +77,13 @@ public class UserController {
     public UserDto putUser(@RequestBody final UserModificationDto userModificationDto) {
         final String loggedInUserId = SecurityUtil.getLoggedInUserId();
         final UserEntity userEntity = userRepository.findById(loggedInUserId);
+        if (userModificationDto.getCurrentPassword() == null
+                || !bCryptPasswordEncoder.matches(userModificationDto.getCurrentPassword(), userEntity.getPassword())) {
+            throw new UnauthorizedException(INVALID_CURRENT_PASSWORD);
+        }
 
         final boolean changeName = userModificationDto.getName() != null;
-        final boolean changePassword = userModificationDto.getPassword() != null;
+        final boolean changePassword = userModificationDto.getNewPassword() != null;
 
         if (changeName) {
             userValidation.validateName(userModificationDto.getName());
@@ -78,7 +91,7 @@ public class UserController {
         }
         if (changePassword) {
             userValidation.validatePassword(userModificationDto.getName());
-            userEntity.setPassword(bCryptPasswordEncoder.encode(userModificationDto.getPassword()));
+            userEntity.setPassword(bCryptPasswordEncoder.encode(userModificationDto.getNewPassword()));
         }
 
         final UserEntity savedEntity = userRepository.save(userEntity);
@@ -93,13 +106,19 @@ public class UserController {
     }
 
     @DeleteMapping
-    public void deleteUser() {
+    public void deleteUser(@RequestBody final UserDeletionDto userDeletionDto) {
         final String loggedInUserId = SecurityUtil.getLoggedInUserId();
+        final UserEntity userEntity = userRepository.findById(loggedInUserId);
+        if (userDeletionDto.getPassword() == null
+                || !bCryptPasswordEncoder.matches(userDeletionDto.getPassword(), userEntity.getPassword())) {
+            throw new UnauthorizedException(INVALID_PASSWORD);
+        }
+
         playerPermissionRepository.deleteAllByUserId(loggedInUserId);
         playerPermissionRepository.deleteAllByPermittedUserId(loggedInUserId);
         gameRepository.deleteAllByUserId(loggedInUserId);
+        notificationRepository.deleteAllByUserId(loggedInUserId);
         userRepository.deleteById(loggedInUserId);
         LOGGER.info("User " + loggedInUserId + " deleted.");
     }
-
 }

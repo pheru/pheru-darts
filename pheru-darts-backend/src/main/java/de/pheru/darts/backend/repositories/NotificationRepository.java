@@ -11,4 +11,5 @@ public interface NotificationRepository extends CrudRepository<NotificationEntit
 
     List<NotificationEntity> findAll(final Iterable<String> ids);
 
+    void deleteAllByUserId(final String userId);
 }

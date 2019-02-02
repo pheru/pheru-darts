@@ -1,15 +1,20 @@
 package de.pheru.darts.backend.controllers;
 
 import de.pheru.darts.backend.dtos.user.SignUpDto;
+import de.pheru.darts.backend.dtos.user.UserDeletionDto;
 import de.pheru.darts.backend.dtos.user.UserDto;
 import de.pheru.darts.backend.dtos.user.UserModificationDto;
+import de.pheru.darts.backend.entities.game.GameEntity;
+import de.pheru.darts.backend.entities.notification.NotificationEntity;
 import de.pheru.darts.backend.entities.playerpermission.PlayerPermissionEntity;
 import de.pheru.darts.backend.entities.user.UserEntity;
+import de.pheru.darts.backend.exceptions.UnauthorizedException;
 import de.pheru.darts.backend.exceptions.ValidationException;
 import de.pheru.darts.backend.mocks.validation.MockedUserValidation;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.junit.rules.ExpectedException;
 
 import java.util.List;
 
@@ -18,14 +23,17 @@ import static org.junit.Assert.*;
 public class UserControllerTest extends ControllerTest {
 
     private UserController userController;
-    private BCryptPasswordEncoder passwordEncoder;
+
     private MockedUserValidation userValidation;
+
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
 
     @Before
     public void setUp() {
-        passwordEncoder = new BCryptPasswordEncoder();
         userValidation = new MockedUserValidation();
-        userController = new UserController(userRepository, playerPermissionRepository, gamesRepository, passwordEncoder, userValidation);
+        userController = new UserController(userRepository, playerPermissionRepository,
+                gamesRepository, notificationRepository, passwordEncoder, userValidation);
     }
 
     @Test
@@ -84,6 +92,7 @@ public class UserControllerTest extends ControllerTest {
         // Name
         final UserModificationDto nameModificationDto = new UserModificationDto();
         nameModificationDto.setName("Neuer Name");
+        nameModificationDto.setCurrentPassword(LOGIN_PASSWORD);
         UserDto putUserDto = userController.putUser(nameModificationDto);
 
         assertEquals(nameModificationDto.getName(), putUserDto.getName());
@@ -92,24 +101,54 @@ public class UserControllerTest extends ControllerTest {
 
         // Passwort
         final UserModificationDto pwModificationDto = new UserModificationDto();
-        pwModificationDto.setPassword("Neues Passwort");
+        final String newPassword = "Neues Passwort";
+        pwModificationDto.setNewPassword(newPassword);
+        pwModificationDto.setCurrentPassword(LOGIN_PASSWORD);
         userController.putUser(pwModificationDto);
 
         savedUser = userRepository.findById(loggedInUser.getId());
-        assertNotEquals(pwModificationDto.getPassword(), savedUser.getPassword());
-        assertTrue(passwordEncoder.matches(pwModificationDto.getPassword(), savedUser.getPassword()));
+        assertNotEquals(pwModificationDto.getNewPassword(), savedUser.getPassword());
+        assertTrue(passwordEncoder.matches(pwModificationDto.getNewPassword(), savedUser.getPassword()));
 
         // Name und Passwort
         final UserModificationDto namePwModificationDto = new UserModificationDto();
         namePwModificationDto.setName("Ganz neuer Name");
-        namePwModificationDto.setPassword("Ganz neues Passwort");
+        namePwModificationDto.setNewPassword("Ganz neues Passwort");
+        namePwModificationDto.setCurrentPassword(newPassword);
         putUserDto = userController.putUser(namePwModificationDto);
 
         assertEquals(namePwModificationDto.getName(), putUserDto.getName());
         savedUser = userRepository.findById(loggedInUser.getId());
         assertEquals(namePwModificationDto.getName(), savedUser.getName());
-        assertNotEquals(namePwModificationDto.getPassword(), savedUser.getPassword());
-        assertTrue(passwordEncoder.matches(namePwModificationDto.getPassword(), savedUser.getPassword()));
+        assertNotEquals(namePwModificationDto.getNewPassword(), savedUser.getPassword());
+        assertTrue(passwordEncoder.matches(namePwModificationDto.getNewPassword(), savedUser.getPassword()));
+    }
+
+    @Test
+    public void putUserFailedCurrentPasswordInvalid() {
+        expectedException.expect(UnauthorizedException.class);
+        expectedException.expectMessage(UserController.INVALID_CURRENT_PASSWORD);
+
+        createAndSaveDefaultLoginUser();
+
+        final UserModificationDto nameModificationDto = new UserModificationDto();
+        nameModificationDto.setName("Neuer Name");
+        nameModificationDto.setCurrentPassword("Auf jeden Fall falsch");
+
+        userController.putUser(nameModificationDto);
+    }
+
+    @Test
+    public void putUserFailedCurrentPasswordNull() {
+        expectedException.expect(UnauthorizedException.class);
+        expectedException.expectMessage(UserController.INVALID_CURRENT_PASSWORD);
+
+        createAndSaveDefaultLoginUser();
+
+        final UserModificationDto nameModificationDto = new UserModificationDto();
+        nameModificationDto.setName("Neuer Name");
+
+        userController.putUser(nameModificationDto);
     }
 
     @Test
@@ -119,11 +158,14 @@ public class UserControllerTest extends ControllerTest {
 
         // Kein Name -> Keine Validierung -> Aufruf erfolgreich
         final UserModificationDto modificationDto = new UserModificationDto();
-        modificationDto.setPassword("Was für ein tolles neues Passwort");
+        final String newPassword = "Was für ein tolles neues Passwort";
+        modificationDto.setNewPassword(newPassword);
+        modificationDto.setCurrentPassword(LOGIN_PASSWORD);
         userController.putUser(modificationDto);
 
         // Name -> Validierung -> Aufruf nicht erfolgreich
         modificationDto.setName("Toller neuer Name");
+        modificationDto.setCurrentPassword(newPassword);
         try {
             userController.putUser(modificationDto);
             fail("ValidationException expected");
@@ -142,17 +184,18 @@ public class UserControllerTest extends ControllerTest {
         // Kein Passwort -> Keine Validierung -> Aufruf erfolgreich
         final UserModificationDto modificationDto = new UserModificationDto();
         modificationDto.setName("Was für ein toller neuer Name");
+        modificationDto.setCurrentPassword(LOGIN_PASSWORD);
         userController.putUser(modificationDto);
 
         // Passwort -> Validierung -> Aufruf nicht erfolgreich
-        modificationDto.setPassword("Echt geiles Passwort");
+        modificationDto.setNewPassword("Echt geiles Passwort");
         try {
             userController.putUser(modificationDto);
             fail("ValidationException expected");
         } catch (final ValidationException e) {
             final UserEntity savedUser = userRepository.findById(loggedInUser.getId());
             assertEquals(loggedInUser.getPassword(), savedUser.getPassword());
-            assertNotEquals(modificationDto.getPassword(), savedUser.getPassword());
+            assertNotEquals(modificationDto.getNewPassword(), savedUser.getPassword());
         }
     }
 
@@ -160,17 +203,52 @@ public class UserControllerTest extends ControllerTest {
     public void deleteUser() {
         final UserEntity loggedInUser = createAndSaveDefaultLoginUser();
 
-        assertNotNull(userRepository.findById(loggedInUser.getId()));
-        assertNotNull(playerPermissionRepository.findByUserId(loggedInUser.getId()));
-        assertNotNull(playerPermissionRepository.findByPermittedUserId(loggedInUser.getId()));
-        assertNotNull(gamesRepository.findByUserId(loggedInUser.getId()));
+        final GameEntity gameEntity = new GameEntity();
+        gameEntity.setUserId(LOGIN_ID);
+        gamesRepository.save(gameEntity);
 
-        userController.deleteUser();
+        final NotificationEntity notificationEntity = new NotificationEntity();
+        notificationEntity.setUserId(LOGIN_ID);
+        notificationRepository.save(notificationEntity);
+
+        assertNotNull(userRepository.findById(loggedInUser.getId()));
+        assertFalse(playerPermissionRepository.findByUserId(loggedInUser.getId()).isEmpty());
+        assertFalse(playerPermissionRepository.findByPermittedUserId(loggedInUser.getId()).isEmpty());
+        assertFalse(gamesRepository.findByUserId(loggedInUser.getId()).isEmpty());
+        assertFalse(notificationRepository.findByUserIdOrderByTimestamp(loggedInUser.getId()).isEmpty());
+
+        userController.deleteUser(createUserDeletionDto(LOGIN_PASSWORD));
 
         assertNull(userRepository.findById(loggedInUser.getId()));
         assertTrue(playerPermissionRepository.findByUserId(loggedInUser.getId()).isEmpty());
         assertTrue(playerPermissionRepository.findByPermittedUserId(loggedInUser.getId()).isEmpty());
         assertTrue(gamesRepository.findByUserId(loggedInUser.getId()).isEmpty());
+        assertTrue(notificationRepository.findByUserIdOrderByTimestamp(loggedInUser.getId()).isEmpty());
+    }
+
+    @Test
+    public void deletetUserFailedCurrentPasswordInvalid() {
+        expectedException.expect(UnauthorizedException.class);
+        expectedException.expectMessage(UserController.INVALID_PASSWORD);
+
+        createAndSaveDefaultLoginUser();
+
+        final UserDeletionDto userDeletionDto = new UserDeletionDto();
+        userDeletionDto.setPassword("Das Passwort ist wohl nicht richtig");
+
+        userController.deleteUser(userDeletionDto);
+    }
+
+    @Test
+    public void deletetUserFailedCurrentPasswordNull() {
+        expectedException.expect(UnauthorizedException.class);
+        expectedException.expectMessage(UserController.INVALID_PASSWORD);
+
+        createAndSaveDefaultLoginUser();
+
+        final UserDeletionDto userDeletionDto = new UserDeletionDto();
+
+        userController.deleteUser(userDeletionDto);
     }
 
     private SignUpDto createDefaultSignUpDto() {
@@ -178,6 +256,12 @@ public class UserControllerTest extends ControllerTest {
         user.setName("Name");
         user.setPassword("Password");
         return user;
+    }
+
+    private UserDeletionDto createUserDeletionDto(final String password) {
+        final UserDeletionDto userDeletionDto = new UserDeletionDto();
+        userDeletionDto.setPassword(password);
+        return userDeletionDto;
     }
 
 }

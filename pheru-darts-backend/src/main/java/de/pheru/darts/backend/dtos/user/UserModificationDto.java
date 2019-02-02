@@ -3,7 +3,8 @@ package de.pheru.darts.backend.dtos.user;
 public class UserModificationDto {
 
     private String name;
-    private String password;
+    private String newPassword;
+    private String currentPassword;
 
     public String getName() {
         return name;
@@ -13,11 +14,19 @@ public class UserModificationDto {
         this.name = name;
     }
 
-    public String getPassword() {
-        return password;
+    public String getNewPassword() {
+        return newPassword;
     }
 
-    public void setPassword(final String password) {
-        this.password = password;
+    public void setNewPassword(final String newPassword) {
+        this.newPassword = newPassword;
+    }
+
+    public String getCurrentPassword() {
+        return currentPassword;
+    }
+
+    public void setCurrentPassword(final String currentPassword) {
+        this.currentPassword = currentPassword;
     }
 }
