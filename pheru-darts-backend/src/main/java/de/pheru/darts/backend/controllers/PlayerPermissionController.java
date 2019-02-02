@@ -6,6 +6,7 @@ import de.pheru.darts.backend.dtos.user.UserDto;
 import de.pheru.darts.backend.entities.notification.NotificationTemplates;
 import de.pheru.darts.backend.entities.playerpermission.PlayerPermissionEntity;
 import de.pheru.darts.backend.entities.user.UserEntity;
+import de.pheru.darts.backend.exceptions.BadRequestException;
 import de.pheru.darts.backend.exceptions.PermissionAlreadyGrantedException;
 import de.pheru.darts.backend.exceptions.UserNotFoundException;
 import de.pheru.darts.backend.mappers.EntityMapper;
@@ -76,12 +77,14 @@ public class PlayerPermissionController {
                 LOGGER.warn("User to permit not found: idToPermit=" + id);
                 throw new UserNotFoundException("User not found");
             }
-        } else {
+        } else if (username != null && !username.isEmpty()){
             userToPermit = userRepository.findByName(username);
             if (userToPermit == null) {
                 LOGGER.info("User to permit not found: username=" + username);
                 throw new UserNotFoundException("User not found");
             }
+        }else {
+            throw new BadRequestException("No id or user to permit provided");
         }
         return userToPermit;
     }

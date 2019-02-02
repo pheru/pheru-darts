@@ -6,6 +6,7 @@ import de.pheru.darts.backend.entities.notification.NotificationEntity;
 import de.pheru.darts.backend.entities.notification.NotificationType;
 import de.pheru.darts.backend.entities.playerpermission.PlayerPermissionEntity;
 import de.pheru.darts.backend.entities.user.UserEntity;
+import de.pheru.darts.backend.exceptions.BadRequestException;
 import de.pheru.darts.backend.exceptions.PermissionAlreadyGrantedException;
 import de.pheru.darts.backend.exceptions.UserNotFoundException;
 import org.junit.Before;
@@ -50,6 +51,18 @@ public class PlayerPermissionControllerTest extends ControllerTest {
         assertEquals(NotificationType.PLAYERPERMISSION_GRANTED, allNotificationsAfterSave.get(0).getNotificationType());
         assertEquals(savedUser.getId(), allNotificationsAfterSave.get(0).getUserId());
         assertTrue(allNotificationsAfterSave.get(0).getMessage().contains(LOGIN_NAME));
+    }
+
+    @Test(expected = BadRequestException.class)
+    public void postWithoutAnything() {
+        playerPermissionController.post(new PlayerPermissionModificationDto());
+    }
+
+    @Test(expected = BadRequestException.class)
+    public void postWithIdAndNameEmpty() {
+        final PlayerPermissionModificationDto modificationDto = createModificationDtoWithId("");
+        modificationDto.setPermittedUsername("");
+        playerPermissionController.post(modificationDto);
     }
 
     @Test
