@@ -75,8 +75,8 @@ class NavigationBar extends React.Component {
 
     resetMergeCount(e) {
         // Nur bei Änderungen an der Breite, nicht bei der Höhe
-        if (e.target.outerWidth !== this.state.lastWidth) {
-            this.setState({mergeCount: 0, lastWidth: e.target.outerWidth});
+        if (e.target.innerWidth !== this.state.lastWidth) {
+            this.setState({mergeCount: 0, lastWidth: e.target.innerWidth});
         }
     }
 
