@@ -1,0 +1,11 @@
+.modal-bottom {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 10%;
+}
+
+/* Um den border zu korrigieren*/
+.modal-footer {
+    margin-right: 1px;
+}

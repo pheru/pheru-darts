@@ -1,0 +1,30 @@
+.player {
+    color: black;
+    background-color: #bfcecc;
+    border-radius: 6px;
+    padding: 0;
+    border: 4px solid transparent;
+    margin: 0;
+}
+
+.player-current {
+    background-color: white;
+    border-radius: 6px;
+    margin: 0;
+    border: 4px solid #2196f3;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    transition:all 0.5s ease-in-out;
+    animation:player-current-keyframes normal 1.5s infinite ease-in-out;
+}
+
+@keyframes player-current-keyframes {
+    0% {
+        border-color: rgba(33, 150, 243, 1)
+    }
+    50% {
+        border-color: rgba(33, 150, 243, 0.3)
+    }
+    100% {
+        border-color: rgba(33, 150, 243, 1)
+    }
+}
