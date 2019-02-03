@@ -23,12 +23,13 @@ public class MockedGameRepository extends MockedRepository implements GameReposi
     }
 
     @Override
-    public void deleteAllByUserId(final String userId) {
+    public List<GameEntity> deleteAllByUserId(final String userId) {
         for (final GameEntity game : new ArrayList<>(games)) {
             if (game.getUserId().equals(userId)) {
                 games.remove(game);
             }
         }
+        return null;
     }
 
     @Override

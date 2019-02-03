@@ -45,21 +45,23 @@ public class MockedPlayerPermissionRepository implements PlayerPermissionReposit
     }
 
     @Override
-    public void deleteAllByUserId(final String userId) {
+    public List<PlayerPermissionEntity> deleteAllByUserId(final String userId) {
         for (final PlayerPermissionEntity savedEntity : new ArrayList<>(playerPermissions)) {
             if(savedEntity.getUserId().equals(userId)){
                 playerPermissions.remove(savedEntity);
             }
         }
+        return null;
     }
 
     @Override
-    public void deleteAllByPermittedUserId(final String permittedUserId) {
+    public List<PlayerPermissionEntity> deleteAllByPermittedUserId(final String permittedUserId) {
         for (final PlayerPermissionEntity savedEntity : new ArrayList<>(playerPermissions)) {
             if(savedEntity.getPermittedUserId().equals(permittedUserId)){
                 playerPermissions.remove(savedEntity);
             }
         }
+        return null;
     }
 
     @Override
