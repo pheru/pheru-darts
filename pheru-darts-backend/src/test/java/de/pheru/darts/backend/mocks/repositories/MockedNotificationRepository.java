@@ -36,12 +36,13 @@ public class MockedNotificationRepository extends MockedRepository implements No
     }
 
     @Override
-    public void deleteAllByUserId(final String userId) {
+    public List<NotificationEntity> deleteAllByUserId(final String userId) {
         for (final NotificationEntity notification : new ArrayList<>(notifications)) {
             if (notification.getUserId().equals(userId)) {
                 notifications.remove(notification);
             }
         }
+        return null;
     }
 
     @Override

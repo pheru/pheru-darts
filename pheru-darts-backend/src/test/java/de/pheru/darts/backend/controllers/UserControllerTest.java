@@ -8,7 +8,7 @@ import de.pheru.darts.backend.entities.game.GameEntity;
 import de.pheru.darts.backend.entities.notification.NotificationEntity;
 import de.pheru.darts.backend.entities.playerpermission.PlayerPermissionEntity;
 import de.pheru.darts.backend.entities.user.UserEntity;
-import de.pheru.darts.backend.exceptions.UnauthorizedException;
+import de.pheru.darts.backend.exceptions.FailedPasswordConfirmationException;
 import de.pheru.darts.backend.exceptions.ValidationException;
 import de.pheru.darts.backend.mocks.validation.MockedUserValidation;
 import org.junit.Before;
@@ -126,7 +126,7 @@ public class UserControllerTest extends ControllerTest {
 
     @Test
     public void putUserFailedCurrentPasswordInvalid() {
-        expectedException.expect(UnauthorizedException.class);
+        expectedException.expect(FailedPasswordConfirmationException.class);
         expectedException.expectMessage(UserController.INVALID_CURRENT_PASSWORD);
 
         createAndSaveDefaultLoginUser();
@@ -140,7 +140,7 @@ public class UserControllerTest extends ControllerTest {
 
     @Test
     public void putUserFailedCurrentPasswordNull() {
-        expectedException.expect(UnauthorizedException.class);
+        expectedException.expect(FailedPasswordConfirmationException.class);
         expectedException.expectMessage(UserController.INVALID_CURRENT_PASSWORD);
 
         createAndSaveDefaultLoginUser();
@@ -229,7 +229,7 @@ public class UserControllerTest extends ControllerTest {
 
     @Test
     public void deletetUserFailedCurrentPasswordInvalid() {
-        expectedException.expect(UnauthorizedException.class);
+        expectedException.expect(FailedPasswordConfirmationException.class);
         expectedException.expectMessage(UserController.INVALID_CURRENT_PASSWORD);
 
         createAndSaveDefaultLoginUser();
@@ -242,7 +242,7 @@ public class UserControllerTest extends ControllerTest {
 
     @Test
     public void deletetUserFailedCurrentPasswordNull() {
-        expectedException.expect(UnauthorizedException.class);
+        expectedException.expect(FailedPasswordConfirmationException.class);
         expectedException.expectMessage(UserController.INVALID_CURRENT_PASSWORD);
 
         createAndSaveDefaultLoginUser();

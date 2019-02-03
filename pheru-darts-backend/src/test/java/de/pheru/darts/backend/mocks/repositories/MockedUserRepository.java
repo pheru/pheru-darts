@@ -44,12 +44,13 @@ public class MockedUserRepository extends MockedRepository implements UserReposi
     }
 
     @Override
-    public void deleteById(final String id) {
+    public UserEntity deleteById(final String id) {
         for (final UserEntity savedEntity : new ArrayList<>(users)) {
             if (savedEntity.getId().equals(id)) {
                 users.remove(savedEntity);
             }
         }
+        return null;
     }
 
     @Override
