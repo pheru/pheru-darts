@@ -1,19 +1,19 @@
 import React from 'react'
 import {Route, Switch} from "react-router-dom";
-import NewGameConfigContainer from "../../containers/NewGameConfigContainer";
-import GameContainer from "../../containers/GameContainer";
+import NewGameConfigContainer from "../../containers/views/newgame/NewGameConfigContainer";
+import GameContainer from "../../containers/views/game/GameContainer";
 import {NAVIGATION_ITEM} from "../../constants/navigationItems";
-import {localStorageService} from "../../services/storageService";
-import StatisticsContainer from "../../containers/StatisticsContainer";
-import SettingsContainer from "../../containers/SettingsContainer";
+import {LocalStorageUtil} from "../../util/StorageUtil";
+import StatisticsContainer from "../../containers/views/statistics/StatisticsContainer";
+import SettingsContainer from "../../containers/views/settings/SettingsContainer";
 import LoginModalContainer from "../../containers/modals/LoginModalContainer";
 import SignUpModalContainer from "../../containers/modals/SignUpModalContainer";
 import PropTypes from 'prop-types';
-import AboutContainer from "../../containers/AboutContainer";
+import AboutContainer from "../../containers/views/about/AboutContainer";
 import SimpleModalContainer from "../../containers/modals/SimpleModalContainer";
-import MainContainer from "../../containers/MainContainer";
-import NotificationsContainer from "../../containers/NotificationsContainer";
-import AppNavigationBarContainer from "../../containers/AppNavigationBarContainer";
+import MainContainer from "../../containers/views/main/MainContainer";
+import NotificationsContainer from "../../containers/views/notifications/NotificationsContainer";
+import AppNavigationBarContainer from "../../containers/app/AppNavigationBarContainer";
 
 class App extends React.Component {
 
@@ -29,12 +29,12 @@ class App extends React.Component {
         window.onbeforeunload = this.onBeforeUnload;
 
         this.props.setPossibleVoices(window.speechSynthesis.getVoices());
-        this.props.setSelectedVoiceByName(localStorageService.getSelectedVoiceName());
+        this.props.setSelectedVoiceByName(LocalStorageUtil.getSelectedVoiceName());
         if (speechSynthesis.onvoiceschanged !== undefined) {
             speechSynthesis.onvoiceschanged = () => {
                 this.props.setPossibleVoices(window.speechSynthesis.getVoices());
                 if (this.props.selectedVoice === undefined) {
-                    this.props.setSelectedVoiceByName(localStorageService.getSelectedVoiceName());
+                    this.props.setSelectedVoiceByName(LocalStorageUtil.getSelectedVoiceName());
                 }
             };
         }
@@ -43,7 +43,7 @@ class App extends React.Component {
 
     onUnload(e) {
         if (this.props.selectedVoice) {
-            localStorageService.setSelectedVoiceName(this.props.selectedVoice.name);
+            LocalStorageUtil.setSelectedVoiceName(this.props.selectedVoice.name);
         }
     }
 

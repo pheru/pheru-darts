@@ -2,7 +2,7 @@ import React from 'react'
 import {Badge, Button, Glyphicon} from "react-bootstrap";
 import {NAVIGATION_ITEM} from "../../constants/navigationItems";
 import {Link} from "react-router-dom";
-import FullscreenButton from "./FullscreenButton";
+import FullscreenButton from "../general/FullscreenButton";
 import PropTypes from "prop-types";
 import NavbarLoginLoader from "../general/loaders/NavbarLoginLoader";
 import NavigationBarItem from "../general/navigationbar/NavigationBarItem";

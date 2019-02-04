@@ -1,7 +1,7 @@
-import {getConfig} from "../services/configService";
-import {fetchGet} from "../services/fetchService";
+import ConfigUtil from "../util/ConfigUtil";
+import FetchUtil from "../util/FetchUtil";
 import {showError} from "./modal";
-import {defaultErrorHandling} from "../util/actionUtil";
+import ActionUtil from "../util/ActionUtil";
 
 export const REQUEST_FETCH_STATISTICS = 'REQUEST_FETCH_STATISTICS';
 export const FETCH_STATISTICS_SUCCESSFUL = 'FETCH_STATISTICS_SUCCESSFUL';
@@ -22,11 +22,11 @@ export const fetchStatisticsFailed = (message) => ({
 export function fetchStatistics() {
     return function (dispatch) {
         dispatch(requestFetchStatistics());
-        return fetchGet(getConfig().resourceUrls.statistic,
+        return FetchUtil.fetchGet(ConfigUtil.getConfig().resourceUrls.statistic,
             json => dispatch(fetchStatisticsSuccessful(json)),
             responseNotOk => {
                 dispatch(fetchStatisticsFailed(responseNotOk.message));
-                defaultErrorHandling(dispatch, responseNotOk, showError("Failed to fetch statistics", responseNotOk.message));
+                ActionUtil.defaultErrorHandling(dispatch, responseNotOk, showError("Failed to fetch statistics", responseNotOk.message));
             },
             error => {
                 dispatch(fetchStatisticsFailed(error.message));

@@ -1,7 +1,7 @@
 import React from 'react'
 import {Button, Glyphicon, Modal} from "react-bootstrap";
 import PropTypes from 'prop-types';
-import {ifEnterKey, ifEscKey} from "../../util/functionUtil";
+import KeyUtil from "../../util/KeyUtil";
 
 export const TYPE_INFORMATION = "TYPE_INFORMATION";
 export const TYPE_WARNING = "TYPE_WARNING";
@@ -36,9 +36,9 @@ class SimpleModal extends React.Component {
             if (this.props.item.modalType === TYPE_INFORMATION
                 || this.props.item.modalType === TYPE_WARNING
                 || this.props.item.modalType === TYPE_ERROR) {
-                ifEnterKey(this.props.hide)(target);
+                KeyUtil.ifEnterKey(this.props.hide)(target);
             }
-            ifEscKey(this.props.hide)(target);
+            KeyUtil.ifEscKey(this.props.hide)(target);
         }}>
             <Modal.Body style={{paddingTop: 0, paddingBottom: 0}}>
                 <h3>

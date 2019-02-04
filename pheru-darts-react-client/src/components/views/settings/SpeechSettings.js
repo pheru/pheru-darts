@@ -1,14 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types';
 import {Alert, FormControl} from "react-bootstrap";
-import documentUtil from "../../../util/documentUtil";
+import DocumentUtil from "../../../util/DocumentUtil";
 
 const TITLE = "Spracheinstellungen";
 
 class SpeechSettings extends React.Component {
 
     componentDidMount() {
-        documentUtil.setTitlePrefix(TITLE);
+        DocumentUtil.setTitlePrefix(TITLE);
     }
 
     render() {

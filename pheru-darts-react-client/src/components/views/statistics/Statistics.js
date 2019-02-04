@@ -5,8 +5,8 @@ import DartsBarChart from "./DartsBarChart";
 import PropTypes from "prop-types";
 import StackLoader from "../../general/loaders/StackLoader";
 import DartsRadarChart from "./DartsRadarChart";
-import OnlyForLoggedInUsersContainer from "../../../containers/OnlyForLoggedInUsersContainer";
-import documentUtil from "../../../util/documentUtil";
+import OnlyForLoggedInUsersContainer from "../../../containers/general/OnlyForLoggedInUsersContainer";
+import DocumentUtil from "../../../util/DocumentUtil";
 
 const TITLE = "Statistiken";
 
@@ -32,7 +32,7 @@ class Statistics extends React.Component {
     }
 
     componentDidMount() {
-        documentUtil.setTitlePrefix(TITLE);
+        DocumentUtil.setTitlePrefix(TITLE);
         if (this.props.isLoggedIn) {
             this.props.fetchStatistics();
         }

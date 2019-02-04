@@ -4,11 +4,13 @@ const PRODUCTION_HOST = "https://darts.pheru.de";
 const DEV_PROTOCOL = "https:";
 const DEV_PORT = "8443";
 
-export function getConfig() {
-    if (window.location.hostname === PRODUCTION_CLIENT_HOSTNAME) {
-        return configForHost(PRODUCTION_HOST);
-    } else {
-        return configForHost(devHostForHostname(window.location.hostname));
+class ConfigUtil {
+    static getConfig() {
+        if (window.location.hostname === PRODUCTION_CLIENT_HOSTNAME) {
+            return configForHost(PRODUCTION_HOST);
+        } else {
+            return configForHost(devHostForHostname(window.location.hostname));
+        }
     }
 }
 
@@ -30,3 +32,5 @@ function configForHost(host) {
         logoutUrl: host + "/logout"
     };
 }
+
+export default ConfigUtil;

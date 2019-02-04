@@ -2,14 +2,14 @@ import React from 'react'
 import PropTypes from "prop-types";
 import StackLoader from "../../general/loaders/StackLoader";
 import {Badge, Button, Glyphicon, Table, Well} from "react-bootstrap";
-import {toDate, toTime} from "../../../util/dateUtil";
-import OnlyForLoggedInUsersContainer from "../../../containers/OnlyForLoggedInUsersContainer";
-import documentUtil from "../../../util/documentUtil";
+import DateUtil from "../../../util/DateUtil";
+import OnlyForLoggedInUsersContainer from "../../../containers/general/OnlyForLoggedInUsersContainer";
+import DocumentUtil from "../../../util/DocumentUtil";
 
 class Notifications extends React.Component {
 
     componentDidMount() {
-        documentUtil.setTitlePrefix("Mitteilungen");
+        DocumentUtil.setTitlePrefix("Mitteilungen");
     }
 
     render() {
@@ -44,11 +44,11 @@ class Notifications extends React.Component {
                                 verticalAlign: "middle",
                                 textAlign: "center"
                             }}>
-                                {toDate(new Date(notification.timestamp), {
+                                {DateUtil.toDate(new Date(notification.timestamp), {
                                     replaceToday: true, replaceYesterday: true
                                 })}
                                 <br/>
-                                {toTime(new Date(notification.timestamp))}
+                                {DateUtil.toTime(new Date(notification.timestamp))}
                                 <br/>
                                 {!notification.read &&
                                 <Badge style={{backgroundColor: "#337ab7"}}>Neu</Badge>

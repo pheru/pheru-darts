@@ -1,6 +1,6 @@
 import {connect} from 'react-redux'
-import Main from "../components/views/main/Main";
-import {logout, showLoginModal} from "../actions/user";
+import Main from "../../../components/views/main/Main";
+import {logout, showLoginModal} from "../../../actions/user";
 
 const mapStateToProps = state => ({
     isLoggedIn: state.user.isLoggedIn,

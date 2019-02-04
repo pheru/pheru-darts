@@ -2,7 +2,7 @@ import React from 'react'
 import {Alert, Button, ControlLabel, FormControl, Glyphicon} from "react-bootstrap";
 import PropTypes from 'prop-types';
 import DeletionConfirmationModal from "../../modals/DeletionConfirmationModal";
-import documentUtil from "../../../util/documentUtil";
+import DocumentUtil from "../../../util/DocumentUtil";
 
 const TITLE = "Benutzereinstellungen";
 
@@ -28,7 +28,7 @@ class UserSettings extends React.Component {
     }
 
     componentDidMount() {
-        documentUtil.setTitlePrefix(TITLE);
+        DocumentUtil.setTitlePrefix(TITLE);
     }
 
     handleUserNameChange(value) {

@@ -1,6 +1,6 @@
 import {connect} from 'react-redux'
-import {deleteUser, modifyUser} from "../actions/user";
-import UserSettings from "../components/views/settings/UserSettings";
+import {deleteUser, modifyUser} from "../../../actions/user";
+import UserSettings from "../../../components/views/settings/UserSettings";
 
 const mapStateToProps = state => ({
     userName: state.user.name,

@@ -1,7 +1,7 @@
 import React from 'react'
 import {Button, FormControl, Modal} from "react-bootstrap";
 import PropTypes from 'prop-types';
-import {ifEnterKey} from "../../util/functionUtil";
+import KeyUtil from "../../util/KeyUtil";
 
 const initialState = {
     name: "",
@@ -41,7 +41,7 @@ class LoginModal extends React.Component {
                 <Modal.Title style={{marginBottom: 10}}>Anmelden</Modal.Title>
                 <FormControl style={{marginBottom: 5}} type="text" value={this.state.name}
                              onChange={(e) => this.handleNameChange(e.target.value)}
-                             onKeyDown={ifEnterKey(() => {
+                             onKeyDown={KeyUtil.ifEnterKey(() => {
                                  if (!this.isLoginDisabled()) {
                                      this.doLogin();
                                  }
@@ -49,7 +49,7 @@ class LoginModal extends React.Component {
                              placeholder="Benutzername" autoFocus/>
                 <FormControl type="password" value={this.state.password}
                              onChange={(e) => this.handlePasswordChange(e.target.value)}
-                             onKeyDown={ifEnterKey(() => {
+                             onKeyDown={KeyUtil.ifEnterKey(() => {
                                  if (!this.isLoginDisabled()) {
                                      this.doLogin();
                                  }

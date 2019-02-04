@@ -1,9 +1,4 @@
-import {
-    sortDartDataByScoreBoardOrder,
-    sortDartDataByScoreDesc,
-    sortGameDataByOpponentAsc,
-    sortPlayerByNameAsc
-} from "../../services/sortService";
+import SortUtil from "../../util/SortUtil";
 
 describe('sortService', () => {
 
@@ -17,7 +12,7 @@ describe('sortService', () => {
             createPlayer("Adam")
         ];
 
-        players.sort(sortPlayerByNameAsc);
+        players.sort(SortUtil.sortPlayerByNameAsc);
 
         expect(players[0].name).toEqual("Adam");
         expect(players[1].name).toEqual("Chris");
@@ -38,7 +33,7 @@ describe('sortService', () => {
             createDartData("12")
         ];
 
-        dartData.sort(sortDartDataByScoreDesc);
+        dartData.sort(SortUtil.sortDartDataByScoreDesc);
 
         expect(dartData[0].score).toEqual("25");
         expect(dartData[1].score).toEqual("20");
@@ -55,7 +50,7 @@ describe('sortService', () => {
             dartData.push(createDartData("" + i));
         }
 
-        dartData.sort(sortDartDataByScoreBoardOrder);
+        dartData.sort(SortUtil.sortDartDataByScoreBoardOrder);
 
         expect(dartData[0].score).toEqual("20");
         expect(dartData[1].score).toEqual("1");
@@ -88,7 +83,7 @@ describe('sortService', () => {
             createGameData("Noch ein Adelbert")
         ];
 
-        gameData.sort(sortGameDataByOpponentAsc);
+        gameData.sort(SortUtil.sortGameDataByOpponentAsc);
 
         expect(gameData[0].opponent).toEqual("Adelbert");
         expect(gameData[1].opponent).toEqual("Adelbert II");

@@ -1,7 +1,8 @@
-let documentUtil = {
-    setTitlePrefix(titlePrefix) {
+class DocumentUtil {
+    static setTitlePrefix(titlePrefix) {
         let prefix = titlePrefix ? titlePrefix + " - " : "";
         document.title = prefix + "Pheru-Darts";
     }
-};
-export default documentUtil;
+}
+
+export default DocumentUtil;

@@ -1,8 +1,8 @@
-import {fetchDelete, fetchGet, fetchPost, fetchPut} from "../services/fetchService";
-import {getConfig} from "../services/configService";
+import FetchUtil from "../util/FetchUtil";
+import ConfigUtil from "../util/ConfigUtil";
 import {fetchPermittedUsers, fetchPlayableUsers} from "./playerPermission";
 import {showError} from "./modal";
-import {defaultErrorHandling} from "../util/actionUtil";
+import ActionUtil from "../util/ActionUtil";
 import {fetchNotifications} from "./notifications";
 
 export const SHOW_LOGIN_MODAL = "SHOW_LOGIN_MODAL";
@@ -109,7 +109,7 @@ export const deleteUserFailed = (message) => ({
 export function signUp(name, password) {
     return function (dispatch) {
         dispatch(requestSignUp());
-        return fetchPost(getConfig().resourceUrls.user,
+        return FetchUtil.fetchPost(ConfigUtil.getConfig().resourceUrls.user,
             {name, password},
             json => {
                 dispatch(signUpSuccessful());
@@ -117,7 +117,7 @@ export function signUp(name, password) {
             },
             responseNotOk => {
                 dispatch(signUpFailed(responseNotOk.message));
-                defaultErrorHandling(dispatch, responseNotOk, showError("Sign-up failed", responseNotOk.message));
+                ActionUtil.defaultErrorHandling(dispatch, responseNotOk, showError("Sign-up failed", responseNotOk.message));
             },
             error => {
                 dispatch(signUpFailed(error.message));
@@ -130,7 +130,7 @@ export function signUp(name, password) {
 export function login(name, password) {
     return function (dispatch) {
         dispatch(requestLogin());
-        return fetchPost(getConfig().loginUrl,
+        return FetchUtil.fetchPost(ConfigUtil.getConfig().loginUrl,
             {name, password},
             json => {
                 dispatch(loginSuccessful());
@@ -138,7 +138,7 @@ export function login(name, password) {
             },
             responseNotOk => {
                 dispatch(loginFailed(responseNotOk.message));
-                defaultErrorHandling(dispatch, responseNotOk, showError("Login failed", responseNotOk.message));
+                ActionUtil.defaultErrorHandling(dispatch, responseNotOk, showError("Login failed", responseNotOk.message));
             },
             error => {
                 dispatch(loginFailed(error.message));
@@ -151,7 +151,7 @@ export function login(name, password) {
 export function loginByToken(showErrorOnFailure) {
     return function (dispatch) {
         dispatch(requestLoginByToken());
-        return fetchGet(getConfig().resourceUrls.user,
+        return FetchUtil.fetchGet(ConfigUtil.getConfig().resourceUrls.user,
             json => {
                 dispatch(loginByTokenSuccessful(json));
                 dispatch(fetchPlayableUsers());
@@ -161,7 +161,7 @@ export function loginByToken(showErrorOnFailure) {
             responseNotOk => {
                 dispatch(loginByTokenFailed());
                 if (showErrorOnFailure) {
-                    defaultErrorHandling(dispatch, responseNotOk, showError("Login by token failed", responseNotOk.message));
+                    ActionUtil.defaultErrorHandling(dispatch, responseNotOk, showError("Login by token failed", responseNotOk.message));
                 }
             },
             error => {
@@ -175,11 +175,11 @@ export function loginByToken(showErrorOnFailure) {
 export function logout() {
     return function (dispatch) {
         dispatch(requestLogout());
-        return fetchGet(getConfig().logoutUrl,
+        return FetchUtil.fetchGet(ConfigUtil.getConfig().logoutUrl,
             json => dispatch(logoutSuccessful()),
             responseNotOk => {
                 dispatch(logoutFailed());
-                defaultErrorHandling(dispatch, responseNotOk, showError("Logout failed", responseNotOk.message));
+                ActionUtil.defaultErrorHandling(dispatch, responseNotOk, showError("Logout failed", responseNotOk.message));
             },
             error => {
                 dispatch(logoutFailed());
@@ -192,7 +192,7 @@ export function logout() {
 export function modifyUser(currentPassword, newName, newPassword) {
     return function (dispatch) {
         dispatch(requestModifyUser());
-        return fetchPut(getConfig().resourceUrls.user,
+        return FetchUtil.fetchPut(ConfigUtil.getConfig().resourceUrls.user,
             {currentPassword, newName, newPassword},
             json => {
                 dispatch(modifyUserSuccessful());
@@ -200,7 +200,7 @@ export function modifyUser(currentPassword, newName, newPassword) {
             },
             responseNotOk => {
                 dispatch(modifyUserFailed(responseNotOk.message));
-                defaultErrorHandling(dispatch, responseNotOk, showError("Modify user failed", responseNotOk.message));
+                ActionUtil.defaultErrorHandling(dispatch, responseNotOk, showError("Modify user failed", responseNotOk.message));
             },
             error => {
                 dispatch(modifyUserFailed(error.message));
@@ -213,7 +213,7 @@ export function modifyUser(currentPassword, newName, newPassword) {
 export function deleteUser(currentPassword) {
     return function (dispatch) {
         dispatch(requestDeleteUser());
-        return fetchDelete(getConfig().resourceUrls.user,
+        return FetchUtil.fetchDelete(ConfigUtil.getConfig().resourceUrls.user,
             {currentPassword},
             json => {
                 dispatch(deleteUserSuccessful());
@@ -221,7 +221,7 @@ export function deleteUser(currentPassword) {
             },
             responseNotOk => {
                 dispatch(deleteUserFailed(responseNotOk.message));
-                defaultErrorHandling(dispatch, responseNotOk, showError("Delete user failed", responseNotOk.message));
+                ActionUtil.defaultErrorHandling(dispatch, responseNotOk, showError("Delete user failed", responseNotOk.message));
             },
             error => {
                 dispatch(deleteUserFailed(error.message));

@@ -1,11 +1,11 @@
 import {connect} from 'react-redux'
-import App from "../components/app/App";
+import App from "../../components/app/App";
 import {withRouter} from "react-router-dom";
-import {loginByToken, logout, showLoginModal} from "../actions/user";
-import {fetchPermittedUsers, fetchPlayableUsers} from "../actions/playerPermission";
-import {showConfirmation} from "../actions/modal";
-import {exitGame} from "../actions/game";
-import {setPossibleVoices, setSelectedVoiceByName} from "../actions/speech";
+import {loginByToken, logout, showLoginModal} from "../../actions/user";
+import {fetchPermittedUsers, fetchPlayableUsers} from "../../actions/playerPermission";
+import {showConfirmation} from "../../actions/modal";
+import {exitGame} from "../../actions/game";
+import {setPossibleVoices, setSelectedVoiceByName} from "../../actions/speech";
 
 const mapStateToProps = state => ({
     userName: state.user.name,

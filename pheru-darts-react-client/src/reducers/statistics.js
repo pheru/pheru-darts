@@ -1,5 +1,5 @@
 import {FETCH_STATISTICS_FAILED, FETCH_STATISTICS_SUCCESSFUL, REQUEST_FETCH_STATISTICS} from "../actions/statistics";
-import {sortDartDataByScoreDesc, sortGameDataByOpponentAsc} from "../services/sortService";
+import SortUtil from "../util/SortUtil";
 
 function statistics(state = {
     isFetching: false,
@@ -31,7 +31,7 @@ function statistics(state = {
                     });
                 }
             }
-            dartData.sort(sortDartDataByScoreDesc);
+            dartData.sort(SortUtil.sortDartDataByScoreDesc);
 
             let gamesData = [];
             let games = action.data.games.countsPerPlayer;
@@ -44,7 +44,7 @@ function statistics(state = {
                     });
                 }
             }
-            gamesData.sort(sortGameDataByOpponentAsc);
+            gamesData.sort(SortUtil.sortGameDataByOpponentAsc);
             return {
                 ...state,
                 isFetching: false,

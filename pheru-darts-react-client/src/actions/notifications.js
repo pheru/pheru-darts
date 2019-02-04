@@ -1,7 +1,7 @@
-import {getConfig} from "../services/configService";
-import {fetchGet, fetchPut} from "../services/fetchService";
+import ConfigUtil from "../util/ConfigUtil";
+import FetchUtil from "../util/FetchUtil";
 import {showError} from "./modal";
-import {defaultErrorHandling} from "../util/actionUtil";
+import ActionUtil from "../util/ActionUtil";
 
 export const REQUEST_FETCH_NOTIFICATIONS = 'REQUEST_FETCH_NOTIFICATIONS';
 export const FETCH_NOTIFICATIONS_SUCCESSFUL = 'FETCH_NOTIFICATIONS_SUCCESSFUL';
@@ -39,11 +39,11 @@ export const markNotificationsAsReadFailed = (message) => ({
 export function fetchNotifications() {
     return function (dispatch) {
         dispatch(requestFetchNotifications());
-        return fetchGet(getConfig().resourceUrls.notification,
+        return FetchUtil.fetchGet(ConfigUtil.getConfig().resourceUrls.notification,
             json => dispatch(fetchNotificationsSuccessful(json)),
             responseNotOk => {
                 dispatch(fetchNotificationsFailed(responseNotOk.message));
-                defaultErrorHandling(dispatch, responseNotOk, showError("Failed to fetch notifications", responseNotOk.message));
+                ActionUtil.defaultErrorHandling(dispatch, responseNotOk, showError("Failed to fetch notifications", responseNotOk.message));
             },
             error => {
                 dispatch(fetchNotificationsFailed(error.message));
@@ -56,7 +56,7 @@ export function fetchNotifications() {
 export function markNotificationsAsRead(notificationIds) {
     return function (dispatch) {
         dispatch(requestMarkNotificationsAsRead(notificationIds));
-        return fetchPut(getConfig().resourceUrls.notification,
+        return FetchUtil.fetchPut(ConfigUtil.getConfig().resourceUrls.notification,
             {
                 ids: notificationIds,
                 read: true
@@ -64,7 +64,7 @@ export function markNotificationsAsRead(notificationIds) {
             json => dispatch(markNotificationsAsReadSuccessful(json)),
             responseNotOk => {
                 dispatch(markNotificationsAsReadFailed(responseNotOk.message));
-                defaultErrorHandling(dispatch, responseNotOk, showError("Failed to update notifications", responseNotOk.message));
+                ActionUtil.defaultErrorHandling(dispatch, responseNotOk, showError("Failed to update notifications", responseNotOk.message));
             },
             error => {
                 dispatch(markNotificationsAsReadFailed(error.message));

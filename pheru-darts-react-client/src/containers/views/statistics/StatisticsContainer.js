@@ -1,7 +1,7 @@
 import {connect} from 'react-redux'
-import Statistics from "../components/views/statistics/Statistics";
-import {showLoginModal} from "../actions/user";
-import {fetchStatistics} from "../actions/statistics";
+import Statistics from "../../../components/views/statistics/Statistics";
+import {showLoginModal} from "../../../actions/user";
+import {fetchStatistics} from "../../../actions/statistics";
 
 const mapStateToProps = state => ({
     isLoggedIn: state.user.isLoggedIn,

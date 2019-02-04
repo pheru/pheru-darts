@@ -1,6 +1,6 @@
 import {connect} from 'react-redux'
-import Player from "../components/views/game/Player";
-import getTurnInformation from "../services/gameInformationService";
+import Player from "../../../components/views/game/Player";
+import getTurnInformation from "../../../services/gameInformationService";
 
 // TODO turninfo in game -> kein container mehr
 const mapStateToProps = function (state, ownProps) {

@@ -1,10 +1,11 @@
 const SELECTED_VOICE_NAME = "selectedVoiceName";
 
-export let localStorageService = {
-    getSelectedVoiceName() {
+export class LocalStorageUtil {
+    static getSelectedVoiceName() {
         return localStorage.getItem(SELECTED_VOICE_NAME);
-    },
-    setSelectedVoiceName(voiceName) {
+    }
+
+    static setSelectedVoiceName(voiceName) {
         return localStorage.setItem(SELECTED_VOICE_NAME, voiceName);
     }
-};
+}

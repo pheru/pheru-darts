@@ -1,8 +1,8 @@
 import {connect} from 'react-redux'
-import Game from "../components/views/game/Game";
-import {exitGame, rematch, undoDart} from "../actions/game";
-import {archiveGame} from "../actions/games";
-import {toggleSpeechOutput} from "../actions/speech";
+import Game from "../../../components/views/game/Game";
+import {addDart, exitGame, rematch, undoDart} from "../../../actions/game";
+import {archiveGame} from "../../../actions/games";
+import {toggleSpeechOutput} from "../../../actions/speech";
 
 const mapStateToProps = function (state) {
     let startScore = state.game.score;
@@ -32,6 +32,7 @@ const mapStateToProps = function (state) {
 };
 
 const mapDispatchToProps = dispatch => ({
+    addDart: (value, multiplier) => dispatch(addDart(value, multiplier)),
     undoDart: () => dispatch(undoDart()),
     exit: () => dispatch(exitGame()),
     rematch: (startingPlayer) => dispatch(rematch(startingPlayer)),

@@ -1,7 +1,7 @@
 import React from 'react'
 import {Button, FormControl, Glyphicon, Modal} from "react-bootstrap";
 import PropTypes from 'prop-types';
-import {ifEnterKey} from "../../util/functionUtil";
+import KeyUtil from "../../util/KeyUtil";
 
 const initialState = {
     name: "",
@@ -47,7 +47,7 @@ class SignUpModal extends React.Component {
                 <Modal.Title style={{marginBottom: 10}}>Registrieren</Modal.Title>
                 <FormControl style={{marginBottom: 5}} type="text" value={this.state.name}
                              onChange={(e) => this.handleNameChange(e.target.value)}
-                             onKeyDown={ifEnterKey(() => {
+                             onKeyDown={KeyUtil.ifEnterKey(() => {
                                  if (!this.isSignupDisabled()) {
                                      this.doSignUp()
                                  }
@@ -55,7 +55,7 @@ class SignUpModal extends React.Component {
                              placeholder="Benutzername" autoFocus/>
                 <FormControl style={{marginBottom: 5}} type="password" value={this.state.password}
                              onChange={(e) => this.handlePasswordChange(e.target.value)}
-                             onKeyDown={ifEnterKey(() => {
+                             onKeyDown={KeyUtil.ifEnterKey(() => {
                                  if (!this.isSignupDisabled()) {
                                      this.doSignUp()
                                  }
@@ -63,7 +63,7 @@ class SignUpModal extends React.Component {
                              placeholder="Passwort"/>
                 <FormControl type="password" value={this.state.passwordRepeat}
                              onChange={(e) => this.handlePasswordRepeatChange(e.target.value)}
-                             onKeyDown={ifEnterKey(() => {
+                             onKeyDown={KeyUtil.ifEnterKey(() => {
                                  if (!this.isSignupDisabled()) {
                                      this.doSignUp()
                                  }

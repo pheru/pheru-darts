@@ -1,10 +1,10 @@
 import React from 'react'
-import ScoreButtonsContainer from "../../../containers/ScoreButtonsContainer";
-import PlayerContainer from "../../../containers/PlayerContainer";
+import PlayerContainer from "../../../containers/views/game/PlayerContainer";
 import {Button, Col, Dropdown, Glyphicon, Grid, MenuItem, Modal, Row, Well} from "react-bootstrap";
 import PropTypes from "prop-types";
-import {speak} from "../../../services/speechSynthService";
-import documentUtil from "../../../util/documentUtil";
+import SpeechUtil from "../../../util/SpeechUtil";
+import DocumentUtil from "../../../util/DocumentUtil";
+import ScoreButtons from "./ScoreButtons";
 
 class Game extends React.Component {
 
@@ -32,7 +32,7 @@ class Game extends React.Component {
     }
 
     componentDidMount() {
-        documentUtil.setTitlePrefix("Aktuelles Spiel");
+        DocumentUtil.setTitlePrefix("Aktuelles Spiel");
     }
 
     componentDidUpdate(prevProps) {
@@ -45,7 +45,7 @@ class Game extends React.Component {
         }
         if (this.props.speechOutputActive && this.props.announcementText
             && this.props.announcementText !== prevProps.announcementText) {
-            speak(this.props.announcementText, this.props.selectedVoice);
+            SpeechUtil.speak(this.props.announcementText, this.props.selectedVoice);
         }
     }
 
@@ -94,7 +94,7 @@ class Game extends React.Component {
                     }
                 </Row>
             </Grid>
-            <ScoreButtonsContainer/>
+            <ScoreButtons addDart={this.props.addDart}/>
 
             <Modal dialogClassName='modal-bottom' show={this.state.gameFinishedModalShow}
                    onHide={this.handleGameFinishedModalClose}
@@ -147,6 +147,7 @@ Game.propTypes = {
     players: PropTypes.array.isRequired,
     winner: PropTypes.object,
     game: PropTypes.object.isRequired,
+    addDart: PropTypes.func.isRequired,
     undoDart: PropTypes.func.isRequired,
     exit: PropTypes.func.isRequired,
     rematch: PropTypes.func.isRequired,

@@ -15,9 +15,8 @@ import {NAVIGATION_ITEM} from "../../../constants/navigationItems";
 import DropdownTextfield from "../../general/input/DropdownTextfield";
 import PropTypes from "prop-types";
 import {ALL_CHECKIN_MODES, SINGLE_IN} from "../../../constants/checkinModes";
-import documentUtil from "../../../util/documentUtil";
-
-const SCORE_CHOICES = ["101", "201", "301", "401", "501", "1001"];
+import DocumentUtil from "../../../util/DocumentUtil";
+import ScoreInput from "../../general/input/ScoreInput";
 
 class NewGameConfig extends React.Component {
 
@@ -27,7 +26,7 @@ class NewGameConfig extends React.Component {
             this.state = {...props.initialState};
         } else {
             this.state = {
-                score: SCORE_CHOICES[4],
+                score: 501,
                 selectedPlayers: [
                     {name: ""},
                     {name: ""}
@@ -54,7 +53,7 @@ class NewGameConfig extends React.Component {
     }
 
     componentDidMount() {
-        documentUtil.setTitlePrefix(this.props.training ? "Training" : "Neues Spiel");
+        DocumentUtil.setTitlePrefix(this.props.training ? "Training" : "Neues Spiel");
     }
 
     componentDidUpdate(prevProps) {
@@ -116,16 +115,9 @@ class NewGameConfig extends React.Component {
     }
 
     handleScoreChange(value) {
-        if (value !== "" && !this.isValidScore(value)) {
-            return;
-        }
         this.setState({
             score: value
         });
-    }
-
-    isValidScore(value) {
-        return /^[1-9]+\d*$/.test(value);
     }
 
     handleCheckInModeChange(e) {
@@ -172,8 +164,8 @@ class NewGameConfig extends React.Component {
                 }
             }
         }
-        if (!this.isValidScore(this.state.score)) {
-            validationMessages.push("Es wurde kein gültiger Score angegeben");
+        if (this.state.score === "") {
+            validationMessages.push("Es wurde kein Score angegeben");
         }
         if (validationMessages.length > 0) {
             this.props.showWarning("Ungültige Spielkonfiguration",
@@ -265,9 +257,7 @@ class NewGameConfig extends React.Component {
                 }
                 <Row className="show-grid text-center">
                     <Col xs={12} sm={12} style={this.colStyle}>
-                        <DropdownTextfield id="score-dropdown" value={this.state.score} choices={SCORE_CHOICES}
-                                           onDropdownClick={(newValue) => this.handleScoreChange(newValue)}
-                                           onInputChange={(newValue) => this.handleScoreChange(newValue)}/>
+                        <ScoreInput value={this.state.score} onChange={this.handleScoreChange}/>
                     </Col>
                 </Row>
                 <Row className="show-grid text-center">

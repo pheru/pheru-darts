@@ -1,7 +1,7 @@
 import {connect} from 'react-redux'
-import Notifications from "../components/views/notifications/Notifications";
-import {fetchNotifications, markNotificationsAsRead} from "../actions/notifications";
-import {showLoginModal} from "../actions/user";
+import Notifications from "../../../components/views/notifications/Notifications";
+import {fetchNotifications, markNotificationsAsRead} from "../../../actions/notifications";
+import {showLoginModal} from "../../../actions/user";
 
 const mapStateToProps = state => ({
     notifications: state.notifications.notifications.slice().reverse(),

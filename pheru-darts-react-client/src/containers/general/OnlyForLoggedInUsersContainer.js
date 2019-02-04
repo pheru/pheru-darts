@@ -1,6 +1,6 @@
 import {connect} from 'react-redux'
-import {showLoginModal} from "../actions/user";
-import OnlyForLoggedInUsers from "../components/general/alerts/OnlyForLoggedInUsers";
+import {showLoginModal} from "../../actions/user";
+import OnlyForLoggedInUsers from "../../components/general/OnlyForLoggedInUsers";
 
 const mapStateToProps = (state, ownProps) => ({
     text: ownProps.text,

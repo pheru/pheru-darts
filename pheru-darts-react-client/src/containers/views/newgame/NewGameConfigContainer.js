@@ -1,9 +1,9 @@
 import {connect} from 'react-redux'
-import {startNewGame} from "../actions/game";
-import NewGameConfig from "../components/views/newgame/NewGameConfig";
-import {memorizeState} from "../actions/stateMemory";
-import {sortPlayerByNameAsc} from "../services/sortService";
-import {showConfirmation, showWarning} from "../actions/modal";
+import {startNewGame} from "../../../actions/game";
+import NewGameConfig from "../../../components/views/newgame/NewGameConfig";
+import {memorizeState} from "../../../actions/stateMemory";
+import SortUtil from "../../../util/SortUtil";
+import {showConfirmation, showWarning} from "../../../actions/modal";
 
 const mapStateToProps = (state, ownProps) => ({
     initialState: state.stateMemory.states[getMemoryKeyByProps(ownProps)],
@@ -11,7 +11,7 @@ const mapStateToProps = (state, ownProps) => ({
     isLoggingIn: state.user.isLoggingIn,
     userId: state.user.id,
     userName: state.user.name,
-    playableUsers: putPlayerInFront(state.user.name, state.playerPermission.playableUsers.slice().sort(sortPlayerByNameAsc)),
+    playableUsers: putPlayerInFront(state.user.name, state.playerPermission.playableUsers.slice().sort(SortUtil.sortPlayerByNameAsc)),
     gameRunning: state.game !== null,
     fetchAllUsersFailed: state.playerPermission.fetchPlayableUsersFailed,
     isFetchingUsers: state.playerPermission.isFetchingPlayableUsers

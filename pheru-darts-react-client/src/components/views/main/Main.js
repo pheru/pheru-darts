@@ -1,18 +1,18 @@
 import React from 'react'
-import ButtonTile from "./ButtonTile";
+import ButtonTile from "../../general/tiles/ButtonTile";
 import PropTypes from 'prop-types';
 import {NAVIGATION_ITEM} from "../../../constants/navigationItems";
 import {Badge} from "react-bootstrap";
-import NavigationTile from "./NavigationTile";
-import TileRow from "./TileRow";
-import documentUtil from "../../../util/documentUtil";
+import NavigationTile from "../../general/tiles/NavigationTile";
+import TileRow from "../../general/tiles/TileRow";
+import DocumentUtil from "../../../util/DocumentUtil";
 
 const COLUMNS = [{width: 300}];
 
 class Main extends React.Component {
 
     componentDidMount() {
-        documentUtil.setTitlePrefix("")
+        DocumentUtil.setTitlePrefix("")
     }
 
     render() {

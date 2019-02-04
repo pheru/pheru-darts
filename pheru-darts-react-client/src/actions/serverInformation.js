@@ -1,7 +1,7 @@
-import {fetchGet} from "../services/fetchService";
-import {getConfig} from "../services/configService";
+import FetchUtil from "../util/FetchUtil";
+import ConfigUtil from "../util/ConfigUtil";
 import {showError} from "./modal";
-import {defaultErrorHandling} from "../util/actionUtil";
+import ActionUtil from "../util/ActionUtil";
 
 export const REQUEST_SERVER_VERSION = 'REQUEST_SERVER_VERSION';
 export const FETCH_SERVER_VERSION_SUCCESSFUL = 'FETCH_SERVER_VERSION_SUCCESSFUL';
@@ -22,11 +22,11 @@ export const fetchServerVersionFailed = (message) => ({
 export function fetchServerVersion() {
     return function (dispatch) {
         dispatch(requestServerVersion());
-        return fetchGet(getConfig().resourceUrls.serverInformation,
+        return FetchUtil.fetchGet(ConfigUtil.getConfig().resourceUrls.serverInformation,
             json => dispatch(fetchServerVersionSuccessful(json)),
             responseNotOk => {
                 dispatch(fetchServerVersionFailed(responseNotOk.message));
-                defaultErrorHandling(dispatch, responseNotOk, showError("Could not fetch server version", responseNotOk.message));
+                ActionUtil.defaultErrorHandling(dispatch, responseNotOk, showError("Could not fetch server version", responseNotOk.message));
             },
             error => {
                 dispatch(fetchServerVersionFailed(error.message));

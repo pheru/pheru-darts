@@ -1,9 +1,9 @@
 import {connect} from 'react-redux'
 import {withRouter} from "react-router-dom";
-import {logout, showLoginModal} from "../actions/user";
-import {showConfirmation} from "../actions/modal";
-import {exitGame} from "../actions/game";
-import AppNavigationBar from "../components/app/AppNavigationBar";
+import {logout, showLoginModal} from "../../actions/user";
+import {showConfirmation} from "../../actions/modal";
+import {exitGame} from "../../actions/game";
+import AppNavigationBar from "../../components/app/AppNavigationBar";
 
 const mapStateToProps = state => ({
     userName: state.user.name,
