@@ -1,0 +1,115 @@
+#bracket {
+    overflow: hidden;
+    font-size: 12px;
+}
+
+.bracket-container {
+    margin: 0 auto;
+    display: block;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+}
+
+.bracket-split {
+    float: left;
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.bracket-round {
+    display: block;
+    float: left;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    width: 95%;
+    width: 30.8333% \9;
+    max-width: 260px;
+    margin: 0 2.5% 0 0;
+}
+
+.bracket-round-details {
+    font-family: 'Roboto Condensed', sans-serif;
+    font-weight: bold;
+    font-size: 13px;
+    color: #2C7399;
+    text-transform: uppercase;
+    text-align: center;
+    height: 55px;
+}
+
+.bracket-round-sub-details {
+    font-size: 10px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    font-family: 'Istok Web', sans-serif;
+    color: #3F915F;
+}
+
+.bracket-round li {
+    background-color: #fff;
+    box-shadow: none;
+    opacity: 0.45;
+}
+
+.bracket-score {
+    font-size: 11px;
+    text-transform: uppercase;
+    float: right;
+    color: #2C7399;
+    font-weight: bold;
+    font-family: 'Roboto Condensed', sans-serif;
+    position: absolute;
+    right: 5px;
+}
+
+.bracket-matchup {
+    box-sizing: initial;
+    margin: 0;
+    width: 100%;
+    padding: 10px 0;
+    height: 60px;
+    -webkit-transition: all 0.2s;
+    transition: all 0.2s;
+}
+
+.bracket-round-two .bracket-matchup {
+    padding: 50px 0;
+}
+
+.bracket-round-three .bracket-matchup {
+    padding: 130px 0;
+}
+
+.bracket-current li {
+    opacity: 1;
+}
+
+.bracket-current li.bracket-player {
+    background-color: #fff;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    opacity: 1;
+}
+
+.bracket-player {
+    text-align: center;
+    border-radius: 4px;
+    padding: 0 5px;
+    margin: 3px 0;
+    height: 25px;
+    line-height: 25px;
+    white-space: nowrap;
+    overflow: hidden;
+    position: relative;
+}
