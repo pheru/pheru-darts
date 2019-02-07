@@ -19,6 +19,9 @@ public class ControllerTest {
     protected static final String LOGIN_NAME = "login-name";
     protected static final String LOGIN_PASSWORD = "login-password";
 
+    protected static final String DEFAULT_NAME = "default-name";
+    protected static final String DEFAULT_PASSWORD = "default-password";
+
     protected BCryptPasswordEncoder passwordEncoder;
 
     protected MockedUserRepository userRepository;
@@ -43,7 +46,7 @@ public class ControllerTest {
     }
 
     protected UserEntity createDefaultUserEntity() {
-        return createUserEntity(LOGIN_NAME, LOGIN_PASSWORD);
+        return createUserEntity(DEFAULT_NAME, DEFAULT_PASSWORD);
     }
 
     protected UserEntity createUserEntity(final String name, final String password) {
