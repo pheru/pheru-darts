@@ -3,13 +3,14 @@ package de.pheru.darts.backend.controllers;
 import de.pheru.darts.backend.Logger;
 import de.pheru.darts.backend.dtos.playerpermission.PlayerPermissionModificationDto;
 import de.pheru.darts.backend.dtos.user.UserDto;
+import de.pheru.darts.backend.entities.notification.NotificationEntity;
 import de.pheru.darts.backend.entities.notification.NotificationTemplates;
 import de.pheru.darts.backend.entities.playerpermission.PlayerPermissionEntity;
 import de.pheru.darts.backend.entities.user.UserEntity;
 import de.pheru.darts.backend.exceptions.BadRequestException;
 import de.pheru.darts.backend.exceptions.PermissionAlreadyGrantedException;
 import de.pheru.darts.backend.exceptions.UserNotFoundException;
-import de.pheru.darts.backend.mappers.EntityMapper;
+import de.pheru.darts.backend.mappers.EntityToDtoMapper;
 import de.pheru.darts.backend.repositories.NotificationRepository;
 import de.pheru.darts.backend.repositories.PlayerPermissionRepository;
 import de.pheru.darts.backend.repositories.UserRepository;
@@ -59,11 +60,14 @@ public class PlayerPermissionController {
         LOGGER.info("Permission with user=" + loggedInUserId + ", permitted=" + idToPermit + " saved.");
 
         final UserEntity loggedInUser = userRepository.findById(loggedInUserId);
-        notificationRepository.save(NotificationTemplates.permissionGranted(
-                idToPermit, timestamp.getTime(), loggedInUser.getName()));
-        LOGGER.info("Notification for user " + idToPermit + " saved by user " + loggedInUserId + ".");
+        final NotificationEntity notification = NotificationTemplates.permissionGranted(
+                idToPermit, timestamp.getTime(), loggedInUser.getName());
+        notificationRepository.save(notification);
+        LOGGER.info("Notification of type " + notification.getNotificationType()
+                + " for user " + idToPermit
+                + " saved by user " + loggedInUserId + ".");
 
-        return EntityMapper.toUserDto(userToPermit);
+        return EntityToDtoMapper.toUserDto(userToPermit);
     }
 
     private UserEntity findUserByModificationDto(final PlayerPermissionModificationDto modificationDto) {
@@ -102,9 +106,12 @@ public class PlayerPermissionController {
         LOGGER.info("Permission with user=" + loggedInUserId + ", permitted=" + permittedId + " deleted.");
 
         final UserEntity loggedInUser = userRepository.findById(loggedInUserId);
-        notificationRepository.save(NotificationTemplates.permissionRemoved(
-                permittedId, timestamp.getTime(), loggedInUser.getName()));
-        LOGGER.info("Notification for user " + permittedId + " saved by user " + loggedInUserId + ".");
+        final NotificationEntity notification = NotificationTemplates.permissionRemoved(
+                permittedId, timestamp.getTime(), loggedInUser.getName());
+        notificationRepository.save(notification);
+        LOGGER.info("Notification of type " + notification.getNotificationType()
+                + " for user " + permittedId
+                + " saved by user " + loggedInUserId + ".");
     }
 
     @GetMapping("/permitted")
@@ -112,10 +119,10 @@ public class PlayerPermissionController {
         final String loggedInUserId = SecurityUtil.getLoggedInUserId();
 
         final List<PlayerPermissionEntity> permittedEntities = playerPermissionRepository.findByUserId(loggedInUserId);
-        final List<String> permittedIds = EntityMapper.toPermittedList(permittedEntities);
+        final List<String> permittedIds = EntityToDtoMapper.toPermittedList(permittedEntities);
         final List<UserEntity> permittedUsers = userRepository.findAll(permittedIds);
 
-        return EntityMapper.toUserDto(permittedUsers);
+        return EntityToDtoMapper.toUserDto(permittedUsers);
     }
 
     @GetMapping("/playable")
@@ -123,10 +130,10 @@ public class PlayerPermissionController {
         final String loggedInUserId = SecurityUtil.getLoggedInUserId();
 
         final List<PlayerPermissionEntity> playableEntities = playerPermissionRepository.findByPermittedUserId(loggedInUserId);
-        final List<String> playableIds = EntityMapper.toPlayableList(playableEntities);
+        final List<String> playableIds = EntityToDtoMapper.toPlayableList(playableEntities);
         final List<UserEntity> playableUsers = userRepository.findAll(playableIds);
 
-        return EntityMapper.toUserDto(playableUsers);
+        return EntityToDtoMapper.toUserDto(playableUsers);
     }
 
 }

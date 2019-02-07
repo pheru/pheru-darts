@@ -5,7 +5,7 @@ import de.pheru.darts.backend.dtos.notification.NotificationDto;
 import de.pheru.darts.backend.dtos.notification.NotificationModificationDto;
 import de.pheru.darts.backend.entities.notification.NotificationEntity;
 import de.pheru.darts.backend.exceptions.ForbiddenException;
-import de.pheru.darts.backend.mappers.EntityMapper;
+import de.pheru.darts.backend.mappers.EntityToDtoMapper;
 import de.pheru.darts.backend.repositories.NotificationRepository;
 import de.pheru.darts.backend.security.SecurityUtil;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +28,7 @@ public class NotificationController {
     @GetMapping
     public List<NotificationDto> get() {
         final List<NotificationEntity> notifications = notificationRepository.findByUserIdOrderByTimestamp(SecurityUtil.getLoggedInUserId());
-        return EntityMapper.toNotificationDto(notifications);
+        return EntityToDtoMapper.toNotificationDto(notifications);
     }
 
     @PutMapping
@@ -45,7 +45,7 @@ public class NotificationController {
 
         final List<NotificationEntity> savedNotificationsList = new ArrayList<>();
         savedNotifications.forEach(savedNotificationsList::add);
-        return EntityMapper.toNotificationDto(savedNotificationsList);
+        return EntityToDtoMapper.toNotificationDto(savedNotificationsList);
     }
 
     private void checkUserIds(final List<NotificationEntity> notifications) {

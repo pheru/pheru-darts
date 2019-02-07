@@ -9,9 +9,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public final class DtoMapper {
+public final class DtoToEntityMapper {
 
-    private DtoMapper() {
+    private DtoToEntityMapper() {
         //Utility-Klasse
     }
 

@@ -9,9 +9,9 @@ import de.pheru.darts.backend.entities.user.UserEntity;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class EntityMapper {
+public final class EntityToDtoMapper {
 
-    private EntityMapper() {
+    private EntityToDtoMapper() {
         //Utility-Klasse
     }
 
