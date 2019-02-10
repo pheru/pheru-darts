@@ -66,8 +66,8 @@ public class GameEntity {
         this.score = score;
     }
 
-    public CheckInMode getCheckInMode() {
-        return checkInMode;
+    public CheckInMode getCheckInModeOrDefault() {
+        return checkInMode != null ? checkInMode : CheckInMode.defaultValue();
     }
 
     public void setCheckInMode(final CheckInMode checkInMode) {
@@ -82,8 +82,8 @@ public class GameEntity {
         this.checkOutMode = checkOutMode;
     }
 
-    public Boolean isTraining() {
-        return training;
+    public Boolean isTrainingOrDefault() {
+        return training != null && training;
     }
 
     public void setTraining(final Boolean training) {

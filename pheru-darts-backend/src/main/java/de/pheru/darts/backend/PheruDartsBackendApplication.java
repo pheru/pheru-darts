@@ -1,6 +1,8 @@
 package de.pheru.darts.backend;
 
 import de.pheru.darts.backend.repositories.UserRepository;
+import de.pheru.darts.backend.statistics.DefaultStatisticEvaluation;
+import de.pheru.darts.backend.statistics.StatisticEvaluation;
 import de.pheru.darts.backend.validation.DefaultUserValidation;
 import de.pheru.darts.backend.validation.UserValidation;
 import org.springframework.boot.SpringApplication;
@@ -25,6 +27,11 @@ public class PheruDartsBackendApplication {
     @Bean
     public UserValidation userValidation() {
         return new DefaultUserValidation(userRepository);
+    }
+
+    @Bean
+    public StatisticEvaluation statisticEvaluation() {
+        return new DefaultStatisticEvaluation();
     }
 
     public static void main(final String[] args) {

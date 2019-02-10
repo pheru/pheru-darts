@@ -56,7 +56,7 @@ public class GameEntityBuilder {
         return this;
     }
 
-    public GameEntityBuilder neueAufnahme(final AufnahmeDocument aufnahmeDocument) {
+    public GameEntityBuilder aufnahme(final AufnahmeDocument aufnahmeDocument) {
         entity.getPlayers().get(currentPlayer).getAufnahmen().add(aufnahmeDocument);
         currentPlayer++;
         if (currentPlayer >= entity.getPlayers().size()) {
