@@ -23,8 +23,9 @@ class ScoreInput extends React.Component {
     }
 
     render() {
-        return <DropdownTextfield value={this.props.value}
-                                  choices={SCORE_CHOICES}
+        return <DropdownTextfield id={this.props.id}
+                                  value={this.props.value}
+                                  choices={this.props.noChoices ? [] : SCORE_CHOICES}
                                   onDropdownClick={this.handleScoreChange}
                                   onInputChange={this.handleScoreChange}/>
     }
@@ -33,7 +34,8 @@ class ScoreInput extends React.Component {
 
 ScoreInput.propTypes = {
     value: PropTypes.string,
-    onChange: PropTypes.func
+    onChange: PropTypes.func,
+    noChoices: PropTypes.bool
 };
 
 export default ScoreInput

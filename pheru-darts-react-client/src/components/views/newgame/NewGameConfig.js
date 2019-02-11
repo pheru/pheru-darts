@@ -26,7 +26,7 @@ class NewGameConfig extends React.Component {
             this.state = {...props.initialState};
         } else {
             this.state = {
-                score: 501,
+                score: "501",
                 selectedPlayers: [
                     {name: ""},
                     {name: ""}
@@ -257,7 +257,7 @@ class NewGameConfig extends React.Component {
                 }
                 <Row className="show-grid text-center">
                     <Col xs={12} sm={12} style={this.colStyle}>
-                        <ScoreInput value={this.state.score} onChange={this.handleScoreChange}/>
+                        <ScoreInput id="newgame_scoreinput" value={this.state.score} onChange={this.handleScoreChange}/>
                     </Col>
                 </Row>
                 <Row className="show-grid text-center">

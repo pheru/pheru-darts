@@ -7,6 +7,7 @@ import StackLoader from "../../general/loaders/StackLoader";
 import DartsRadarChart from "./DartsRadarChart";
 import OnlyForLoggedInUsersContainer from "../../../containers/general/OnlyForLoggedInUsersContainer";
 import DocumentUtil from "../../../util/DocumentUtil";
+import StatisticsFilter from "./StatisticsFilter";
 
 const TITLE = "Statistiken";
 
@@ -85,17 +86,17 @@ class Statistics extends React.Component {
     createStatisticsView() {
         return <div style={{textAlign: 'center'}}>
             <h1 style={{marginTop: 0}}><strong>{TITLE}</strong></h1>
-            <h2><strong>Darts</strong></h2>
+            {/*TODO Einklappbar*/}
+            {/*<StatisticsFilter/>*/}
             {this.props.dartData.length > 0
                 ? this.createDartsView()
                 : <Alert bsStyle="warning">
-                    <strong>Keine Daten vorhanden</strong>
+                    <strong>Keine Dart-Daten vorhanden</strong>
                 </Alert>}
-            <h2><strong>Spiele</strong></h2>
             {this.props.gamesData.length > 0
                 ? this.createGamesView()
                 : <Alert bsStyle="warning">
-                    <strong>Keine Daten vorhanden</strong>
+                    <strong>Keine Spiel-Daten vorhanden</strong>
                 </Alert>}
         </div>
     }
@@ -103,9 +104,10 @@ class Statistics extends React.Component {
     createDartsView() {
         return <Well style={{
             paddingBottom: 0,
-            marginBottom: 5,
+            marginBottom: 15,
             textAlign: 'center'
         }}>
+            <h2 style={{marginTop: 0}}><strong>Darts</strong></h2>
             <Table responsive style={{textAlign: 'center'}}>
                 <tbody>
                 <tr>
@@ -152,8 +154,9 @@ class Statistics extends React.Component {
         return <Well
             style={{
                 paddingBottom: 0,
-                marginBottom: 5
+                marginBottom: 15
             }}>
+            <h2 style={{marginTop: 0}}><strong>Spiele</strong></h2>
             <Table responsive style={{textAlign: 'center'}}>
                 <tbody>
                 <tr>
