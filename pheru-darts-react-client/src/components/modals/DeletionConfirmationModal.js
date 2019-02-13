@@ -1,7 +1,7 @@
 import React from 'react'
 import {Alert, Button, FormControl, Modal} from "react-bootstrap";
 import PropTypes from 'prop-types';
-import Glyphicon from "react-bootstrap/es/Glyphicon";
+import {FaExclamationCircle} from "react-icons/fa";
 
 const initialState = {
     name: "",
@@ -38,10 +38,10 @@ class DeletionConfirmationModal extends React.Component {
         return <Modal backdrop='static' show={this.props.show} onHide={this.props.hide}>
             <Modal.Body style={{textAlign: 'center', paddingTop: 0, paddingBottom: 0}}>
                 <h3>
-                    <Glyphicon glyph="exclamation-sign" style={{color: "#d9534f"}}/>
+                    <FaExclamationCircle style={{color: "#d9534f"}}/>
                     <strong> Benutzerkonto endgültig löschen</strong>
                 </h3>
-                <Alert bsStyle="danger" style={{textAlign: 'center'}}>
+                <Alert variant="danger" style={{textAlign: 'center'}}>
                     Das Löschen Deines Benutzerkontos kann nicht rückgängig gemacht werden! <br/>
                     Um Dein Konto dennoch zu löschen, musst du Deinen Benutzernamen und Dein Passwort bestätigen.
                 </Alert>
@@ -55,12 +55,12 @@ class DeletionConfirmationModal extends React.Component {
                              placeholder="Passwort"/>
             </Modal.Body>
             <Modal.Footer style={{textAlign: 'center'}}>
-                <Button style={{width: 100}} bsStyle="danger"
+                <Button style={{width: 100}} variant="danger"
                         disabled={this.isButtonDisabled()}
                         onClick={() => this.props.deleteUser(this.state.password)}>
                     Löschen
                 </Button>
-                <Button style={{width: 100}} bsStyle='primary'
+                <Button style={{width: 100}} variant='primary'
                         onClick={this.props.hide} disabled={this.props.isDeleting}>
                     Abbrechen
                 </Button>

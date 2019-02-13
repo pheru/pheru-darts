@@ -1,9 +1,10 @@
 import React from 'react'
-import {Button, FormControl, Glyphicon, OverlayTrigger, Table, Tooltip, Well} from "react-bootstrap";
+import {Button, FormControl, OverlayTrigger, Table, Tooltip, Card} from "react-bootstrap";
 import PropTypes from 'prop-types';
 import DocumentUtil from "../../../util/DocumentUtil";
 import KeyUtil from "../../../util/KeyUtil";
 import StackLoader from "../../general/loaders/StackLoader";
+import {FaCheck, FaTimes} from "react-icons/fa";
 
 const TITLE = "Berechtigungen";
 
@@ -101,13 +102,13 @@ class PermissionSettings extends React.Component {
                                  }
                              )}
                              placeholder="Spieler berechtigen"/>
-                <Button bsStyle="success" style={{marginLeft: 2}}
+                <Button variant="success" style={{marginLeft: 2}}
                         disabled={this.isPermitButtonDisabled()}
                         onClick={() => this.props.addPlayerPermissionByName(this.state.userNameToPermit)}>
                     Berechtigen
                 </Button>
             </div>
-            <Well style={{marginTop: 20, paddingBottom: 0, textAlign: 'center'}}>
+            <Card body style={{marginTop: 20, paddingBottom: 0, textAlign: 'center'}}>
                 <Table responsive hover style={{textAlign: 'center'}}>
                     <thead>
                     <tr>
@@ -129,25 +130,25 @@ class PermissionSettings extends React.Component {
                             }}>{playerInformation.name}</td>
                             <td>
                                 {playerInformation.playable
-                                    ? <Glyphicon style={{color: 'green'}} glyph="ok"/>
-                                    : <Glyphicon style={{color: 'red'}} glyph="remove"/>}
+                                    ? <FaCheck style={{color: 'green'}}/>
+                                    : <FaTimes style={{color: 'red'}}/>}
                             </td>
                             <td>
                                 {playerInformation.permitted
                                     ? <OverlayTrigger placement='top'
                                                       overlay={<Tooltip id="tooltip">Berechtigung nehmen</Tooltip>}>
-                                        <Button bsStyle="success"
+                                        <Button variant="success"
                                                 onClick={() => this.props.removePlayerPermission(playerInformation.id)}
                                                 disabled={this.props.isUpdatingPlayerPermission}>
-                                            <Glyphicon glyph="ok"/>
+                                            <FaCheck/>
                                         </Button>
                                     </OverlayTrigger>
                                     : <OverlayTrigger placement='top'
                                                       overlay={<Tooltip id="tooltip">Berechtigung geben</Tooltip>}>
-                                        <Button bsStyle="danger"
+                                        <Button variant="danger"
                                                 onClick={() => this.props.addPlayerPermissionById(playerInformation.id)}
                                                 disabled={this.props.isUpdatingPlayerPermission}>
-                                            <Glyphicon glyph="remove"/>
+                                            <FaTimes/>
                                         </Button>
                                     </OverlayTrigger>
                                 }
@@ -160,7 +161,7 @@ class PermissionSettings extends React.Component {
                 &&
                 <StackLoader label="Lade Spieler-Berechtigungen..."/>
                 }
-            </Well>
+            </Card>
         </div>
     }
 }

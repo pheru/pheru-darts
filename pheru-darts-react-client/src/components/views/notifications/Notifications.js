@@ -1,10 +1,11 @@
 import React from 'react'
 import PropTypes from "prop-types";
 import StackLoader from "../../general/loaders/StackLoader";
-import {Badge, Button, Glyphicon, Table, Well} from "react-bootstrap";
+import {Badge, Button, Table, Card} from "react-bootstrap";
 import DateUtil from "../../../util/DateUtil";
 import OnlyForLoggedInUsersContainer from "../../../containers/general/OnlyForLoggedInUsersContainer";
 import DocumentUtil from "../../../util/DocumentUtil";
+import {FaCheck, FaSyncAlt} from "react-icons/fa";
 
 class Notifications extends React.Component {
 
@@ -15,18 +16,18 @@ class Notifications extends React.Component {
     render() {
         return <OnlyForLoggedInUsersContainer
             text="Mitteilungen können nur von angemeldeten Benutzern eingesehen werden">
-            <Well style={{paddingBottom: 0, textAlign: "center"}}>
-                <Button bsStyle="primary" style={{marginRight: 5}}
+            <Card body style={{paddingBottom: 0, textAlign: "center"}}>
+                <Button variant="primary" style={{marginRight: 5}}
                         onClick={this.props.fetchNotifications}
                         disabled={this.props.isFetchingNotifications}>
-                    <Glyphicon glyph="refresh"/> Neu Laden
+                    <FaSyncAlt/> Neu Laden
                 </Button>
-                <Button bsStyle="primary"
+                <Button variant="primary"
                         onClick={() => this.props.markAsRead(this.props.unreadNotifications.map(
                             (notification) => notification.id
                         ))}
                         disabled={this.props.isFetchingNotifications || this.props.unreadNotifications.length === 0}>
-                    <Glyphicon glyph="check"/> Alle als gelesen markieren
+                    <FaCheck/> Alle als gelesen markieren
                 </Button>
                 <Table hover style={{textAlign: "initial"}}>
                     <thead>
@@ -68,7 +69,7 @@ class Notifications extends React.Component {
                     </tbody>
                 </Table>
                 {this.props.isFetchingNotifications && <StackLoader label="Lade Mitteilungen..."/>}
-            </Well>
+            </Card>
         </OnlyForLoggedInUsersContainer>
     }
 }

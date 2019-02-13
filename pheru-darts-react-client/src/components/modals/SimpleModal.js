@@ -1,7 +1,8 @@
 import React from 'react'
-import {Button, Glyphicon, Modal} from "react-bootstrap";
+import {Button, Modal} from "react-bootstrap";
 import PropTypes from 'prop-types';
 import KeyUtil from "../../util/KeyUtil";
+import {FaExclamationCircle, FaInfoCircle, FaQuestionCircle, FaTimesCircle} from "react-icons/fa";
 
 export const TYPE_INFORMATION = "TYPE_INFORMATION";
 export const TYPE_WARNING = "TYPE_WARNING";
@@ -42,14 +43,13 @@ class SimpleModal extends React.Component {
         }}>
             <Modal.Body style={{paddingTop: 0, paddingBottom: 0}}>
                 <h3>
-                    <Glyphicon glyph={this.state.appearance.glyph}
-                               style={{color: this.state.appearance.color}}/>
+                    {this.state.appearance.icon}
                     <strong> {this.props.item.title}</strong>
                 </h3>
                 <h4>{this.props.item.message}</h4>
             </Modal.Body>
             <Modal.Footer>
-                <Button style={{width: 100}} bsStyle={this.state.appearance.bsStyle}
+                <Button style={{width: 100}} variant={this.state.appearance.variant}
                         onClick={() => {
                             if (this.props.item.onConfirm) {
                                 this.props.item.onConfirm();
@@ -59,7 +59,7 @@ class SimpleModal extends React.Component {
                     {this.props.item.modalType === TYPE_CONFIRMATION ? "Ja" : "OK"}
                 </Button>
                 {this.props.item.modalType === TYPE_CONFIRMATION &&
-                <Button style={{width: 100}} bsStyle={this.state.appearance.bsStyle}
+                <Button style={{width: 100}} variant={this.state.appearance.variant}
                         onClick={() => {
                             if (this.props.item.onCancel) {
                                 this.props.item.onCancel();
@@ -76,27 +76,23 @@ class SimpleModal extends React.Component {
         switch (modalType) {
             case TYPE_ERROR:
                 return {
-                    glyph: "remove-sign",
-                    color: "#d9534f",
-                    bsStyle: "danger"
+                    icon: <FaTimesCircle style={{color: "#d9534f"}}/>,
+                    variant: "danger"
                 };
             case TYPE_WARNING:
                 return {
-                    glyph: "alert",
-                    color: "#f0ad4e",
-                    bsStyle: "warning"
+                    icon: <FaExclamationCircle style={{color: "#f0ad4e"}}/>,
+                    variant: "warning"
                 };
             case TYPE_INFORMATION:
                 return {
-                    glyph: "info-sign",
-                    color: "#5bc0de",
-                    bsStyle: "info"
+                    icon: <FaInfoCircle style={{color: "#5bc0de"}}/>,
+                    variant: "info"
                 };
             case TYPE_CONFIRMATION:
                 return {
-                    glyph: "question-sign",
-                    color: "#337ab7",
-                    bsStyle: "primary"
+                    icon: <FaQuestionCircle style={{color: "#337ab7"}}/>,
+                    variant: "primary"
                 };
             default:
                 return null;

@@ -35,7 +35,7 @@ class LoginModal extends React.Component {
     render() {
         // restoreFocus auf false, da sonst beim Öffnen des SignUpModals der Fokus verloren geht
         // (der LoginModal wird geschlossen und setzt den Fokus auf das zuletzt fokusierte Element)
-        return <Modal restoreFocus={false} bsSize="small" backdrop='static' show={this.props.show}
+        return <Modal restoreFocus={false} size="small" backdrop='static' show={this.props.show}
                       onHide={this.props.hide}>
             <Modal.Body style={{textAlign: 'center', paddingBottom: 0}}>
                 <Modal.Title style={{marginBottom: 10}}>Anmelden</Modal.Title>
@@ -55,18 +55,18 @@ class LoginModal extends React.Component {
                                  }
                              })}
                              placeholder="Passwort"/>
-                <Button bsStyle="link" onClick={() => {
+                <Button variant="link" onClick={() => {
                     this.props.hide();
                     this.props.showSignUp();
                 }}>Registrieren</Button>
             </Modal.Body>
             <Modal.Footer style={{textAlign: 'center'}}>
-                <Button style={{width: 100}} bsStyle="primary"
+                <Button style={{width: 120}} variant="primary"
                         disabled={this.isLoginDisabled()}
                         onClick={() => this.doLogin()}>
                     Anmelden
                 </Button>
-                <Button style={{width: 100}} bsStyle='primary' onClick={this.props.hide}
+                <Button style={{width: 120}} variant='primary' onClick={this.props.hide}
                         disabled={this.props.isLoggingIn}>
                     Abbrechen
                 </Button>

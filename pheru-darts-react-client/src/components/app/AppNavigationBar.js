@@ -1,5 +1,5 @@
 import React from 'react'
-import {Badge, Button, Glyphicon} from "react-bootstrap";
+import {Badge, Button} from "react-bootstrap";
 import {NAVIGATION_ITEM} from "../../constants/navigationItems";
 import {Link} from "react-router-dom";
 import FullscreenButton from "../general/FullscreenButton";
@@ -7,6 +7,7 @@ import PropTypes from "prop-types";
 import NavbarLoginLoader from "../general/loaders/NavbarLoginLoader";
 import NavigationBarItem from "../general/navigationbar/NavigationBarItem";
 import NavigationBar, {DropdownConfig, NavigationBarContainer} from "../general/navigationbar/NavigationBar";
+import {FaBars, FaPlayCircle, FaUser} from "react-icons/fa";
 
 class AppNavigationBar extends React.Component {
 
@@ -19,17 +20,17 @@ class AppNavigationBar extends React.Component {
         ];
 
         let gameItems = this.createGameLinks();
-        let gameDropdownConfig = new DropdownConfig("game_dropdown", <Glyphicon glyph="expand"/>, "Spielmenü");
+        let gameDropdownConfig = new DropdownConfig("game_dropdown", <FaPlayCircle/>, "Spielmenü");
         let leftContainer = new NavigationBarContainer(gameItems, gameItems, gameDropdownConfig);
 
         let userItemsUnmerged = this.createUserLinks(false);
         let userItemsMerged = this.createUserLinks(true);
-        let userDropdownConfig = new DropdownConfig("user_dropdown", <Glyphicon glyph="user"/>,
+        let userDropdownConfig = new DropdownConfig("user_dropdown", <FaUser/>,
             this.props.userName ? this.props.userName : "Benutzer");
         let rightContainer = new NavigationBarContainer(userItemsUnmerged, userItemsMerged, userDropdownConfig);
 
         let singleDropdownConfig = new DropdownConfig("hamburger_dropdown",
-            <Glyphicon className="navigation-bar-bordered-item-icon" glyph="menu-hamburger"/>,
+            <FaBars className="navigation-bar-bordered-item-icon"/>,
             null, false);
         return <NavigationBar
             style={{zIndex: 1030}}

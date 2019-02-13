@@ -1,5 +1,6 @@
 import React from 'react'
-import {Button, Glyphicon} from "react-bootstrap";
+import {Button} from "react-bootstrap";
+import {FaCompress, FaExpand} from "react-icons/fa";
 
 class FullscreenButton extends React.Component {
 
@@ -63,8 +64,8 @@ class FullscreenButton extends React.Component {
     render() {
         return <Button onClick={this.toggleFullscreen} className={this.props.className}>
             {this.state.fullscreen
-                ? <Glyphicon className={this.props.className + "-icon"} glyph="resize-small"/>
-                : <Glyphicon className={this.props.className + "-icon"} glyph="resize-full"/>
+                ? <FaCompress className={this.props.className + "-icon"} glyph="resize-small"/>
+                : <FaExpand className={this.props.className + "-icon"}/>
             }
         </Button>
     }

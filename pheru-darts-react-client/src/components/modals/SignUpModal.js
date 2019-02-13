@@ -1,7 +1,8 @@
 import React from 'react'
-import {Button, FormControl, Glyphicon, Modal} from "react-bootstrap";
+import {Button, FormControl, Modal} from "react-bootstrap";
 import PropTypes from 'prop-types';
 import KeyUtil from "../../util/KeyUtil";
+import {FaTimes} from "react-icons/fa";
 
 const initialState = {
     name: "",
@@ -42,7 +43,7 @@ class SignUpModal extends React.Component {
     }
 
     render() {
-        return <Modal bsSize="small" backdrop='static' show={this.props.show} onHide={this.props.hide}>
+        return <Modal size="small" backdrop='static' show={this.props.show} onHide={this.props.hide}>
             <Modal.Body style={{textAlign: 'center'}}>
                 <Modal.Title style={{marginBottom: 10}}>Registrieren</Modal.Title>
                 <FormControl style={{marginBottom: 5}} type="text" value={this.state.name}
@@ -71,17 +72,17 @@ class SignUpModal extends React.Component {
                              placeholder="Passwort wiederholen"/>
                 {!this.state.passwordsMatch &&
                 <div style={{color: "red"}}>
-                    <Glyphicon glyph="remove"/> Passwort muss übereinstimmen
+                    <FaTimes/> Passwort muss übereinstimmen
                 </div>
                 }
             </Modal.Body>
             <Modal.Footer style={{textAlign: 'center'}}>
-                <Button style={{width: 100}} bsStyle="primary"
+                <Button style={{width: 120}} variant="primary"
                         disabled={this.isSignupDisabled()}
                         onClick={() => this.doSignUp()}>
                     Registrieren
                 </Button>
-                <Button style={{width: 100}} bsStyle='primary' onClick={this.props.hide}>Abbrechen</Button>
+                <Button style={{width: 120}} variant='primary' onClick={this.props.hide}>Abbrechen</Button>
             </Modal.Footer>
         </Modal>;
     }

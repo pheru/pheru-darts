@@ -1,7 +1,7 @@
 import React from 'react'
-import {MenuItem} from "react-bootstrap";
 import PropTypes from "prop-types";
 import NavigationBarDropdown from "./NavigationBarDropdown";
+import {Dropdown} from "react-bootstrap";
 
 class NavigationBarContainer {
     constructor(unmergedItems, mergedItems, dropdownConfig) {
@@ -114,7 +114,7 @@ class NavigationBar extends React.Component {
         let singleDropdownLinks = [];
 
         if (this.state.mergeCount === this.maxMergeCount() && this.props.singleDropdown) {
-            singleDropdownLinks = allMergedLeftLinks.concat(<MenuItem divider/>).concat(allMergedRightLinks);
+            singleDropdownLinks = allMergedLeftLinks.concat(<Dropdown.Divider/>).concat(allMergedRightLinks);
         } else {
             let mergeRightLengthDiff = allUnmergedRightLinks.length - this.state.mergeCount;
             let rightSliceIndex = mergeRightLengthDiff >= 0 ? mergeRightLengthDiff : 0;

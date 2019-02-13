@@ -2,8 +2,7 @@ import React from 'react'
 import {
     Button,
     Col,
-    Glyphicon,
-    Grid,
+    Container,
     OverlayTrigger,
     Row,
     ToggleButton,
@@ -17,6 +16,7 @@ import PropTypes from "prop-types";
 import {ALL_CHECKIN_MODES, SINGLE_IN} from "../../../constants/checkinModes";
 import DocumentUtil from "../../../util/DocumentUtil";
 import ScoreInput from "../../general/input/ScoreInput";
+import {FaCheck, FaExchangeAlt, FaExclamationCircle} from "react-icons/fa";
 
 class NewGameConfig extends React.Component {
 
@@ -26,7 +26,7 @@ class NewGameConfig extends React.Component {
             this.state = {...props.initialState};
         } else {
             this.state = {
-                score: 501,
+                score: "501",
                 selectedPlayers: [
                     {name: ""},
                     {name: ""}
@@ -200,7 +200,7 @@ class NewGameConfig extends React.Component {
             return null;
         }
         if (this.getPlayableUserByName(playerName)) {
-            return <Glyphicon glyph='ok' style={{color: 'green'}}/>;
+            return <FaCheck style={{color: 'green'}}/>;
         }
         return <OverlayTrigger placement='bottom'
                                overlay={<Tooltip id="user-tooltip">
@@ -208,7 +208,7 @@ class NewGameConfig extends React.Component {
                                    worden, ein Spiel mit ihm zu erstellen.<br/>
                                    In den Statistiken wird dieser Spieler als "Unregistrierter Benutzer" gelistet.
                                </Tooltip>}>
-            <Glyphicon glyph='exclamation-sign' style={{color: 'orange'}}/>
+            <FaExclamationCircle style={{color: 'orange'}}/>
         </OverlayTrigger>;
     }
 
@@ -223,7 +223,7 @@ class NewGameConfig extends React.Component {
 
     render() {
         return <div>
-            <Grid>
+            <Container>
                 {!this.props.training &&
                 <Row className="show-grid text-center">
                     <Col xs={12} sm={5} style={this.colStyle}>
@@ -239,8 +239,8 @@ class NewGameConfig extends React.Component {
                         />
                     </Col>
                     <Col xs={6} xsOffset={3} sm={2} smOffset={0} style={this.colStyleButton}>
-                        <Button block bsStyle="primary" onClick={this.swapPlayerSelection}>
-                            <Glyphicon glyph="transfer"/>
+                        <Button block variant="primary" onClick={this.swapPlayerSelection}>
+                            <FaExchangeAlt/>
                         </Button>
                     </Col>
                     <Col xs={12} sm={5} style={this.colStyle}>
@@ -283,14 +283,14 @@ class NewGameConfig extends React.Component {
                 </Row>
                 <Row className="show-grid text-center">
                     <Col xs={12} sm={12} style={this.colStyleButton}>
-                        <Button bsStyle="primary" bsSize="large" block
+                        <Button variant="primary" size="large" block
                                 disabled={this.props.isLoggingIn}
                                 onClick={this.onStartNewGameButtonClicked}>
                             Neues {this.props.training ? "Trainingsspiel" : "Spiel"} starten
                         </Button>
                     </Col>
                 </Row>
-            </Grid>
+            </Container>
         </div>
     }
 }

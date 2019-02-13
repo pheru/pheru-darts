@@ -1,8 +1,9 @@
 import React from 'react'
-import {Alert, Button, ControlLabel, FormControl, Glyphicon} from "react-bootstrap";
+import {Alert, Button, FormLabel, FormControl} from "react-bootstrap";
 import PropTypes from 'prop-types';
 import DeletionConfirmationModal from "../../modals/DeletionConfirmationModal";
 import DocumentUtil from "../../../util/DocumentUtil";
+import {FaTimes} from "react-icons/fa";
 
 const TITLE = "Benutzereinstellungen";
 
@@ -80,14 +81,14 @@ class UserSettings extends React.Component {
                                        name={this.props.userName} isDeleting={this.props.isDeletingUser}
                                        deleteUser={this.props.deleteUser}/>
             <h3 style={{marginTop: 0}}><strong>{TITLE}</strong></h3>
-            <ControlLabel>Benutzername ändern</ControlLabel>
+            <FormLabel>Benutzername ändern</FormLabel>
             <FormControl type="text"
                          className="user-settings-input"
                          disabled={this.props.isDeletingUser || this.props.isModifyingUser}
                          value={this.state.userName}
                          onChange={(e) => this.handleUserNameChange(e.target.value)}
                          placeholder="Benutzername"/>
-            <ControlLabel>Passwort ändern</ControlLabel>
+            <FormLabel>Passwort ändern</FormLabel>
             <FormControl type="password"
                          className="user-settings-input"
                          disabled={this.props.isDeletingUser || this.props.isModifyingUser}
@@ -102,17 +103,17 @@ class UserSettings extends React.Component {
                          placeholder="Neues Passwort wiederholen"/>
             {!this.state.passwordsMatch &&
             <div style={{color: "red"}}>
-                <Glyphicon glyph="remove"/> Passwort muss übereinstimmen
+                <FaTimes/> Passwort muss übereinstimmen
             </div>
             }
-            <ControlLabel style={{marginTop: 15}}>Aktuelles Passwort bestätigen</ControlLabel>
+            <FormLabel style={{marginTop: 15}}>Aktuelles Passwort bestätigen</FormLabel>
             <FormControl type="password"
                          className="user-settings-input"
                          disabled={this.props.isDeletingUser || this.props.isModifyingUser}
                          value={this.state.currentPassword}
                          onChange={(e) => this.handleCurrentPasswordChange(e.target.value)}
                          placeholder="Aktuelles Passwort"/>
-            <Button bsStyle="primary" style={{display: "block", margin: "auto auto 10px"}}
+            <Button variant="primary" style={{display: "block", margin: "auto auto 10px"}}
                     disabled={this.props.isDeletingUser || this.props.isModifyingUser || this.state.saveButtonDisabled}
                     onClick={() => this.props.modifyUser(
                         this.state.currentPassword,
@@ -122,9 +123,9 @@ class UserSettings extends React.Component {
                 Änderungen speichern
             </Button>
 
-            <Alert bsStyle="danger" style={{marginTop: 25}}>
+            <Alert variant="danger" style={{marginTop: 25}}>
                 <h3 style={{marginTop: 0}}><strong>Benutzerkonto löschen</strong></h3>
-                <Button style={{display: "block", margin: "auto"}} bsStyle="danger" disabled={this.props.disabled}
+                <Button style={{display: "block", margin: "auto"}} variant="danger" disabled={this.props.disabled}
                         onClick={() => this.showDeletionConfirmationModal(true)}>
                     Benutzer löschen
                 </Button>

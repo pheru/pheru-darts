@@ -1,5 +1,18 @@
 import React from 'react'
-import {Glyphicon} from "react-bootstrap";
+import {
+    FaBell,
+    FaChartPie,
+    FaCog,
+    FaEdit,
+    FaInfoCircle,
+    FaListAlt,
+    FaPlay,
+    FaRunning,
+    FaSignInAlt,
+    FaSignOutAlt,
+    FaUserCog,
+    FaVolumeUp
+} from "react-icons/fa";
 
 class NavigationItem {
     constructor(text, icon, route) {
@@ -12,17 +25,17 @@ class NavigationItem {
 const SETTINGS_PATH = "/settings";
 
 export const NAVIGATION_ITEM = {
-    NEW_GAME: new NavigationItem("Neues Spiel", <Glyphicon glyph="edit"/>, "/newgame"),
-    NEW_TRAINING: new NavigationItem("Training", <Glyphicon glyph="upload"/>,"/newtraining"),
-    GAME: new NavigationItem("Aktuelles Spiel", <Glyphicon glyph="play-circle"/>, "/game"),
-    NOTIFICATIONS: new NavigationItem("Mitteilungen", <Glyphicon glyph="bell"/>, "/notifications"),
-    STATISTICS: new NavigationItem("Statistiken", <Glyphicon glyph="stats"/>, "/statistics"),
-    SETTINGS: new NavigationItem("Einstellungen", <Glyphicon glyph="cog"/>, SETTINGS_PATH),
-    SETTINGS_USER: new NavigationItem("Benutzereinstellungen", <Glyphicon glyph="user"/>, SETTINGS_PATH + "/user"),
-    SETTINGS_SPEECH: new NavigationItem("Spracheinstellungen", <Glyphicon glyph="volume-up"/>, SETTINGS_PATH + "/speech"),
-    SETTINGS_PERMISSIONS: new NavigationItem("Berechtigungen", <Glyphicon glyph="list-alt"/>, SETTINGS_PATH + "/permissions"),
-    ABOUT: new NavigationItem("Info", <Glyphicon glyph="info-sign"/>, "/about"),
+    NEW_GAME: new NavigationItem("Neues Spiel", <FaEdit/>, "/newgame"),
+    NEW_TRAINING: new NavigationItem("Training", <FaRunning/>,"/newtraining"),
+    GAME: new NavigationItem("Aktuelles Spiel", <FaPlay/>, "/game"),
+    NOTIFICATIONS: new NavigationItem("Mitteilungen", <FaBell/>, "/notifications"),
+    STATISTICS: new NavigationItem("Statistiken", <FaChartPie/>, "/statistics"),
+    SETTINGS: new NavigationItem("Einstellungen", <FaCog/>, SETTINGS_PATH),
+    SETTINGS_USER: new NavigationItem("Benutzereinstellungen", <FaUserCog/>, SETTINGS_PATH + "/user"),
+    SETTINGS_SPEECH: new NavigationItem("Spracheinstellungen", <FaVolumeUp/>, SETTINGS_PATH + "/speech"),
+    SETTINGS_PERMISSIONS: new NavigationItem("Berechtigungen", <FaListAlt/>, SETTINGS_PATH + "/permissions"),
+    ABOUT: new NavigationItem("Info", <FaInfoCircle/>, "/about"),
 
-    LOGIN: new NavigationItem("Anmelden", <Glyphicon glyph="log-in"/>),
-    LOGOUT: new NavigationItem("Abmelden", <Glyphicon glyph="log-out"/>)
+    LOGIN: new NavigationItem("Anmelden", <FaSignInAlt/>),
+    LOGOUT: new NavigationItem("Abmelden", <FaSignOutAlt/>)
 };

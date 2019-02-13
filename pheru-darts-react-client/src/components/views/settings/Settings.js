@@ -1,5 +1,4 @@
 import React from 'react'
-import {Glyphicon} from "react-bootstrap";
 import PropTypes from "prop-types";
 import SpeechSettings from "./SpeechSettings";
 import {NAVIGATION_ITEM} from "../../../constants/navigationItems";
@@ -9,6 +8,7 @@ import NavigationBarItem from "../../general/navigationbar/NavigationBarItem";
 import OnlyForLoggedInUsersContainer from "../../../containers/general/OnlyForLoggedInUsersContainer";
 import UserSettingsContainer from "../../../containers/views/settings/UserSettingsContainer";
 import PermissionSettingsContainer from "../../../containers/views/settings/PermissionSettingsContainer";
+import {FaCogs} from "react-icons/fa";
 
 class Settings extends React.Component {
 
@@ -23,7 +23,7 @@ class Settings extends React.Component {
             <NavigationBarItem key="settings_speech_link" navigationItem={NAVIGATION_ITEM.SETTINGS_SPEECH}/>,
         ];
         let navigationBarDropdown = new DropdownConfig("settings_dropdown",
-            <Glyphicon glyph="cog"/>, "Weitere Einstellungen");
+            <FaCogs/>, "Weitere Einstellungen");
         let navContainer = new NavigationBarContainer(navigationBarItems, navigationBarItems, navigationBarDropdown);
         return <div style={{textAlign: 'center'}}>
             <NavigationBar style={{top: 40, borderTop: "1px solid black", minHeight: 31}}

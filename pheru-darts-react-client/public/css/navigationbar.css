@@ -35,6 +35,7 @@
 .navigation-bar-item {
     color: #9d9d9d;
     background-color: transparent;
+    height: 40px;
     border: 0;
     display: inline-block;
     padding: 10px;
@@ -107,6 +108,7 @@
     background-color: #222;
     color: #9d9d9d;
     border: none;
+    height: 40px;
     border-radius: 0;
     padding-top: 10px;
     padding-bottom: 10px;

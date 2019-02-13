@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 class ButtonTile extends React.Component {
 
     render() {
-        return <Button bsStyle="primary"
+        return <Button variant="primary"
                        disabled={this.props.disabled}
                        style={{
                            margin: 5,

@@ -14,7 +14,7 @@ class SpeechSettings extends React.Component {
     render() {
         return <div style={{...this.props.style}}>
             <h3 style={{marginTop: 0}}><strong>{TITLE}</strong></h3>
-            <Alert bsStyle="warning" style={{marginBottom: 5, textAlign: 'center'}}>
+            <Alert variant="warning" style={{marginBottom: 5, textAlign: 'center'}}>
                 Diese Einstellungen sind abhängig vom verwendeten Endgerät und Browser.<br/>
                 Daher werden sie nicht in Deinem Benutzerkonto gespeichert, sondern in Deinem Browser.
             </Alert>
