@@ -73,9 +73,7 @@ class App extends React.Component {
                      left: 0,
                      right: 0,
                      bottom: 0,
-                     paddingTop: 10,
-                     paddingLeft: 20,
-                     paddingRight: 20,
+                     padding: 5,
                      marginTop: 40,
                      overflowY: "auto"
                  }}>

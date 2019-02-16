@@ -24,3 +24,15 @@
 .well {
     background-color: white;
 }
+
+.center-content {
+    text-align: center;
+    white-space: nowrap;
+}
+
+.center-content:before {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}

@@ -5,12 +5,14 @@ import PropTypes from "prop-types";
 import SpeechUtil from "../../../util/SpeechUtil";
 import DocumentUtil from "../../../util/DocumentUtil";
 import ScoreButtons from "./ScoreButtons";
+import WindowUtil from "../../../util/WindowUtil";
 
 class Game extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            landscapeOrientation: WindowUtil.isLandscapeOrientation(),
             gameFinishedModalShow: props.winner !== undefined,
             rematchStartingPlayer: props.players[props.players.length > 1 ? 1 : 0]
         };
@@ -27,12 +29,14 @@ class Game extends React.Component {
         this.modalBodyStyle = {
             textAlign: 'center'
         };
+        this.updateOrientation = this.updateOrientation.bind(this);
         this.handleGameFinishedModalClose = this.handleGameFinishedModalClose.bind(this);
         this.handleRematchStartingPlayerChanged = this.handleRematchStartingPlayerChanged.bind(this);
     }
 
     componentDidMount() {
         DocumentUtil.setTitlePrefix("Aktuelles Spiel");
+        window.addEventListener("resize", this.updateOrientation);
     }
 
     componentDidUpdate(prevProps) {
@@ -49,6 +53,17 @@ class Game extends React.Component {
         }
     }
 
+    componentWillUnmount() {
+        window.removeEventListener("resize", this.updateOrientation);
+    }
+
+    updateOrientation(e) {
+        let landscapeOrientation = WindowUtil.isLandscapeOrientation();
+        if (this.state.landscapeOrientation !== landscapeOrientation) {
+            this.setState({landscapeOrientation});
+        }
+    }
+
     handleRematchStartingPlayerChanged(player) {
         this.setState({rematchStartingPlayer: player});
     }
@@ -58,43 +73,33 @@ class Game extends React.Component {
     }
 
     render() {
+        let upperContainerStyle = this.state.landscapeOrientation ? {height: "40%", display: "flex"} : {height: "40%"};
+        let playerWrapperStyle = this.state.landscapeOrientation ? {paddingRight: 8, paddingBottom: 8, height: "100%", width: "45%"} : {height: "40%", width: "100%"};
+        let playerStyle = {height: "100%", width: "100%"};
+        let buttonContainerStyle = this.state.landscapeOrientation ? {display: "flex", flexDirection: "column", height: "100%", width: "10%"} : {height: "20%", width: "100%"};
+        let buttonStyle = this.state.landscapeOrientation ? {flexGrow: 1, marginBottom: 8, lineHeight: 0, fontSize: "6vh"} : {height: "100%", width: "50%"};
         return <div style={{height: "100%"}}>
-            <Grid>
-                <Row className="show-grid text-center">
-                    <Col xs={12} xsPush={0} sm={2} smPush={10} style={{...this.colStyle, marginBottom: 0}}>
-                        <Row className="show-grid text-center">
-                            <Col xs={5} sm={12}
-                                 style={{...this.colStyleButton, fontWeight: 'bold'}}>
-                                <Well style={{margin: 0, padding: 2}}>
-                                    <div style={{borderBottom: '0.5px black solid'}}>{this.props.startScore}</div>
-                                    <div>{this.props.checkInMode.text} {this.props.checkOutMode.text}</div>
-                                </Well>
-                            </Col>
-                            <Col xs={5} sm={12} style={this.colStyleButton}>
-                                <Button bsStyle='warning' bsSize='large' block
-                                        onClick={() => this.props.undoDart()}>
-                                    <Glyphicon glyph="erase"/>
-                                </Button>
-                            </Col>
-                            <Col xs={2} sm={12} style={this.colStyleButton}>
-                                <Button bsStyle='info' bsSize='large' block
-                                        onClick={() => this.props.toggleSpeechOutput()}>
-                                    <Glyphicon glyph={this.props.speechOutputActive ? "volume-up" : "volume-off"}/>
-                                </Button>
-                            </Col>
-                        </Row>
-                    </Col>
-                    <Col xs={12} xsPull={0} sm={this.props.training ? 10 : 5} smPull={2} style={this.colStyle}>
-                        <PlayerContainer index={0}/>
-                    </Col>
-                    {!this.props.training &&
-                    <Col xs={12} xsPull={0} sm={5} smPull={2} style={this.colStyle}>
-                        <PlayerContainer index={1}/>
-                    </Col>
-                    }
-                </Row>
-            </Grid>
-            <ScoreButtons addDart={this.props.addDart}/>
+            <div style={upperContainerStyle}>
+                <div style={playerWrapperStyle}>
+                    <PlayerContainer style={playerStyle} index={0}/>
+                </div>
+                {!this.props.training &&
+                    <div style={playerWrapperStyle}>
+                        <PlayerContainer style={playerStyle} index={1}/>
+                    </div>
+                }
+                <div style={buttonContainerStyle}>
+                    <Button bsStyle='warning' style={buttonStyle}
+                            onClick={() => this.props.undoDart()}>
+                        <Glyphicon glyph="erase"/>
+                    </Button>
+                    <Button bsStyle='info' style={buttonStyle}
+                            onClick={() => this.props.toggleSpeechOutput()}>
+                        <Glyphicon glyph={this.props.speechOutputActive ? "volume-up" : "volume-off"}/>
+                    </Button>
+                </div>
+            </div>
+            <ScoreButtons style={{height: "60%", width: "100%"}} addDart={this.props.addDart}/>
 
             <Modal dialogClassName='modal-bottom' show={this.state.gameFinishedModalShow}
                    onHide={this.handleGameFinishedModalClose}
