@@ -20,8 +20,8 @@ class FullscreenButton extends React.Component {
 
     componentWillUnmount() {
         document.removeEventListener("fullscreenchange", this.fullscreenchangeEventListener);
-        document.addEventListener("webkitfullscreenchange", this.fullscreenchangeEventListener);
-        document.addEventListener("msfullscreenchange", this.fullscreenchangeEventListener);
+        document.removeEventListener("webkitfullscreenchange", this.fullscreenchangeEventListener);
+        document.removeEventListener("msfullscreenchange", this.fullscreenchangeEventListener);
     }
 
     fullscreenchangeEventListener(e) {
