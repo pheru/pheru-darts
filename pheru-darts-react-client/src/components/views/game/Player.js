@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from "prop-types";
-import WindowUtil from "../../../util/WindowUtil";
 
 const DEFAULT_STYLE = {
     textAlign: "center",
@@ -14,12 +13,11 @@ const BORDER_RADIUS = 6;
 class Player extends React.Component {
 
     render() {
-        let landscapeOrientation = WindowUtil.isLandscapeOrientation();
-        let fontSizeDart = landscapeOrientation ? "6vh" : "3vh";
-        let fontSizeName = landscapeOrientation ? "6vh" : "3vh";
-        let fontSizeScore = landscapeOrientation ? "9vh" : "5vh";
-        let fontSizeDartCount = landscapeOrientation ? "5vh" : "3vh";
-        let fontSizeAverage = landscapeOrientation ? "5vh" : "3vh";
+        let fontSizeDart = this.props.landscapeOrientation ? "6vh" : "3vh";
+        let fontSizeName = this.props.landscapeOrientation ? "6vh" : "3vh";
+        let fontSizeScore = this.props.landscapeOrientation ? "9vh" : "5vh";
+        let fontSizeDartCount = this.props.landscapeOrientation ? "5vh" : "3vh";
+        let fontSizeAverage = this.props.landscapeOrientation ? "5vh" : "3vh";
         return <div style={{...DEFAULT_STYLE, borderRadius: BORDER_RADIUS, ...this.props.style}}
                     className={"player" + (this.props.current ? " player-current" : "")}>
             <div style={{
@@ -84,6 +82,7 @@ class Player extends React.Component {
 }
 
 Player.propTypes = {
+    landscapeOrientation: PropTypes.bool.isRequired,
     name: PropTypes.string.isRequired,
     score: PropTypes.number.isRequired,
     dartCount: PropTypes.number.isRequired,

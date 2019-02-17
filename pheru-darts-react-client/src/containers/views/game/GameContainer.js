@@ -3,10 +3,11 @@ import Game from "../../../components/views/game/Game";
 import {addDart, exitGame, rematch, undoDart} from "../../../actions/game";
 import {archiveGame} from "../../../actions/games";
 import {toggleSpeechOutput} from "../../../actions/speech";
-import {setNavigationBarVisibility, toggleNavigationBarVisibility} from "../../../actions/app";
+import {toggleNavigationBarVisibility} from "../../../actions/app";
 
 const mapStateToProps = function (state) {
     return {
+        landscapeOrientation: state.app.landscapeOrientation,
         startScore: state.game.score,
         checkInMode: state.game.checkInMode,
         checkOutMode: state.game.checkOutMode,

@@ -1,7 +1,12 @@
-import {SET_NAVIGATION_BAR_VISIBILITY, TOGGLE_NAVIGATION_BAR_VISIBILITY} from "../actions/app";
+import {
+    SET_LANDSCAPE_ORIENTATION,
+    SET_NAVIGATION_BAR_VISIBILITY,
+    TOGGLE_NAVIGATION_BAR_VISIBILITY
+} from "../actions/app";
 
 function app(state = {
-    navigationBarVisible: true
+    navigationBarVisible: true,
+    landscapeOrientation: true
 }, action) {
     switch (action.type) {
         case TOGGLE_NAVIGATION_BAR_VISIBILITY: {
@@ -14,6 +19,12 @@ function app(state = {
             return {
                 ...state,
                 navigationBarVisible: action.visibility
+            };
+        }
+        case SET_LANDSCAPE_ORIENTATION: {
+            return {
+                ...state,
+                landscapeOrientation: action.landscapeOrientation
             };
         }
         default:

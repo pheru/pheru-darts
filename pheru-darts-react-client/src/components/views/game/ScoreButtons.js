@@ -1,7 +1,6 @@
 import React from 'react'
 import {Button} from "react-bootstrap";
 import PropTypes from "prop-types";
-import WindowUtil from "../../../util/WindowUtil";
 
 class ScoreButtons extends React.Component {
 
@@ -40,16 +39,15 @@ class ScoreButtons extends React.Component {
     }
 
     render() {
-        let landscapeOrientation = WindowUtil.isLandscapeOrientation();
         let rows = [];
-        let rowCount = landscapeOrientation ? 4 : 6;
-        let buttonsPerRow = landscapeOrientation ? 6 : 4;
+        let rowCount = this.props.landscapeOrientation ? 4 : 6;
+        let buttonsPerRow = this.props.landscapeOrientation ? 6 : 4;
         let rowHeight = 100.0 / rowCount + "%";
         let buttonStyle = {
             height: "100%",
             width: 100.0 / buttonsPerRow + "%",
             lineHeight: 0,
-            fontSize: landscapeOrientation ? "6vh" : "3vh"
+            fontSize: this.props.landscapeOrientation ? "6vh" : "3vh"
         };
 
         let buttons = {};
@@ -99,6 +97,7 @@ class ScoreButtons extends React.Component {
 }
 
 ScoreButtons.propTypes = {
+    landscapeOrientation: PropTypes.bool.isRequired,
     addDart: PropTypes.func.isRequired
 };
 

@@ -14,17 +14,23 @@ import SimpleModalContainer from "../../containers/modals/SimpleModalContainer";
 import MainContainer from "../../containers/views/main/MainContainer";
 import NotificationsContainer from "../../containers/views/notifications/NotificationsContainer";
 import AppNavigationBarContainer from "../../containers/app/AppNavigationBarContainer";
+import WindowUtil from "../../util/WindowUtil";
 
 class App extends React.Component {
 
     constructor(props) {
         super(props);
         this.appContainerRef = React.createRef();
+
+        this.updateOrientation = this.updateOrientation.bind(this);
         this.onBeforeUnload = this.onBeforeUnload.bind(this);
         this.onUnload = this.onUnload.bind(this);
     }
 
     componentDidMount() {
+        this.updateOrientation();
+        window.addEventListener("resize", this.updateOrientation);
+
         window.onunload = this.onUnload;
         window.onbeforeunload = this.onBeforeUnload;
 
@@ -60,6 +66,17 @@ class App extends React.Component {
     componentDidUpdate(prevProps) {
         if (this.props.location !== prevProps.location) {
             this.appContainerRef.current.scrollTo(0, 0);
+        }
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener("resize", this.updateOrientation);
+    }
+
+    updateOrientation() {
+        let landscapeOrientation = WindowUtil.isLandscapeOrientation();
+        if (this.props.landscapeOrientation !== landscapeOrientation) {
+            this.props.setLandscapeOrientation(landscapeOrientation);
         }
     }
 
@@ -105,6 +122,7 @@ class App extends React.Component {
 }
 
 App.propTypes = {
+    landscapeOrientation: PropTypes.bool.isRequired,
     userName: PropTypes.string,
 
     isLoggedIn: PropTypes.bool.isRequired,
@@ -130,7 +148,8 @@ App.propTypes = {
 
     unreadNotificationsCount: PropTypes.number.isRequired,
 
-    selectedVoice: PropTypes.object
+    selectedVoice: PropTypes.object,
+    setLandscapeOrientation: PropTypes.func.isRequired,
 };
 
 export default App;

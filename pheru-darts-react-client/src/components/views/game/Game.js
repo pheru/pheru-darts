@@ -5,7 +5,6 @@ import PropTypes from "prop-types";
 import SpeechUtil from "../../../util/SpeechUtil";
 import DocumentUtil from "../../../util/DocumentUtil";
 import ScoreButtons from "./ScoreButtons";
-import WindowUtil from "../../../util/WindowUtil";
 import FullscreenButton from "../../general/FullscreenButton";
 
 class Game extends React.Component {
@@ -13,21 +12,18 @@ class Game extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            landscapeOrientation: WindowUtil.isLandscapeOrientation(),
             gameFinishedModalShow: props.winner !== undefined,
             rematchStartingPlayer: props.players[props.players.length > 1 ? 1 : 0]
         };
         this.modalBodyStyle = {
             textAlign: 'center'
         };
-        this.updateOrientation = this.updateOrientation.bind(this);
         this.handleGameFinishedModalClose = this.handleGameFinishedModalClose.bind(this);
         this.handleRematchStartingPlayerChanged = this.handleRematchStartingPlayerChanged.bind(this);
     }
 
     componentDidMount() {
         DocumentUtil.setTitlePrefix("Aktuelles Spiel");
-        window.addEventListener("resize", this.updateOrientation);
     }
 
     componentDidUpdate(prevProps) {
@@ -44,17 +40,6 @@ class Game extends React.Component {
         }
     }
 
-    componentWillUnmount() {
-        window.removeEventListener("resize", this.updateOrientation);
-    }
-
-    updateOrientation(e) {
-        let landscapeOrientation = WindowUtil.isLandscapeOrientation();
-        if (this.state.landscapeOrientation !== landscapeOrientation) {
-            this.setState({landscapeOrientation});
-        }
-    }
-
     handleRematchStartingPlayerChanged(player) {
         this.setState({rematchStartingPlayer: player});
     }
@@ -65,12 +50,12 @@ class Game extends React.Component {
 
     render() {
         //TODO refactoren (css, Komponenten, etc.)
-        let upperContainerStyle = this.state.landscapeOrientation ? {
+        let upperContainerStyle = this.props.landscapeOrientation ? {
             height: "38%",
             display: "flex",
             flexGrow: 1
         } : {height: "37%"};
-        let playerWrapperStyle = this.state.landscapeOrientation ? {
+        let playerWrapperStyle = this.props.landscapeOrientation ? {
             paddingRight: 3,
             paddingBottom: 3,
             height: "100%",
@@ -81,7 +66,7 @@ class Game extends React.Component {
             paddingBottom: 3
         };
         let playerStyle = {height: "100%", width: "100%"};
-        let buttonContainerStyle = this.state.landscapeOrientation ? {
+        let buttonContainerStyle = this.props.landscapeOrientation ? {
             display: "flex",
             flexDirection: "column",
             height: "100%",
@@ -90,7 +75,7 @@ class Game extends React.Component {
             display: "flex", flexDirection: "row",
             height: "9%", width: "100%", paddingBottom: 3
         };
-        let buttonStyle = this.state.landscapeOrientation ? {
+        let buttonStyle = this.props.landscapeOrientation ? {
             flexGrow: 1,
             width: "100%",
             marginBottom: 3,
@@ -100,12 +85,12 @@ class Game extends React.Component {
         let popoverButtonStyle = {
             marginLeft: 3,
             marginRight: 3,
-            fontSize: this.state.landscapeOrientation ? "8vh" : "6vh"
+            fontSize: this.props.landscapeOrientation ? "8vh" : "6vh"
         };
 
         let buttonContainer = <div style={buttonContainerStyle}>
             <OverlayTrigger container={this} rootClose trigger="click"
-                            placement={this.state.landscapeOrientation ? "left" : "top"}
+                            placement={this.props.landscapeOrientation ? "left" : "top"}
                             overlay={
                                 <Popover>
                                     <FullscreenButton bsStyle="primary" style={popoverButtonStyle}/>
@@ -142,12 +127,12 @@ class Game extends React.Component {
                     <PlayerContainer style={playerStyle} index={1}/>
                 </div>
                 }
-                {this.state.landscapeOrientation && buttonContainer}
+                {this.props.landscapeOrientation && buttonContainer}
             </div>
-            <div style={{height: this.state.landscapeOrientation ? "8%" : "12%", margin: 0, paddingBottom: 3}}>
+            <div style={{height: this.props.landscapeOrientation ? "8%" : "12%", margin: 0, paddingBottom: 3}}>
                 <Well style={{
                     display: "flex",
-                    flexDirection: this.state.landscapeOrientation ? "row" : "column",
+                    flexDirection: this.props.landscapeOrientation ? "row" : "column",
                     justifyContent: "space-between",
                     alignItems: "center",
                     alignContent: "center",
@@ -157,7 +142,7 @@ class Game extends React.Component {
                     paddingLeft: 10,
                     paddingRight: 10,
                     fontWeight: "bold",
-                    fontSize: this.state.landscapeOrientation ? "4vh" : "3vh"
+                    fontSize: this.props.landscapeOrientation ? "4vh" : "3vh"
                 }}>
                     {/*<div>Kein Checkout möglich</div>*/}
                     <div>
@@ -165,9 +150,9 @@ class Game extends React.Component {
                     </div>
                 </Well>
             </div>
-            {!this.state.landscapeOrientation && buttonContainer}
-            <ScoreButtons style={{height: this.state.landscapeOrientation ? "54%" : "42%", width: "100%"}}
-                          addDart={this.props.addDart}/>
+            {!this.props.landscapeOrientation && buttonContainer}
+            <ScoreButtons style={{height: this.props.landscapeOrientation ? "54%" : "42%", width: "100%"}}
+                          addDart={this.props.addDart} landscapeOrientation={this.props.landscapeOrientation}/>
 
             <Modal dialogClassName='modal-bottom' show={this.state.gameFinishedModalShow}
                    onHide={this.handleGameFinishedModalClose}
@@ -215,6 +200,7 @@ class Game extends React.Component {
 }
 
 Game.propTypes = {
+    landscapeOrientation: PropTypes.bool.isRequired,
     startScore: PropTypes.number.isRequired,
     checkInMode: PropTypes.object.isRequired,
     checkOutMode: PropTypes.object.isRequired,

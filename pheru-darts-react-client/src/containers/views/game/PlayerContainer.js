@@ -17,6 +17,7 @@ const mapStateToProps = function (state, ownProps) {
     let current = turnInfo.turnInformation.current.playerIndex === ownProps.index;
     let average = turnInfo.playerInformation[ownProps.index].average;
     return {
+        landscapeOrientation: state.app.landscapeOrientation,
         name: player.name,
         score: score,
         dartCount: dartCount,

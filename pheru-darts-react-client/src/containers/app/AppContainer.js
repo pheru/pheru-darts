@@ -6,8 +6,11 @@ import {fetchPermittedUsers, fetchPlayableUsers} from "../../actions/playerPermi
 import {showConfirmation} from "../../actions/modal";
 import {exitGame} from "../../actions/game";
 import {setPossibleVoices, setSelectedVoiceByName} from "../../actions/speech";
+import {setLandscapeOrientation} from "../../actions/app";
 
 const mapStateToProps = state => ({
+    landscapeOrientation: state.app.landscapeOrientation,
+
     userName: state.user.name,
 
     isLoggedIn: state.user.isLoggedIn,
@@ -27,15 +30,16 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    fetchPlayableUsers : () => dispatch(fetchPlayableUsers()),
-    fetchPermittedUsers : () => dispatch(fetchPermittedUsers()),
+    fetchPlayableUsers: () => dispatch(fetchPlayableUsers()),
+    fetchPermittedUsers: () => dispatch(fetchPermittedUsers()),
     showLogin: () => dispatch(showLoginModal()),
     loginByToken: (showErrorOnFailure) => dispatch(loginByToken(showErrorOnFailure)),
     logout: () => dispatch(logout()),
     showConfirmation: (title, message, onConfirm, onCancel) => dispatch(showConfirmation(title, message, onConfirm, onCancel)),
     exitGame: () => dispatch(exitGame()),
     setPossibleVoices: (voices) => dispatch(setPossibleVoices(voices)),
-    setSelectedVoiceByName: (voice) => dispatch(setSelectedVoiceByName(voice))
+    setSelectedVoiceByName: (voice) => dispatch(setSelectedVoiceByName(voice)),
+    setLandscapeOrientation: (landscapeOrientation) => dispatch(setLandscapeOrientation(landscapeOrientation))
 });
 
 export default withRouter(connect(
