@@ -40,39 +40,44 @@ class ScoreButtons extends React.Component {
     }
 
     render() {
+        let landscapeOrientation = WindowUtil.isLandscapeOrientation();
         let rows = [];
-        let rowCount = WindowUtil.isLandscapeOrientation() ? 4 : 6;
-        let buttonsPerRow = WindowUtil.isLandscapeOrientation() ? 6 : 4;
+        let rowCount = landscapeOrientation ? 4 : 6;
+        let buttonsPerRow = landscapeOrientation ? 6 : 4;
         let rowHeight = 100.0 / rowCount + "%";
         let buttonStyle = {
             height: "100%",
             width: 100.0 / buttonsPerRow + "%",
             lineHeight: 0,
-            fontSize: WindowUtil.isLandscapeOrientation() ? "6vh" : "5vh"
+            fontSize: landscapeOrientation ? "6vh" : "3vh"
         };
 
         let buttons = {};
         for (let i = 1; i <= 20; i++) {
             buttons[i - 1] =
-                <Button style={buttonStyle} className="score-button" onClick={() => this.addDart(i)} key={"scorebuttons_button_" + i}
-                        bsStyle="primary" >{i}</Button>;
+                <Button style={{...buttonStyle}} className="score-button" onClick={() => this.addDart(i)}
+                        key={"scorebuttons_button_" + i}
+                        bsStyle="primary">{i}</Button>;
         }
         buttons[20] =
-            <Button style={buttonStyle} className="score-button" onClick={() => this.addDart(25)} bsStyle="primary">
+            <Button style={{...buttonStyle}} className="score-button" onClick={() => this.addDart(25)}
+                    bsStyle="primary">
                 Bull
             </Button>;
         buttons[21] =
-            <Button style={buttonStyle} className={"score-button" + (this.state.multiplier === 2 ? " multiplier-toggled" : "")}
+            <Button style={{...buttonStyle}}
+                    className={"score-button" + (this.state.multiplier === 2 ? " multiplier-toggled" : "")}
                     onClick={this.toggleDouble} bsStyle="success">
                 Double
             </Button>;
         buttons[22] =
-            <Button style={buttonStyle} className={"score-button" + (this.state.multiplier === 3 ? " multiplier-toggled" : "")}
+            <Button style={{...buttonStyle}}
+                    className={"score-button" + (this.state.multiplier === 3 ? " multiplier-toggled" : "")}
                     onClick={this.toggleTriple} bsStyle="success">
                 Triple
             </Button>;
         buttons[23] =
-            <Button style={buttonStyle} className="score-button" onClick={() => this.addDart(0)} bsStyle="danger" >
+            <Button style={{...buttonStyle}} className="score-button" onClick={() => this.addDart(0)} bsStyle="danger">
                 0
             </Button>;
 
@@ -83,6 +88,10 @@ class ScoreButtons extends React.Component {
             }
             rows.push(<div style={{height: rowHeight, width: "100%"}}>{rowButtons}</div>)
         }
+        rows[0].props.children[0].props.style.borderTopLeftRadius = 4;
+        rows[0].props.children[rows[0].props.children.length - 1].props.style.borderTopRightRadius = 4;
+        rows[rows.length - 1].props.children[0].props.style.borderBottomLeftRadius = 4;
+        rows[rows.length - 1].props.children[rows[rows.length - 1].props.children.length - 1].props.style.borderBottomRightRadius = 4;
         return <div style={{...this.props.style}}>
             {rows}
         </div>

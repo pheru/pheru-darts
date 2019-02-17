@@ -1,11 +1,12 @@
 import React from 'react'
 import PlayerContainer from "../../../containers/views/game/PlayerContainer";
-import {Button, Col, Dropdown, Glyphicon, Grid, MenuItem, Modal, Row, Well} from "react-bootstrap";
+import {Button, Dropdown, Glyphicon, MenuItem, Modal, OverlayTrigger, Popover, Well} from "react-bootstrap";
 import PropTypes from "prop-types";
 import SpeechUtil from "../../../util/SpeechUtil";
 import DocumentUtil from "../../../util/DocumentUtil";
 import ScoreButtons from "./ScoreButtons";
 import WindowUtil from "../../../util/WindowUtil";
+import FullscreenButton from "../../general/FullscreenButton";
 
 class Game extends React.Component {
 
@@ -73,33 +74,88 @@ class Game extends React.Component {
     }
 
     render() {
-        let upperContainerStyle = this.state.landscapeOrientation ? {height: "40%", display: "flex"} : {height: "40%"};
-        let playerWrapperStyle = this.state.landscapeOrientation ? {paddingRight: 8, paddingBottom: 8, height: "100%", width: "45%"} : {height: "40%", width: "100%"};
+        let upperContainerStyle = this.state.landscapeOrientation ? {
+            height: "38%",
+            display: "flex",
+            flexGrow: 1
+        } : {height: "46%"};
+        let playerWrapperStyle = this.state.landscapeOrientation ? {
+            paddingRight: 3,
+            paddingBottom: 3,
+            height: "100%",
+            width: this.props.training ? "90%" : "45%"
+        } : {height: this.props.training ? "80%" : "40%", width: "100%"};
         let playerStyle = {height: "100%", width: "100%"};
-        let buttonContainerStyle = this.state.landscapeOrientation ? {display: "flex", flexDirection: "column", height: "100%", width: "10%"} : {height: "20%", width: "100%"};
-        let buttonStyle = this.state.landscapeOrientation ? {flexGrow: 1, marginBottom: 8, lineHeight: 0, fontSize: "6vh"} : {height: "100%", width: "50%"};
+        let buttonContainerStyle = this.state.landscapeOrientation ? {
+            display: "flex",
+            flexDirection: "column",
+            height: "100%",
+            width: "10%"
+        } : {height: "20%", width: "100%"};
+        let buttonStyle = this.state.landscapeOrientation ? {
+            flexGrow: 1,
+            marginBottom: 3,
+            lineHeight: 0,
+            fontSize: "6vh"
+        } : {height: "100%", width: "50%", fontSize: "4vh"};
+        let popoverButtonStyle = {
+            marginLeft: 3,
+            marginRight: 3,
+            fontSize: this.state.landscapeOrientation ? "8vh" : "6vh"
+        };
         return <div style={{height: "100%"}}>
             <div style={upperContainerStyle}>
                 <div style={playerWrapperStyle}>
                     <PlayerContainer style={playerStyle} index={0}/>
                 </div>
                 {!this.props.training &&
-                    <div style={playerWrapperStyle}>
-                        <PlayerContainer style={playerStyle} index={1}/>
-                    </div>
+                <div style={playerWrapperStyle}>
+                    <PlayerContainer style={playerStyle} index={1}/>
+                </div>
                 }
                 <div style={buttonContainerStyle}>
+                    <OverlayTrigger container={this} rootClose trigger="click"
+                                    placement={this.state.landscapeOrientation ? "left" : "top"}
+                                    overlay={
+                                        <Popover>
+                                            <FullscreenButton bsStyle="primary" style={popoverButtonStyle}/>
+                                            <Button bsStyle='primary' style={{
+                                                ...popoverButtonStyle,
+                                                transform: this.props.navigationBarVisible ? "" : "rotate(180deg)"
+                                            }} onClick={this.props.toggleNavigationBar}>
+                                                <Glyphicon glyph="eject"/>
+                                            </Button>
+                                            <Button bsStyle='primary' style={popoverButtonStyle}
+                                                    onClick={this.props.toggleSpeechOutput}>
+                                                <Glyphicon
+                                                    glyph={this.props.speechOutputActive ? "volume-up" : "volume-off"}/>
+                                            </Button>
+                                        </Popover>
+                                    }>
+                        <Button bsStyle='primary' style={buttonStyle}>
+                            <Glyphicon glyph="option-horizontal"/>
+                        </Button>
+                    </OverlayTrigger>
                     <Button bsStyle='warning' style={buttonStyle}
                             onClick={() => this.props.undoDart()}>
                         <Glyphicon glyph="erase"/>
                     </Button>
-                    <Button bsStyle='info' style={buttonStyle}
-                            onClick={() => this.props.toggleSpeechOutput()}>
-                        <Glyphicon glyph={this.props.speechOutputActive ? "volume-up" : "volume-off"}/>
-                    </Button>
                 </div>
             </div>
-            <ScoreButtons style={{height: "60%", width: "100%"}} addDart={this.props.addDart}/>
+            <div style={{height: this.state.landscapeOrientation ? "8%" : "12%", margin: 0, paddingBottom: 3}}>
+                <Well style={{
+                    display: "flex", flexDirection: this.state.landscapeOrientation ? "row" : "column", justifyContent: "space-between", alignItems: "center", alignContent: "center",
+                    height: "100%", margin: 0, padding: 0, paddingLeft: 10, paddingRight: 10,
+                    fontWeight: "bold", fontSize: this.state.landscapeOrientation ? "4vh" : "3vh"
+                }}>
+                    <div>Kein Checkout möglich</div>
+                    <div>
+                        [{this.props.startScore}] - [{this.props.checkInMode.text}] - [{this.props.checkOutMode.text}]
+                    </div>
+                </Well>
+            </div>
+            <ScoreButtons style={{height: this.state.landscapeOrientation ? "54%" : "42%", width: "100%"}}
+                          addDart={this.props.addDart}/>
 
             <Modal dialogClassName='modal-bottom' show={this.state.gameFinishedModalShow}
                    onHide={this.handleGameFinishedModalClose}
@@ -152,11 +208,13 @@ Game.propTypes = {
     players: PropTypes.array.isRequired,
     winner: PropTypes.object,
     game: PropTypes.object.isRequired,
+    navigationBarVisible: PropTypes.bool.isRequired,
     addDart: PropTypes.func.isRequired,
     undoDart: PropTypes.func.isRequired,
     exit: PropTypes.func.isRequired,
     rematch: PropTypes.func.isRequired,
     archiveGame: PropTypes.func.isRequired,
+    toggleNavigationBar: PropTypes.func.isRequired,
     toggleSpeechOutput: PropTypes.func.isRequired,
     training: PropTypes.bool,
     isLoggedIn: PropTypes.bool.isRequired,

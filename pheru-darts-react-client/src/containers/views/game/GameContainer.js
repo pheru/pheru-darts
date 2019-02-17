@@ -3,31 +3,22 @@ import Game from "../../../components/views/game/Game";
 import {addDart, exitGame, rematch, undoDart} from "../../../actions/game";
 import {archiveGame} from "../../../actions/games";
 import {toggleSpeechOutput} from "../../../actions/speech";
+import {setNavigationBarVisibility, toggleNavigationBarVisibility} from "../../../actions/app";
 
 const mapStateToProps = function (state) {
-    let startScore = state.game.score;
-    let checkInMode = state.game.checkInMode;
-    let checkOutMode = state.game.checkOutMode;
-    let players = state.game.players;
-    let winner = state.game.winner;
-    let game = state.game;
-    let training = state.game.training;
-    let announcementText = state.game.announcementText;
-    let isLoggedIn = state.user.isLoggedIn;
-    let selectedVoice = state.speech.selectedVoice ? state.speech.selectedVoice : state.speech.defaultVoice;
-    let speechOutputActive = state.speech.speechOutputActive;
     return {
-        startScore,
-        checkInMode,
-        checkOutMode,
-        players,
-        winner,
-        game,
-        training,
-        announcementText,
-        isLoggedIn,
-        selectedVoice,
-        speechOutputActive
+        startScore: state.game.score,
+        checkInMode: state.game.checkInMode,
+        checkOutMode: state.game.checkOutMode,
+        players: state.game.players,
+        winner: state.game.winner,
+        game: state.game,
+        training: state.game.training,
+        announcementText: state.game.announcementText,
+        isLoggedIn: state.user.isLoggedIn,
+        selectedVoice: state.speech.selectedVoice ? state.speech.selectedVoice : state.speech.defaultVoice,
+        speechOutputActive: state.speech.speechOutputActive,
+        navigationBarVisible: state.app.navigationBarVisible
     };
 };
 
@@ -37,7 +28,8 @@ const mapDispatchToProps = dispatch => ({
     exit: () => dispatch(exitGame()),
     rematch: (startingPlayer) => dispatch(rematch(startingPlayer)),
     archiveGame: (game) => dispatch(archiveGame(game)),
-    toggleSpeechOutput: () => dispatch(toggleSpeechOutput())
+    toggleSpeechOutput: () => dispatch(toggleSpeechOutput()),
+    toggleNavigationBar: () => dispatch(toggleNavigationBarVisibility())
 });
 
 export default connect(

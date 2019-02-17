@@ -23,6 +23,11 @@
 
 .well {
     background-color: white;
+    min-height: 0;
+}
+
+.popover {
+    max-width: none;
 }
 
 .center-content {

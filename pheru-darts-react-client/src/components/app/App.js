@@ -65,7 +65,9 @@ class App extends React.Component {
 
     render() {
         return <div style={{height: "100%"}}>
+            {this.props.navigationBarVisible &&
             <AppNavigationBarContainer/>
+            }
             <div ref={this.appContainerRef}
                  style={{
                      position: "absolute",
@@ -74,7 +76,7 @@ class App extends React.Component {
                      right: 0,
                      bottom: 0,
                      padding: 5,
-                     marginTop: 40,
+                     marginTop: this.props.navigationBarVisible ? 40 : 0,
                      overflowY: "auto"
                  }}>
                 <Switch>
@@ -108,6 +110,8 @@ App.propTypes = {
     isLoggedIn: PropTypes.bool.isRequired,
     isLoggingIn: PropTypes.bool.isRequired,
     isLoggingOut: PropTypes.bool.isRequired,
+
+    navigationBarVisible: PropTypes.bool.isRequired,
 
     gameRunning: PropTypes.bool.isRequired,
 

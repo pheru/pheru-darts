@@ -61,10 +61,10 @@ class FullscreenButton extends React.Component {
     }
 
     render() {
-        return <Button onClick={this.toggleFullscreen} className={this.props.className}>
+        return <Button bsStyle={this.props.bsStyle} onClick={this.toggleFullscreen} className={this.props.className} style={{...this.props.style}}>
             {this.state.fullscreen
-                ? <Glyphicon className={this.props.className + "-icon"} glyph="resize-small"/>
-                : <Glyphicon className={this.props.className + "-icon"} glyph="resize-full"/>
+                ? <Glyphicon style={{...this.props.glyphiconStyle}} className={this.props.className ? this.props.className + "-icon" : ""} glyph="resize-small"/>
+                : <Glyphicon style={{...this.props.glyphiconStyle}} className={this.props.className ? this.props.className + "-icon" : ""} glyph="resize-full"/>
             }
         </Button>
     }

@@ -14,6 +14,8 @@ const mapStateToProps = state => ({
     isLoggingIn: state.user.isLoggingIn,
     isLoggingOut: state.user.isLoggingOut,
 
+    navigationBarVisible: state.app.navigationBarVisible,
+
     gameRunning: state.game !== null,
 
     fetchPlayableUsersFailed: state.playerPermission.fetchPlayableUsersFailed,

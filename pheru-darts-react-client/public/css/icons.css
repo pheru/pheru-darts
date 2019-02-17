@@ -1,3 +1,15 @@
+.glyphicon-resize-full {
+    top: 3px;
+}
+
+.glyphicon-resize-small {
+    top: 3px;
+}
+
+.glyphicon-eject {
+    top: 3px;
+}
+
 .glyphicon-plus-sign {
     top: 2px;
 }
@@ -11,11 +23,11 @@
 }
 
 .glyphicon-volume-off {
-    top: 2px;
+    top: 3px;
 }
 
 .glyphicon-volume-up {
-    top: 2px;
+    top: 3px;
 }
 
 .glyphicon-info-sign {

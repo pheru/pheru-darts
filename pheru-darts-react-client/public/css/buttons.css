@@ -1,3 +1,7 @@
+.btn {
+    border-radius: 4px;
+}
+
 .score-button {
     border-radius: 0;
 }
