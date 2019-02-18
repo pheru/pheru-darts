@@ -9,22 +9,23 @@ class FullscreenButton extends React.Component {
             fullscreen: false
         };
         this.toggleFullscreen = this.toggleFullscreen.bind(this);
-        this.fullscreenchangeEventListener = this.fullscreenchangeEventListener.bind(this);
+        this.updateFullscreen = this.updateFullscreen.bind(this);
     }
 
     componentDidMount() {
-        document.addEventListener("fullscreenchange", this.fullscreenchangeEventListener);
-        document.addEventListener("webkitfullscreenchange", this.fullscreenchangeEventListener);
-        document.addEventListener("msfullscreenchange", this.fullscreenchangeEventListener);
+        this.updateFullscreen();
+        document.addEventListener("fullscreenchange", this.updateFullscreen);
+        document.addEventListener("webkitfullscreenchange", this.updateFullscreen);
+        document.addEventListener("msfullscreenchange", this.updateFullscreen);
     }
 
     componentWillUnmount() {
-        document.removeEventListener("fullscreenchange", this.fullscreenchangeEventListener);
-        document.addEventListener("webkitfullscreenchange", this.fullscreenchangeEventListener);
-        document.addEventListener("msfullscreenchange", this.fullscreenchangeEventListener);
+        document.removeEventListener("fullscreenchange", this.updateFullscreen);
+        document.addEventListener("webkitfullscreenchange", this.updateFullscreen);
+        document.addEventListener("msfullscreenchange", this.updateFullscreen);
     }
 
-    fullscreenchangeEventListener(e) {
+    updateFullscreen(e) {
         this.setState({fullscreen: this.isFullscreen()});
     }
 

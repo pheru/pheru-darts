@@ -192,7 +192,7 @@ class NewGameConfig extends React.Component {
                                overlay={<Tooltip id="user-tooltip">
                                    Dieser Spieler ist entweder kein registrierter Benutzer oder Du bist nicht berechtigt
                                    worden, ein Spiel mit ihm zu erstellen.<br/>
-                                   In den Statistiken wird dieser Spieler als "Unregistrierter Benutzer" gelistet.
+                                   In den Statistiken wird dieser Spieler als unregistrierter Benutzer gelistet.
                                </Tooltip>}>
             <Glyphicon glyph='exclamation-sign' style={{color: 'orange'}}/>
         </OverlayTrigger>;
@@ -221,6 +221,7 @@ class NewGameConfig extends React.Component {
                                        onDropdownClick={(newValue) => this.changeSelectedPlayer(0, newValue)}
                                        onInputChange={(newValue) => this.handleUnregisteredUserChange(0, newValue)}
                                        autoFocus
+                                       dividerPositions={[0]}
                     />
                 </div>
                 <div style={{...ROW_STYLE, flexGrow: 1}}>
@@ -238,7 +239,9 @@ class NewGameConfig extends React.Component {
                                        style={{width: '100%'}}
                                        iconFactory={this.playerIconFactory}
                                        onDropdownClick={(newValue) => this.changeSelectedPlayer(1, newValue)}
-                                       onInputChange={(newValue) => this.handleUnregisteredUserChange(1, newValue)}/>
+                                       onInputChange={(newValue) => this.handleUnregisteredUserChange(1, newValue)}
+                                       dividerPositions={[0]}
+                    />
                 </div>
             </div>
             }

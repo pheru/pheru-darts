@@ -14,7 +14,7 @@ class Player extends React.Component {
 
     render() {
         let fontSizeDart = this.props.landscapeOrientation ? "6vh" : "3vh";
-        let fontSizeName = this.props.landscapeOrientation ? "6vh" : "3vh";
+        let fontSizeName = this.props.landscapeOrientation ? "5vh" : "3vh";
         let fontSizeScore = this.props.landscapeOrientation ? "9vh" : "5vh";
         let fontSizeDartCount = this.props.landscapeOrientation ? "5vh" : "3vh";
         let fontSizeAverage = this.props.landscapeOrientation ? "5vh" : "3vh";

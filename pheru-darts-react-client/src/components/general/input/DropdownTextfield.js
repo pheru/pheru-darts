@@ -29,18 +29,23 @@ class DropdownTextfield extends React.Component {
             </div>
             <FormControl type="text" value={this.props.value} placeholder={this.props.placeholder}
                          onChange={(e) => this.props.onInputChange(e.target.value)}
-                         style={{borderTopRightRadius: showDropdownToggle ? 0 : undefined,
+                         style={{
+                             borderTopRightRadius: showDropdownToggle ? 0 : undefined,
                              borderBottomRightRadius: showDropdownToggle ? 0 : undefined,
-                             textAlign: 'center'}}
-                        autoFocus={this.props.autoFocus}
+                             textAlign: 'center'
+                         }}
+                         autoFocus={this.props.autoFocus}
             />
             <Dropdown.Toggle style={{borderLeftWidth: 0, display: showDropdownToggle ? "" : "none"}}/>
             <Dropdown.Menu style={{minWidth: 'calc(100% - 34px)', textAlign: 'center'}}>
-                {this.props.choices.map(choice =>
-                    <MenuItem key={"choice" + this.getTextForChoice(choice)}
-                              onClick={() => this.props.onDropdownClick(choice)}>
+                {this.props.choices.map((choice, i) =>
+                    [<MenuItem key={"choice" + this.getTextForChoice(choice)}
+                               style={{width: 'calc(100% - 1px)', margin: "auto"}}
+                               onClick={() => this.props.onDropdownClick(choice)}>
                         {this.getTextForChoice(choice)}
-                    </MenuItem>
+                    </MenuItem>,
+                        (this.props.dividerPositions && this.props.dividerPositions.includes(i)) && <MenuItem divider/>
+                    ]
                 )}
             </Dropdown.Menu>
         </Dropdown>
@@ -59,7 +64,8 @@ DropdownTextfield.propTypes = {
     onDropdownClick: PropTypes.func,
     onInputChange: PropTypes.func,
     placeholder: PropTypes.string,
-    autoFocus: PropTypes.bool
+    autoFocus: PropTypes.bool,
+    dividerPositions: PropTypes.array
 };
 
 export default DropdownTextfield

@@ -114,7 +114,7 @@ class Game extends React.Component {
             </OverlayTrigger>
             <Button bsStyle='warning' style={buttonStyle}
                     onClick={() => this.props.undoDart()}>
-                <Glyphicon glyph="erase"/>
+                <Glyphicon glyph="repeat" style={{transform: "scaleX(-1)"}}/>
             </Button>
         </div>;
 
@@ -148,7 +148,7 @@ class Game extends React.Component {
                     <div>{CheckOutUtil.getPossibleCheckout(this.props.currentPlayerScore, this.props.currentPlayerDartsLeft,
                         this.props.checkInMode, this.props.checkOutMode, this.props.currentPlayerCheckinCondition)}</div>
                     <div>
-                        [{this.props.startScore}] - [{this.props.checkInMode.text}] - [{this.props.checkOutMode.text}]
+                        [{this.props.startScore}] [{this.props.checkInMode.text}] [{this.props.checkOutMode.text}]
                     </div>
                 </Well>
             </div>
