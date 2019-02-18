@@ -6,6 +6,7 @@ import SpeechUtil from "../../../util/SpeechUtil";
 import DocumentUtil from "../../../util/DocumentUtil";
 import ScoreButtons from "./ScoreButtons";
 import FullscreenButton from "../../general/FullscreenButton";
+import CheckOutUtil from "../../../util/CheckOutUtil";
 
 class Game extends React.Component {
 
@@ -92,7 +93,7 @@ class Game extends React.Component {
             <OverlayTrigger container={this} rootClose trigger="click"
                             placement={this.props.landscapeOrientation ? "left" : "top"}
                             overlay={
-                                <Popover>
+                                <Popover id="gamebuttons_popover">
                                     <FullscreenButton bsStyle="primary" style={popoverButtonStyle}/>
                                     <Button bsStyle='primary' style={{
                                         ...popoverButtonStyle,
@@ -144,7 +145,8 @@ class Game extends React.Component {
                     fontWeight: "bold",
                     fontSize: this.props.landscapeOrientation ? "4vh" : "3vh"
                 }}>
-                    {/*<div>Kein Checkout möglich</div>*/}
+                    <div>{CheckOutUtil.getPossibleCheckout(this.props.currentPlayerScore, this.props.currentPlayerDartsLeft,
+                        this.props.checkInMode, this.props.checkOutMode, this.props.currentPlayerCheckinCondition)}</div>
                     <div>
                         [{this.props.startScore}] - [{this.props.checkInMode.text}] - [{this.props.checkOutMode.text}]
                     </div>
@@ -205,6 +207,9 @@ Game.propTypes = {
     checkInMode: PropTypes.object.isRequired,
     checkOutMode: PropTypes.object.isRequired,
     players: PropTypes.array.isRequired,
+    currentPlayerScore: PropTypes.number.isRequired,
+    currentPlayerDartsLeft: PropTypes.number.isRequired,
+    currentPlayerCheckinCondition: PropTypes.bool.isRequired,
     winner: PropTypes.object,
     game: PropTypes.object.isRequired,
     navigationBarVisible: PropTypes.bool.isRequired,
