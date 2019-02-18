@@ -6,16 +6,19 @@ import DateUtil from "../../../util/DateUtil";
 import OnlyForLoggedInUsersContainer from "../../../containers/general/OnlyForLoggedInUsersContainer";
 import DocumentUtil from "../../../util/DocumentUtil";
 
+const TITLE = "Mitteilungen";
+
 class Notifications extends React.Component {
 
     componentDidMount() {
-        DocumentUtil.setTitlePrefix("Mitteilungen");
+        DocumentUtil.setTitlePrefix(TITLE);
     }
 
     render() {
         return <OnlyForLoggedInUsersContainer
             text="Mitteilungen können nur von angemeldeten Benutzern eingesehen werden">
-            <Well style={{paddingBottom: 0, textAlign: "center"}}>
+            <div style={{textAlign: "center", marginBottom: 7}}>
+                <h1 style={{marginTop: 0}}><strong>{TITLE}</strong></h1>
                 <Button bsStyle="primary" style={{marginRight: 5}}
                         onClick={this.props.fetchNotifications}
                         disabled={this.props.isFetchingNotifications}>
@@ -28,6 +31,8 @@ class Notifications extends React.Component {
                         disabled={this.props.isFetchingNotifications || this.props.unreadNotifications.length === 0}>
                     <Glyphicon glyph="check"/> Alle als gelesen markieren
                 </Button>
+            </div>
+            <Well style={{paddingBottom: 0, textAlign: "center"}}>
                 <Table hover style={{textAlign: "initial"}}>
                     <thead>
                     <tr>

@@ -30,9 +30,7 @@ class Settings extends React.Component {
                            rightContainer={navContainer} alignCenter small/>
             <div style={{
                 marginTop: 31,
-                paddingTop: 10,
-                paddingLeft: 20,
-                paddingRight: 20,
+                padding: 5,
                 overflowY: "auto",
                 position: "absolute",
                 top: 0,

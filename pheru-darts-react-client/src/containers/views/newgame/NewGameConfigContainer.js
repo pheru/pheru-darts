@@ -6,6 +6,7 @@ import SortUtil from "../../../util/SortUtil";
 import {showConfirmation, showWarning} from "../../../actions/modal";
 
 const mapStateToProps = (state, ownProps) => ({
+    landscapeOrientation: state.app.landscapeOrientation,
     initialState: state.stateMemory.states[getMemoryKeyByProps(ownProps)],
     isLoggedIn: state.user.isLoggedIn,
     isLoggingIn: state.user.isLoggingIn,

@@ -1,3 +1,24 @@
+.btn {
+    border-radius: 4px;
+}
+
 .score-button {
     border-radius: 0;
+}
+
+.score-button.multiplier-toggled {
+    transition:all 0.5s ease-in-out;
+    animation:multiplier-toggled-keyframes normal 1.1s infinite ease-in-out;
+}
+
+@keyframes multiplier-toggled-keyframes {
+    0% {
+        background-color: #5cb85c
+    }
+    50% {
+        background-color: #7bf17b
+    }
+    100% {
+        background-color: #5cb85c
+    }
 }
