@@ -41,6 +41,10 @@ class Game extends React.Component {
         }
     }
 
+    componentWillUnmount() {
+        this.props.setNavigationBarVisibility(true);
+    }
+
     handleRematchStartingPlayerChanged(player) {
         this.setState({rematchStartingPlayer: player});
     }
@@ -164,7 +168,7 @@ class Game extends React.Component {
                 </Modal.Body>
                 <Modal.Footer style={{textAlign: 'center'}}>
                     <Dropdown style={{display: 'inline-flex'}} id="rematch_player_dropdown">
-                        <Button bsStyle='primary' onClick={() => {
+                        <Button bsStyle='primary' style={{margin: 0, marginTop: 5}} onClick={() => {
                             if (this.props.isLoggedIn) {
                                 this.props.archiveGame(this.props.game);
                             }
@@ -172,7 +176,7 @@ class Game extends React.Component {
                         }}>
                             Rematch ({this.state.rematchStartingPlayer.name} beginnt)
                         </Button>
-                        <Dropdown.Toggle bsStyle="primary"/>
+                        <Dropdown.Toggle bsStyle="primary" style={{margin: 0, marginRight: 5, marginTop: 5}}/>
                         <Dropdown.Menu style={{minWidth: '100%', textAlign: 'center'}}>
                             {this.props.players.map((player, i) =>
                                 <MenuItem key={"rematch_player_" + i}
@@ -182,7 +186,7 @@ class Game extends React.Component {
                             )}
                         </Dropdown.Menu>
                     </Dropdown>
-                    <Button style={{marginLeft: 10}} bsStyle='primary' onClick={() => {
+                    <Button style={{margin: 0, marginRight: 5, marginTop: 5}} bsStyle='primary' onClick={() => {
                         if (this.props.isLoggedIn) {
                             this.props.archiveGame(this.props.game);
                         }
@@ -190,7 +194,8 @@ class Game extends React.Component {
                     }}>
                         Zurück zum Menü
                     </Button>
-                    <Button style={{marginLeft: 10}} bsStyle='warning' onClick={() => this.props.undoDart()}>
+                    <Button bsStyle='warning' style={{margin: 0, marginTop: 5}}
+                            onClick={() => this.props.undoDart()}>
                         Dart rückgängig machen
                     </Button>
                 </Modal.Footer>
@@ -219,6 +224,7 @@ Game.propTypes = {
     rematch: PropTypes.func.isRequired,
     archiveGame: PropTypes.func.isRequired,
     toggleNavigationBar: PropTypes.func.isRequired,
+    setNavigationBarVisibility: PropTypes.func.isRequired,
     toggleSpeechOutput: PropTypes.func.isRequired,
     training: PropTypes.bool,
     isLoggedIn: PropTypes.bool.isRequired,

@@ -7,7 +7,7 @@ class CheckOutUtil {
         let forCheckIn = POSSIBLE_CHECKOUTS[SINGLE_IN.key];
         let forCheckOut = forCheckIn[checkOutMode.key];
         if (!forCheckOut) {
-            return "Keine Finish-Angaben für Modus: [" + checkOutMode.text + "]";
+            return "Keine Finish-Angaben für: [" + checkOutMode.text + "]";
         }
         if (checkInMode !== SINGLE_IN && !checkInCondition) {
             return "Keine Finish-Angabe solange Check-In nicht erfüllt"

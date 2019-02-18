@@ -3,7 +3,7 @@ import Game from "../../../components/views/game/Game";
 import {addDart, exitGame, rematch, undoDart} from "../../../actions/game";
 import {archiveGame} from "../../../actions/games";
 import {toggleSpeechOutput} from "../../../actions/speech";
-import {toggleNavigationBarVisibility} from "../../../actions/app";
+import {setNavigationBarVisibility, toggleNavigationBarVisibility} from "../../../actions/app";
 import getTurnInformation from "../../../services/gameInformationService";
 
 // TODO Mit Turninfo besser umgehen (nur hier und an die Player via props weitergeben, kein player container mehr)
@@ -39,6 +39,17 @@ const mapStateToProps = function (state) {
     };
 };
 
+const mapDispatchToProps = dispatch => ({
+    addDart: (value, multiplier) => dispatch(addDart(value, multiplier)),
+    undoDart: () => dispatch(undoDart()),
+    exit: () => dispatch(exitGame()),
+    rematch: (startingPlayer) => dispatch(rematch(startingPlayer)),
+    archiveGame: (game) => dispatch(archiveGame(game)),
+    toggleSpeechOutput: () => dispatch(toggleSpeechOutput()),
+    toggleNavigationBar: () => dispatch(toggleNavigationBarVisibility()),
+    setNavigationBarVisibility: (visibility) => dispatch(setNavigationBarVisibility(visibility))
+});
+
 function dartsLeft(player) {
     let aufnahme = player.aufnahmen[player.aufnahmen.length - 1];
     if (aufnahme !== undefined) {
@@ -47,16 +58,6 @@ function dartsLeft(player) {
         return 3;
     }
 }
-
-const mapDispatchToProps = dispatch => ({
-    addDart: (value, multiplier) => dispatch(addDart(value, multiplier)),
-    undoDart: () => dispatch(undoDart()),
-    exit: () => dispatch(exitGame()),
-    rematch: (startingPlayer) => dispatch(rematch(startingPlayer)),
-    archiveGame: (game) => dispatch(archiveGame(game)),
-    toggleSpeechOutput: () => dispatch(toggleSpeechOutput()),
-    toggleNavigationBar: () => dispatch(toggleNavigationBarVisibility())
-});
 
 export default connect(
     mapStateToProps,

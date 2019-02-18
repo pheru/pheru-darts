@@ -17,14 +17,14 @@ class Notifications extends React.Component {
     render() {
         return <OnlyForLoggedInUsersContainer
             text="Mitteilungen können nur von angemeldeten Benutzern eingesehen werden">
-            <div style={{textAlign: "center", marginBottom: 7}}>
+            <div style={{textAlign: "center"}}>
                 <h1 style={{marginTop: 0}}><strong>{TITLE}</strong></h1>
-                <Button bsStyle="primary" style={{marginRight: 5}}
+                <Button bsStyle="primary" style={{marginRight: 5, marginBottom: 5}}
                         onClick={this.props.fetchNotifications}
                         disabled={this.props.isFetchingNotifications}>
                     <Glyphicon glyph="refresh"/> Neu Laden
                 </Button>
-                <Button bsStyle="primary"
+                <Button bsStyle="primary" style={{marginBottom: 5}}
                         onClick={() => this.props.markAsRead(this.props.unreadNotifications.map(
                             (notification) => notification.id
                         ))}
