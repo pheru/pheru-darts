@@ -90,7 +90,7 @@ class PermissionSettings extends React.Component {
             <div>
                 <p><strong>Hier siehst Du welche Spieler Dir erlaubt haben ein Spiel mit ihnen zu erstellen und
                     kannst einstellen wer dich in einem Spiel auswählen darf.</strong></p>
-                <FormControl style={{marginBottom: 5, width: 300, maxWidth: "95%", display: 'inline'}} type="text"
+                <FormControl style={{marginBottom: 5, marginRight: 2,width: 300, maxWidth: "95%", display: 'inline'}} type="text"
                              disabled={this.isBusy()}
                              value={this.state.userNameToPermit}
                              onChange={(e) => this.handleUserNameToPermitChange(e.target.value)}
@@ -101,13 +101,14 @@ class PermissionSettings extends React.Component {
                                  }
                              )}
                              placeholder="Spieler berechtigen"/>
-                <Button bsStyle="success" style={{marginLeft: 2}}
+                    {/*margin nur 2, weil ansonsten Input und Button nicht auf einer Linie liegen*/}
+                <Button bsStyle="success" style={{marginBottom: 2}}
                         disabled={this.isPermitButtonDisabled()}
                         onClick={() => this.props.addPlayerPermissionByName(this.state.userNameToPermit)}>
                     Berechtigen
                 </Button>
             </div>
-            <Well style={{marginTop: 20, paddingBottom: 0, textAlign: 'center'}}>
+            <Well style={{marginTop: 3,paddingBottom: 0, textAlign: 'center'}}>
                 <Table responsive hover style={{textAlign: 'center'}}>
                     <thead>
                     <tr>

@@ -9,22 +9,23 @@ class FullscreenButton extends React.Component {
             fullscreen: false
         };
         this.toggleFullscreen = this.toggleFullscreen.bind(this);
-        this.fullscreenchangeEventListener = this.fullscreenchangeEventListener.bind(this);
+        this.updateFullscreen = this.updateFullscreen.bind(this);
     }
 
     componentDidMount() {
-        document.addEventListener("fullscreenchange", this.fullscreenchangeEventListener);
-        document.addEventListener("webkitfullscreenchange", this.fullscreenchangeEventListener);
-        document.addEventListener("msfullscreenchange", this.fullscreenchangeEventListener);
+        this.updateFullscreen();
+        document.addEventListener("fullscreenchange", this.updateFullscreen);
+        document.addEventListener("webkitfullscreenchange", this.updateFullscreen);
+        document.addEventListener("msfullscreenchange", this.updateFullscreen);
     }
 
     componentWillUnmount() {
-        document.removeEventListener("fullscreenchange", this.fullscreenchangeEventListener);
-        document.addEventListener("webkitfullscreenchange", this.fullscreenchangeEventListener);
-        document.addEventListener("msfullscreenchange", this.fullscreenchangeEventListener);
+        document.removeEventListener("fullscreenchange", this.updateFullscreen);
+        document.removeEventListener("webkitfullscreenchange", this.updateFullscreen);
+        document.removeEventListener("msfullscreenchange", this.updateFullscreen);
     }
 
-    fullscreenchangeEventListener(e) {
+    updateFullscreen(e) {
         this.setState({fullscreen: this.isFullscreen()});
     }
 
@@ -61,10 +62,10 @@ class FullscreenButton extends React.Component {
     }
 
     render() {
-        return <Button onClick={this.toggleFullscreen} className={this.props.className}>
+        return <Button bsStyle={this.props.bsStyle} onClick={this.toggleFullscreen} className={this.props.className} style={{...this.props.style}}>
             {this.state.fullscreen
-                ? <Glyphicon className={this.props.className + "-icon"} glyph="resize-small"/>
-                : <Glyphicon className={this.props.className + "-icon"} glyph="resize-full"/>
+                ? <Glyphicon style={{...this.props.glyphiconStyle}} className={this.props.className ? this.props.className + "-icon" : ""} glyph="resize-small"/>
+                : <Glyphicon style={{...this.props.glyphiconStyle}} className={this.props.className ? this.props.className + "-icon" : ""} glyph="resize-full"/>
             }
         </Button>
     }

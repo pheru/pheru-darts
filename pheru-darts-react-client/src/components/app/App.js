@@ -14,17 +14,23 @@ import SimpleModalContainer from "../../containers/modals/SimpleModalContainer";
 import MainContainer from "../../containers/views/main/MainContainer";
 import NotificationsContainer from "../../containers/views/notifications/NotificationsContainer";
 import AppNavigationBarContainer from "../../containers/app/AppNavigationBarContainer";
+import WindowUtil from "../../util/WindowUtil";
 
 class App extends React.Component {
 
     constructor(props) {
         super(props);
         this.appContainerRef = React.createRef();
+
+        this.updateOrientation = this.updateOrientation.bind(this);
         this.onBeforeUnload = this.onBeforeUnload.bind(this);
         this.onUnload = this.onUnload.bind(this);
     }
 
     componentDidMount() {
+        this.updateOrientation();
+        window.addEventListener("resize", this.updateOrientation);
+
         window.onunload = this.onUnload;
         window.onbeforeunload = this.onBeforeUnload;
 
@@ -63,9 +69,22 @@ class App extends React.Component {
         }
     }
 
+    componentWillUnmount() {
+        window.removeEventListener("resize", this.updateOrientation);
+    }
+
+    updateOrientation() {
+        let landscapeOrientation = WindowUtil.isLandscapeOrientation();
+        if (this.props.landscapeOrientation !== landscapeOrientation) {
+            this.props.setLandscapeOrientation(landscapeOrientation);
+        }
+    }
+
     render() {
         return <div style={{height: "100%"}}>
+            {this.props.navigationBarVisible &&
             <AppNavigationBarContainer/>
+            }
             <div ref={this.appContainerRef}
                  style={{
                      position: "absolute",
@@ -73,10 +92,8 @@ class App extends React.Component {
                      left: 0,
                      right: 0,
                      bottom: 0,
-                     paddingTop: 10,
-                     paddingLeft: 20,
-                     paddingRight: 20,
-                     marginTop: 40,
+                     padding: 5,
+                     marginTop: this.props.navigationBarVisible ? 40 : 0,
                      overflowY: "auto"
                  }}>
                 <Switch>
@@ -105,11 +122,14 @@ class App extends React.Component {
 }
 
 App.propTypes = {
+    landscapeOrientation: PropTypes.bool.isRequired,
     userName: PropTypes.string,
 
     isLoggedIn: PropTypes.bool.isRequired,
     isLoggingIn: PropTypes.bool.isRequired,
     isLoggingOut: PropTypes.bool.isRequired,
+
+    navigationBarVisible: PropTypes.bool.isRequired,
 
     gameRunning: PropTypes.bool.isRequired,
 
@@ -128,7 +148,8 @@ App.propTypes = {
 
     unreadNotificationsCount: PropTypes.number.isRequired,
 
-    selectedVoice: PropTypes.object
+    selectedVoice: PropTypes.object,
+    setLandscapeOrientation: PropTypes.func.isRequired,
 };
 
 export default App;
