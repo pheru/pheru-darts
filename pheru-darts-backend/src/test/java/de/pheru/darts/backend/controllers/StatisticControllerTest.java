@@ -1,10 +1,6 @@
 package de.pheru.darts.backend.controllers;
 
-import de.pheru.darts.backend.dtos.statistics.GameCountStatisticDto;
-import de.pheru.darts.backend.dtos.statistics.StatisticDto;
-import de.pheru.darts.backend.dtos.statistics.StatisticFilterDto;
-import de.pheru.darts.backend.dtos.statistics.StatisticFilterOptionsDto;
-import de.pheru.darts.backend.entities.game.GameEntity;
+import de.pheru.darts.backend.dtos.statistics.*;
 import de.pheru.darts.backend.entities.user.UserEntity;
 import de.pheru.darts.backend.mocks.statistics.MockedStatisticEvaluation;
 import de.pheru.darts.backend.statistics.*;
@@ -20,6 +16,8 @@ import static org.junit.Assert.*;
 
 public class StatisticControllerTest extends ControllerTest {
 
+    private static final String GAME_ID_ONE = "game-1";
+    private static final String GAME_ID_TWO = "game-2";
     private static final String DELETED_ID_ONE = "deleted-1";
     private static final String DELETED_ID_TWO = "deleted-2";
 
@@ -39,59 +37,99 @@ public class StatisticControllerTest extends ControllerTest {
         final UserEntity playerTwo = createAndSaveUser("Name 2", "Password 2");
 
         // Trainingsmatch
-        gamesRepository.save(new GameEntityBuilder().userId(LOGIN_ID)
+        gamesRepository.save(new GameEntityBuilder()
+                .id(GAME_ID_ONE)
+                .userId(LOGIN_ID)
                 .player(LOGIN_ID)
                 .training(true)
+                .timestamp(1L)
                 .build());
         // Spiel gegen one
-        gamesRepository.save(new GameEntityBuilder().userId(LOGIN_ID)
-                .player(LOGIN_ID).player(playerOne.getId())
+        gamesRepository.save(new GameEntityBuilder()
+                .id(GAME_ID_TWO)
+                .userId(LOGIN_ID)
+                .player(LOGIN_ID)
+                .player(playerOne.getId())
+                .timestamp(2L)
                 .build());
-        // Spiel gegen two
-        gamesRepository.save(new GameEntityBuilder().userId(LOGIN_ID)
-                .player(LOGIN_ID).player(playerTwo.getId())
+        // Spiel gegen one und two
+        gamesRepository.save(new GameEntityBuilder()
+                .userId(LOGIN_ID)
+                .player(LOGIN_ID)
+                .player(playerOne.getId())
+                .player(playerTwo.getId())
+                .timestamp(3L)
                 .build());
         // Spiel gegen gelöscht 1
-        gamesRepository.save(new GameEntityBuilder().userId(LOGIN_ID)
-                .player(LOGIN_ID).player(DELETED_ID_ONE)
+        gamesRepository.save(new GameEntityBuilder()
+                .userId(LOGIN_ID)
+                .player(LOGIN_ID)
+                .player(DELETED_ID_ONE)
+                .timestamp(4L)
                 .build());
         // Spiel gegen gelöscht 2
-        gamesRepository.save(new GameEntityBuilder().userId(LOGIN_ID)
-                .player(LOGIN_ID).player(DELETED_ID_TWO)
+        gamesRepository.save(new GameEntityBuilder()
+                .userId(LOGIN_ID)
+                .player(LOGIN_ID)
+                .player(DELETED_ID_TWO)
+                .timestamp(5L)
                 .build());
         // Spiel gegen unregistriert
-        gamesRepository.save(new GameEntityBuilder().userId(LOGIN_ID)
-                .player(LOGIN_ID).player(null)
+        gamesRepository.save(new GameEntityBuilder()
+                .userId(LOGIN_ID)
+                .player(LOGIN_ID)
+                .player(null)
+                .timestamp(6L)
                 .build());
 
         final StatisticFilterOptionsDto filterOptions = statisticController.getFilterOptions();
 
-        final Map<String, List<String>> usernameToUserIds = filterOptions.getUsernameToUserIds();
-        assertEquals(4, usernameToUserIds.size());
+        final Map<String, Set<String>> usernameToUserIds = filterOptions.getUsernameToUserIds();
+        assertEquals(5, usernameToUserIds.size());
+
+        assertTrue(usernameToUserIds.containsKey(ReservedUser.TRAINING.getName()));
+        assertEquals(1, usernameToUserIds.get(ReservedUser.TRAINING.getName()).size());
+        assertTrue(usernameToUserIds.get(ReservedUser.TRAINING.getName()).contains(ReservedUser.TRAINING.getId()));
 
         assertTrue(usernameToUserIds.containsKey(playerOne.getName()));
         assertEquals(1, usernameToUserIds.get(playerOne.getName()).size());
-        assertEquals(playerOne.getId(), usernameToUserIds.get(playerOne.getName()).get(0));
+        assertTrue(usernameToUserIds.get(playerOne.getName()).contains(playerOne.getId()));
 
         assertTrue(usernameToUserIds.containsKey(playerTwo.getName()));
         assertEquals(1, usernameToUserIds.get(playerTwo.getName()).size());
-        assertEquals(playerTwo.getId(), usernameToUserIds.get(playerTwo.getName()).get(0));
+        assertTrue(usernameToUserIds.get(playerTwo.getName()).contains(playerTwo.getId()));
 
-        assertTrue(usernameToUserIds.containsKey(ReservedUser.UNREGISTERED_USERS.getName()));
-        assertEquals(1, usernameToUserIds.get(ReservedUser.UNREGISTERED_USERS.getName()).size());
-        assertEquals(ReservedUser.UNREGISTERED_USERS.getId(), usernameToUserIds.get(ReservedUser.UNREGISTERED_USERS.getName()).get(0));
+        assertTrue(usernameToUserIds.containsKey(ReservedUser.UNREGISTERED_USER.getName()));
+        assertEquals(1, usernameToUserIds.get(ReservedUser.UNREGISTERED_USER.getName()).size());
+        assertTrue(usernameToUserIds.get(ReservedUser.UNREGISTERED_USER.getName()).contains(ReservedUser.UNREGISTERED_USER.getId()));
 
-        assertTrue(usernameToUserIds.containsKey(ReservedUser.DELETED_USERS.getName()));
-        assertEquals(2, usernameToUserIds.get(ReservedUser.DELETED_USERS.getName()).size());
-        assertTrue(usernameToUserIds.get(ReservedUser.DELETED_USERS.getName()).contains(DELETED_ID_ONE));
-        assertTrue(usernameToUserIds.get(ReservedUser.DELETED_USERS.getName()).contains(DELETED_ID_TWO));
+        assertTrue(usernameToUserIds.containsKey(ReservedUser.DELETED_USER.getName()));
+        assertEquals(2, usernameToUserIds.get(ReservedUser.DELETED_USER.getName()).size());
+        assertTrue(usernameToUserIds.get(ReservedUser.DELETED_USER.getName()).contains(DELETED_ID_ONE));
+        assertTrue(usernameToUserIds.get(ReservedUser.DELETED_USER.getName()).contains(DELETED_ID_TWO));
+
+        assertEquals(ComparativeOperator.values().length, filterOptions.getComparativeOperators().size());
+
+        final List<StatisticFilterGameOptionDto> games = filterOptions.getGames();
+        assertEquals(6, games.size());
+        assertEquals(GAME_ID_ONE, games.get(0).getId());
+        assertEquals(0, games.get(0).getOpponents().size());
+        assertEquals(1L, games.get(0).getTimestamp());
+        assertEquals(GAME_ID_TWO, games.get(1).getId());
+        assertEquals(1, games.get(1).getOpponents().size());
+        assertEquals(2L, games.get(1).getTimestamp());
+        assertEquals(2, games.get(2).getOpponents().size());
+        assertEquals(1, games.get(3).getOpponents().size());
+        assertEquals(1, games.get(4).getOpponents().size());
+        assertEquals(1, games.get(5).getOpponents().size());
     }
 
     @Test
-    public void getFilterOptionsUserIdsNoGames() {
+    public void getFilterOptionsNoGamesPlayed() {
         final StatisticFilterOptionsDto filterOptions = statisticController.getFilterOptions();
-        final Map<String, List<String>> usernameToUserIds = filterOptions.getUsernameToUserIds();
-        assertTrue(usernameToUserIds.isEmpty());
+        assertTrue(filterOptions.getUsernameToUserIds().isEmpty());
+        assertTrue(filterOptions.getGames().isEmpty());
+        assertEquals(ComparativeOperator.values().length, filterOptions.getComparativeOperators().size());
     }
 
     @Test
@@ -117,7 +155,7 @@ public class StatisticControllerTest extends ControllerTest {
         countsPerId.put(playerTwo.getId(), createGameCountStatistic(2L, 2L));
         countsPerId.put(DELETED_ID_ONE, createGameCountStatistic(3L, 3L));
         countsPerId.put(DELETED_ID_TWO, createGameCountStatistic(4L, 4L));
-        countsPerId.put(ReservedUser.UNREGISTERED_USERS.getId(), createGameCountStatistic(5L, 5L));
+        countsPerId.put(ReservedUser.UNREGISTERED_USER.getId(), createGameCountStatistic(5L, 5L));
         games.setCountsPerPlayerIds(countsPerId);
 
         final Statistic result = new Statistic();
@@ -125,7 +163,7 @@ public class StatisticControllerTest extends ControllerTest {
 
         mockedStatisticEvaluation.setEvaluationResult(result);
 
-        final StatisticDto statisticDto = statisticController.get(null);
+        final StatisticDto statisticDto = statisticController.createStatistic(null);
         final Map<String, GameCountStatisticDto> countsPerPlayer = statisticDto.getGames().getCountsPerPlayer();
         assertEquals(4, countsPerPlayer.size());
 
@@ -137,13 +175,13 @@ public class StatisticControllerTest extends ControllerTest {
         assertEquals(2L, countsPerPlayer.get(playerTwo.getName()).getWonCount().longValue());
         assertEquals(2L, countsPerPlayer.get(playerTwo.getName()).getLostCount().longValue());
 
-        assertTrue(countsPerPlayer.containsKey(ReservedUser.DELETED_USERS.getName()));
-        assertEquals(7L, countsPerPlayer.get(ReservedUser.DELETED_USERS.getName()).getWonCount().longValue());
-        assertEquals(7L, countsPerPlayer.get(ReservedUser.DELETED_USERS.getName()).getLostCount().longValue());
+        assertTrue(countsPerPlayer.containsKey(ReservedUser.DELETED_USER.getName()));
+        assertEquals(7L, countsPerPlayer.get(ReservedUser.DELETED_USER.getName()).getWonCount().longValue());
+        assertEquals(7L, countsPerPlayer.get(ReservedUser.DELETED_USER.getName()).getLostCount().longValue());
 
-        assertTrue(countsPerPlayer.containsKey(ReservedUser.UNREGISTERED_USERS.getName()));
-        assertEquals(5L, countsPerPlayer.get(ReservedUser.UNREGISTERED_USERS.getName()).getWonCount().longValue());
-        assertEquals(5L, countsPerPlayer.get(ReservedUser.UNREGISTERED_USERS.getName()).getLostCount().longValue());
+        assertTrue(countsPerPlayer.containsKey(ReservedUser.UNREGISTERED_USER.getName()));
+        assertEquals(5L, countsPerPlayer.get(ReservedUser.UNREGISTERED_USER.getName()).getWonCount().longValue());
+        assertEquals(5L, countsPerPlayer.get(ReservedUser.UNREGISTERED_USER.getName()).getLostCount().longValue());
     }
 
     @Test
@@ -153,7 +191,7 @@ public class StatisticControllerTest extends ControllerTest {
             return new Statistic();
         };
         statisticController = new StatisticController(evaluation, gamesRepository, userRepository);
-        statisticController.get(new StatisticFilterDto());
+        statisticController.createStatistic(new StatisticFilterDto());
     }
 
     private GameCountStatistic createGameCountStatistic(final long won, final long lost){

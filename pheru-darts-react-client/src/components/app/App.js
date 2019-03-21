@@ -15,6 +15,8 @@ import MainContainer from "../../containers/views/main/MainContainer";
 import NotificationsContainer from "../../containers/views/notifications/NotificationsContainer";
 import AppNavigationBarContainer from "../../containers/app/AppNavigationBarContainer";
 import WindowUtil from "../../util/WindowUtil";
+import { registerLocale, setDefaultLocale } from "react-datepicker";
+import de from "date-fns/locale/de";
 
 class App extends React.Component {
 
@@ -29,6 +31,10 @@ class App extends React.Component {
 
     componentDidMount() {
         this.updateOrientation();
+
+        registerLocale("de", de);
+        setDefaultLocale("de");
+
         window.addEventListener("resize", this.updateOrientation);
 
         window.onunload = this.onUnload;

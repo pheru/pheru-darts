@@ -16,8 +16,8 @@ public class StatisticFilter {
     private ComparativeOperator startScoreComparatorOperator;
     private Integer currentScore;
     private ComparativeOperator currentScoreComparativeOperator;
-    private Long date;
-    private ComparativeOperator dateComparativeOperator;
+    private Long startDate;
+    private Long endDate;
 
     public List<String> getGameIds() {
         return gameIds;
@@ -83,20 +83,19 @@ public class StatisticFilter {
         this.currentScoreComparativeOperator = currentScoreComparativeOperator;
     }
 
-    public Long getDate() {
-        return date;
+    public Long getStartDate() {
+        return startDate;
     }
 
-    public void setDate(final Long date) {
-        this.date = date;
+    public void setStartDate(final Long startDate) {
+        this.startDate = startDate;
     }
 
-    public ComparativeOperator getDateComparativeOperator() {
-        return dateComparativeOperator;
+    public Long getEndDate() {
+        return endDate;
     }
 
-    public void setDateComparativeOperator(final ComparativeOperator dateComparativeOperator) {
-        this.dateComparativeOperator = dateComparativeOperator;
+    public void setEndDate(final Long endDate) {
+        this.endDate = endDate;
     }
-
 }

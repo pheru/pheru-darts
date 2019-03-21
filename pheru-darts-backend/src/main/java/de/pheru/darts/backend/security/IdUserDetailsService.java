@@ -22,7 +22,7 @@ public class IdUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
         final UserEntity userEntity = userRepository.findByName(username);
         if (userEntity == null) {
-            throw new UsernameNotFoundException(username);
+            throw new UsernameNotFoundException("Login for username " + username + " failed: No User found.");
         }
         return new IdUser(userEntity.getId(), userEntity.getName(), userEntity.getPassword(), Collections.emptyList());
     }

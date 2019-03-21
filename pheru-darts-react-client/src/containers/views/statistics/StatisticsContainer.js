@@ -1,7 +1,7 @@
 import {connect} from 'react-redux'
 import Statistics from "../../../components/views/statistics/Statistics";
 import {showLoginModal} from "../../../actions/user";
-import {fetchStatistics} from "../../../actions/statistics";
+import {fetchStatistics, fetchStatisticsFilterOptions} from "../../../actions/statistics";
 
 const mapStateToProps = state => ({
     isLoggedIn: state.user.isLoggedIn,
@@ -13,12 +13,14 @@ const mapStateToProps = state => ({
     possibleCheckoutDarts : state.statistics.possibleCheckoutDarts,
     checkoutDarts: state.statistics.checkoutDarts,
     dartData : state.statistics.dartData,
-    gamesData: state.statistics.gamesData
+    gamesData: state.statistics.gamesData,
+    options: state.statistics.options
 });
 
 const mapDispatchToProps = dispatch => ({
     showLogin: () => dispatch(showLoginModal()),
-    fetchStatistics: () => dispatch(fetchStatistics())
+    fetchStatistics: (filter) => dispatch(fetchStatistics(filter)),
+    fetchStatisticsFilterOptions: () => dispatch(fetchStatisticsFilterOptions())
 });
 
 export default connect(

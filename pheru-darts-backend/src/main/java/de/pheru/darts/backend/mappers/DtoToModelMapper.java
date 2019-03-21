@@ -18,7 +18,6 @@ public final class DtoToModelMapper {
         if (dto == null) {
             return null;
         }
-
         final StatisticFilter filter = new StatisticFilter();
         if (dto.getUserIds() != null && !dto.getUserIds().isEmpty()) {
             filter.setUserIds(new ArrayList<>(dto.getUserIds()));
@@ -46,14 +45,12 @@ public final class DtoToModelMapper {
             filter.setCurrentScoreComparativeOperator(
                     ComparativeOperator.forString(dto.getCurrentScoreComparativeOperator()));
         }
-        if (dto.getDate() != null) {
-            filter.setDate(dto.getDate());
+        if (dto.getStartDate() != null) {
+            filter.setStartDate(dto.getStartDate());
         }
-        if (dto.getDateComparativeOperator() != null) {
-            filter.setDateComparativeOperator(
-                    ComparativeOperator.forString(dto.getDateComparativeOperator()));
+        if (dto.getEndDate() != null) {
+            filter.setEndDate(dto.getEndDate());
         }
         return filter;
     }
-
 }

@@ -27,7 +27,7 @@ import java.util.Date;
 @RequestMapping("/game")
 public class GameController {
 
-    private static final Logger LOGGER = new Logger();
+    private static final Logger LOGGER = new Logger(GameController.class);
 
     private final PlayerPermissionRepository playerPermissionRepository;
     private final GameRepository gameRepository;

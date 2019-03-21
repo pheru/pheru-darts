@@ -9,7 +9,7 @@ import java.util.List;
 
 public class MockedGameRepository extends MockedRepository implements GameRepository {
 
-    final List<GameEntity> games = new ArrayList<>();
+    private final List<GameEntity> games = new ArrayList<>();
 
     @Override
     public List<GameEntity> findByUserId(final String userId) {

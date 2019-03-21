@@ -24,7 +24,7 @@ import java.util.List;
 @RequestMapping("/playerPermission")
 public class PlayerPermissionController {
 
-    private static final Logger LOGGER = new Logger();
+    private static final Logger LOGGER = new Logger(PlayerPermissionController.class);
 
     private final PlayerPermissionRepository playerPermissionRepository;
     private final UserRepository userRepository;

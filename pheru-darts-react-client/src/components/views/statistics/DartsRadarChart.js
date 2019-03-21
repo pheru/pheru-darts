@@ -44,7 +44,7 @@ class DartsRadarChart extends React.Component {
                 });
             }
         }
-        sortedData.sort(SortUtil.sortDartDataByScoreBoardOrder);
+        sortedData.sort(SortUtil.sortScoreByBoardOrder);
         return sortedData;
     }
 

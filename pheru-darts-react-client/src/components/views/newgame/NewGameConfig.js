@@ -1,12 +1,14 @@
 import React from 'react'
-import {Button, Glyphicon, OverlayTrigger, ToggleButton, ToggleButtonGroup, Tooltip} from "react-bootstrap";
-import {ALL_CHECKOUT_MODES, DOUBLE_OUT} from "../../../constants/checkoutModes";
+import {Button, Glyphicon, OverlayTrigger, Tooltip} from "react-bootstrap";
+import {DOUBLE_OUT} from "../../../constants/checkoutModes";
 import {NAVIGATION_ITEM} from "../../../constants/navigationItems";
 import DropdownTextfield from "../../general/input/DropdownTextfield";
 import PropTypes from "prop-types";
-import {ALL_CHECKIN_MODES, SINGLE_IN} from "../../../constants/checkinModes";
+import {SINGLE_IN} from "../../../constants/checkinModes";
 import DocumentUtil from "../../../util/DocumentUtil";
 import ScoreInput from "../../general/input/ScoreInput";
+import CheckInModeSelection from "../../general/input/CheckInModeSelection";
+import CheckOutModeSelection from "../../general/input/CheckOutModeSelection";
 
 const ROW_STYLE = {marginBottom: 10};
 
@@ -232,7 +234,7 @@ class NewGameConfig extends React.Component {
                     </div>
                 </div>
                 <div style={{...ROW_STYLE, flexGrow: 2}}>
-                    <DropdownTextfield id="player-1-dropdown" placeholder="Spieler 2"
+                    <DropdownTextfield id="player-2-dropdown" placeholder="Spieler 2"
                                        value={this.state.selectedPlayers[1].name}
                                        choices={this.props.playableUsers}
                                        dropdownPropertyName='name'
@@ -246,24 +248,13 @@ class NewGameConfig extends React.Component {
             </div>
             }
             <div style={ROW_STYLE}>
-                <ScoreInput value={this.state.score} onChange={this.handleScoreChange}/>
+                <ScoreInput id="new_game_scoreinput" value={this.state.score} onChange={this.handleScoreChange}/>
             </div>
             <div style={ROW_STYLE}>
-                <ToggleButtonGroup type="radio" name="options" defaultValue={this.state.checkInMode}
-                                   onChange={this.handleCheckInModeChange}>
-                    {ALL_CHECKIN_MODES.map(mode =>
-                        <ToggleButton
-                            style={{width: '50%'}} key={mode.key} value={mode}>{mode.text}</ToggleButton>
-                    )}
-                </ToggleButtonGroup>
+                <CheckInModeSelection value={this.state.checkInMode} onChange={this.handleCheckInModeChange}/>
             </div>
             <div style={ROW_STYLE}>
-                <ToggleButtonGroup type="radio" name="options" defaultValue={this.state.checkOutMode}
-                                   onChange={this.handleCheckOutModeChange}>
-                    {ALL_CHECKOUT_MODES.map(mode =>
-                        <ToggleButton key={mode.key} value={mode}>{mode.text}</ToggleButton>
-                    )}
-                </ToggleButtonGroup>
+                <CheckOutModeSelection value={this.state.checkOutMode} onChange={this.handleCheckOutModeChange}/>
             </div>
             <div style={ROW_STYLE}>
                 <Button bsStyle="primary" bsSize="large" block

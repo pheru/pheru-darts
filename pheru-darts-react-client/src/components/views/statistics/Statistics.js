@@ -35,12 +35,14 @@ class Statistics extends React.Component {
     componentDidMount() {
         DocumentUtil.setTitlePrefix(TITLE);
         if (this.props.isLoggedIn) {
+            this.props.fetchStatisticsFilterOptions();
             this.props.fetchStatistics();
         }
     }
 
     componentDidUpdate(prevProps) {
         if (!prevProps.isLoggedIn && this.props.isLoggedIn) {
+            this.props.fetchStatisticsFilterOptions();
             this.props.fetchStatistics();
         }
     }
@@ -75,30 +77,29 @@ class Statistics extends React.Component {
     render() {
         return <OnlyForLoggedInUsersContainer
             text="Statistiken können nur für angemeldete Benutzer erstellt und eingesehen werden">
+            <div style={{textAlign: 'center'}}>
+                <h1 style={{marginTop: 0}}><strong>{TITLE}</strong></h1>
+                <StatisticsFilter style={{marginBottom: 5}}
+                                  fetchStatistics={this.props.fetchStatistics}
+                                  options={this.props.options}
+                />
+            </div>
             {this.props.isFetchingStatistics ?
-                <div style={{position: 'absolute', left: '50%', top: '50%'}}>
-                    <StackLoader label="Lade Statistiken..."/>
+                    <StackLoader modal label="Lade Statistiken..."/>
+                : <div>
+                    {this.props.dartData.length > 0
+                        ? this.createDartsView()
+                        : <Alert bsStyle="warning">
+                            <strong>Keine Dart-Daten vorhanden</strong>
+                        </Alert>}
+                    {this.props.gamesData.length > 0
+                        ? this.createGamesView()
+                        : <Alert bsStyle="warning">
+                            <strong>Keine Spiel-Daten vorhanden</strong>
+                        </Alert>}
                 </div>
-                : this.createStatisticsView()}
+            }
         </OnlyForLoggedInUsersContainer>
-    }
-
-    createStatisticsView() {
-        return <div style={{textAlign: 'center'}}>
-            <h1 style={{marginTop: 0}}><strong>{TITLE}</strong></h1>
-            {/*TODO Einklappbar*/}
-            {/*<StatisticsFilter/>*/}
-            {this.props.dartData.length > 0
-                ? this.createDartsView()
-                : <Alert bsStyle="warning">
-                    <strong>Keine Dart-Daten vorhanden</strong>
-                </Alert>}
-            {this.props.gamesData.length > 0
-                ? this.createGamesView()
-                : <Alert bsStyle="warning">
-                    <strong>Keine Spiel-Daten vorhanden</strong>
-                </Alert>}
-        </div>
     }
 
     createDartsView() {
@@ -154,7 +155,8 @@ class Statistics extends React.Component {
         return <Well
             style={{
                 paddingBottom: 0,
-                marginBottom: 15
+                marginBottom: 15,
+                textAlign: 'center'
             }}>
             <h2 style={{marginTop: 0}}><strong>Spiele</strong></h2>
             <Table responsive style={{textAlign: 'center'}}>
@@ -202,8 +204,11 @@ Statistics.propTypes = {
     dartData: PropTypes.array,
     gamesData: PropTypes.array,
 
+    options: PropTypes.object.isRequired,
+
     showLogin: PropTypes.func.isRequired,
-    fetchStatistics: PropTypes.func.isRequired
+    fetchStatistics: PropTypes.func.isRequired,
+    fetchStatisticsFilterOptions: PropTypes.func.isRequired
 };
 
 export default Statistics;

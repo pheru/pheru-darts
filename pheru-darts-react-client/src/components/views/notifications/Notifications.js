@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from "prop-types";
-import StackLoader from "../../general/loaders/StackLoader";
 import {Badge, Button, Glyphicon, Table, Well} from "react-bootstrap";
 import DateUtil from "../../../util/DateUtil";
 import OnlyForLoggedInUsersContainer from "../../../containers/general/OnlyForLoggedInUsersContainer";
@@ -41,7 +40,7 @@ class Notifications extends React.Component {
                     </tr>
                     </thead>
                     <tbody>
-                    {this.props.notifications.map(notification =>
+                    {!this.props.isFetchingNotifications && this.props.notifications.map(notification =>
                         <tr key={"notification_row_" + notification.id}>
                             <td style={{
                                 whiteSpace: 'normal',
@@ -64,15 +63,20 @@ class Notifications extends React.Component {
                             </td>
                         </tr>
                     )}
-                    {this.props.notifications.length === 0 &&
+                    {!this.props.isFetchingNotifications && this.props.notifications.length === 0 &&
                     <tr>
                         <td style={{whiteSpace: 'normal', width: 100}}/>
                         <td>Keine Mitteilungen vorhanden</td>
                     </tr>
                     }
+                    {this.props.isFetchingNotifications &&
+                    <tr>
+                        <td style={{whiteSpace: 'normal', width: 100}}/>
+                        <td>Lade Mitteilungen...</td>
+                    </tr>
+                    }
                     </tbody>
                 </Table>
-                {this.props.isFetchingNotifications && <StackLoader label="Lade Mitteilungen..."/>}
             </Well>
         </OnlyForLoggedInUsersContainer>
     }

@@ -4,13 +4,13 @@ import de.pheru.darts.backend.entities.game.*;
 import de.pheru.darts.backend.security.SecurityUtil;
 import de.pheru.darts.backend.util.ReservedUser;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class DefaultStatisticEvaluation implements StatisticEvaluation {
+
+    private static final long MILLIS_PER_DAY = 86400000L;
 
     @Override
     public Statistic evaluate(final List<GameEntity> games, final StatisticFilter filter) {
@@ -34,11 +34,11 @@ public class DefaultStatisticEvaluation implements StatisticEvaluation {
         // Jetzt steht im GameState fest, ob Spiel gewonnen oder verloren,
         // also kann jetzt die Sieg-Statistik gegen die restlichen Spieler gesetzt werden
         for (final PlayerDocument player : game.getPlayers()) {
-            final String playerId = player.getId() != null ? player.getId() : ReservedUser.UNREGISTERED_USERS.getId();
-            if (!playerId.equals(SecurityUtil.getLoggedInUserId())) {
+            final String playerIdNotNull = player.getId() != null ? player.getId() : ReservedUser.UNREGISTERED_USER.getId();
+            if (!playerIdNotNull.equals(SecurityUtil.getLoggedInUserId())) {
                 final Map<String, GameCountStatistic> gameCountsPerPlayerId = gameStatistic.getCountsPerPlayerIds();
-                gameCountsPerPlayerId.putIfAbsent(playerId, new GameCountStatistic());
-                final GameCountStatistic gameCountStatistic = gameCountsPerPlayerId.get(playerId);
+                gameCountsPerPlayerId.putIfAbsent(playerIdNotNull, new GameCountStatistic());
+                final GameCountStatistic gameCountStatistic = gameCountsPerPlayerId.get(playerIdNotNull);
                 if (gameState.isWon()) {
                     gameCountStatistic.setWonCount(gameCountStatistic.getWonCount() + 1);
                 } else {
@@ -166,10 +166,8 @@ public class DefaultStatisticEvaluation implements StatisticEvaluation {
                             && gameEntity.getCheckInModeOrDefault() != filter.getCheckInMode()) {
                         return false;
                     }
-                    if (filter.getDate() != null
-                            && filter.getDateComparativeOperator() != null
-                            && !filter.getDateComparativeOperator().getComparativeMatcher()
-                            .match(removeTimeFromDateMillis(gameEntity.getTimestamp()), filter.getDate())) {
+                    if ((filter.getStartDate() != null && filter.getStartDate() > gameEntity.getTimestamp())
+                            || filter.getEndDate() != null && (filter.getEndDate() + MILLIS_PER_DAY) < gameEntity.getTimestamp()) {
                         return false;
                     }
                     if (filter.getGameIds() != null
@@ -187,24 +185,16 @@ public class DefaultStatisticEvaluation implements StatisticEvaluation {
     }
 
     private boolean containsFilterUserId(final GameEntity game, final StatisticFilter filter) {
+        if (game.isTrainingOrDefault() && filter.getUserIds().contains(ReservedUser.TRAINING.getId())) {
+            return true;
+        }
         for (final PlayerDocument player : game.getPlayers()) {
-            for (final String userId : filter.getUserIds()) {
-                if (player.getId().equals(userId)) {
-                    return true;
-                }
+            if ((player.getId() == null && filter.getUserIds().contains(ReservedUser.UNREGISTERED_USER.getId()))
+                    || (player.getId() != null && filter.getUserIds().contains(player.getId()))) {
+                return true;
             }
         }
         return false;
-    }
-
-    private long removeTimeFromDateMillis(final long millis) {
-        final Calendar cal = Calendar.getInstance();
-        cal.setTime(new Date(millis));
-        cal.set(Calendar.HOUR_OF_DAY, 0);
-        cal.set(Calendar.MINUTE, 0);
-        cal.set(Calendar.SECOND, 0);
-        cal.set(Calendar.MILLISECOND, 0);
-        return cal.getTimeInMillis();
     }
 
     private class EvaluationGameState {

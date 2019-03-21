@@ -75,8 +75,8 @@ public class DefaultStatisticEvaluationTest {
         assertEquals(1, gamesStatistics.getLostCount().longValue());
         assertEquals(1, countsPerPlayerId.get(PLAYER_TWO_ID).getWonCount().longValue());
         assertEquals(1, countsPerPlayerId.get(PLAYER_TWO_ID).getLostCount().longValue());
-        assertEquals(2, countsPerPlayerId.get(ReservedUser.UNREGISTERED_USERS.getId()).getWonCount().longValue());
-        assertEquals(0, countsPerPlayerId.get(ReservedUser.UNREGISTERED_USERS.getId()).getLostCount().longValue());
+        assertEquals(2, countsPerPlayerId.get(ReservedUser.UNREGISTERED_USER.getId()).getWonCount().longValue());
+        assertEquals(0, countsPerPlayerId.get(ReservedUser.UNREGISTERED_USER.getId()).getLostCount().longValue());
         assertEquals(1, countsPerPlayerId.get(PLAYER_THREE_ID).getWonCount().longValue());
         assertEquals(0, countsPerPlayerId.get(PLAYER_THREE_ID).getLostCount().longValue());
     }
@@ -381,9 +381,9 @@ public class DefaultStatisticEvaluationTest {
                 .build());
 
         // Date = 02.02.2002
-        final StatisticFilter filter = new StatisticFilter();
-        filter.setDate(dateFormatDate.parse("02.02.2002").getTime());
-        filter.setDateComparativeOperator(ComparativeOperator.EQUAL);
+        StatisticFilter filter = new StatisticFilter();
+        filter.setStartDate(dateFormatDate.parse("02.02.2002").getTime());
+        filter.setEndDate(dateFormatDate.parse("02.02.2002").getTime());
         Statistic statistic = new DefaultStatisticEvaluation().evaluate(games, filter);
         DartStatistic dartStatistics = statistic.getDarts();
         Map<Integer, DartCountStatistic> countsPerScore = dartStatistics.getCountsPerScore();
@@ -403,8 +403,9 @@ public class DefaultStatisticEvaluationTest {
         assertEquals(1, countsPerPlayerId.get(PLAYER_TWO_ID).getWonCount().longValue());
         assertEquals(0, countsPerPlayerId.get(PLAYER_TWO_ID).getLostCount().longValue());
 
-        // Date > 02.02.2002
-        filter.setDateComparativeOperator(ComparativeOperator.GREATER);
+        // Date >= 03.02.2002
+        filter = new StatisticFilter();
+        filter.setStartDate(dateFormatDate.parse("03.02.2002").getTime());
         statistic = new DefaultStatisticEvaluation().evaluate(games, filter);
         dartStatistics = statistic.getDarts();
         countsPerScore = dartStatistics.getCountsPerScore();

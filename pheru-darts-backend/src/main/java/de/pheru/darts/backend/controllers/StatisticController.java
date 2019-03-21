@@ -2,6 +2,7 @@ package de.pheru.darts.backend.controllers;
 
 import de.pheru.darts.backend.dtos.statistics.StatisticDto;
 import de.pheru.darts.backend.dtos.statistics.StatisticFilterDto;
+import de.pheru.darts.backend.dtos.statistics.StatisticFilterGameOptionDto;
 import de.pheru.darts.backend.dtos.statistics.StatisticFilterOptionsDto;
 import de.pheru.darts.backend.entities.game.GameEntity;
 import de.pheru.darts.backend.entities.user.UserEntity;
@@ -15,10 +16,7 @@ import de.pheru.darts.backend.statistics.StatisticEvaluation;
 import de.pheru.darts.backend.statistics.StatisticFilter;
 import de.pheru.darts.backend.util.ComparativeOperator;
 import de.pheru.darts.backend.util.ReservedUser;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
@@ -38,8 +36,8 @@ public class StatisticController {
         this.userRepository = userRepository;
     }
 
-    @GetMapping
-    public StatisticDto get(@RequestBody(required = false) final StatisticFilterDto statisticFilterDto) {
+    @PostMapping
+    public StatisticDto createStatistic(@RequestBody(required = false) final StatisticFilterDto statisticFilterDto) {
         final List<GameEntity> games = gameRepository.findByUserId(SecurityUtil.getLoggedInUserId());
 
         final StatisticFilter filter = DtoToModelMapper.toStatisticFilter(statisticFilterDto);
@@ -54,15 +52,34 @@ public class StatisticController {
     public StatisticFilterOptionsDto getFilterOptions() {
         final String loggedInUserId = SecurityUtil.getLoggedInUserId();
         final List<GameEntity> games = gameRepository.findByUserId(loggedInUserId);
-        final Set<String> playerIds = new HashSet<>();
-        games.forEach(gameEntity -> gameEntity.getPlayers()
-                .forEach(playerDocument -> {
-                    if (!loggedInUserId.equals(playerDocument.getId())) {
-                        playerIds.add(playerDocument.getId());
-                    }
-                }));
-        final Map<String, String> playerIdToPlayerName = getPlayerNamesForIds(playerIds);
-        final Map<String, List<String>> playerNameToPlayerIds = reversePlayerIdToPlayerName(playerIdToPlayerName);
+
+        final Map<String, Set<String>> playerNameToPlayerIds = new HashMap<>();
+        final List<StatisticFilterGameOptionDto> gameOptionDtos = new ArrayList<>();
+        games.forEach(gameEntity -> {
+            final StatisticFilterGameOptionDto gameOptionDto = new StatisticFilterGameOptionDto();
+            gameOptionDto.setId(gameEntity.getId());
+            gameOptionDto.setTimestamp(gameEntity.getTimestamp());
+            gameOptionDto.setOpponents(new ArrayList<>());
+            if (gameEntity.isTrainingOrDefault()
+                    && !playerNameToPlayerIds.containsKey(ReservedUser.TRAINING.getName())) {
+                playerNameToPlayerIds.put(ReservedUser.TRAINING.getName(), new HashSet<>());
+                playerNameToPlayerIds.get(ReservedUser.TRAINING.getName()).add(ReservedUser.TRAINING.getId());
+            }
+            gameEntity.getPlayers()
+                    .forEach(playerDocument -> {
+                        if (!loggedInUserId.equals(playerDocument.getId())) {
+                            final String playerIdNotNull = playerDocument.getId() == null
+                                    ? ReservedUser.UNREGISTERED_USER.getId() : playerDocument.getId();
+                            final String playerName = playerNameForId(playerIdNotNull);
+                            if (!playerNameToPlayerIds.containsKey(playerName)) {
+                                playerNameToPlayerIds.put(playerName, new HashSet<>());
+                            }
+                            playerNameToPlayerIds.get(playerName).add(playerIdNotNull);
+                            gameOptionDto.getOpponents().add(playerName);
+                        }
+                    });
+            gameOptionDtos.add(gameOptionDto);
+        });
 
         final List<String> operators = new ArrayList<>();
         for (final ComparativeOperator operator : ComparativeOperator.values()) {
@@ -72,7 +89,22 @@ public class StatisticController {
         final StatisticFilterOptionsDto options = new StatisticFilterOptionsDto();
         options.setUsernameToUserIds(playerNameToPlayerIds);
         options.setComparativeOperators(operators);
+        options.setGames(gameOptionDtos);
         return options;
+    }
+
+    private String playerNameForId(final String playerId) {
+        for (final ReservedUser reservedUser : ReservedUser.values()) {
+            if (reservedUser.getId().equals(playerId)) {
+                return reservedUser.getName();
+            }
+        }
+        final UserEntity userEntity = userRepository.findById(playerId);
+        if (userEntity == null) {
+            return ReservedUser.DELETED_USER.getName();
+        } else {
+            return userEntity.getName();
+        }
     }
 
     private Map<String, String> getPlayerNamesForStatistic(final Statistic statistic) {
@@ -82,10 +114,6 @@ public class StatisticController {
     private Map<String, String> getPlayerNamesForIds(final Set<String> playerIds) {
         final Map<String, String> playerIdToPlayerName = new HashMap<>();
         for (final String playerId : playerIds) {
-            if (playerId == null) {
-                playerIdToPlayerName.put(ReservedUser.UNREGISTERED_USERS.getId(), ReservedUser.UNREGISTERED_USERS.getName());
-                continue;
-            }
             boolean isReservedUserId = false;
             for (final ReservedUser reservedUser : ReservedUser.values()) {
                 if (reservedUser.getId().equals(playerId)) {
@@ -99,7 +127,7 @@ public class StatisticController {
             }
             final UserEntity userEntity = userRepository.findById(playerId);
             if (userEntity == null) {
-                playerIdToPlayerName.put(playerId, ReservedUser.DELETED_USERS.getName());
+                playerIdToPlayerName.put(playerId, ReservedUser.DELETED_USER.getName());
             } else {
                 playerIdToPlayerName.put(playerId, userEntity.getName());
             }
@@ -107,15 +135,4 @@ public class StatisticController {
         return playerIdToPlayerName;
     }
 
-    private Map<String, List<String>> reversePlayerIdToPlayerName(final Map<String, String> playerIdToPlayerName) {
-        final Map<String, List<String>> reverse = new HashMap<>();
-
-        for (final Map.Entry<String, String> entry : playerIdToPlayerName.entrySet()) {
-            if (!reverse.containsKey(entry.getValue())) {
-                reverse.put(entry.getValue(), new ArrayList<>());
-            }
-            reverse.get(entry.getValue()).add(entry.getKey());
-        }
-        return reverse;
-    }
 }

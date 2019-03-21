@@ -1,7 +1,15 @@
-import {FETCH_STATISTICS_FAILED, FETCH_STATISTICS_SUCCESSFUL, REQUEST_FETCH_STATISTICS} from "../actions/statistics";
+import {
+    REQUEST_FETCH_STATISTICS_FILTER_OPTIONS,
+    FETCH_STATISTICS_FILTER_OPTIONS_SUCCESSFUL,
+    FETCH_STATISTICS_FILTER_OPTIONS_FAILED,
+    REQUEST_FETCH_STATISTICS,
+    FETCH_STATISTICS_SUCCESSFUL,
+    FETCH_STATISTICS_FAILED
+} from "../actions/statistics";
 import SortUtil from "../util/SortUtil";
 
 function statistics(state = {
+    isFetchingOptions: false,
     isFetching: false,
     totalGames: 0,
     totalDarts: 0,
@@ -10,9 +18,34 @@ function statistics(state = {
     gamesWon: 0,
     gamesLost: 0,
     dartData: [],
-    gamesData: []
+    gamesData: [],
+    options: {
+        usernameToUserIds: {},
+        comparativeOperators: [],
+        games: []
+    }
 }, action) {
     switch (action.type) {
+        case REQUEST_FETCH_STATISTICS_FILTER_OPTIONS:
+            return {
+                ...state,
+                isFetchingOptions: true
+            };
+        case FETCH_STATISTICS_FILTER_OPTIONS_SUCCESSFUL:
+            return {
+                ...state,
+                isFetchingOptions: false,
+                options: {
+                    usernameToUserIds: action.options.usernameToUserIds,
+                    comparativeOperators: action.options.comparativeOperators,
+                    games: action.options.games
+                }
+            };
+        case FETCH_STATISTICS_FILTER_OPTIONS_FAILED:
+            return {
+                ...state,
+                isFetchingOptions: false
+            };
         case REQUEST_FETCH_STATISTICS:
             return {
                 ...state,
@@ -31,7 +64,7 @@ function statistics(state = {
                     });
                 }
             }
-            dartData.sort(SortUtil.sortDartDataByScoreDesc);
+            dartData.sort(SortUtil.sortByScoreDesc);
 
             let gamesData = [];
             let games = action.data.games.countsPerPlayer;
@@ -44,7 +77,7 @@ function statistics(state = {
                     });
                 }
             }
-            gamesData.sort(SortUtil.sortGameDataByOpponentAsc);
+            gamesData.sort(SortUtil.sortByOpponentAsc);
             return {
                 ...state,
                 isFetching: false,

@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/user")
 public class UserController {
 
-    private static final Logger LOGGER = new Logger();
+    private static final Logger LOGGER = new Logger(UserController.class);
 
     public static final String INVALID_CURRENT_PASSWORD = "Invalid current password";
 

@@ -17,7 +17,7 @@ import java.util.List;
 @RequestMapping("/notification")
 public class NotificationController {
 
-    private static final Logger LOGGER = new Logger();
+    private static final Logger LOGGER = new Logger(NotificationController.class);
 
     private final NotificationRepository notificationRepository;
 
