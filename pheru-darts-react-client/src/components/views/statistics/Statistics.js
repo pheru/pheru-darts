@@ -21,12 +21,6 @@ class Statistics extends React.Component {
         this.state = {
             dartChartType: DART_CHART_TYPE_BAR
         };
-        this.tableStyle = {
-            border: "1px solid #a5b0b6",
-            borderCollapse: "collapse",
-            textAlign: "center",
-            verticalAlign: "middle"
-        };
         this.dartsBarChartRef = React.createRef();
         this.dartsRadarChartRef = React.createRef();
         this.handleDartChartTypeChange = this.handleDartChartTypeChange.bind(this);
@@ -85,12 +79,17 @@ class Statistics extends React.Component {
                 />
             </div>
             {this.props.isFetchingStatistics ?
-                    <StackLoader modal label="Lade Statistiken..."/>
+                <StackLoader modal label="Lade Statistiken..."/>
                 : <div>
                     {this.props.dartData.length > 0
                         ? this.createDartsView()
                         : <Alert bsStyle="warning">
                             <strong>Keine Dart-Daten vorhanden</strong>
+                        </Alert>}
+                    {Object.keys(this.props.highestAufnahmen).length > 0
+                        ? this.createAufnahmenView()
+                        : <Alert bsStyle="warning">
+                            <strong>Keine Aufnahmen-Daten vorhanden</strong>
                         </Alert>}
                     {this.props.gamesData.length > 0
                         ? this.createGamesView()
@@ -109,22 +108,22 @@ class Statistics extends React.Component {
             textAlign: 'center'
         }}>
             <h2 style={{marginTop: 0}}><strong>Darts</strong></h2>
-            <Table responsive style={{textAlign: 'center'}}>
+            <Table className="statistics-table" responsive>
                 <tbody>
                 <tr>
-                    <th style={this.tableStyle}>Gesamt:</th>
-                    <td colSpan={3} style={this.tableStyle}>{this.props.totalDarts}</td>
+                    <th>Gesamt:</th>
+                    <td colSpan={3}>{this.props.totalDarts}</td>
                 </tr>
                 <tr>
-                    <th rowSpan={2} style={this.tableStyle}>Checkouts:</th>
-                    <th style={this.tableStyle}>Mögliche Checkouts</th>
-                    <th style={this.tableStyle}>Erfolgreiche Checkouts</th>
-                    <th style={this.tableStyle}>Checkoutrate</th>
+                    <th rowSpan={2}>Checkouts:</th>
+                    <th>Mögliche Checkouts</th>
+                    <th>Erfolgreiche Checkouts</th>
+                    <th>Checkoutrate</th>
                 </tr>
                 <tr>
-                    <td style={this.tableStyle}>{this.props.possibleCheckoutDarts}</td>
-                    <td style={this.tableStyle}>{this.props.checkoutDarts}</td>
-                    <td style={this.tableStyle}>{this.getDartCheckoutRate()}</td>
+                    <td>{this.props.possibleCheckoutDarts}</td>
+                    <td>{this.props.checkoutDarts}</td>
+                    <td>{this.getDartCheckoutRate()}</td>
                 </tr>
                 </tbody>
             </Table>
@@ -151,6 +150,39 @@ class Statistics extends React.Component {
         </Well>
     }
 
+    createAufnahmenView() {
+        let ths = [];
+        let tds = [];
+        for (let property in this.props.highestAufnahmen) {
+            if (this.props.highestAufnahmen.hasOwnProperty(property)) {
+                ths.unshift(<th key={"aufnahme_th_" + property}>{property}</th>);
+                tds.unshift(<td key={"aufnahme_td_" + property}>{this.props.highestAufnahmen[property]}</td>);
+            }
+        }
+        return <Well style={{
+            paddingBottom: 0,
+            marginBottom: 15,
+            textAlign: 'center'
+        }}>
+            <h2 style={{marginTop: 0}}><strong>Aufnahmen</strong></h2>
+            <Table className="statistics-table" responsive>
+                <tbody>
+                <tr>
+                    <th>Durchschnitt:</th>
+                    <td colSpan={ths.length}>{this.props.averageAufnahmeScore.toFixed(2)}</td>
+                </tr>
+                <tr>
+                    <th rowSpan={2}>Höchste Aufnahmen (Top {ths.length}):</th>
+                    {ths}
+                </tr>
+                <tr>
+                    {tds}
+                </tr>
+                </tbody>
+            </Table>
+        </Well>
+    }
+
     createGamesView() {
         return <Well
             style={{
@@ -159,19 +191,19 @@ class Statistics extends React.Component {
                 textAlign: 'center'
             }}>
             <h2 style={{marginTop: 0}}><strong>Spiele</strong></h2>
-            <Table responsive style={{textAlign: 'center'}}>
+            <Table className="statistics-table" responsive>
                 <tbody>
                 <tr>
-                    <th style={this.tableStyle}>Gesamt</th>
-                    <th style={this.tableStyle}>Gewonnen</th>
-                    <th style={this.tableStyle}>Verloren</th>
-                    <th style={this.tableStyle}>Siegrate</th>
+                    <th>Gesamt</th>
+                    <th>Gewonnen</th>
+                    <th>Verloren</th>
+                    <th>Siegrate</th>
                 </tr>
                 <tr>
-                    <td style={this.tableStyle}>{this.props.gamesWon + this.props.gamesLost}</td>
-                    <td style={this.tableStyle}>{this.props.gamesWon}</td>
-                    <td style={this.tableStyle}>{this.props.gamesLost}</td>
-                    <td style={this.tableStyle}>{this.getWinRate()}</td>
+                    <td>{this.props.gamesWon + this.props.gamesLost}</td>
+                    <td>{this.props.gamesWon}</td>
+                    <td>{this.props.gamesLost}</td>
+                    <td>{this.getWinRate()}</td>
                 </tr>
                 </tbody>
             </Table>
@@ -201,6 +233,9 @@ Statistics.propTypes = {
     gamesWon: PropTypes.number.isRequired,
     gamesLost: PropTypes.number.isRequired,
     totalDarts: PropTypes.number.isRequired,
+    averageAufnahmeScore: PropTypes.number.isRequired,
+    highestAufnahmen: PropTypes.object.isRequired,
+
     dartData: PropTypes.array,
     gamesData: PropTypes.array,
 

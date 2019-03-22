@@ -12,6 +12,8 @@ const mapStateToProps = state => ({
     totalDarts : state.statistics.totalDarts,
     possibleCheckoutDarts : state.statistics.possibleCheckoutDarts,
     checkoutDarts: state.statistics.checkoutDarts,
+    averageAufnahmeScore: state.statistics.averageAufnahmeScore,
+    highestAufnahmen: state.statistics.highestAufnahmen,
     dartData : state.statistics.dartData,
     gamesData: state.statistics.gamesData,
     options: state.statistics.options

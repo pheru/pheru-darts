@@ -22,9 +22,9 @@ import java.util.Map;
 
 import static org.junit.Assert.*;
 
-//TODO Test für gemischten Filter
 public class DefaultStatisticEvaluationTest {
 
+    private static final double AVERAGE_DELTA = 0.001;
     private static final String LOGGED_IN_ID = "logged-in-id";
     private static final String PLAYER_TWO_ID = "player-2-id";
     private static final String PLAYER_THREE_ID = "player-3-id";
@@ -50,8 +50,6 @@ public class DefaultStatisticEvaluationTest {
         final Statistic statistic = new DefaultStatisticEvaluation().evaluate(games, null);
         final DartStatistic dartStatistics = statistic.getDarts();
         final Map<Integer, DartCountStatistic> countsPerScore = dartStatistics.getCountsPerScore();
-        final GameStatistic gamesStatistics = statistic.getGames();
-        final Map<String, GameCountStatistic> countsPerPlayerId = gamesStatistics.getCountsPerPlayerIds();
 
         assertEquals(28, dartStatistics.getTotalCount().longValue());
         assertEquals(8, dartStatistics.getPossibleCheckoutCount().longValue());
@@ -71,6 +69,8 @@ public class DefaultStatisticEvaluationTest {
         assertDartCount(countsPerScore.get(1), 4, 0, 0);
 
 
+        final GameStatistic gamesStatistics = statistic.getGames();
+        final Map<String, GameCountStatistic> countsPerPlayerId = gamesStatistics.getCountsPerPlayerIds();
         assertEquals(4, gamesStatistics.getWonCount().longValue());
         assertEquals(1, gamesStatistics.getLostCount().longValue());
         assertEquals(1, countsPerPlayerId.get(PLAYER_TWO_ID).getWonCount().longValue());
@@ -79,6 +79,15 @@ public class DefaultStatisticEvaluationTest {
         assertEquals(0, countsPerPlayerId.get(ReservedUser.UNREGISTERED_USER.getId()).getLostCount().longValue());
         assertEquals(1, countsPerPlayerId.get(PLAYER_THREE_ID).getWonCount().longValue());
         assertEquals(0, countsPerPlayerId.get(PLAYER_THREE_ID).getLostCount().longValue());
+
+        final AufnahmeStatistic aufnahmeStatistic = statistic.getAufnahmen();
+        final Map<Integer, Integer> highestAufnahmen = aufnahmeStatistic.getHighestAufnahmen();
+        assertEquals(57.0, aufnahmeStatistic.getAverageAufnahmeScore(), AVERAGE_DELTA);
+        assertEquals(1, highestAufnahmen.get(120).intValue());
+        assertEquals(4, highestAufnahmen.get(101).intValue());
+        assertEquals(1, highestAufnahmen.get(60).intValue());
+        assertEquals(1, highestAufnahmen.get(59).intValue());
+        assertEquals(1, highestAufnahmen.get(41).intValue());
     }
 
     @Test
@@ -124,8 +133,6 @@ public class DefaultStatisticEvaluationTest {
         final Statistic statistic = new DefaultStatisticEvaluation().evaluate(games, filter);
         final DartStatistic dartStatistics = statistic.getDarts();
         final Map<Integer, DartCountStatistic> countsPerScore = dartStatistics.getCountsPerScore();
-        final GameStatistic gamesStatistics = statistic.getGames();
-        final Map<String, GameCountStatistic> countsPerPlayerId = gamesStatistics.getCountsPerPlayerIds();
 
         assertEquals(2, dartStatistics.getTotalCount().longValue());
         assertEquals(2, dartStatistics.getPossibleCheckoutCount().longValue());
@@ -134,12 +141,20 @@ public class DefaultStatisticEvaluationTest {
         assertEquals(2, dartStatistics.getCheckinCount().longValue());
         assertDartCount(countsPerScore.get(5), 2, 0, 0);
 
+        final GameStatistic gamesStatistics = statistic.getGames();
+        final Map<String, GameCountStatistic> countsPerPlayerId = gamesStatistics.getCountsPerPlayerIds();
         assertEquals(1, gamesStatistics.getWonCount().longValue());
         assertEquals(1, gamesStatistics.getLostCount().longValue());
         assertEquals(1, countsPerPlayerId.get(PLAYER_TWO_ID).getWonCount().longValue());
         assertEquals(0, countsPerPlayerId.get(PLAYER_TWO_ID).getLostCount().longValue());
         assertEquals(0, countsPerPlayerId.get(PLAYER_THREE_ID).getWonCount().longValue());
         assertEquals(1, countsPerPlayerId.get(PLAYER_THREE_ID).getLostCount().longValue());
+
+        final AufnahmeStatistic aufnahmeStatistic = statistic.getAufnahmen();
+        final Map<Integer, Integer> highestAufnahmen = aufnahmeStatistic.getHighestAufnahmen();
+        assertEquals(2.5, aufnahmeStatistic.getAverageAufnahmeScore(), AVERAGE_DELTA);
+        assertEquals(1, highestAufnahmen.get(5).intValue());
+        assertEquals(1, highestAufnahmen.get(0).intValue());
     }
 
     @Test
@@ -181,8 +196,6 @@ public class DefaultStatisticEvaluationTest {
         final Statistic statistic = new DefaultStatisticEvaluation().evaluate(games, filter);
         final DartStatistic dartStatistics = statistic.getDarts();
         final Map<Integer, DartCountStatistic> countsPerScore = dartStatistics.getCountsPerScore();
-        final GameStatistic gamesStatistics = statistic.getGames();
-        final Map<String, GameCountStatistic> countsPerPlayerId = gamesStatistics.getCountsPerPlayerIds();
 
         assertEquals(2, dartStatistics.getTotalCount().longValue());
         assertEquals(2, dartStatistics.getPossibleCheckoutCount().longValue());
@@ -191,12 +204,20 @@ public class DefaultStatisticEvaluationTest {
         assertEquals(2, dartStatistics.getCheckinCount().longValue());
         assertDartCount(countsPerScore.get(5), 2, 0, 0);
 
+        final GameStatistic gamesStatistics = statistic.getGames();
+        final Map<String, GameCountStatistic> countsPerPlayerId = gamesStatistics.getCountsPerPlayerIds();
         assertEquals(1, gamesStatistics.getWonCount().longValue());
         assertEquals(1, gamesStatistics.getLostCount().longValue());
         assertEquals(1, countsPerPlayerId.get(PLAYER_TWO_ID).getWonCount().longValue());
         assertEquals(0, countsPerPlayerId.get(PLAYER_TWO_ID).getLostCount().longValue());
         assertEquals(0, countsPerPlayerId.get(PLAYER_THREE_ID).getWonCount().longValue());
         assertEquals(1, countsPerPlayerId.get(PLAYER_THREE_ID).getLostCount().longValue());
+
+        final AufnahmeStatistic aufnahmeStatistic = statistic.getAufnahmen();
+        final Map<Integer, Integer> highestAufnahmen = aufnahmeStatistic.getHighestAufnahmen();
+        assertEquals(2.5, aufnahmeStatistic.getAverageAufnahmeScore(), AVERAGE_DELTA);
+        assertEquals(1, highestAufnahmen.get(5).intValue());
+        assertEquals(1, highestAufnahmen.get(0).intValue());
     }
 
     @Test
@@ -228,8 +249,6 @@ public class DefaultStatisticEvaluationTest {
         final Statistic statistic = new DefaultStatisticEvaluation().evaluate(games, filter);
         final DartStatistic dartStatistics = statistic.getDarts();
         final Map<Integer, DartCountStatistic> countsPerScore = dartStatistics.getCountsPerScore();
-        final GameStatistic gamesStatistics = statistic.getGames();
-        final Map<String, GameCountStatistic> countsPerPlayerId = gamesStatistics.getCountsPerPlayerIds();
 
         assertEquals(1, dartStatistics.getTotalCount().longValue());
         assertEquals(1, dartStatistics.getPossibleCheckoutCount().longValue());
@@ -238,10 +257,17 @@ public class DefaultStatisticEvaluationTest {
         assertEquals(1, dartStatistics.getCheckinCount().longValue());
         assertDartCount(countsPerScore.get(5), 0, 1, 0);
 
+        final GameStatistic gamesStatistics = statistic.getGames();
+        final Map<String, GameCountStatistic> countsPerPlayerId = gamesStatistics.getCountsPerPlayerIds();
         assertEquals(1, gamesStatistics.getWonCount().longValue());
         assertEquals(0, gamesStatistics.getLostCount().longValue());
         assertEquals(1, countsPerPlayerId.get(PLAYER_THREE_ID).getWonCount().longValue());
         assertEquals(0, countsPerPlayerId.get(PLAYER_THREE_ID).getLostCount().longValue());
+
+        final AufnahmeStatistic aufnahmeStatistic = statistic.getAufnahmen();
+        final Map<Integer, Integer> highestAufnahmen = aufnahmeStatistic.getHighestAufnahmen();
+        assertEquals(10, aufnahmeStatistic.getAverageAufnahmeScore(), AVERAGE_DELTA);
+        assertEquals(1, highestAufnahmen.get(10).intValue());
     }
 
     @Test
@@ -271,8 +297,6 @@ public class DefaultStatisticEvaluationTest {
         final Statistic statistic = new DefaultStatisticEvaluation().evaluate(games, filter);
         final DartStatistic dartStatistics = statistic.getDarts();
         final Map<Integer, DartCountStatistic> countsPerScore = dartStatistics.getCountsPerScore();
-        final GameStatistic gamesStatistics = statistic.getGames();
-        final Map<String, GameCountStatistic> countsPerPlayerId = gamesStatistics.getCountsPerPlayerIds();
 
         assertEquals(1, dartStatistics.getTotalCount().longValue());
         assertEquals(1, dartStatistics.getPossibleCheckoutCount().longValue());
@@ -281,10 +305,17 @@ public class DefaultStatisticEvaluationTest {
         assertEquals(1, dartStatistics.getCheckinCount().longValue());
         assertDartCount(countsPerScore.get(5), 1, 0, 0);
 
+        final GameStatistic gamesStatistics = statistic.getGames();
+        final Map<String, GameCountStatistic> countsPerPlayerId = gamesStatistics.getCountsPerPlayerIds();
         assertEquals(1, gamesStatistics.getWonCount().longValue());
         assertEquals(0, gamesStatistics.getLostCount().longValue());
         assertEquals(1, countsPerPlayerId.get(PLAYER_TWO_ID).getWonCount().longValue());
         assertEquals(0, countsPerPlayerId.get(PLAYER_TWO_ID).getLostCount().longValue());
+
+        final AufnahmeStatistic aufnahmeStatistic = statistic.getAufnahmen();
+        final Map<Integer, Integer> highestAufnahmen = aufnahmeStatistic.getHighestAufnahmen();
+        assertEquals(5, aufnahmeStatistic.getAverageAufnahmeScore(), AVERAGE_DELTA);
+        assertEquals(1, highestAufnahmen.get(5).intValue());
     }
 
     @Test
@@ -316,8 +347,6 @@ public class DefaultStatisticEvaluationTest {
         Statistic statistic = new DefaultStatisticEvaluation().evaluate(games, filter);
         DartStatistic dartStatistics = statistic.getDarts();
         Map<Integer, DartCountStatistic> countsPerScore = dartStatistics.getCountsPerScore();
-        GameStatistic gamesStatistics = statistic.getGames();
-        Map<String, GameCountStatistic> countsPerPlayerId = gamesStatistics.getCountsPerPlayerIds();
 
         assertEquals(1, dartStatistics.getTotalCount().longValue());
         assertEquals(1, dartStatistics.getPossibleCheckoutCount().longValue());
@@ -327,10 +356,17 @@ public class DefaultStatisticEvaluationTest {
         assertDartCount(countsPerScore.get(5), 1, 0, 0);
         assertNull(countsPerScore.get(20));
 
+        GameStatistic gamesStatistics = statistic.getGames();
+        Map<String, GameCountStatistic> countsPerPlayerId = gamesStatistics.getCountsPerPlayerIds();
         assertEquals(1, gamesStatistics.getWonCount().longValue());
         assertEquals(0, gamesStatistics.getLostCount().longValue());
         assertEquals(1, countsPerPlayerId.get(PLAYER_TWO_ID).getWonCount().longValue());
         assertEquals(0, countsPerPlayerId.get(PLAYER_TWO_ID).getLostCount().longValue());
+
+        AufnahmeStatistic aufnahmeStatistic = statistic.getAufnahmen();
+        Map<Integer, Integer> highestAufnahmen = aufnahmeStatistic.getHighestAufnahmen();
+        assertEquals(5, aufnahmeStatistic.getAverageAufnahmeScore(), AVERAGE_DELTA);
+        assertEquals(1, highestAufnahmen.get(5).intValue());
 
         // Startscore > 10
         filter = new StatisticFilter();
@@ -339,8 +375,6 @@ public class DefaultStatisticEvaluationTest {
         statistic = new DefaultStatisticEvaluation().evaluate(games, filter);
         dartStatistics = statistic.getDarts();
         countsPerScore = dartStatistics.getCountsPerScore();
-        gamesStatistics = statistic.getGames();
-        countsPerPlayerId = gamesStatistics.getCountsPerPlayerIds();
 
         assertEquals(1, dartStatistics.getTotalCount().longValue());
         assertEquals(1, dartStatistics.getPossibleCheckoutCount().longValue());
@@ -350,10 +384,17 @@ public class DefaultStatisticEvaluationTest {
         assertNull(countsPerScore.get(5));
         assertDartCount(countsPerScore.get(20), 1, 0, 0);
 
+        gamesStatistics = statistic.getGames();
+        countsPerPlayerId = gamesStatistics.getCountsPerPlayerIds();
         assertEquals(1, gamesStatistics.getWonCount().longValue());
         assertEquals(0, gamesStatistics.getLostCount().longValue());
         assertEquals(1, countsPerPlayerId.get(PLAYER_THREE_ID).getWonCount().longValue());
         assertEquals(0, countsPerPlayerId.get(PLAYER_THREE_ID).getLostCount().longValue());
+
+        aufnahmeStatistic = statistic.getAufnahmen();
+        highestAufnahmen = aufnahmeStatistic.getHighestAufnahmen();
+        assertEquals(20, aufnahmeStatistic.getAverageAufnahmeScore(), AVERAGE_DELTA);
+        assertEquals(1, highestAufnahmen.get(20).intValue());
     }
 
     @Test
@@ -387,8 +428,6 @@ public class DefaultStatisticEvaluationTest {
         Statistic statistic = new DefaultStatisticEvaluation().evaluate(games, filter);
         DartStatistic dartStatistics = statistic.getDarts();
         Map<Integer, DartCountStatistic> countsPerScore = dartStatistics.getCountsPerScore();
-        GameStatistic gamesStatistics = statistic.getGames();
-        Map<String, GameCountStatistic> countsPerPlayerId = gamesStatistics.getCountsPerPlayerIds();
 
         assertEquals(1, dartStatistics.getTotalCount().longValue());
         assertEquals(1, dartStatistics.getPossibleCheckoutCount().longValue());
@@ -398,10 +437,17 @@ public class DefaultStatisticEvaluationTest {
         assertDartCount(countsPerScore.get(5), 1, 0, 0);
         assertNull(countsPerScore.get(20));
 
+        GameStatistic gamesStatistics = statistic.getGames();
+        Map<String, GameCountStatistic> countsPerPlayerId = gamesStatistics.getCountsPerPlayerIds();
         assertEquals(1, gamesStatistics.getWonCount().longValue());
         assertEquals(0, gamesStatistics.getLostCount().longValue());
         assertEquals(1, countsPerPlayerId.get(PLAYER_TWO_ID).getWonCount().longValue());
         assertEquals(0, countsPerPlayerId.get(PLAYER_TWO_ID).getLostCount().longValue());
+
+        AufnahmeStatistic aufnahmeStatistic = statistic.getAufnahmen();
+        Map<Integer, Integer> highestAufnahmen = aufnahmeStatistic.getHighestAufnahmen();
+        assertEquals(5, aufnahmeStatistic.getAverageAufnahmeScore(), AVERAGE_DELTA);
+        assertEquals(1, highestAufnahmen.get(5).intValue());
 
         // Date >= 03.02.2002
         filter = new StatisticFilter();
@@ -409,8 +455,6 @@ public class DefaultStatisticEvaluationTest {
         statistic = new DefaultStatisticEvaluation().evaluate(games, filter);
         dartStatistics = statistic.getDarts();
         countsPerScore = dartStatistics.getCountsPerScore();
-        gamesStatistics = statistic.getGames();
-        countsPerPlayerId = gamesStatistics.getCountsPerPlayerIds();
 
         assertEquals(1, dartStatistics.getTotalCount().longValue());
         assertEquals(1, dartStatistics.getPossibleCheckoutCount().longValue());
@@ -420,10 +464,17 @@ public class DefaultStatisticEvaluationTest {
         assertNull(countsPerScore.get(5));
         assertDartCount(countsPerScore.get(20), 1, 0, 0);
 
+        gamesStatistics = statistic.getGames();
+        countsPerPlayerId = gamesStatistics.getCountsPerPlayerIds();
         assertEquals(1, gamesStatistics.getWonCount().longValue());
         assertEquals(0, gamesStatistics.getLostCount().longValue());
         assertEquals(1, countsPerPlayerId.get(PLAYER_THREE_ID).getWonCount().longValue());
         assertEquals(0, countsPerPlayerId.get(PLAYER_THREE_ID).getLostCount().longValue());
+
+        aufnahmeStatistic = statistic.getAufnahmen();
+        highestAufnahmen = aufnahmeStatistic.getHighestAufnahmen();
+        assertEquals(20, aufnahmeStatistic.getAverageAufnahmeScore(), AVERAGE_DELTA);
+        assertEquals(1, highestAufnahmen.get(20).intValue());
     }
 
     @Test
@@ -468,6 +519,20 @@ public class DefaultStatisticEvaluationTest {
         assertDartCount(countsPerScore.get(1), 1, 0, 0);
         assertDartCount(countsPerScore.get(20), 4, 0, 0);
 
+        GameStatistic gamesStatistics = statistic.getGames();
+        Map<String, GameCountStatistic> countsPerPlayerId = gamesStatistics.getCountsPerPlayerIds();
+        assertEquals(1, gamesStatistics.getWonCount().longValue());
+        assertEquals(0, gamesStatistics.getLostCount().longValue());
+        assertEquals(1, countsPerPlayerId.get(PLAYER_TWO_ID).getWonCount().longValue());
+        assertEquals(0, countsPerPlayerId.get(PLAYER_TWO_ID).getLostCount().longValue());
+
+        AufnahmeStatistic aufnahmeStatistic = statistic.getAufnahmen();
+        Map<Integer, Integer> highestAufnahmen = aufnahmeStatistic.getHighestAufnahmen();
+        assertEquals(33.666, aufnahmeStatistic.getAverageAufnahmeScore(), AVERAGE_DELTA);
+        assertEquals(1, highestAufnahmen.get(41).intValue());
+        assertEquals(1, highestAufnahmen.get(0).intValue());
+        assertEquals(1, highestAufnahmen.get(60).intValue());
+
         // CurrentScore = 40
         filter = new StatisticFilter();
         filter.setCurrentScore(40);
@@ -482,6 +547,18 @@ public class DefaultStatisticEvaluationTest {
         assertEquals(0, dartStatistics.getPossibleCheckinCount().longValue());
         assertEquals(0, dartStatistics.getCheckinCount().longValue());
         assertDartCount(countsPerScore.get(20), 1, 1, 0);
+
+        gamesStatistics = statistic.getGames();
+        countsPerPlayerId = gamesStatistics.getCountsPerPlayerIds();
+        assertEquals(1, gamesStatistics.getWonCount().longValue());
+        assertEquals(0, gamesStatistics.getLostCount().longValue());
+        assertEquals(1, countsPerPlayerId.get(PLAYER_TWO_ID).getWonCount().longValue());
+        assertEquals(0, countsPerPlayerId.get(PLAYER_TWO_ID).getLostCount().longValue());
+
+        aufnahmeStatistic = statistic.getAufnahmen();
+        highestAufnahmen = aufnahmeStatistic.getHighestAufnahmen();
+        assertEquals(0, aufnahmeStatistic.getAverageAufnahmeScore(), AVERAGE_DELTA);
+        assertTrue(highestAufnahmen.isEmpty());
     }
 
     @Test
@@ -489,18 +566,22 @@ public class DefaultStatisticEvaluationTest {
         final Statistic statistic = new DefaultStatisticEvaluation().evaluate(new ArrayList<>(), null);
         final DartStatistic dartStatistics = statistic.getDarts();
         final Map<Integer, DartCountStatistic> countsPerScore = dartStatistics.getCountsPerScore();
-        final GameStatistic gamesStatistics = statistic.getGames();
-        final Map<String, GameCountStatistic> countsPerPlayerId = gamesStatistics.getCountsPerPlayerIds();
 
         assertEquals(0, dartStatistics.getTotalCount().longValue());
         assertEquals(0, dartStatistics.getPossibleCheckoutCount().longValue());
         assertEquals(0, dartStatistics.getCheckoutCount().longValue());
         assertTrue(countsPerScore.isEmpty());
 
-
+        final GameStatistic gamesStatistics = statistic.getGames();
+        final Map<String, GameCountStatistic> countsPerPlayerId = gamesStatistics.getCountsPerPlayerIds();
         assertEquals(0, gamesStatistics.getWonCount().longValue());
         assertEquals(0, gamesStatistics.getLostCount().longValue());
         assertTrue(countsPerPlayerId.isEmpty());
+
+        final AufnahmeStatistic aufnahmeStatistic = statistic.getAufnahmen();
+        final Map<Integer, Integer> highestAufnahmen = aufnahmeStatistic.getHighestAufnahmen();
+        assertEquals(0.0, aufnahmeStatistic.getAverageAufnahmeScore(), AVERAGE_DELTA);
+        assertTrue(highestAufnahmen.isEmpty());
     }
 
     private void assertDartCount(final DartCountStatistic dartStatistic, final long singleCount, final long doubleCount, final long tripleCount) {

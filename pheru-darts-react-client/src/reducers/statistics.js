@@ -19,6 +19,8 @@ function statistics(state = {
     gamesLost: 0,
     dartData: [],
     gamesData: [],
+    averageAufnahmeScore: 0.0,
+    highestAufnahmen: {},
     options: {
         usernameToUserIds: {},
         comparativeOperators: [],
@@ -86,6 +88,8 @@ function statistics(state = {
                 totalDarts: action.data.darts.totalCount,
                 possibleCheckoutDarts: action.data.darts.possibleCheckoutCount,
                 checkoutDarts: action.data.darts.checkoutCount,
+                averageAufnahmeScore: action.data.aufnahmen.averageAufnahmeScore,
+                highestAufnahmen: action.data.aufnahmen.highestAufnahmen,
                 dartData,
                 gamesData
             };

@@ -16,6 +16,7 @@ public final class ModelToDtoMapper {
         final StatisticDto statisticDto = new StatisticDto();
         statisticDto.setGames(toGameStatisticDto(statistic.getGames(), playerIdToPlayerName));
         statisticDto.setDarts(toDartStatisticDto(statistic.getDarts()));
+        statisticDto.setAufnahmen(toAufnahmenStatisticDto(statistic.getAufnahmen()));
         return statisticDto;
     }
 
@@ -68,6 +69,13 @@ public final class ModelToDtoMapper {
             gameCountStatisticDtos.put(entry.getKey(), dartCountStatisticDto);
         }
         return gameCountStatisticDtos;
+    }
+
+    private static AufnahmenStatisticDto toAufnahmenStatisticDto(final AufnahmeStatistic aufnahmeStatistic) {
+        final AufnahmenStatisticDto aufnahmenStatisticDto = new AufnahmenStatisticDto();
+        aufnahmenStatisticDto.setAverageAufnahmeScore(aufnahmeStatistic.getAverageAufnahmeScore());
+        aufnahmenStatisticDto.setHighestAufnahmen(aufnahmeStatistic.getHighestAufnahmen());
+        return aufnahmenStatisticDto;
     }
 
 }

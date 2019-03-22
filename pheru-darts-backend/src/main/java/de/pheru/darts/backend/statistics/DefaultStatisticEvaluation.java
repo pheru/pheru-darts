@@ -4,6 +4,8 @@ import de.pheru.darts.backend.entities.game.*;
 import de.pheru.darts.backend.security.SecurityUtil;
 import de.pheru.darts.backend.util.ReservedUser;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -11,24 +13,33 @@ import java.util.stream.Collectors;
 public class DefaultStatisticEvaluation implements StatisticEvaluation {
 
     private static final long MILLIS_PER_DAY = 86400000L;
+    private static final int HIGHEST_AUFNAHMEN_COUNT = 5;
 
     @Override
     public Statistic evaluate(final List<GameEntity> games, final StatisticFilter filter) {
+        final EvaluationState evaluationState = new EvaluationState();
         final Statistic statistic = new Statistic();
         final List<GameEntity> filteredGames = applyFilterToGames(filter, games);
         for (final GameEntity game : filteredGames) {
-            evaluateGame(game, statistic, filter);
+            evaluateGame(game, statistic, evaluationState, filter);
+        }
+        statistic.getAufnahmen().setHighestAufnahmen(evaluationState.highestAufnahmenCounts);
+        if(evaluationState.aufnahmeCount > 0){
+            statistic.getAufnahmen().setAverageAufnahmeScore((double) evaluationState.aufnahmeScoreSum / evaluationState.aufnahmeCount);
+        } else {
+            statistic.getAufnahmen().setAverageAufnahmeScore(0.0);
         }
         return statistic;
     }
 
-    private void evaluateGame(final GameEntity game, final Statistic statistic, final StatisticFilter filter) {
-        final EvaluationGameState gameState = new EvaluationGameState(game);
+    private void evaluateGame(final GameEntity game, final Statistic statistic, final EvaluationState evaluationState,
+                              final StatisticFilter filter) {
+        evaluationState.currentGameState = new EvaluationGameState(game);
         final GameStatistic gameStatistic = statistic.getGames();
         // Statistik für aktuellen User
         for (final PlayerDocument player : game.getPlayers()) {
             if (player.getId() != null && player.getId().equals(SecurityUtil.getLoggedInUserId())) {
-                evaluatePlayer(player, statistic, gameState, filter);
+                evaluatePlayer(player, statistic, evaluationState, filter);
             }
         }
         // Jetzt steht im GameState fest, ob Spiel gewonnen oder verloren,
@@ -39,15 +50,15 @@ public class DefaultStatisticEvaluation implements StatisticEvaluation {
                 final Map<String, GameCountStatistic> gameCountsPerPlayerId = gameStatistic.getCountsPerPlayerIds();
                 gameCountsPerPlayerId.putIfAbsent(playerIdNotNull, new GameCountStatistic());
                 final GameCountStatistic gameCountStatistic = gameCountsPerPlayerId.get(playerIdNotNull);
-                if (gameState.isWon()) {
+                if (evaluationState.currentGameState.won) {
                     gameCountStatistic.setWonCount(gameCountStatistic.getWonCount() + 1);
                 } else {
                     gameCountStatistic.setLostCount(gameCountStatistic.getLostCount() + 1);
                 }
             }
         }
-        if (!gameState.isTraining()) {
-            if (gameState.isWon()) {
+        if (!evaluationState.currentGameState.training) {
+            if (evaluationState.currentGameState.won) {
                 gameStatistic.setWonCount(gameStatistic.getWonCount() + 1);
             } else {
                 gameStatistic.setLostCount(gameStatistic.getLostCount() + 1);
@@ -55,27 +66,43 @@ public class DefaultStatisticEvaluation implements StatisticEvaluation {
         }
     }
 
-    private void evaluatePlayer(final PlayerDocument player, final Statistic statistic, final EvaluationGameState gameState, final StatisticFilter filter) {
+    private void evaluatePlayer(final PlayerDocument player, final Statistic statistic, final EvaluationState evaluationState, final StatisticFilter filter) {
         for (final AufnahmeDocument aufnahme : player.getAufnahmen()) {
-            evaluateAufnahme(aufnahme, statistic, gameState, filter);
+            evaluateAufnahme(aufnahme, statistic, evaluationState, filter);
         }
     }
 
     private void evaluateAufnahme(final AufnahmeDocument aufnahme, final Statistic statistic,
-                                  final EvaluationGameState gameState, final StatisticFilter filter) {
-        gameState.setLastAufnahmeScore(gameState.getCurrentScore());
+                                  final EvaluationState evaluationState, final StatisticFilter filter) {
+        evaluationState.currentGameState.lastAufnahmeScore = evaluationState.currentGameState.currentScore;
+        final boolean countAufnahmeForStatistic = currentScoreInFilter(filter, evaluationState.currentGameState.currentScore);
         for (final DartDocument dart : aufnahme.getDarts()) {
-            evaluateDart(dart, statistic, gameState, filter);
+            evaluateDart(dart, statistic, evaluationState, filter);
+        }
+        if (countAufnahmeForStatistic) {
+            evaluationState.aufnahmeCount++;
+            final int aufnahmeScore = evaluationState.currentGameState.lastAufnahmeScore
+                    - evaluationState.currentGameState.currentScore;
+            evaluationState.aufnahmeScoreSum += aufnahmeScore;
+            final Map<Integer, Integer> highestAufnahmenCounts = evaluationState.highestAufnahmenCounts;
+            if (highestAufnahmenCounts.containsKey(aufnahmeScore)) {
+                highestAufnahmenCounts.put(aufnahmeScore, highestAufnahmenCounts.get(aufnahmeScore) + 1);
+            } else if (highestAufnahmenCounts.keySet().size() < HIGHEST_AUFNAHMEN_COUNT) {
+                highestAufnahmenCounts.put(aufnahmeScore, 1);
+            } else {
+                final int smallestHighestAufnahmeScore = Collections.min(highestAufnahmenCounts.keySet());
+                if (smallestHighestAufnahmeScore < aufnahmeScore) {
+                    highestAufnahmenCounts.remove(smallestHighestAufnahmeScore);
+                    highestAufnahmenCounts.put(aufnahmeScore, 1);
+                }
+            }
         }
     }
 
     private void evaluateDart(final DartDocument dart, final Statistic statistic,
-                              final EvaluationGameState gameState, final StatisticFilter filter) {
-        final boolean countDartForStatistic = filter == null
-                || filter.getCurrentScore() == null
-                || filter.getCurrentScoreComparativeOperator() == null
-                || filter.getCurrentScoreComparativeOperator().getComparativeMatcher()
-                .match(gameState.getCurrentScore(), filter.getCurrentScore());
+                              final EvaluationState evaluationState, final StatisticFilter filter) {
+        final EvaluationGameState gameState = evaluationState.currentGameState;
+        final boolean countDartForStatistic = currentScoreInFilter(filter, gameState.currentScore);
 
         final DartStatistic dartStatistic = statistic.getDarts();
         if (countDartForStatistic) {
@@ -93,38 +120,38 @@ public class DefaultStatisticEvaluation implements StatisticEvaluation {
             }
         }
 
-        final CheckOutMode checkOutMode = gameState.getCheckOutMode();
-        final CheckInMode checkInMode = gameState.getCheckInMode();
+        final CheckOutMode checkOutMode = gameState.checkOutMode;
+        final CheckInMode checkInMode = gameState.checkInMode;
         final int dartScore = dart.getValue() * dart.getMultiplier();
 
-        if (countDartForStatistic && checkOutPossible(checkOutMode, gameState.getCurrentScore())) {
+        if (countDartForStatistic && checkOutPossible(checkOutMode, gameState.currentScore)) {
             dartStatistic.setPossibleCheckoutCount(dartStatistic.getPossibleCheckoutCount() + 1);
         }
 
         final boolean checkOutCondition = checkOutMode == CheckOutMode.SINGLE_OUT
                 || (checkOutMode == CheckOutMode.DOUBLE_OUT && dart.getMultiplier() == 2);
-        final boolean thrownOver = isThrownOver(gameState.getCurrentScore(), dartScore, checkOutMode);
-        if (!gameState.isCheckInCondition()) {
+        final boolean thrownOver = isThrownOver(gameState.currentScore, dartScore, checkOutMode);
+        if (!gameState.checkInCondition) {
             if (countDartForStatistic) {
                 dartStatistic.setPossibleCheckinCount(dartStatistic.getPossibleCheckinCount() + 1);
             }
-            gameState.setCheckInCondition(checkInMode == CheckInMode.SINGLE_IN
-                    || (checkInMode == CheckInMode.DOUBLE_IN && dart.getMultiplier() == 2));
-            if (countDartForStatistic && gameState.isCheckInCondition()) {
+            gameState.checkInCondition = checkInMode == CheckInMode.SINGLE_IN
+                    || (checkInMode == CheckInMode.DOUBLE_IN && dart.getMultiplier() == 2);
+            if (countDartForStatistic && gameState.checkInCondition) {
                 dartStatistic.setCheckinCount(dartStatistic.getCheckinCount() + 1);
             }
         }
-        if (gameState.isCheckInCondition()) {
-            if (gameState.getCurrentScore() - dartScore == 0 && checkOutCondition) { // ausgecheckt
-                gameState.setCurrentScore(0);
-                gameState.setWon(true);
+        if (gameState.checkInCondition) {
+            if (gameState.currentScore - dartScore == 0 && checkOutCondition) { // ausgecheckt
+                gameState.currentScore = 0;
+                gameState.won = true;
                 if (countDartForStatistic) {
                     dartStatistic.setCheckoutCount(dartStatistic.getCheckoutCount() + 1);
                 }
             } else if (thrownOver) { // ueberworfen
-                gameState.setCurrentScore(gameState.getLastAufnahmeScore());
+                gameState.currentScore = gameState.lastAufnahmeScore;
             } else {
-                gameState.setCurrentScore(gameState.getCurrentScore() - dartScore);
+                gameState.currentScore -= dartScore;
             }
         }
     }
@@ -197,6 +224,21 @@ public class DefaultStatisticEvaluation implements StatisticEvaluation {
         return false;
     }
 
+    private boolean currentScoreInFilter(final StatisticFilter filter, final long currentScore) {
+        return filter == null
+                || filter.getCurrentScore() == null
+                || filter.getCurrentScoreComparativeOperator() == null
+                || filter.getCurrentScoreComparativeOperator().getComparativeMatcher()
+                .match(currentScore, filter.getCurrentScore());
+    }
+
+    private class EvaluationState {
+        private EvaluationGameState currentGameState;
+        private long aufnahmeScoreSum = 0L;
+        private int aufnahmeCount = 0;
+        private Map<Integer, Integer> highestAufnahmenCounts = new HashMap<>();
+    }
+
     private class EvaluationGameState {
         private final boolean training;
         private final CheckInMode checkInMode;
@@ -216,50 +258,5 @@ public class DefaultStatisticEvaluation implements StatisticEvaluation {
             this.lastAufnahmeScore = game.getScore();
             this.won = false;
         }
-
-        public boolean isTraining() {
-            return training;
-        }
-
-        public CheckInMode getCheckInMode() {
-            return checkInMode;
-        }
-
-        public CheckOutMode getCheckOutMode() {
-            return checkOutMode;
-        }
-
-        public boolean isCheckInCondition() {
-            return checkInCondition;
-        }
-
-        public void setCheckInCondition(final boolean checkInCondition) {
-            this.checkInCondition = checkInCondition;
-        }
-
-        public int getCurrentScore() {
-            return currentScore;
-        }
-
-        public void setCurrentScore(final int currentScore) {
-            this.currentScore = currentScore;
-        }
-
-        public int getLastAufnahmeScore() {
-            return lastAufnahmeScore;
-        }
-
-        public void setLastAufnahmeScore(final int lastAufnahmeScore) {
-            this.lastAufnahmeScore = lastAufnahmeScore;
-        }
-
-        public boolean isWon() {
-            return won;
-        }
-
-        public void setWon(final boolean won) {
-            this.won = won;
-        }
     }
-
 }

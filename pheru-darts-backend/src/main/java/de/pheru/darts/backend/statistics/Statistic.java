@@ -4,6 +4,7 @@ public class Statistic {
 
     private GameStatistic games = new GameStatistic();
     private DartStatistic darts = new DartStatistic();
+    private AufnahmeStatistic aufnahmen = new AufnahmeStatistic();
 
     public GameStatistic getGames() {
         return games;
@@ -19,5 +20,13 @@ public class Statistic {
 
     public void setDarts(final DartStatistic darts) {
         this.darts = darts;
+    }
+
+    public AufnahmeStatistic getAufnahmen() {
+        return aufnahmen;
+    }
+
+    public void setAufnahmen(final AufnahmeStatistic aufnahmen) {
+        this.aufnahmen = aufnahmen;
     }
 }
