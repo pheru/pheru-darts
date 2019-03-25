@@ -4,10 +4,7 @@ import de.pheru.darts.backend.entities.game.*;
 import de.pheru.darts.backend.security.SecurityUtil;
 import de.pheru.darts.backend.util.ReservedUser;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class DefaultStatisticEvaluation implements StatisticEvaluation {
@@ -17,9 +14,11 @@ public class DefaultStatisticEvaluation implements StatisticEvaluation {
 
     @Override
     public Statistic evaluate(final List<GameEntity> games, final StatisticFilter filter) {
+        final List<GameEntity> sortedGames = new ArrayList<>(games);
+        sortedGames.sort(Comparator.comparing(GameEntity::getTimestamp));
         final EvaluationState evaluationState = new EvaluationState();
         final Statistic statistic = new Statistic();
-        final List<GameEntity> filteredGames = applyFilterToGames(filter, games);
+        final List<GameEntity> filteredGames = applyFilterToGames(filter, sortedGames);
         for (final GameEntity game : filteredGames) {
             evaluateGame(game, statistic, evaluationState, filter);
         }
@@ -64,6 +63,23 @@ public class DefaultStatisticEvaluation implements StatisticEvaluation {
                 gameStatistic.setLostCount(gameStatistic.getLostCount() + 1);
             }
         }
+        if (evaluationState.currentGameState.aufnahmeCount > 0) {
+            final StatisticGameInformation gameInformation = new StatisticGameInformation();
+            gameInformation.setId(game.getId());
+            gameInformation.setTimestamp(game.getTimestamp());
+            gameInformation.setOpponentIds(new ArrayList<>());
+            for (final PlayerDocument player : game.getPlayers()) {
+                gameInformation.getOpponentIds().add(player.getId());
+            }
+            final ProgressStatistic progressStatistic = new ProgressStatistic();
+            progressStatistic.setGameInformation(gameInformation);
+            progressStatistic.setAverageAufnahmeScore((double) evaluationState.aufnahmeScoreSum
+                    / evaluationState.aufnahmeCount);
+            progressStatistic.setAverageAufnahmeScoreCurrentGame(
+                    (double) evaluationState.currentGameState.aufnahmeScoreSum
+                            / evaluationState.currentGameState.aufnahmeCount);
+            statistic.getProgress().add(progressStatistic);
+        }
     }
 
     private void evaluatePlayer(final PlayerDocument player, final Statistic statistic, final EvaluationState evaluationState, final StatisticFilter filter) {
@@ -81,9 +97,13 @@ public class DefaultStatisticEvaluation implements StatisticEvaluation {
         }
         if (countAufnahmeForStatistic) {
             evaluationState.aufnahmeCount++;
+            evaluationState.currentGameState.aufnahmeCount++;
+
             final int aufnahmeScore = evaluationState.currentGameState.lastAufnahmeScore
                     - evaluationState.currentGameState.currentScore;
             evaluationState.aufnahmeScoreSum += aufnahmeScore;
+            evaluationState.currentGameState.aufnahmeScoreSum += aufnahmeScore;
+
             final Map<Integer, Integer> highestAufnahmenCounts = evaluationState.highestAufnahmenCounts;
             if (highestAufnahmenCounts.containsKey(aufnahmeScore)) {
                 highestAufnahmenCounts.put(aufnahmeScore, highestAufnahmenCounts.get(aufnahmeScore) + 1);
@@ -236,7 +256,7 @@ public class DefaultStatisticEvaluation implements StatisticEvaluation {
         private EvaluationGameState currentGameState;
         private long aufnahmeScoreSum = 0L;
         private int aufnahmeCount = 0;
-        private Map<Integer, Integer> highestAufnahmenCounts = new HashMap<>();
+        private final Map<Integer, Integer> highestAufnahmenCounts = new HashMap<>();
     }
 
     private class EvaluationGameState {
@@ -247,6 +267,8 @@ public class DefaultStatisticEvaluation implements StatisticEvaluation {
         private int currentScore;
         private int lastAufnahmeScore;
         private boolean won;
+        private long aufnahmeScoreSum;
+        private int aufnahmeCount;
 
         private EvaluationGameState(final GameEntity game) {
             this.training = game.isTrainingOrDefault();
@@ -257,6 +279,8 @@ public class DefaultStatisticEvaluation implements StatisticEvaluation {
             this.currentScore = game.getScore();
             this.lastAufnahmeScore = game.getScore();
             this.won = false;
+            this.aufnahmeScoreSum = 0L;
+            this.aufnahmeCount = 0;
         }
     }
 }

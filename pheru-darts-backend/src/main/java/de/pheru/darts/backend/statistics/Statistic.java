@@ -1,10 +1,14 @@
 package de.pheru.darts.backend.statistics;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Statistic {
 
     private GameStatistic games = new GameStatistic();
     private DartStatistic darts = new DartStatistic();
     private AufnahmeStatistic aufnahmen = new AufnahmeStatistic();
+    private List<ProgressStatistic> progress = new ArrayList<>();
 
     public GameStatistic getGames() {
         return games;
@@ -28,5 +32,13 @@ public class Statistic {
 
     public void setAufnahmen(final AufnahmeStatistic aufnahmen) {
         this.aufnahmen = aufnahmen;
+    }
+
+    public List<ProgressStatistic> getProgress() {
+        return progress;
+    }
+
+    public void setProgress(final List<ProgressStatistic> progress) {
+        this.progress = progress;
     }
 }

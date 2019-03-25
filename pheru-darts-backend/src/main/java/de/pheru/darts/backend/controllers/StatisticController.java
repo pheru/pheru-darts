@@ -2,7 +2,7 @@ package de.pheru.darts.backend.controllers;
 
 import de.pheru.darts.backend.dtos.statistics.StatisticDto;
 import de.pheru.darts.backend.dtos.statistics.StatisticFilterDto;
-import de.pheru.darts.backend.dtos.statistics.StatisticFilterGameOptionDto;
+import de.pheru.darts.backend.dtos.statistics.StatisticGameInformationDto;
 import de.pheru.darts.backend.dtos.statistics.StatisticFilterOptionsDto;
 import de.pheru.darts.backend.entities.game.GameEntity;
 import de.pheru.darts.backend.entities.user.UserEntity;
@@ -54,9 +54,9 @@ public class StatisticController {
         final List<GameEntity> games = gameRepository.findByUserId(loggedInUserId);
 
         final Map<String, Set<String>> playerNameToPlayerIds = new HashMap<>();
-        final List<StatisticFilterGameOptionDto> gameOptionDtos = new ArrayList<>();
+        final List<StatisticGameInformationDto> gameOptionDtos = new ArrayList<>();
         games.forEach(gameEntity -> {
-            final StatisticFilterGameOptionDto gameOptionDto = new StatisticFilterGameOptionDto();
+            final StatisticGameInformationDto gameOptionDto = new StatisticGameInformationDto();
             gameOptionDto.setId(gameEntity.getId());
             gameOptionDto.setTimestamp(gameEntity.getTimestamp());
             gameOptionDto.setOpponents(new ArrayList<>());

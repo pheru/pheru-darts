@@ -8,7 +8,7 @@ public class StatisticFilterOptionsDto {
 
     private Map<String, Set<String>> usernameToUserIds;
     private List<String> comparativeOperators;
-    private List<StatisticFilterGameOptionDto> games;
+    private List<StatisticGameInformationDto> games;
 
     public Map<String, Set<String>> getUsernameToUserIds() {
         return usernameToUserIds;
@@ -26,11 +26,11 @@ public class StatisticFilterOptionsDto {
         this.comparativeOperators = comparativeOperators;
     }
 
-    public List<StatisticFilterGameOptionDto> getGames() {
+    public List<StatisticGameInformationDto> getGames() {
         return games;
     }
 
-    public void setGames(final List<StatisticFilterGameOptionDto> games) {
+    public void setGames(final List<StatisticGameInformationDto> games) {
         this.games = games;
     }
 }

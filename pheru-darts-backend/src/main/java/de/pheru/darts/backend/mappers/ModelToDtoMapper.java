@@ -3,7 +3,9 @@ package de.pheru.darts.backend.mappers;
 import de.pheru.darts.backend.dtos.statistics.*;
 import de.pheru.darts.backend.statistics.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public final class ModelToDtoMapper {
@@ -17,6 +19,7 @@ public final class ModelToDtoMapper {
         statisticDto.setGames(toGameStatisticDto(statistic.getGames(), playerIdToPlayerName));
         statisticDto.setDarts(toDartStatisticDto(statistic.getDarts()));
         statisticDto.setAufnahmen(toAufnahmenStatisticDto(statistic.getAufnahmen()));
+        statisticDto.setProgress(toProgressStatisticDtoList(statistic.getProgress(), playerIdToPlayerName));
         return statisticDto;
     }
 
@@ -76,6 +79,33 @@ public final class ModelToDtoMapper {
         aufnahmenStatisticDto.setAverageAufnahmeScore(aufnahmeStatistic.getAverageAufnahmeScore());
         aufnahmenStatisticDto.setHighestAufnahmen(aufnahmeStatistic.getHighestAufnahmen());
         return aufnahmenStatisticDto;
+    }
+
+    private static List<ProgressStatisticDto> toProgressStatisticDtoList(
+            final List<ProgressStatistic> progressStatisticList,
+            final Map<String, String> playerIdToPlayerName) {
+        final List<ProgressStatisticDto> progressStatisticDtoList = new ArrayList<>();
+        for (final ProgressStatistic progressStatistic : progressStatisticList) {
+            final ProgressStatisticDto progressStatisticDto = new ProgressStatisticDto();
+            progressStatisticDto.setGameInformation(toStatisticGameInformationDto(progressStatistic.getGameInformation(), playerIdToPlayerName));
+            progressStatisticDto.setAverageAufnahmeScore(progressStatistic.getAverageAufnahmeScore());
+            progressStatisticDto.setAverageAufnahmeScoreCurrentGame(progressStatistic.getAverageAufnahmeScoreCurrentGame());
+            progressStatisticDtoList.add(progressStatisticDto);
+        }
+        return progressStatisticDtoList;
+    }
+
+    private static StatisticGameInformationDto toStatisticGameInformationDto(
+            final StatisticGameInformation statisticGameInformation,
+            final Map<String, String> playerIdToPlayerName) {
+        final StatisticGameInformationDto statisticGameInformationDto = new StatisticGameInformationDto();
+        statisticGameInformationDto.setId(statisticGameInformation.getId());
+        statisticGameInformationDto.setTimestamp(statisticGameInformation.getTimestamp());
+        statisticGameInformationDto.setOpponents(new ArrayList<>());
+        for (final String opponentId : statisticGameInformation.getOpponentIds()) {
+            statisticGameInformationDto.getOpponents().add(playerIdToPlayerName.get(opponentId));
+        }
+        return statisticGameInformationDto;
     }
 
 }

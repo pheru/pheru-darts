@@ -110,7 +110,7 @@ public class StatisticControllerTest extends ControllerTest {
 
         assertEquals(ComparativeOperator.values().length, filterOptions.getComparativeOperators().size());
 
-        final List<StatisticFilterGameOptionDto> games = filterOptions.getGames();
+        final List<StatisticGameInformationDto> games = filterOptions.getGames();
         assertEquals(6, games.size());
         assertEquals(GAME_ID_ONE, games.get(0).getId());
         assertEquals(0, games.get(0).getOpponents().size());

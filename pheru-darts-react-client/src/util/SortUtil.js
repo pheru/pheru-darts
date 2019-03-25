@@ -67,6 +67,20 @@ class SortUtil {
         }
         return 0;
     }
+
+    static sortByTimestampAsc(a, b) {
+        if (a.timestamp > b.timestamp) {
+            return 1;
+        }
+        if (a.timestamp < b.timestamp) {
+            return -1;
+        }
+        return 0;
+    }
+
+    static sortByGameInformationTimestampAsc(a, b) {
+        return SortUtil.sortByTimestampAsc(a.gameInformation, b.gameInformation);
+    }
 }
 
 export default SortUtil;

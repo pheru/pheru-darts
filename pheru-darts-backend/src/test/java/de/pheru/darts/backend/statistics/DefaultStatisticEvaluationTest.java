@@ -15,10 +15,7 @@ import org.junit.Test;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.junit.Assert.*;
 
@@ -40,12 +37,12 @@ public class DefaultStatisticEvaluationTest {
     @Test
     public void evaluate() throws Exception {
         final List<GameEntity> games = new ArrayList<>();
-        games.add(training1());
-        games.add(game1SiegPlayerTwo());
-        games.add(game2NiederlagePlayerTwo());
         games.add(game3SiegPlayerThree());
-        games.add(game4SiegUnregistriert());
+        games.add(game2NiederlagePlayerTwo());
         games.add(game5SiegUnregistriertDoubleIn());
+        games.add(training1());
+        games.add(game4SiegUnregistriert());
+        games.add(game1SiegPlayerTwo());
 
         final Statistic statistic = new DefaultStatisticEvaluation().evaluate(games, null);
         final DartStatistic dartStatistics = statistic.getDarts();
@@ -88,6 +85,22 @@ public class DefaultStatisticEvaluationTest {
         assertEquals(1, highestAufnahmen.get(60).intValue());
         assertEquals(1, highestAufnahmen.get(59).intValue());
         assertEquals(1, highestAufnahmen.get(41).intValue());
+
+        final List<ProgressStatistic> progress = statistic.getProgress();
+        assertEquals(6, progress.size());
+        progress.sort(Comparator.comparingLong(o -> o.getGameInformation().getTimestamp()));
+        assertEquals(101, progress.get(0).getAverageAufnahmeScoreCurrentGame(), AVERAGE_DELTA);
+        assertEquals(101, progress.get(0).getAverageAufnahmeScore(), AVERAGE_DELTA);
+        assertEquals(50.5, progress.get(1).getAverageAufnahmeScoreCurrentGame(), AVERAGE_DELTA);
+        assertEquals(67.333, progress.get(1).getAverageAufnahmeScore(), AVERAGE_DELTA);
+        assertEquals(59.666, progress.get(2).getAverageAufnahmeScoreCurrentGame(), AVERAGE_DELTA);
+        assertEquals(63.5, progress.get(2).getAverageAufnahmeScore(), AVERAGE_DELTA);
+        assertEquals(50.5, progress.get(3).getAverageAufnahmeScoreCurrentGame(), AVERAGE_DELTA);
+        assertEquals(60.25, progress.get(3).getAverageAufnahmeScore(), AVERAGE_DELTA);
+        assertEquals(101, progress.get(4).getAverageAufnahmeScoreCurrentGame(), AVERAGE_DELTA);
+        assertEquals(64.777, progress.get(4).getAverageAufnahmeScore(), AVERAGE_DELTA);
+        assertEquals(33.666, progress.get(5).getAverageAufnahmeScoreCurrentGame(), AVERAGE_DELTA);
+        assertEquals(57.0, progress.get(5).getAverageAufnahmeScore(), AVERAGE_DELTA);
     }
 
     @Test
@@ -99,6 +112,7 @@ public class DefaultStatisticEvaluationTest {
                 .id(gameId1)
                 .player(LOGGED_IN_ID)
                 .player(PLAYER_TWO_ID)
+                .timestamp(1L)
                 .checkOutMode(CheckOutMode.SINGLE_OUT)
                 .score(5)
                 .aufnahme(new AufnahmeDocumentBuilder()
@@ -109,6 +123,7 @@ public class DefaultStatisticEvaluationTest {
                 .id(gameId2)
                 .player(LOGGED_IN_ID)
                 .player(PLAYER_THREE_ID)
+                .timestamp(1L)
                 .checkOutMode(CheckOutMode.SINGLE_OUT)
                 .score(3)
                 .aufnahme(new AufnahmeDocumentBuilder()
@@ -121,6 +136,7 @@ public class DefaultStatisticEvaluationTest {
         games.add(new GameEntityBuilder()
                 .id("nicht im filter")
                 .player(LOGGED_IN_ID)
+                .timestamp(1L)
                 .checkOutMode(CheckOutMode.SINGLE_OUT)
                 .score(5)
                 .aufnahme(new AufnahmeDocumentBuilder()
@@ -163,6 +179,7 @@ public class DefaultStatisticEvaluationTest {
         games.add(new GameEntityBuilder()
                 .player(LOGGED_IN_ID)
                 .player(PLAYER_TWO_ID)
+                .timestamp(1L)
                 .checkOutMode(CheckOutMode.SINGLE_OUT)
                 .score(5)
                 .aufnahme(new AufnahmeDocumentBuilder()
@@ -172,6 +189,7 @@ public class DefaultStatisticEvaluationTest {
         games.add(new GameEntityBuilder()
                 .player(LOGGED_IN_ID)
                 .player(PLAYER_THREE_ID)
+                .timestamp(1L)
                 .checkOutMode(CheckOutMode.SINGLE_OUT)
                 .score(3)
                 .aufnahme(new AufnahmeDocumentBuilder()
@@ -184,6 +202,7 @@ public class DefaultStatisticEvaluationTest {
         games.add(new GameEntityBuilder()
                 .player(LOGGED_IN_ID)
                 .player("Nicht im Filter")
+                .timestamp(1L)
                 .checkOutMode(CheckOutMode.SINGLE_OUT)
                 .score(5)
                 .aufnahme(new AufnahmeDocumentBuilder()
@@ -226,6 +245,7 @@ public class DefaultStatisticEvaluationTest {
         games.add(new GameEntityBuilder()
                 .player(LOGGED_IN_ID)
                 .player(PLAYER_TWO_ID)
+                .timestamp(1L)
                 .checkInMode(CheckInMode.SINGLE_IN)
                 .checkOutMode(CheckOutMode.SINGLE_OUT)
                 .score(5)
@@ -236,6 +256,7 @@ public class DefaultStatisticEvaluationTest {
         games.add(new GameEntityBuilder()
                 .player(LOGGED_IN_ID)
                 .player(PLAYER_THREE_ID)
+                .timestamp(1L)
                 .checkInMode(CheckInMode.DOUBLE_IN)
                 .checkOutMode(CheckOutMode.SINGLE_OUT)
                 .score(10)
@@ -276,6 +297,7 @@ public class DefaultStatisticEvaluationTest {
         games.add(new GameEntityBuilder()
                 .player(LOGGED_IN_ID)
                 .player(PLAYER_TWO_ID)
+                .timestamp(1L)
                 .checkOutMode(CheckOutMode.SINGLE_OUT)
                 .score(5)
                 .aufnahme(new AufnahmeDocumentBuilder()
@@ -285,6 +307,7 @@ public class DefaultStatisticEvaluationTest {
         games.add(new GameEntityBuilder()
                 .player(LOGGED_IN_ID)
                 .player(PLAYER_THREE_ID)
+                .timestamp(1L)
                 .checkOutMode(CheckOutMode.DOUBLE_OUT)
                 .score(10)
                 .aufnahme(new AufnahmeDocumentBuilder()
@@ -324,6 +347,7 @@ public class DefaultStatisticEvaluationTest {
         games.add(new GameEntityBuilder()
                 .player(LOGGED_IN_ID)
                 .player(PLAYER_TWO_ID)
+                .timestamp(1L)
                 .checkOutMode(CheckOutMode.SINGLE_OUT)
                 .score(5)
                 .aufnahme(new AufnahmeDocumentBuilder()
@@ -333,6 +357,7 @@ public class DefaultStatisticEvaluationTest {
         games.add(new GameEntityBuilder()
                 .player(LOGGED_IN_ID)
                 .player(PLAYER_THREE_ID)
+                .timestamp(1L)
                 .checkOutMode(CheckOutMode.SINGLE_OUT)
                 .score(20)
                 .aufnahme(new AufnahmeDocumentBuilder()
@@ -483,6 +508,7 @@ public class DefaultStatisticEvaluationTest {
         games.add(new GameEntityBuilder()
                 .player(LOGGED_IN_ID)
                 .player(PLAYER_TWO_ID)
+                .timestamp(1L)
                 .checkOutMode(CheckOutMode.DOUBLE_OUT)
                 .score(101)
                 .aufnahme(new AufnahmeDocumentBuilder()
@@ -599,12 +625,13 @@ public class DefaultStatisticEvaluationTest {
      */
     private GameEntity training1() throws ParseException {
         return new GameEntityBuilder()
+                .id("training-1")
                 .userId(LOGGED_IN_ID)
                 .checkOutMode(CheckOutMode.DOUBLE_OUT)
                 .score(101)
                 .training(true)
                 .player(LOGGED_IN_ID)
-                .timestamp(dateFormatDateTime.parse("01.01.2001 01:00:00").getTime())
+                .timestamp(dateFormatDateTime.parse("01.01.2001 01:01:01").getTime())
                 .aufnahme(new AufnahmeDocumentBuilder()
                         .dart(new DartDocumentBuilder().value(17).multiplier(3).build()) // 51
                         .dart(new DartDocumentBuilder().value(25).multiplier(2).build()) // 101
@@ -623,12 +650,13 @@ public class DefaultStatisticEvaluationTest {
      */
     private GameEntity game1SiegPlayerTwo() throws ParseException {
         return new GameEntityBuilder()
+                .id("1-sieg-player-two")
                 .userId(LOGGED_IN_ID)
                 .checkOutMode(CheckOutMode.DOUBLE_OUT)
                 .score(101)
                 .player(LOGGED_IN_ID)
                 .player(PLAYER_TWO_ID)
-                .timestamp(dateFormatDateTime.parse("02.02.2002 22:22:22").getTime())
+                .timestamp(dateFormatDateTime.parse("02.02.2002 02:02:02").getTime())
                 .aufnahme(new AufnahmeDocumentBuilder()
                         .dart(new DartDocumentBuilder().value(20).build()) // 20
                         .dart(new DartDocumentBuilder().value(20).build()) // 40
@@ -656,12 +684,13 @@ public class DefaultStatisticEvaluationTest {
      */
     private GameEntity game2NiederlagePlayerTwo() throws ParseException {
         return new GameEntityBuilder()
+                .id("2-niederlage-player-two")
                 .userId(LOGGED_IN_ID)
                 .checkOutMode(CheckOutMode.SINGLE_OUT)
                 .score(201)
                 .player(LOGGED_IN_ID)
                 .player(PLAYER_TWO_ID)
-                .timestamp(dateFormatDateTime.parse("11.11.2011 11:11:11").getTime())
+                .timestamp(dateFormatDateTime.parse("03.03.2003 03:03:03").getTime())
                 .aufnahme(new AufnahmeDocumentBuilder()
                         .dart(new DartDocumentBuilder().value(20).multiplier(3).build()) // 1: 60
                         .dart(new DartDocumentBuilder().value(20).multiplier(2).build()) // 1: 100
@@ -701,12 +730,13 @@ public class DefaultStatisticEvaluationTest {
      */
     private GameEntity game3SiegPlayerThree() throws ParseException {
         return new GameEntityBuilder()
+                .id("3-sieg-player-three")
                 .userId(LOGGED_IN_ID)
                 .checkOutMode(CheckOutMode.DOUBLE_OUT)
                 .score(101)
                 .player(LOGGED_IN_ID)
                 .player(PLAYER_THREE_ID)
-                .timestamp(dateFormatDateTime.parse("31.12.2111 23:59:00").getTime())
+                .timestamp(dateFormatDateTime.parse("04.04.2004 04:04:04").getTime())
                 .aufnahme(new AufnahmeDocumentBuilder()
                         .dart(new DartDocumentBuilder().value(20).multiplier(3).build()) // 60
                         .dart(new DartDocumentBuilder().value(20).multiplier(3).build()) // 0 (Überworfen)
@@ -728,12 +758,13 @@ public class DefaultStatisticEvaluationTest {
      */
     private GameEntity game4SiegUnregistriert() throws ParseException {
         return new GameEntityBuilder()
+                .id("4-sieg-unregistriert")
                 .userId(LOGGED_IN_ID)
                 .checkOutMode(CheckOutMode.DOUBLE_OUT)
                 .score(101)
                 .player(LOGGED_IN_ID)
                 .player(null)
-                .timestamp(dateFormatDateTime.parse("15.05.2015 05:15:00").getTime())
+                .timestamp(dateFormatDateTime.parse("05.05.2005 05:05:05").getTime())
                 .aufnahme(new AufnahmeDocumentBuilder()
                         .dart(new DartDocumentBuilder().value(17).multiplier(3).build()) // 51
                         .dart(new DartDocumentBuilder().value(25).multiplier(2).build()) // 101
@@ -754,13 +785,14 @@ public class DefaultStatisticEvaluationTest {
      */
     private GameEntity game5SiegUnregistriertDoubleIn() throws ParseException {
         return new GameEntityBuilder()
+                .id("5-sieg-unregistriert-double-in")
                 .userId(LOGGED_IN_ID)
                 .checkInMode(CheckInMode.DOUBLE_IN)
                 .checkOutMode(CheckOutMode.DOUBLE_OUT)
                 .score(101)
                 .player(LOGGED_IN_ID)
                 .player(null)
-                .timestamp(dateFormatDateTime.parse("01.01.2001 01:00:00").getTime())
+                .timestamp(dateFormatDateTime.parse("06.06.2006 06:06:06").getTime())
                 .aufnahme(new AufnahmeDocumentBuilder()
                         .dart(new DartDocumentBuilder().value(1).multiplier(1).build()) // 0
                         .dart(new DartDocumentBuilder().value(1).multiplier(1).build()) // 0

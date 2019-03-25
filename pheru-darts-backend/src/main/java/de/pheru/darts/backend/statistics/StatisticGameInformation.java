@@ -1,11 +1,11 @@
-package de.pheru.darts.backend.dtos.statistics;
+package de.pheru.darts.backend.statistics;
 
 import java.util.List;
 
-public class StatisticFilterGameOptionDto {
+public class StatisticGameInformation {
 
     private String id;
-    private List<String> opponents;
+    private List<String> opponentIds;
     private long timestamp;
 
     public String getId() {
@@ -16,12 +16,12 @@ public class StatisticFilterGameOptionDto {
         this.id = id;
     }
 
-    public List<String> getOpponents() {
-        return opponents;
+    public List<String> getOpponentIds() {
+        return opponentIds;
     }
 
-    public void setOpponents(final List<String> opponents) {
-        this.opponents = opponents;
+    public void setOpponentIds(final List<String> opponentIds) {
+        this.opponentIds = opponentIds;
     }
 
     public long getTimestamp() {

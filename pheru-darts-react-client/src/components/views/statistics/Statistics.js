@@ -8,6 +8,7 @@ import DartsRadarChart from "./DartsRadarChart";
 import OnlyForLoggedInUsersContainer from "../../../containers/general/OnlyForLoggedInUsersContainer";
 import DocumentUtil from "../../../util/DocumentUtil";
 import StatisticsFilter from "./StatisticsFilter";
+import AufnahmeProgressAreaChart from "./AufnahmeProgressAreaChart";
 
 const TITLE = "Statistiken";
 
@@ -180,6 +181,7 @@ class Statistics extends React.Component {
                 </tr>
                 </tbody>
             </Table>
+            <AufnahmeProgressAreaChart data={this.props.progressData}/>
         </Well>
     }
 

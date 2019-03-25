@@ -80,6 +80,8 @@ function statistics(state = {
                 }
             }
             gamesData.sort(SortUtil.sortByOpponentAsc);
+
+            let progressData = action.data.progress.slice().sort(SortUtil.sortByGameInformationTimestampAsc);
             return {
                 ...state,
                 isFetching: false,
@@ -91,7 +93,8 @@ function statistics(state = {
                 averageAufnahmeScore: action.data.aufnahmen.averageAufnahmeScore,
                 highestAufnahmen: action.data.aufnahmen.highestAufnahmen,
                 dartData,
-                gamesData
+                gamesData,
+                progressData
             };
         case FETCH_STATISTICS_FAILED:
             return {
