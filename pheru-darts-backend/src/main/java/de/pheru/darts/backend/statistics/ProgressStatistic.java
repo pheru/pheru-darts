@@ -1,7 +1,5 @@
 package de.pheru.darts.backend.statistics;
 
-import java.util.Objects;
-
 public class ProgressStatistic {
 
     private StatisticGameInformation gameInformation;
@@ -32,35 +30,4 @@ public class ProgressStatistic {
         this.averageAufnahmeScoreCurrentGame = averageAufnahmeScoreCurrentGame;
     }
 
-    public static class Key {
-
-        private final int gameNumber;
-        private final long timestamp;
-
-        public Key(final int gameNumber, final long timestamp) {
-            this.gameNumber = gameNumber;
-            this.timestamp = timestamp;
-        }
-
-        public int getGameNumber() {
-            return gameNumber;
-        }
-
-        public long getTimestamp() {
-            return timestamp;
-        }
-
-        @Override
-        public boolean equals(final Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            final Key key = (Key) o;
-            return gameNumber == key.gameNumber;
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(gameNumber);
-        }
-    }
 }
