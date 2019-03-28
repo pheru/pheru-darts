@@ -1,19 +1,13 @@
 import {connect} from 'react-redux'
 import Main from "../../../components/views/main/Main";
-import {logout, showLoginModal} from "../../../actions/user";
+import {showSignUpModal} from "../../../actions/user";
 
 const mapStateToProps = state => ({
-    isLoggedIn: state.user.isLoggedIn,
-    isLoggingIn: state.user.isLoggingIn,
-    isLoggingOut: state.user.isLoggingOut,
-
-    gameRunning: state.game !== null,
-    unreadNotificationsCount: state.notifications.unreadNotifications.length
+    landscapeOrientation: state.app.landscapeOrientation,
 });
 
 const mapDispatchToProps = dispatch => ({
-    showLogin: () => dispatch(showLoginModal()),
-    logout: () => dispatch(logout())
+    showSignUp: () => dispatch(showSignUpModal())
 });
 
 export default connect(

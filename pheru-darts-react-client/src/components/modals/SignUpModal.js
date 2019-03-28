@@ -43,7 +43,7 @@ class SignUpModal extends React.Component {
 
     render() {
         return <Modal bsSize="small" backdrop='static' show={this.props.show} onHide={this.props.hide}>
-            <Modal.Body style={{textAlign: 'center'}}>
+            <Modal.Body style={{textAlign: 'center', paddingBottom: 0}}>
                 <Modal.Title style={{marginBottom: 10}}>Registrieren</Modal.Title>
                 <FormControl style={{marginBottom: 5}} type="text" value={this.state.name}
                              onChange={(e) => this.handleNameChange(e.target.value)}
@@ -74,6 +74,10 @@ class SignUpModal extends React.Component {
                     <Glyphicon glyph="remove"/> Passwort muss übereinstimmen
                 </div>
                 }
+                <Button bsStyle="link" onClick={() => {
+                    this.props.hide();
+                    this.props.showLogin();
+                }}>Zurück zur Anmeldung</Button>
             </Modal.Body>
             <Modal.Footer style={{textAlign: 'center'}}>
                 <Button style={{width: 100}} bsStyle="primary"
@@ -99,6 +103,7 @@ class SignUpModal extends React.Component {
 SignUpModal.propTypes = {
     show: PropTypes.bool,
     hide: PropTypes.func.isRequired,
+    showLogin: PropTypes.func.isRequired,
     isSigningUp: PropTypes.bool,
     signUp: PropTypes.func.isRequired
 };
