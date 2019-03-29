@@ -39,6 +39,7 @@ class NavigationBar extends React.Component {
 
     componentDidMount() {
         window.addEventListener("resize", this.resetMergeCount);
+        this.resetMergeCount();
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {

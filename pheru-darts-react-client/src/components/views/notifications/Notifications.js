@@ -16,68 +16,70 @@ class Notifications extends React.Component {
     render() {
         return <OnlyForLoggedInUsersContainer
             text="Mitteilungen können nur von angemeldeten Benutzern eingesehen werden">
-            <div style={{textAlign: "center"}}>
-                <h1 style={{marginTop: 0}}><strong>{TITLE}</strong></h1>
-                <Button bsStyle="primary" style={{marginRight: 5, marginBottom: 5}}
-                        onClick={this.props.fetchNotifications}
-                        disabled={this.props.isFetchingNotifications}>
-                    <Glyphicon glyph="refresh"/> Neu Laden
-                </Button>
-                <Button bsStyle="primary" style={{marginBottom: 5}}
-                        onClick={() => this.props.markAsRead(this.props.unreadNotifications.map(
-                            (notification) => notification.id
-                        ))}
-                        disabled={this.props.isFetchingNotifications || this.props.unreadNotifications.length === 0}>
-                    <Glyphicon glyph="check"/> Alle als gelesen markieren
-                </Button>
-            </div>
-            <Well style={{paddingBottom: 0, textAlign: "center"}}>
-                <Table hover style={{textAlign: "initial"}}>
-                    <thead>
-                    <tr>
-                        <th style={{whiteSpace: 'normal', width: 100}}>Zeitpunkt</th>
-                        <th style={{whiteSpace: 'normal'}}>Mitteilung</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {!this.props.isFetchingNotifications && this.props.notifications.map(notification =>
-                        <tr key={"notification_row_" + notification.id}>
-                            <td style={{
-                                whiteSpace: 'normal',
-                                width: 100,
-                                verticalAlign: "middle",
-                                textAlign: "center"
-                            }}>
-                                {DateUtil.toDate(new Date(notification.timestamp), {
-                                    replaceToday: true, replaceYesterday: true
-                                })}
-                                <br/>
-                                {DateUtil.toTime(new Date(notification.timestamp))}
-                                <br/>
-                                {!notification.read &&
-                                <Badge style={{backgroundColor: "#337ab7"}}>Neu</Badge>
-                                }
-                            </td>
-                            <td style={{verticalAlign: "middle"}}>
-                                {notification.message}
-                            </td>
+            <div className="notifications">
+                <div style={{textAlign: "center"}}>
+                    <h1 style={{marginTop: 0}}><strong>{TITLE}</strong></h1>
+                    <Button bsStyle="primary" style={{marginRight: 5, marginBottom: 5}}
+                            onClick={this.props.fetchNotifications}
+                            disabled={this.props.isFetchingNotifications}>
+                        <Glyphicon glyph="refresh"/> Neu Laden
+                    </Button>
+                    <Button bsStyle="primary" style={{marginBottom: 5}}
+                            onClick={() => this.props.markAsRead(this.props.unreadNotifications.map(
+                                (notification) => notification.id
+                            ))}
+                            disabled={this.props.isFetchingNotifications || this.props.unreadNotifications.length === 0}>
+                        <Glyphicon glyph="check"/> Alle als gelesen markieren
+                    </Button>
+                </div>
+                <Well style={{paddingBottom: 0, textAlign: "center"}}>
+                    <Table hover style={{textAlign: "initial"}}>
+                        <thead>
+                        <tr>
+                            <th style={{whiteSpace: 'normal', width: 100}}>Zeitpunkt</th>
+                            <th style={{whiteSpace: 'normal'}}>Mitteilung</th>
                         </tr>
-                    )}
-                    {!this.props.isFetchingNotifications && this.props.notifications.length === 0 &&
-                    <tr>
-                        <td style={{whiteSpace: 'normal', width: 100}}/>
-                        <td>Keine Mitteilungen vorhanden</td>
-                    </tr>
-                    }
-                    {this.props.isFetchingNotifications &&
-                    <tr>
-                        <td style={{whiteSpace: 'normal', width: 100}}/>
-                        <td>Lade Mitteilungen...</td>
-                    </tr>
-                    }
-                    </tbody>
-                </Table>
-            </Well>
+                        </thead>
+                        <tbody>
+                        {!this.props.isFetchingNotifications && this.props.notifications.map(notification =>
+                            <tr key={"notification_row_" + notification.id}>
+                                <td style={{
+                                    whiteSpace: 'normal',
+                                    width: 100,
+                                    verticalAlign: "middle",
+                                    textAlign: "center"
+                                }}>
+                                    {DateUtil.toDate(new Date(notification.timestamp), {
+                                        replaceToday: true, replaceYesterday: true
+                                    })}
+                                    <br/>
+                                    {DateUtil.toTime(new Date(notification.timestamp))}
+                                    <br/>
+                                    {!notification.read &&
+                                    <Badge>Neu</Badge>
+                                    }
+                                </td>
+                                <td style={{verticalAlign: "middle"}}>
+                                    {notification.message}
+                                </td>
+                            </tr>
+                        )}
+                        {!this.props.isFetchingNotifications && this.props.notifications.length === 0 &&
+                        <tr>
+                            <td style={{whiteSpace: 'normal', width: 100}}/>
+                            <td>Keine Mitteilungen vorhanden</td>
+                        </tr>
+                        }
+                        {this.props.isFetchingNotifications &&
+                        <tr>
+                            <td style={{whiteSpace: 'normal', width: 100}}/>
+                            <td>Lade Mitteilungen...</td>
+                        </tr>
+                        }
+                        </tbody>
+                    </Table>
+                </Well>
+            </div>
         </OnlyForLoggedInUsersContainer>
     }
 }

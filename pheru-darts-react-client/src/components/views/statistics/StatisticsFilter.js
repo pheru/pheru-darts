@@ -277,6 +277,8 @@ class StatisticsFilter extends React.Component {
                         <div style={{marginLeft: 3, marginRight: 3, marginBottom: 5, flexBasis: "48%", minWidth: 250}}>
                             <p style={{margin: 0}}>Spieler</p>
                             <Select placeholder=""
+                                    className="select-container"
+                                    classNamePrefix="select"
                                     value={this.state.players}
                                     onChange={this.handlePlayerChange}
                                     styles={this.customSelectStyles(undefined, undefined, 550)}
@@ -287,6 +289,8 @@ class StatisticsFilter extends React.Component {
                         <div style={{marginLeft: 3, marginRight: 3, marginBottom: 5, flexBasis: "48%", minWidth: 250}}>
                             <p style={{margin: 0}}>Gespielte Spiele</p>
                             <Select placeholder=""
+                                    className="select-container"
+                                    classNamePrefix="select"
                                     value={this.state.games}
                                     onChange={this.handleGamesChange}
                                     styles={this.customSelectStyles(undefined, undefined, 540)}
@@ -301,6 +305,8 @@ class StatisticsFilter extends React.Component {
                             <div style={{display: "flex"}}>
                                 <div style={{width: 75}}>
                                     <Select value={this.state.scoreComparator}
+                                            className="select-container"
+                                            classNamePrefix="select"
                                             onChange={this.handleScoreComparatorChange}
                                             styles={this.customSelectStyles(34, 75, 530)}
                                             placeholder=""
@@ -314,6 +320,8 @@ class StatisticsFilter extends React.Component {
                             <p style={{margin: 0}}>Aktueller Score</p>
                             <div style={{display: "flex"}}>
                                 <Select value={this.state.currentScoreComparator}
+                                        className="select-container"
+                                        classNamePrefix="select"
                                         onChange={this.handleCurrentScoreComparatorChange}
                                         styles={this.customSelectStyles(34, 75, 520)}
                                         placeholder=""

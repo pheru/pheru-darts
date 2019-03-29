@@ -122,7 +122,7 @@ class Game extends React.Component {
             </Button>
         </div>;
 
-        return <div style={{height: "100%"}}>
+        return <div className="game" style={{height: "100%"}}>
             <div style={upperContainerStyle}>
                 <div style={playerWrapperStyle}>
                     <PlayerContainer style={playerStyle} index={0}/>

@@ -17,7 +17,7 @@ class DartsBarChart extends React.Component {
                 <YAxis/>
                 <Tooltip labelFormatter={() => ""}/>
                 <Legend/>
-                <Bar name="Single" dataKey="singleCount" stackId="a" fillOpacity={0.8} fill="#333"/>
+                <Bar name="Single" dataKey="singleCount" stackId="a" fillOpacity={0.8} fill="#111"/>
                 <Bar name="Double" dataKey="doubleCount" stackId="a" fillOpacity={0.8} fill="#08965f"/>
                 <Bar name="Triple" dataKey="tripleCount" stackId="a" fillOpacity={0.8} fill="#e01d36"/>
             </BarChart>

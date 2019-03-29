@@ -24,7 +24,7 @@ class DropdownTextfield extends React.Component {
     render() {
         let showDropdownToggle = this.props.choices !== undefined && this.props.choices.length > 0;
         return <Dropdown id={this.props.id} style={{...this.props.style, display: 'inline-flex'}}>
-            <div style={{position: 'absolute', top: 1, left: 3}}>
+            <div style={{position: 'absolute', top: 1, left: 7}}>
                 {this.state.icon}
             </div>
             <FormControl type="text" value={this.props.value} placeholder={this.props.placeholder}

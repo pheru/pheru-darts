@@ -19,7 +19,7 @@ class StackLoader extends React.Component {
                 left: 0,
                 right: 0,
                 bottom: 0,
-                backgroundColor: "#00000066"
+                backgroundColor: "#000000bd"
             }}>
                 <div style={{zIndex: 990, position: "fixed", left: "50%", top: "50%", color: "white"}}>
                     {loader}

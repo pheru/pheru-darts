@@ -72,33 +72,35 @@ class Statistics extends React.Component {
     render() {
         return <OnlyForLoggedInUsersContainer
             text="Statistiken können nur für angemeldete Benutzer erstellt und eingesehen werden">
-            <div style={{textAlign: 'center'}}>
-                <h1 style={{marginTop: 0}}><strong>{TITLE}</strong></h1>
-                <StatisticsFilter style={{marginBottom: 5}}
-                                  fetchStatistics={this.props.fetchStatistics}
-                                  options={this.props.options}
-                />
-            </div>
-            {this.props.isFetchingStatistics ?
-                <StackLoader modal label="Lade Statistiken..."/>
-                : <div>
-                    {this.props.dartData.length > 0
-                        ? this.createDartsView()
-                        : <Alert bsStyle="warning">
-                            <strong>Keine Dart-Daten vorhanden</strong>
-                        </Alert>}
-                    {Object.keys(this.props.highestAufnahmen).length > 0
-                        ? this.createAufnahmenView()
-                        : <Alert bsStyle="warning">
-                            <strong>Keine Aufnahmen-Daten vorhanden</strong>
-                        </Alert>}
-                    {this.props.gamesData.length > 0
-                        ? this.createGamesView()
-                        : <Alert bsStyle="warning">
-                            <strong>Keine Spiel-Daten vorhanden</strong>
-                        </Alert>}
+            <div className="statistics">
+                <div style={{textAlign: 'center'}}>
+                    <h1 style={{marginTop: 0}}><strong>{TITLE}</strong></h1>
+                    <StatisticsFilter style={{marginBottom: 5}}
+                                      fetchStatistics={this.props.fetchStatistics}
+                                      options={this.props.options}
+                    />
                 </div>
-            }
+                {this.props.isFetchingStatistics ?
+                    <StackLoader modal label="Lade Statistiken..."/>
+                    : <div>
+                        {this.props.dartData.length > 0
+                            ? this.createDartsView()
+                            : <Alert bsStyle="warning">
+                                <strong>Keine Dart-Daten vorhanden</strong>
+                            </Alert>}
+                        {Object.keys(this.props.highestAufnahmen).length > 0
+                            ? this.createAufnahmenView()
+                            : <Alert bsStyle="warning">
+                                <strong>Keine Aufnahmen-Daten vorhanden</strong>
+                            </Alert>}
+                        {this.props.gamesData.length > 0
+                            ? this.createGamesView()
+                            : <Alert bsStyle="warning">
+                                <strong>Keine Spiel-Daten vorhanden</strong>
+                            </Alert>}
+                    </div>
+                }
+            </div>
         </OnlyForLoggedInUsersContainer>
     }
 
