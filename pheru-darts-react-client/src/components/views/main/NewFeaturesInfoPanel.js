@@ -11,7 +11,7 @@ class NewFeaturesInfoPanel extends React.Component {
                 <Glyphicon glyph="flash"/> Was ist neu?
             </Panel.Heading>
             <Panel.Body>
-                <ReleaseFeaturesInfoPanel version="2.0.0" date="28.03.2019">
+                <ReleaseFeaturesInfoPanel version="2.0.0" date="TODO">
                     <li>
                         <Glyphicon glyph="home"/> Überarbeitete Startseite mit Übersicht aller Features
                         und Neuerungen
@@ -19,7 +19,7 @@ class NewFeaturesInfoPanel extends React.Component {
                     <li><Glyphicon glyph="phone"/> Verbessertes Design für Mobilgeräte</li>
                     <li><Glyphicon glyph="stats"/> Neue Statistiken für Aufnahmen</li>
                     <li><Glyphicon glyph="filter"/> Statistiken können jetzt gefilter werden</li>
-                    <li>TODO ICON Finish-Anzeige während des Spiels</li>
+                    <li><Glyphicon glyph="screenshot"/> Finish-Anzeige während des Spiels</li>
                 </ReleaseFeaturesInfoPanel>
             </Panel.Body>
         </Panel>
