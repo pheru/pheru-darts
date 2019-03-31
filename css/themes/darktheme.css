@@ -1,0 +1,77 @@
+body {
+    color: white;
+    background: #222;
+}
+
+.navigation-bar {
+    background-color: #111;
+}
+
+.navigation-bar .dropdown-menu {
+    background-color: #111;
+}
+
+.navigation-bar .dropdown.open .navigation-bar-dropdown-toggle,
+.navigation-bar .dropdown.open .navigation-bar-dropdown-toggle:focus {
+    background-color: #000;
+}
+
+.navigation-bar-dropdown-toggle {
+    background-color: #111;
+}
+
+.well {
+    background-color: #333;
+    border: none;
+}
+
+.main .panel {
+    background-color: #333;
+}
+
+.main .panel .panel {
+    background-color: #444;
+}
+
+.modal-dialog {
+    color: black;
+}
+
+.alert {
+    background-color: transparent;
+    border-width: 3px;
+}
+
+.alert-warning {
+    color: #ffce6a;
+    border-color: #ffce6a;
+    background-color: #f2ff0012;
+}
+
+.alert-danger {
+    border-color: #a94442;
+    background-color: #ff00001a;
+}
+
+.table-hover > tbody > tr:hover {
+    background-color: #444;
+}
+
+.navigation-bar-item.active,
+.navigation-bar-item.active:hover {
+    color: white;
+    background-color: #000;
+    text-decoration: none;
+}
+
+.statistics-table th {
+    background-color: #0a84ec2e;
+}
+
+.statistics .well .btn-default {
+    color: #adadad;
+    background-color: transparent;
+}
+.statistics .well .btn-default.active {
+    background-color: #111;
+}

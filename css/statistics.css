@@ -1,0 +1,12 @@
+.statistics-table,
+.statistics-table th,
+.statistics-table td {
+    border: 1px solid #a5b0b6 !important;
+    border-collapse: collapse !important;
+    text-align: center !important;
+    vertical-align: middle !important;
+}
+
+.statistics-table th {
+    background-color: #006bc717;
+}

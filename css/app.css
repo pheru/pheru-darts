@@ -1,3 +1,71 @@
+/*Nötig für Datepicker, da Bootstrap den Wert wohl recht klein setzt*/
+html {
+    font-size: 14px;
+}
+
+.select__control,
+.select__multi-value{
+    border-radius: 20px !important;
+}
+
+.select__multi-value__remove{
+    border-radius: 20px !important;
+}
+
+.select-container {
+    color: black;
+}
+
+.form-control {
+    border-radius: 99px;
+}
+
+.open > .dropdown-menu {
+    border-radius: 8px;
+}
+
+.dropdown-menu .divider {
+    margin-left: 1px;
+    margin-right: 1px;
+}
+
+.notifications .badge {
+    background-color: transparent;
+    border: 1px solid rgb(51, 122, 183);
+    color: rgb(51, 122, 183);
+}
+
+.datepicker-hidden-popper {
+    display: none;
+}
+
+.datepicker-input-for-toggle {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    text-align: center;
+}
+
+.react-datepicker__navigation--previous {
+    border-right-color: #337ab7 !important;
+}
+
+.react-datepicker__navigation--next {
+    border-left-color: #337ab7 !important;
+}
+
+.react-datepicker__year-read-view--down-arrow {
+    border-top-color: #337ab7 !important;
+}
+
+.react-datepicker__today-button {
+    background-color: #337ab7 !important;
+    color: white !important;
+}
+
+.react-datepicker__today-button:hover {
+    background-color: #286090 !important;
+}
+
 .container {
     width: 100%;
     padding-left: 0;
@@ -5,8 +73,8 @@
 }
 
 .blink-color {
-    transition:all 0.5s ease-in-out;
-    animation:blink-color-keyframes normal 2s infinite ease-in-out;
+    transition: all 0.5s ease-in-out;
+    animation: blink-color-keyframes normal 2s infinite ease-in-out;
 }
 
 @keyframes blink-color-keyframes {
@@ -23,4 +91,48 @@
 
 .well {
     background-color: white;
+    min-height: 0;
+    margin: 0;
+}
+
+.popover {
+    max-width: none;
+}
+
+.center-content {
+    text-align: center;
+    white-space: nowrap;
+}
+
+.center-content:before {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+
+.focus-wrapper {
+    box-shadow: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+}
+
+.focus-wrapper:focus-within {
+    box-shadow: 0 0 0 1px #2684FF;
+    border: 1px solid #2684FF;
+    border-radius: 4px;
+    outline: none;
+}
+
+.focus-within-wrapper {
+    box-shadow: none;
+    border: none;
+    outline: none;
+}
+
+.focus-within-wrapper:focus {
+    box-shadow: none;
+    border: none;
+    outline: none;
 }
