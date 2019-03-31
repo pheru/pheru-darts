@@ -12,7 +12,7 @@ class NewFeaturesInfoPanel extends React.Component {
                 <Glyphicon glyph="flash"/> Was ist neu?
             </Panel.Heading>
             <Panel.Body>
-                <ReleaseFeaturesInfoPanel version="2.0.0" date="TODO">
+                <ReleaseFeaturesInfoPanel version="2.0.0" date="31.03.2019">
                     <li>
                         <Glyphicon glyph="home"/> Überarbeitete Startseite mit Übersicht aller Features
                         und Neuerungen
