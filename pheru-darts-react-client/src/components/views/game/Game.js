@@ -7,6 +7,7 @@ import DocumentUtil from "../../../util/DocumentUtil";
 import ScoreButtons from "./ScoreButtons";
 import FullscreenButton from "../../general/FullscreenButton";
 import CheckOutUtil from "../../../util/CheckOutUtil";
+import {NAVIGATION_ITEM} from "../../../constants/navigationItems";
 
 class Game extends React.Component {
 
@@ -24,7 +25,7 @@ class Game extends React.Component {
     }
 
     componentDidMount() {
-        DocumentUtil.setTitlePrefix("Aktuelles Spiel");
+        DocumentUtil.setTitlePrefix(NAVIGATION_ITEM.GAME.text);
     }
 
     componentDidUpdate(prevProps) {

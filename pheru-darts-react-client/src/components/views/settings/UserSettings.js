@@ -3,8 +3,7 @@ import {Alert, Button, ControlLabel, FormControl, Glyphicon} from "react-bootstr
 import PropTypes from 'prop-types';
 import DeletionConfirmationModal from "../../modals/DeletionConfirmationModal";
 import DocumentUtil from "../../../util/DocumentUtil";
-
-const TITLE = "Benutzereinstellungen";
+import {NAVIGATION_ITEM} from "../../../constants/navigationItems";
 
 class UserSettings extends React.Component {
 
@@ -28,7 +27,7 @@ class UserSettings extends React.Component {
     }
 
     componentDidMount() {
-        DocumentUtil.setTitlePrefix(TITLE);
+        DocumentUtil.setTitlePrefix(NAVIGATION_ITEM.SETTINGS_USER.text);
     }
 
     handleUserNameChange(value) {
@@ -79,7 +78,7 @@ class UserSettings extends React.Component {
                                        hide={() => this.showDeletionConfirmationModal(false)}
                                        name={this.props.userName} isDeleting={this.props.isDeletingUser}
                                        deleteUser={this.props.deleteUser}/>
-            <h3 style={{marginTop: 0}}><strong>{TITLE}</strong></h3>
+            <h3 style={{marginTop: 0}}><strong>{NAVIGATION_ITEM.SETTINGS_USER.text}</strong></h3>
             <ControlLabel>Benutzername ändern</ControlLabel>
             <FormControl type="text"
                          className="user-settings-input"

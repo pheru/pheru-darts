@@ -2,18 +2,17 @@ import React from 'react'
 import PropTypes from 'prop-types';
 import {Alert, FormControl} from "react-bootstrap";
 import DocumentUtil from "../../../util/DocumentUtil";
-
-const TITLE = "Spracheinstellungen";
+import {NAVIGATION_ITEM} from "../../../constants/navigationItems";
 
 class SpeechSettings extends React.Component {
 
     componentDidMount() {
-        DocumentUtil.setTitlePrefix(TITLE);
+        DocumentUtil.setTitlePrefix(NAVIGATION_ITEM.SETTINGS_SPEECH.text);
     }
 
     render() {
         return <div style={{...this.props.style}}>
-            <h3 style={{marginTop: 0}}><strong>{TITLE}</strong></h3>
+            <h3 style={{marginTop: 0}}><strong>{NAVIGATION_ITEM.SETTINGS_SPEECH.text}</strong></h3>
             <Alert bsStyle="warning" style={{marginBottom: 5, textAlign: 'center'}}>
                 Diese Einstellungen sind abhängig vom verwendeten Endgerät und Browser.<br/>
                 Daher werden sie nicht in Deinem Benutzerkonto gespeichert, sondern in Deinem Browser.

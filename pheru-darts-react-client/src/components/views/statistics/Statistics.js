@@ -9,8 +9,7 @@ import OnlyForLoggedInUsersContainer from "../../../containers/general/OnlyForLo
 import DocumentUtil from "../../../util/DocumentUtil";
 import StatisticsFilter from "./StatisticsFilter";
 import AufnahmeProgressAreaChart from "./AufnahmeProgressAreaChart";
-
-const TITLE = "Statistiken";
+import {NAVIGATION_ITEM} from "../../../constants/navigationItems";
 
 const DART_CHART_TYPE_BAR = "bar";
 const DART_CHART_TYPE_RADAR = "radar";
@@ -28,7 +27,7 @@ class Statistics extends React.Component {
     }
 
     componentDidMount() {
-        DocumentUtil.setTitlePrefix(TITLE);
+        DocumentUtil.setTitlePrefix(NAVIGATION_ITEM.STATISTICS.text);
         if (this.props.isLoggedIn) {
             this.props.fetchStatisticsFilterOptions();
             this.props.fetchStatistics();
@@ -74,7 +73,7 @@ class Statistics extends React.Component {
             text="Statistiken können nur für angemeldete Benutzer erstellt und eingesehen werden">
             <div className="statistics">
                 <div style={{textAlign: 'center'}}>
-                    <h1 style={{marginTop: 0}}><strong>{TITLE}</strong></h1>
+                    <h1 style={{marginTop: 0}}><strong>{NAVIGATION_ITEM.STATISTICS.text}</strong></h1>
                     <StatisticsFilter style={{marginBottom: 5}}
                                       fetchStatistics={this.props.fetchStatistics}
                                       options={this.props.options}

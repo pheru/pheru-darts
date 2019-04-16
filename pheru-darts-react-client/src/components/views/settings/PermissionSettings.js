@@ -4,8 +4,7 @@ import PropTypes from 'prop-types';
 import DocumentUtil from "../../../util/DocumentUtil";
 import KeyUtil from "../../../util/KeyUtil";
 import StackLoader from "../../general/loaders/StackLoader";
-
-const TITLE = "Berechtigungen";
+import {NAVIGATION_ITEM} from "../../../constants/navigationItems";
 
 class PermissionSettings extends React.Component {
 
@@ -19,7 +18,7 @@ class PermissionSettings extends React.Component {
     }
 
     componentDidMount() {
-        DocumentUtil.setTitlePrefix(TITLE);
+        DocumentUtil.setTitlePrefix(NAVIGATION_ITEM.SETTINGS_PERMISSIONS.text);
     }
 
     componentDidUpdate(prevProps) {
@@ -86,7 +85,7 @@ class PermissionSettings extends React.Component {
 
     render() {
         return <div>
-            <h3 style={{marginTop: 0}}><strong>{TITLE}</strong></h3>
+            <h3 style={{marginTop: 0}}><strong>{NAVIGATION_ITEM.SETTINGS_PERMISSIONS.text}</strong></h3>
             <div>
                 <p><strong>Hier siehst Du welche Spieler Dir erlaubt haben ein Spiel mit ihnen zu erstellen und
                     kannst einstellen wer dich in einem Spiel auswählen darf.</strong></p>

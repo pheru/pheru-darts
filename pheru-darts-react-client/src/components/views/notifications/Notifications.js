@@ -4,13 +4,12 @@ import {Badge, Button, Glyphicon, Table, Well} from "react-bootstrap";
 import DateUtil from "../../../util/DateUtil";
 import OnlyForLoggedInUsersContainer from "../../../containers/general/OnlyForLoggedInUsersContainer";
 import DocumentUtil from "../../../util/DocumentUtil";
-
-const TITLE = "Mitteilungen";
+import {NAVIGATION_ITEM} from "../../../constants/navigationItems";
 
 class Notifications extends React.Component {
 
     componentDidMount() {
-        DocumentUtil.setTitlePrefix(TITLE);
+        DocumentUtil.setTitlePrefix(NAVIGATION_ITEM.NOTIFICATIONS.text);
     }
 
     render() {
@@ -18,7 +17,7 @@ class Notifications extends React.Component {
             text="Mitteilungen können nur von angemeldeten Benutzern eingesehen werden">
             <div className="notifications">
                 <div style={{textAlign: "center"}}>
-                    <h1 style={{marginTop: 0}}><strong>{TITLE}</strong></h1>
+                    <h1 style={{marginTop: 0}}><strong>{NAVIGATION_ITEM.NOTIFICATIONS.text}</strong></h1>
                     <Button bsStyle="primary" style={{marginRight: 5, marginBottom: 5}}
                             onClick={this.props.fetchNotifications}
                             disabled={this.props.isFetchingNotifications}>

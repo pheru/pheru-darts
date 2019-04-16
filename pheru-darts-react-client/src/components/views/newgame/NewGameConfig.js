@@ -41,7 +41,9 @@ class NewGameConfig extends React.Component {
     }
 
     componentDidMount() {
-        DocumentUtil.setTitlePrefix(this.props.training ? "Training" : "Neues Spiel");
+        DocumentUtil.setTitlePrefix(this.props.training
+            ? NAVIGATION_ITEM.NEW_TRAINING.text
+            : NAVIGATION_ITEM.NEW_GAME.text);
     }
 
     componentDidUpdate(prevProps) {
