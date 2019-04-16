@@ -20,9 +20,12 @@ function getTurnInformation(players, startScore, checkInMode, checkOutMode) {
     let prevAufnahmeIndex;
     let prevDartIndex;
 
+    let lastTurnThrownOver = false;
+
     let aufnahmeStartScore = startScore;
     while (players[playerIndex].aufnahmen[aufnahmeIndex] !== undefined
     && players[playerIndex].aufnahmen[aufnahmeIndex][dartIndex] !== undefined) {
+        lastTurnThrownOver = false;
         prevPlayerIndex = playerIndex;
         prevAufnahmeIndex = aufnahmeIndex;
         prevDartIndex = dartIndex;
@@ -48,6 +51,7 @@ function getTurnInformation(players, startScore, checkInMode, checkOutMode) {
                 score = 0;
             } else if (thrownOver) { // ueberworfen
                 score = aufnahmeStartScore;
+                lastTurnThrownOver = true;
             } else {
                 score -= dartScore;
             }
@@ -94,7 +98,8 @@ function getTurnInformation(players, startScore, checkInMode, checkOutMode) {
             previous: {
                 playerIndex: prevPlayerIndex,
                 aufnahmeIndex: prevAufnahmeIndex,
-                dartIndex: prevDartIndex
+                dartIndex: prevDartIndex,
+                thrownOver: lastTurnThrownOver
             }
         },
         playerInformation: playerInformationList

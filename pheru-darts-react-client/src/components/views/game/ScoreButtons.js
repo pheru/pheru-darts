@@ -2,6 +2,8 @@ import React from 'react'
 import {Button} from "react-bootstrap";
 import PropTypes from "prop-types";
 
+// const CLICK_SOUND = new Audio('sounds/scorebutton_click.wav');
+
 class ScoreButtons extends React.Component {
 
     constructor(props) {
@@ -27,12 +29,16 @@ class ScoreButtons extends React.Component {
     }
 
     toggleDouble() {
+        document.getElementById("click").play();
+        // CLICK_SOUND.play();
         this.setState({
             multiplier: this.state.multiplier === 2 ? 1 : 2
         });
     }
 
     toggleTriple() {
+        document.getElementById("click").play();
+        // CLICK_SOUND.play();
         this.setState({
             multiplier: this.state.multiplier === 3 ? 1 : 3
         });
