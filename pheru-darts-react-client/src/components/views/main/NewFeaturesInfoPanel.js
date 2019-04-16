@@ -1,38 +1,68 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import {Panel} from "react-bootstrap";
 import Glyphicon from "react-bootstrap/es/Glyphicon";
-import ReleaseFeaturesInfoPanel from "./ReleaseFeaturesInfoPanel";
-import {FaMoon} from "react-icons/fa";
+import RELEASES from "../../../releases";
+import {NavLink} from "react-router-dom";
+import {NAVIGATION_ITEM} from "../../../constants/navigationItems";
+
+const Truncation = (props) =>
+    <NavLink to={NAVIGATION_ITEM.ABOUT.route}>
+        <div style={{
+            ...props.style,
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center"
+        }}>
+            <Glyphicon glyph="option-vertical" style={{fontSize: 30}}/>
+            Alle Änderungen ansehen
+        </div>
+    </NavLink>
+;
 
 class NewFeaturesInfoPanel extends React.Component {
 
     render() {
+        let minorRendered = false;
+        let minorTruncateRendered = false;
+        let majorRendered = false;
+        let majorTruncateRendered = false;
         return <Panel bsStyle="primary">
             <Panel.Heading>
                 <Glyphicon glyph="flash"/> Was ist neu?
             </Panel.Heading>
             <Panel.Body>
-                <ReleaseFeaturesInfoPanel version="2.0" date="31.03.2019">
-                    <li>
-                        <Glyphicon glyph="home"/> Überarbeitete Startseite mit Übersicht aller Features
-                        und Neuerungen
-                    </li>
-                    <li><Glyphicon glyph="phone"/> Verbessertes Design für Mobilgeräte</li>
-                    <li><Glyphicon glyph="stats"/> Neue Statistiken für Aufnahmen</li>
-                    <li><Glyphicon glyph="filter"/> Statistiken können jetzt gefilter werden</li>
-                    <li><Glyphicon glyph="screenshot"/> Finish-Anzeige während des Spiels</li>
-                    <li><FaMoon/> Darktheme verfügbar (klicke auf das Symbol in der linken oberen Ecke
-                        zum Wechseln des Designs)
-                    </li>
-                    <li>
-                        <Glyphicon glyph="eject"/> Möglichkeit zum Ausblenden der Navigationsleiste während eines Spiels
-                    </li>
-                </ReleaseFeaturesInfoPanel>
+                {RELEASES.map(release => {
+                    if (!this.props.truncated) {
+                        return release;
+                    }
+                    if (release.props.majorRelease) {
+                        if (!majorRendered) {
+                            majorRendered = true;
+                            return release;
+                        } else if (!majorTruncateRendered) {
+                            majorTruncateRendered = true;
+                            return <Truncation style={{marginTop: 7}} key="major-truncation"/>;
+                        }
+                    } else {
+                        if (!majorRendered && !minorRendered) {
+                            minorRendered = true;
+                            return release;
+                        } else if (!majorRendered && !minorTruncateRendered) {
+                            minorTruncateRendered = true;
+                            return <Truncation style={{marginBottom: 7}} key="minor-truncation"/>;
+                        }
+                    }
+                    return null;
+                })}
             </Panel.Body>
         </Panel>
     }
 }
 
-NewFeaturesInfoPanel.propTypes = {};
+NewFeaturesInfoPanel.propTypes = {
+    truncated: PropTypes.bool
+};
 
-export default NewFeaturesInfoPanel
+export default NewFeaturesInfoPanel;

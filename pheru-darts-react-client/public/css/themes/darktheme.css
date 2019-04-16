@@ -25,11 +25,11 @@ body {
     border: none;
 }
 
-.main .panel {
+.panel {
     background-color: #333;
 }
 
-.main .panel .panel {
+.panel .panel {
     background-color: #444;
 }
 
@@ -74,4 +74,9 @@ body {
 }
 .statistics .well .btn-default.active {
     background-color: #111;
+}
+
+.alert-info {
+    color: #bce8f1;
+    background-color: #b6e5fd24;
 }

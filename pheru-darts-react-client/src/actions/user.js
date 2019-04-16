@@ -1,7 +1,8 @@
+import React from 'react'
 import FetchUtil from "../util/FetchUtil";
 import ConfigUtil from "../util/ConfigUtil";
 import {fetchPermittedUsers, fetchPlayableUsers} from "./playerPermission";
-import {showError} from "./modal";
+import {showError, showInformation} from "./modal";
 import ActionUtil from "../util/ActionUtil";
 import {fetchNotifications} from "./notifications";
 
@@ -114,6 +115,12 @@ export function signUp(name, password) {
             json => {
                 dispatch(signUpSuccessful());
                 dispatch(login(name, password));
+                dispatch(showInformation("Wichtig",
+                    <div>
+                        Gib <strong>alle</strong> Darts <strong>genau</strong> so ein, wie sie geworfen werden.<strong>
+                        <br/><br/>Lass keine aus und halte die Reihenfolge ein!</strong>
+                        <br/><br/>Nur so kann garantiert werden, dass die Spiele für die Statistiken richtig erfasst werden.
+                    </div>));
             },
             responseNotOk => {
                 dispatch(signUpFailed(responseNotOk.message));

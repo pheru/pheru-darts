@@ -37,15 +37,20 @@ class RegisteredInfoPanel extends React.Component {
                         hat)
                     </li>
                 </ul>
-                <Button bsStyle="primary" style={{marginTop: 10}} onClick={this.props.onSignUp}>
+                {this.props.showSignUpButton &&
+                <Button bsStyle="primary" style={{marginTop: 10}} disabled={this.props.disableSignUpButton}
+                        onClick={this.props.onSignUp}>
                     Jetzt registrieren
                 </Button>
+                }
             </Panel.Body>
         </Panel>
     }
 }
 
 RegisteredInfoPanel.propTypes = {
+    showSignUpButton: PropTypes.bool.isRequired,
+    disableSignUpButton: PropTypes.bool.isRequired,
     onSignUp: PropTypes.func.isRequired,
 };
 

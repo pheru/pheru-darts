@@ -202,3 +202,20 @@
 .navigation-bar-bordered-item:hover > .navigation-bar-bordered-item-icon {
     color: white;
 }
+
+.navigation-bar {
+    background-color: #222;
+}
+
+.navigation-bar .dropdown-menu {
+    background-color: #222;
+}
+
+.navigation-bar .dropdown.open .navigation-bar-dropdown-toggle,
+.navigation-bar .dropdown.open .navigation-bar-dropdown-toggle:focus {
+    background-color: #111;
+}
+
+.navigation-bar-dropdown-toggle {
+    background-color: #222;
+}

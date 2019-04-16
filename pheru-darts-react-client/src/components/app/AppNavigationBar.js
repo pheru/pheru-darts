@@ -21,7 +21,7 @@ class AppNavigationBar extends React.Component {
 
     toggleTheme() {
         if (this.state.darktheme) {
-            document.getElementById("theme_link").setAttribute("href", "css/themes/brighttheme.css");
+            document.getElementById("theme_link").setAttribute("href", "");
         } else {
             document.getElementById("theme_link").setAttribute("href", "css/themes/darktheme.css");
         }

@@ -7,32 +7,6 @@
     margin: 0 0 10px;
 }
 
-.main .panel {
-    flex-grow: 1;
-    margin: 7px;
-    border: none;
-}
-
-.main .panel-heading {
-    font-weight: bold;
-    font-size: 18px;
-    border: none;
-}
-
-.main .panel ul {
-    margin: 0;
-    padding-left: 20px;
-}
-
-.main .panel a {
-    font-weight: bold;
-}
-
-.main .panel .panel {
-    margin: 0;
-    background-color: #f4f4f4;
-}
-
 .main-flex-row {
     display: flex;
     flex-wrap: nowrap;

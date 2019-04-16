@@ -18,11 +18,13 @@ class Main extends React.Component {
             <div className="main-flex-row"
                  style={{alignItems: "flex-end", flexWrap: this.props.landscapeOrientation ? "inherit" : "wrap"}}>
                 <UnregisteredInfoPanel/>
-                <RegisteredInfoPanel onSignUp={this.props.showSignUp}/>
+                <RegisteredInfoPanel showSignUpButton={!this.props.isLoggedIn}
+                                     disableSignUpButton={this.props.isLoggingIn}
+                                     onSignUp={this.props.showSignUp}/>
             </div>
             <div className="main-flex-row"
                  style={{alignItems: "start", flexWrap: this.props.landscapeOrientation ? "inherit" : "wrap"}}>
-                <NewFeaturesInfoPanel/>
+                <NewFeaturesInfoPanel truncated/>
                 <PlannedFeaturesInfoPanel/>
             </div>
         </div>
@@ -30,6 +32,8 @@ class Main extends React.Component {
 }
 
 Main.propTypes = {
+    isLoggedIn: PropTypes.bool.isRequired,
+    isLoggingIn: PropTypes.bool.isRequired,
     landscapeOrientation: PropTypes.bool.isRequired,
     showSignUp: PropTypes.func.isRequired
 };

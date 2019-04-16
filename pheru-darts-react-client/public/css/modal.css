@@ -9,3 +9,11 @@
 .modal-footer {
     margin-right: 1px;
 }
+
+.static-modal {
+    position: static;
+}
+
+.static-modal .modal-dialog {
+    margin: 0;
+}

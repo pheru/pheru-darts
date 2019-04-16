@@ -14,8 +14,17 @@ class PlannedFeaturesInfoPanel extends React.Component {
                 <ul>
                     <li><Glyphicon glyph="bullhorn"/> Soundeffekte</li>
                     <li><Glyphicon glyph="play-circle"/> Neuer Spielmodus: Cricket</li>
+                    <li><Glyphicon glyph="play-circle"/> Mehr als zwei Spieler gleichzeitig</li>
+                    <li><Glyphicon glyph="play-circle"/> Weitere Spielkonfiguration: Sets & Legs</li>
                     <li><FaTrophy/> Turniermodus mit Gruppenphase & KO-Runde</li>
                     <li><FaMicrophone/> Sprachsteuerung</li>
+                    <li><Glyphicon glyph="stats"/> Statistiken verbessern:</li>
+                    <ul>
+                        <li>Layout auf Mobilgeräten anpassen</li>
+                        <li>Einzelspielstatistiken</li>
+                        <li>Schnellfilter</li>
+                        <li>Detailliertere Aufnahmestatistiken</li>
+                    </ul>
                     <li><Glyphicon glyph="time"/> Stoppuhr & Timer</li>
                 </ul>
             </Panel.Body>
