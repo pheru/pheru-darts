@@ -282,6 +282,7 @@ class StatisticsFilter extends React.Component {
                                     value={this.state.players}
                                     onChange={this.handlePlayerChange}
                                     styles={this.customSelectStyles(undefined, undefined, 550)}
+                                    blurInputOnSelect={false}
                                     closeMenuOnSelect={false}
                                     options={usernameToUserIds}
                                     isMulti/>
@@ -294,6 +295,7 @@ class StatisticsFilter extends React.Component {
                                     value={this.state.games}
                                     onChange={this.handleGamesChange}
                                     styles={this.customSelectStyles(undefined, undefined, 540)}
+                                    blurInputOnSelect={false}
                                     closeMenuOnSelect={false}
                                     options={playedGames}
                                     isMulti/>
