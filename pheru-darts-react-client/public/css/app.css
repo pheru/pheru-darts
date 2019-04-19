@@ -37,11 +37,12 @@ body {
 
 .panel .panel {
     margin: 0 0 7px;
+    background-color: #f4f4f4;
 }
 
 .minor-release-panel .panel-heading,
 .minor-release-panel .panel-body {
-    padding: 2px 15px;
+    padding: 5px 15px;
 }
 
 .minor-release-panel .panel-heading {

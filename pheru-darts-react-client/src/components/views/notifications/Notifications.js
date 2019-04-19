@@ -84,8 +84,6 @@ class Notifications extends React.Component {
 }
 
 Notifications.propTypes = {
-    isLoggedIn: PropTypes.bool.isRequired,
-    isLoggingIn: PropTypes.bool.isRequired,
     fetchNotifications: PropTypes.func.isRequired,
     markAsRead: PropTypes.func.isRequired,
     isFetchingNotifications: PropTypes.bool.isRequired,

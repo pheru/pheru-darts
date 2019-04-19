@@ -18,8 +18,7 @@ class Main extends React.Component {
             <div className="main-flex-row"
                  style={{alignItems: "flex-end", flexWrap: this.props.landscapeOrientation ? "inherit" : "wrap"}}>
                 <UnregisteredInfoPanel/>
-                <RegisteredInfoPanel showSignUpButton={!this.props.isLoggedIn}
-                                     disableSignUpButton={this.props.isLoggingIn}
+                <RegisteredInfoPanel showSignUpButton={!this.props.isLoggedIn && !this.props.isLoggingIn}
                                      onSignUp={this.props.showSignUp}/>
             </div>
             <div className="main-flex-row"

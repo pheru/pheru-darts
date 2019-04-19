@@ -262,7 +262,10 @@ class NewGameConfig extends React.Component {
                 <Button bsStyle="primary" bsSize="large" block
                         disabled={this.props.isLoggingIn}
                         onClick={this.onStartNewGameButtonClicked}>
-                    Neues {this.props.training ? "Trainingsspiel" : "Spiel"} starten
+                    {this.props.isLoggingIn
+                        ? "Melde an..."
+                        : "Neues " + (this.props.training ? "Trainingsspiel" : "Spiel") + " starten"
+                    }
                 </Button>
             </div>
         </div>

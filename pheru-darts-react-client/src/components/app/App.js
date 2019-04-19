@@ -9,7 +9,6 @@ import SettingsContainer from "../../containers/views/settings/SettingsContainer
 import LoginModalContainer from "../../containers/modals/LoginModalContainer";
 import SignUpModalContainer from "../../containers/modals/SignUpModalContainer";
 import PropTypes from 'prop-types';
-import AboutContainer from "../../containers/views/about/AboutContainer";
 import SimpleModalContainer from "../../containers/modals/SimpleModalContainer";
 import MainContainer from "../../containers/views/main/MainContainer";
 import NotificationsContainer from "../../containers/views/notifications/NotificationsContainer";
@@ -17,6 +16,7 @@ import AppNavigationBarContainer from "../../containers/app/AppNavigationBarCont
 import WindowUtil from "../../util/WindowUtil";
 import { registerLocale, setDefaultLocale } from "react-datepicker";
 import de from "date-fns/locale/de";
+import About from "../views/about/About";
 
 class App extends React.Component {
 
@@ -30,11 +30,13 @@ class App extends React.Component {
     }
 
     componentDidMount() {
-        this.updateOrientation();
-
         registerLocale("de", de);
         setDefaultLocale("de");
 
+        console.log(`Client Version: ${process.env.REACT_APP_VERSION}`);
+        this.props.fetchServerVersion();
+
+        this.updateOrientation();
         window.addEventListener("resize", this.updateOrientation);
 
         window.onunload = this.onUnload;
@@ -50,6 +52,7 @@ class App extends React.Component {
                 }
             };
         }
+
         this.props.loginByToken(false);
     }
 
@@ -72,6 +75,9 @@ class App extends React.Component {
     componentDidUpdate(prevProps) {
         if (this.props.location !== prevProps.location) {
             this.appContainerRef.current.scrollTo(0, 0);
+        }
+        if (this.props.serverVersion !== prevProps.serverVersion) {
+            console.log("Server Version: " + this.props.serverVersion);
         }
     }
 
@@ -115,7 +121,7 @@ class App extends React.Component {
                     <Route path={NAVIGATION_ITEM.NOTIFICATIONS.route} component={NotificationsContainer}/>
                     <Route path={NAVIGATION_ITEM.STATISTICS.route} component={StatisticsContainer}/>
                     <Route path={NAVIGATION_ITEM.SETTINGS.route} component={SettingsContainer}/>
-                    <Route path={NAVIGATION_ITEM.ABOUT.route} component={AboutContainer}/>
+                    <Route path={NAVIGATION_ITEM.ABOUT.route} component={About}/>
                     {/*no-match-route*/}
                     <Route component={MainContainer}/>
                 </Switch>
@@ -128,12 +134,9 @@ class App extends React.Component {
 }
 
 App.propTypes = {
+    serverVersion: PropTypes.string,
     landscapeOrientation: PropTypes.bool.isRequired,
     userName: PropTypes.string,
-
-    isLoggedIn: PropTypes.bool.isRequired,
-    isLoggingIn: PropTypes.bool.isRequired,
-    isLoggingOut: PropTypes.bool.isRequired,
 
     navigationBarVisible: PropTypes.bool.isRequired,
 

@@ -7,15 +7,13 @@ import {showConfirmation} from "../../actions/modal";
 import {exitGame} from "../../actions/game";
 import {setPossibleVoices, setSelectedVoiceByName} from "../../actions/speech";
 import {setLandscapeOrientation} from "../../actions/app";
+import {fetchServerVersion} from "../../actions/serverInformation";
 
 const mapStateToProps = state => ({
+    serverVersion: state.serverInformation.version,
     landscapeOrientation: state.app.landscapeOrientation,
 
     userName: state.user.name,
-
-    isLoggedIn: state.user.isLoggedIn,
-    isLoggingIn: state.user.isLoggingIn,
-    isLoggingOut: state.user.isLoggingOut,
 
     navigationBarVisible: state.app.navigationBarVisible,
 
@@ -30,6 +28,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+    fetchServerVersion: () => dispatch(fetchServerVersion()),
     fetchPlayableUsers: () => dispatch(fetchPlayableUsers()),
     fetchPermittedUsers: () => dispatch(fetchPermittedUsers()),
     showLogin: () => dispatch(showLoginModal()),

@@ -230,8 +230,6 @@ class Statistics extends React.Component {
 }
 
 Statistics.propTypes = {
-    isLoggedIn: PropTypes.bool.isRequired,
-    isLoggingIn: PropTypes.bool.isRequired,
     isFetchingStatistics: PropTypes.bool.isRequired,
     gamesWon: PropTypes.number.isRequired,
     gamesLost: PropTypes.number.isRequired,

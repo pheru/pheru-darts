@@ -173,8 +173,11 @@ export function loginByToken(showErrorOnFailure) {
             },
             error => {
                 dispatch(loginByTokenFailed());
-                dispatch(showError("Login by token failed", error.message));
-            }
+                if (showErrorOnFailure) {
+                    dispatch(showError("Login by token failed", error.message));
+                }
+            },
+            FetchUtil.LOGIN_BY_TOKEN_TIMEOUT
         );
     };
 }
