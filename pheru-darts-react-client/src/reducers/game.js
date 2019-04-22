@@ -1,5 +1,6 @@
 import {ADD_DART, EXIT_GAME, REMATCH, START_NEW_GAME, UNDO_DART} from "../actions/game";
 import getTurnInformation from "../services/gameInformationService";
+import AudioUtil from "../util/AudioUtil";
 
 function game(state = null, action) {
     switch (action.type) {
@@ -46,6 +47,7 @@ function initPlayers(players) {
 function addDart(state, dart) {
     let multiplier = dart.multiplier;
     if (dart.value === 25 && multiplier > 2) {
+        AudioUtil.playUndo();
         return state;
     }
     if (dart.value === 0 && multiplier !== 1) {
@@ -69,11 +71,11 @@ function addDart(state, dart) {
             + turnInfo.playerInformation[currentTurnInfo.playerIndex].score;
     }
     if (turnInfo.turnInformation.previous.thrownOver) {
-        document.getElementById("audio_overthrown").play();
+        AudioUtil.playOverthrown();
     } else if (playerChanged) {
-        document.getElementById("audio_player_change").play();
+        AudioUtil.playPlayerChange();
     } else {
-        document.getElementById("audio_scorebutton_click").play();
+        AudioUtil.playScoreButtonClick();
     }
 
     // Pruefen, ob jemand gewonnen hat
@@ -94,7 +96,7 @@ function addDart(state, dart) {
 }
 
 function undoDart(state) {
-    document.getElementById("audio_undo").play();
+    AudioUtil.playUndo();
     let players = state.players;
 
     let currentTurnInfo = getTurnInformation(players, state.score, state.checkInMode, state.checkOutMode).turnInformation.current;

@@ -1,6 +1,7 @@
 import React from 'react'
 import {Button} from "react-bootstrap";
 import PropTypes from "prop-types";
+import AudioUtil from "../../../util/AudioUtil";
 
 class ScoreButtons extends React.Component {
 
@@ -27,14 +28,14 @@ class ScoreButtons extends React.Component {
     }
 
     toggleDouble() {
-        document.getElementById("audio_scorebutton_click").play();
+        AudioUtil.playScoreButtonClick();
         this.setState({
             multiplier: this.state.multiplier === 2 ? 1 : 2
         });
     }
 
     toggleTriple() {
-        document.getElementById("audio_scorebutton_click").play();
+        AudioUtil.playScoreButtonClick();
         this.setState({
             multiplier: this.state.multiplier === 3 ? 1 : 3
         });

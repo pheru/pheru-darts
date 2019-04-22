@@ -1,4 +1,4 @@
-import {DOUBLE_OUT, SINGLE_OUT} from "../constants/checkoutModes";
+import {DOUBLE_OUT, MASTER_OUT, SINGLE_OUT} from "../constants/checkoutModes";
 import {DOUBLE_IN, SINGLE_IN} from "../constants/checkinModes";
 
 function getTurnInformation(players, startScore, checkInMode, checkOutMode) {
@@ -34,7 +34,9 @@ function getTurnInformation(players, startScore, checkInMode, checkOutMode) {
 
         let dart = players[playerIndex].aufnahmen[aufnahmeIndex][dartIndex];
         let dartScore = dart.value * dart.multiplier;
-        let checkOutCondition = checkOutMode === SINGLE_OUT || (checkOutMode === DOUBLE_OUT && dart.multiplier === 2);
+        let checkOutCondition = checkOutMode === SINGLE_OUT
+            || (checkOutMode === DOUBLE_OUT && dart.multiplier === 2)
+            || (checkOutMode === MASTER_OUT && (dart.multiplier === 2 || dart.multiplier === 3));
         let score = playerInformationList[playerIndex].score;
         let checkInCondition = playerInformationList[playerIndex].checkInCondition;
         if (dartIndex === 0) {

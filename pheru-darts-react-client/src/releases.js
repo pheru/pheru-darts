@@ -5,6 +5,7 @@ import React from "react";
 
 export default [
     <ReleaseFeaturesInfoPanel key="release_2.1" version="2.1" date="XX.XX.2019">
+        <li><Glyphicon glyph="play-circle"/> Neue Check-Out-Option: Master-Out</li>
         <li><Glyphicon glyph="bullhorn"/> Soundeffekte</li>
     </ReleaseFeaturesInfoPanel>,
     <ReleaseFeaturesInfoPanel key="release_2.0" style={{marginBottom: 0}} majorRelease version="2.0" date="31.03.2019">

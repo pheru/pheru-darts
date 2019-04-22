@@ -23,7 +23,7 @@ public class DefaultStatisticEvaluation implements StatisticEvaluation {
             evaluateGame(game, statistic, evaluationState, filter);
         }
         statistic.getAufnahmen().setHighestAufnahmen(evaluationState.highestAufnahmenCounts);
-        if(evaluationState.aufnahmeCount > 0){
+        if (evaluationState.aufnahmeCount > 0) {
             statistic.getAufnahmen().setAverageAufnahmeScore((double) evaluationState.aufnahmeScoreSum / evaluationState.aufnahmeCount);
         } else {
             statistic.getAufnahmen().setAverageAufnahmeScore(0.0);
@@ -149,7 +149,8 @@ public class DefaultStatisticEvaluation implements StatisticEvaluation {
         }
 
         final boolean checkOutCondition = checkOutMode == CheckOutMode.SINGLE_OUT
-                || (checkOutMode == CheckOutMode.DOUBLE_OUT && dart.getMultiplier() == 2);
+                || (checkOutMode == CheckOutMode.DOUBLE_OUT && dart.getMultiplier() == 2)
+                || (checkOutMode == CheckOutMode.MASTER_OUT && (dart.getMultiplier() == 2 || dart.getMultiplier() == 3));
         final boolean thrownOver = isThrownOver(gameState.currentScore, dartScore, checkOutMode);
         if (!gameState.checkInCondition) {
             if (countDartForStatistic) {
@@ -177,15 +178,22 @@ public class DefaultStatisticEvaluation implements StatisticEvaluation {
     }
 
     private boolean checkOutPossible(final CheckOutMode checkOutMode, final int score) {
-        if (checkOutMode == CheckOutMode.SINGLE_OUT) {
-            return score <= 20
-                    || score == 25
-                    || score == 50
-                    || (score <= 40 && score % 2 == 0)
-                    || (score <= 60 && score % 3 == 0);
-        } else {
-            return score == 50
-                    || (score <= 40 && score % 2 == 0);
+        switch (checkOutMode) {
+            case SINGLE_OUT:
+                return score <= 20
+                        || score == 25
+                        || score == 50
+                        || (score <= 40 && score % 2 == 0)
+                        || (score <= 60 && score % 3 == 0);
+            case DOUBLE_OUT:
+                return score == 50
+                        || (score <= 40 && score % 2 == 0);
+            case MASTER_OUT:
+                return score == 50
+                        || (score <= 40 && score % 2 == 0)
+                        || (score <= 60 && score % 3 == 0);
+            default:
+                throw new IllegalArgumentException("Missing configuration for Checkout-Mode: " + checkOutMode);
         }
     }
 
