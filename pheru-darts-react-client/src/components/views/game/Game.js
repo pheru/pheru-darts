@@ -8,6 +8,7 @@ import ScoreButtons from "./ScoreButtons";
 import FullscreenButton from "../../general/FullscreenButton";
 import CheckOutUtil from "../../../util/CheckOutUtil";
 import {NAVIGATION_ITEM} from "../../../constants/navigationItems";
+import * as annyang from 'annyang';
 
 class Game extends React.Component {
 
@@ -22,10 +23,152 @@ class Game extends React.Component {
         };
         this.handleGameFinishedModalClose = this.handleGameFinishedModalClose.bind(this);
         this.handleRematchStartingPlayerChanged = this.handleRematchStartingPlayerChanged.bind(this);
+        this.addDartOnSpeech = this.addDartOnSpeech.bind(this);
+        this.undoDartOnSpeech = this.undoDartOnSpeech.bind(this);
     }
 
     componentDidMount() {
+        if (annyang) {
+            let commands = {};
+            let activationWordsAddDart = ["plus", "fluss"];
+            for (const activationWord of activationWordsAddDart) {
+                commands[activationWord + " *command"] = this.addDartOnSpeech;
+            }
+            let activationWordsUndoDart = ["minus"];
+            for (const activationWord of activationWordsUndoDart) {
+                commands[activationWord + " *command"] = this.undoDartOnSpeech;
+                commands[activationWord] = this.undoDartOnSpeech;
+            }
+            annyang.setLanguage("de-DE");
+            //TODO debug ausmachen
+            annyang.debug(true);
+            annyang.addCommands(commands);
+            annyang.start();
+        }
+
         DocumentUtil.setTitlePrefix(NAVIGATION_ITEM.GAME.text);
+    }
+
+    addDartOnSpeech(command) {
+        let split = command.split(" ");
+        for (let i = 0; i < split.length; i = i + 2) {
+            if (split[i].toLowerCase() === "doppelball"
+                || split[i].toLowerCase() === "doppelpuls") {
+                i--;
+                continue;
+            }
+            if (i + 1 >= split.length) {
+                break;
+            }
+            console.log("multiplier: " + split[i].toLowerCase());
+            let multiplier = this.multiplierFromSpeech(split[i].toLowerCase());
+            if (multiplier > -1) {
+                console.log("value: " + split[i + 1].toLowerCase());
+                let value = this.numberFromSpeech(split[i + 1].toLowerCase());
+                if (value > -1) {
+                    this.props.addDart(value, multiplier);
+                }
+            }
+        }
+    }
+
+    multiplierFromSpeech(multiplier) {
+        switch (multiplier) {
+            case "single":
+            case "singles":
+            case "zingel":
+                return 1;
+            case "doppel":
+            case "double":
+                return 2;
+            case "triple":
+            case "tripple":
+                return 3;
+            default:
+                return -1;
+        }
+    }
+
+    numberFromSpeech(value) {
+        switch (value) {
+            case "1":
+            case "eins":
+                return 1;
+            case "2":
+            case "zwei":
+                return 2;
+            case "3":
+            case "drei":
+                return 3;
+            case "4":
+            case "vier":
+                return 4;
+            case "5":
+            case "fünf":
+                return 5;
+            case "6":
+            case "sechs":
+                return 6;
+            case "7":
+            case "sieben":
+                return 7;
+            case "8":
+            case "acht":
+                return 8;
+            case "9":
+            case "neun":
+                return 9;
+            case "10":
+            case "zehn":
+                return 10;
+            case "11":
+            case "elf":
+                return 11;
+            case "12":
+            case "zwölf":
+                return 12;
+            case "13":
+            case "dreizehn":
+                return 13;
+            case "14":
+            case "vierzehn":
+                return 14;
+            case "15":
+            case "fünfzehn":
+                return 15;
+            case "16":
+            case "sechzehn":
+                return 16;
+            case "17":
+            case "siebzehn":
+                return 17;
+            case "18":
+            case "achtzehn":
+                return 18;
+            case "19":
+            case "neunzehn":
+                return 19;
+            case "20":
+            case "zwanzig":
+                return 20;
+            case "25":
+            case "fünfundzwanzig":
+            case "bull":
+            case "ball":
+                return 25;
+            default:
+                return -1;
+        }
+    }
+
+    undoDartOnSpeech(amount) {
+        let amountNumber = 1;
+        if (amount) {
+            amountNumber = this.numberFromSpeech(amount);
+        }
+        for (let i = 0; i < amountNumber; i++) {
+            this.props.undoDart();
+        }
     }
 
     componentDidUpdate(prevProps) {
@@ -43,6 +186,10 @@ class Game extends React.Component {
     }
 
     componentWillUnmount() {
+        if (annyang) {
+            console.log("Stop speechRec");
+            annyang.abort();
+        }
         this.props.setNavigationBarVisibility(true);
     }
 
