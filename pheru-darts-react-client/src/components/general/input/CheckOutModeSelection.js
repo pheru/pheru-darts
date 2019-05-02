@@ -11,9 +11,13 @@ class CheckOutModeSelection extends React.Component {
 }
 
 CheckOutModeSelection.propTypes = {
-    value: PropTypes.object,
+    value: PropTypes.oneOfType([
+        PropTypes.object,
+        PropTypes.array
+    ]),
     onChange: PropTypes.func,
-    borderRightZero: PropTypes.bool
+    borderRightZero: PropTypes.bool,
+    multipleSelect: PropTypes.bool
 };
 
 export default CheckOutModeSelection

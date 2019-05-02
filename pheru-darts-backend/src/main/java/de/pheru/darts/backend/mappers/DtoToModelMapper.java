@@ -1,5 +1,7 @@
 package de.pheru.darts.backend.mappers;
 
+import de.pheru.darts.backend.dtos.game.CheckInDto;
+import de.pheru.darts.backend.dtos.game.CheckOutDto;
 import de.pheru.darts.backend.dtos.statistics.StatisticFilterDto;
 import de.pheru.darts.backend.entities.game.CheckInMode;
 import de.pheru.darts.backend.entities.game.CheckOutMode;
@@ -25,11 +27,17 @@ public final class DtoToModelMapper {
         if (dto.getGameIds() != null && !dto.getGameIds().isEmpty()) {
             filter.setGameIds(new ArrayList<>(dto.getGameIds()));
         }
-        if (dto.getCheckInMode() != null) {
-            filter.setCheckInMode(CheckInMode.forString(dto.getCheckInMode().getKey()));
+        if (dto.getCheckInModes() != null && !dto.getCheckInModes().isEmpty()) {
+            filter.setCheckInModes(new ArrayList<>());
+            for (final CheckInDto checkInDto : dto.getCheckInModes()) {
+                filter.getCheckInModes().add(CheckInMode.forString(checkInDto.getKey()));
+            }
         }
-        if (dto.getCheckOutMode() != null) {
-            filter.setCheckOutMode(CheckOutMode.forString(dto.getCheckOutMode().getKey()));
+        if (dto.getCheckOutModes() != null && !dto.getCheckOutModes().isEmpty()) {
+            filter.setCheckOutModes(new ArrayList<>());
+            for (final CheckOutDto checkOutDto : dto.getCheckOutModes()) {
+                filter.getCheckOutModes().add(CheckOutMode.forString(checkOutDto.getKey()));
+            }
         }
         if (dto.getStartScore() != null) {
             filter.setStartScore(dto.getStartScore());

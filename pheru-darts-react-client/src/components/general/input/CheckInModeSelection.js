@@ -11,9 +11,13 @@ class CheckInModeSelection extends React.Component {
 }
 
 CheckInModeSelection.propTypes = {
-    value: PropTypes.object,
+    value: PropTypes.oneOfType([
+        PropTypes.object,
+        PropTypes.array
+    ]),
     onChange: PropTypes.func,
-    borderRightZero: PropTypes.bool
+    borderRightZero: PropTypes.bool,
+    multipleSelect: PropTypes.bool
 };
 
 export default CheckInModeSelection

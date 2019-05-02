@@ -213,12 +213,12 @@ public class DefaultStatisticEvaluation implements StatisticEvaluation {
                             .match(gameEntity.getScore(), filter.getStartScore())) {
                         return false;
                     }
-                    if (filter.getCheckOutMode() != null
-                            && gameEntity.getCheckOutMode() != filter.getCheckOutMode()) {
+                    if (filter.getCheckOutModes() != null
+                            && !filter.getCheckOutModes().contains(gameEntity.getCheckOutMode())) {
                         return false;
                     }
-                    if (filter.getCheckInMode() != null
-                            && gameEntity.getCheckInModeOrDefault() != filter.getCheckInMode()) {
+                    if (filter.getCheckInModes() != null
+                            && !filter.getCheckInModes().contains(gameEntity.getCheckInModeOrDefault())) {
                         return false;
                     }
                     if ((filter.getStartDate() != null && filter.getStartDate() > gameEntity.getTimestamp())

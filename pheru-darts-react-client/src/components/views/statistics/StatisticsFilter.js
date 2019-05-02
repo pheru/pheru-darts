@@ -20,8 +20,8 @@ const INITIAL_STATE = {
     score: "",
     currentScoreComparator: "",
     currentScore: "",
-    checkInMode: undefined,
-    checkOutMode: undefined,
+    checkInModes: [],
+    checkOutModes: [],
     startDate: undefined,
     endDate: undefined,
     startDateOpen: false,
@@ -44,8 +44,8 @@ class StatisticsFilter extends React.Component {
         this.handleCurrentScoreComparatorChange = this.handleCurrentScoreComparatorChange.bind(this);
         this.handleCurrentScoreChange = this.handleCurrentScoreChange.bind(this);
 
-        this.handleCheckInModeChange = this.handleCheckInModeChange.bind(this);
-        this.handleCheckOutModeChange = this.handleCheckOutModeChange.bind(this);
+        this.handleCheckInModesChange = this.handleCheckInModesChange.bind(this);
+        this.handleCheckOutModesChange = this.handleCheckOutModesChange.bind(this);
 
         this.toggleStartDateOpen = this.toggleStartDateOpen.bind(this);
         this.toggleEndDateOpen = this.toggleEndDateOpen.bind(this);
@@ -143,15 +143,15 @@ class StatisticsFilter extends React.Component {
         });
     }
 
-    handleCheckInModeChange(e) {
+    handleCheckInModesChange(e) {
         this.setState({
-            checkInMode: e
+            checkInModes: e
         });
     }
 
-    handleCheckOutModeChange(e) {
+    handleCheckOutModesChange(e) {
         this.setState({
-            checkOutMode: e
+            checkOutModes: e
         });
     }
 
@@ -171,11 +171,11 @@ class StatisticsFilter extends React.Component {
                 filter.gameIds.push(this.state.games[i].value);
             }
         }
-        if (this.state.checkInMode) {
-            filter.checkInMode = this.state.checkInMode;
+        if (this.state.checkInModes.length > 0) {
+            filter.checkInModes = this.state.checkInModes;
         }
-        if (this.state.checkOutMode) {
-            filter.checkOutMode = this.state.checkOutMode;
+        if (this.state.checkOutModes.length > 0) {
+            filter.checkOutModes = this.state.checkOutModes;
         }
         if (this.state.scoreComparator.value !== ""
             && this.state.score !== "") {
@@ -336,21 +336,21 @@ class StatisticsFilter extends React.Component {
                     <FilterRow>
                         <div style={{marginRight: 5, marginBottom: 5}}>
                             <p style={{margin: 0}}>Check-In</p>
-                            <CheckInModeSelection value={this.state.checkInMode}
-                                                  onChange={this.handleCheckInModeChange}
-                                                  borderRightZero/>
+                            <CheckInModeSelection value={this.state.checkInModes}
+                                                  onChange={this.handleCheckInModesChange}
+                                                  borderRightZero multipleSelect/>
                             <Button style={{borderTopLeftRadius: 0, borderBottomLeftRadius: 0, marginLeft: -1}}
-                                    onClick={() => this.handleCheckInModeChange(null)}>
+                                    onClick={() => this.handleCheckInModesChange(null)}>
                                 <Glyphicon glyph="remove"/>
                             </Button>
                         </div>
                         <div style={{marginBottom: 5}}>
                             <p style={{margin: 0}}>Check-Out</p>
-                            <CheckOutModeSelection value={this.state.checkOutMode}
-                                                   onChange={this.handleCheckOutModeChange}
-                                                   borderRightZero/>
+                            <CheckOutModeSelection value={this.state.checkOutModes}
+                                                   onChange={this.handleCheckOutModesChange}
+                                                   borderRightZero multipleSelect/>
                             <Button style={{borderTopLeftRadius: 0, borderBottomLeftRadius: 0, marginLeft: -1}}
-                                    onClick={() => this.handleCheckOutModeChange(null)}>
+                                    onClick={() => this.handleCheckOutModesChange(null)}>
                                 <Glyphicon glyph="remove"/>
                             </Button>
                         </div>

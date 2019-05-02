@@ -5,7 +5,8 @@ import {ToggleButton, ToggleButtonGroup} from "react-bootstrap";
 class KeyTextToggleButtonGroup extends React.Component {
 
     render() {
-        return <ToggleButtonGroup type="radio" name="options" value={this.props.value}
+        return <ToggleButtonGroup type={this.props.multipleSelect ? "checkbox" : "radio"}
+                                  name="options" value={this.props.value}
                                   onChange={this.props.onChange}>
             {this.props.options.map((mode, i) =>
                 <ToggleButton
@@ -20,9 +21,13 @@ class KeyTextToggleButtonGroup extends React.Component {
 
 KeyTextToggleButtonGroup.propTypes = {
     options: PropTypes.array.isRequired,
-    value: PropTypes.object,
+    value: PropTypes.oneOfType([
+        PropTypes.object,
+        PropTypes.array
+    ]),
     onChange: PropTypes.func,
-    borderRightZero: PropTypes.bool
+    borderRightZero: PropTypes.bool,
+    multipleSelect: PropTypes.bool
 };
 
 export default KeyTextToggleButtonGroup

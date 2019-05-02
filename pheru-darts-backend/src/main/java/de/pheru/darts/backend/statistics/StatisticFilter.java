@@ -10,8 +10,8 @@ public class StatisticFilter {
 
     private List<String> gameIds;
     private List<String> userIds;
-    private CheckInMode checkInMode;
-    private CheckOutMode checkOutMode;
+    private List<CheckInMode> checkInModes;
+    private List<CheckOutMode> checkOutModes;
     private Integer startScore;
     private ComparativeOperator startScoreComparatorOperator;
     private Integer currentScore;
@@ -35,20 +35,20 @@ public class StatisticFilter {
         this.userIds = userIds;
     }
 
-    public CheckInMode getCheckInMode() {
-        return checkInMode;
+    public List<CheckInMode> getCheckInModes() {
+        return checkInModes;
     }
 
-    public void setCheckInMode(final CheckInMode checkInMode) {
-        this.checkInMode = checkInMode;
+    public void setCheckInModes(final List<CheckInMode> checkInModes) {
+        this.checkInModes = checkInModes;
     }
 
-    public CheckOutMode getCheckOutMode() {
-        return checkOutMode;
+    public List<CheckOutMode> getCheckOutModes() {
+        return checkOutModes;
     }
 
-    public void setCheckOutMode(final CheckOutMode checkOutMode) {
-        this.checkOutMode = checkOutMode;
+    public void setCheckOutModes(final List<CheckOutMode> checkOutModes) {
+        this.checkOutModes = checkOutModes;
     }
 
     public Integer getStartScore() {
