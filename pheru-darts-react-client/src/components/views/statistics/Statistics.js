@@ -19,11 +19,13 @@ class Statistics extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            dartChartType: DART_CHART_TYPE_BAR
+            dartChartType: DART_CHART_TYPE_BAR,
+            fixedYAxisAufnahmeChart: false
         };
         this.dartsBarChartRef = React.createRef();
         this.dartsRadarChartRef = React.createRef();
         this.handleDartChartTypeChange = this.handleDartChartTypeChange.bind(this);
+        this.toggleFixedYAxisAufnahmeChartChange = this.toggleFixedYAxisAufnahmeChartChange.bind(this);
     }
 
     componentDidMount() {
@@ -66,6 +68,10 @@ class Statistics extends React.Component {
             default:
                 return null;
         }
+    }
+
+    toggleFixedYAxisAufnahmeChartChange() {
+        this.setState({fixedYAxisAufnahmeChart: !this.state.fixedYAxisAufnahmeChart});
     }
 
     render() {
@@ -182,7 +188,9 @@ class Statistics extends React.Component {
                 </tr>
                 </tbody>
             </Table>
-            <AufnahmeProgressAreaChart data={this.props.progressData}/>
+            <AufnahmeProgressAreaChart data={this.props.progressData}
+                                       fixedYAxis={this.state.fixedYAxisAufnahmeChart}
+                                       onClick={this.toggleFixedYAxisAufnahmeChartChange}/>
         </Well>
     }
 

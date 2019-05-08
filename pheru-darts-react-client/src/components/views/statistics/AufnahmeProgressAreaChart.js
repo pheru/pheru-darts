@@ -11,7 +11,7 @@ class AufnahmeProgressAreaChart extends React.Component {
 
     render() {
         return <ResponsiveContainer width="100%" height={300}>
-            <AreaChart data={this.props.data}>
+            <AreaChart data={this.props.data} onClick={this.props.onClick}>
                 <defs>
                     <linearGradient id="colorAverageAufnahmeScore" x1="0" y1="0" x2="0" y2="1">
                         <stop offset="5%" stopColor="#337ab7" stopOpacity={0.85}/>
@@ -40,7 +40,8 @@ class AufnahmeProgressAreaChart extends React.Component {
 
 AufnahmeProgressAreaChart.propTypes = {
     data: PropTypes.array.isRequired,
-    fixedYAxis: PropTypes.bool
+    fixedYAxis: PropTypes.bool,
+    onClick: PropTypes.func
 };
 
 export default AufnahmeProgressAreaChart;
