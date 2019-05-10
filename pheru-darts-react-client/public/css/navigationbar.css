@@ -76,9 +76,16 @@
 
 .navigation-bar-item.active,
 .navigation-bar-item.active:hover {
+    padding-bottom: 8px;
     color: white;
+    border-bottom: 2px solid #337ab7;
     background-color: #111;
     text-decoration: none;
+}
+
+.navigation-bar-small .navigation-bar-item.active,
+.navigation-bar-small .navigation-bar-item.hover {
+    padding-bottom: 3px;
 }
 
 .navigation-bar-header {
