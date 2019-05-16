@@ -70,13 +70,6 @@ function addDart(state, dart) {
         announcementText = state.players[currentTurnInfo.playerIndex].name + ", "
             + turnInfo.playerInformation[currentTurnInfo.playerIndex].score;
     }
-    if (turnInfo.turnInformation.previous.thrownOver) {
-        AudioUtil.playOverthrown();
-    } else if (playerChanged) {
-        AudioUtil.playPlayerChange();
-    } else {
-        AudioUtil.playScoreButtonClick();
-    }
 
     // Pruefen, ob jemand gewonnen hat
     let winner;
@@ -87,6 +80,17 @@ function addDart(state, dart) {
             break;
         }
     }
+
+    if (winner) {
+        AudioUtil.playPlayerWon();
+    } else if (turnInfo.turnInformation.previous.thrownOver) {
+        AudioUtil.playOverthrown();
+    } else if (playerChanged) {
+        AudioUtil.playPlayerChange();
+    } else {
+        AudioUtil.playScoreButtonClick();
+    }
+
     return {
         ...state,
         players: players,
