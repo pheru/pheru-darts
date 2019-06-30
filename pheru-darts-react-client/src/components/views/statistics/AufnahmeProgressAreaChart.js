@@ -1,6 +1,7 @@
 import React from 'react'
 import {Area, AreaChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts";
 import PropTypes from "prop-types";
+import StatisticUtil from "../../../util/StatisticUtil";
 
 class AufnahmeProgressAreaChart extends React.Component {
 
@@ -23,11 +24,13 @@ class AufnahmeProgressAreaChart extends React.Component {
                     </linearGradient>
                 </defs>
                 <CartesianGrid/>
-                <XAxis tick={false} />
+                <XAxis tick={false}/>
                 {this.props.fixedYAxis
                     ? <YAxis interval={0} ticks={[20, 40, 60, 80, 100, 120, 140, 160, 180]}/>
                     : <YAxis/>}
-                <Tooltip labelFormatter={() => ""}/>
+                <Tooltip
+                    labelFormatter={(index) => StatisticUtil.labelTextForGameInformation(this.props.data[index].gameInformation)}
+                    formatter={(value) => value.toFixed(2)}/>
                 <Legend/>
                 <Area type="monotone" name="Gesamtdurchschnitt" dataKey="averageAufnahmeScore"
                       stroke="#337ab7" fillOpacity={1} fill="url(#colorAverageAufnahmeScore)"/>

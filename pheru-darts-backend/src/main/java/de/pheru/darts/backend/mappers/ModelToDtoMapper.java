@@ -99,6 +99,7 @@ public final class ModelToDtoMapper {
             final StatisticGameInformation statisticGameInformation,
             final Map<String, String> playerIdToPlayerName) {
         final StatisticGameInformationDto statisticGameInformationDto = new StatisticGameInformationDto();
+        statisticGameInformationDto.setGameNumber(statisticGameInformation.getGameNumber());
         statisticGameInformationDto.setId(statisticGameInformation.getId());
         statisticGameInformationDto.setTimestamp(statisticGameInformation.getTimestamp());
         statisticGameInformationDto.setOpponents(new ArrayList<>());

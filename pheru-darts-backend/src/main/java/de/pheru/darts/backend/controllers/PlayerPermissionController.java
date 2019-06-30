@@ -87,7 +87,7 @@ public class PlayerPermissionController {
                 LOGGER.info("User to permit not found: username=" + username);
                 throw new UserNotFoundException("User not found");
             }
-        }else {
+        } else {
             throw new BadRequestException("No id or user to permit provided");
         }
         return userToPermit;

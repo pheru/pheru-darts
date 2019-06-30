@@ -3,6 +3,10 @@ body {
     background: #222;
 }
 
+.recharts-tooltip-label {
+    color: black;
+}
+
 .navigation-bar {
     background-color: #111;
 }

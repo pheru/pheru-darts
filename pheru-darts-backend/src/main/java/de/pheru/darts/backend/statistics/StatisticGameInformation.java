@@ -5,6 +5,7 @@ import java.util.List;
 public class StatisticGameInformation {
 
     private String id;
+    private long gameNumber;
     private List<String> opponentIds;
     private long timestamp;
 
@@ -14,6 +15,14 @@ public class StatisticGameInformation {
 
     public void setId(final String id) {
         this.id = id;
+    }
+
+    public long getGameNumber() {
+        return gameNumber;
+    }
+
+    public void setGameNumber(final long gameNumber) {
+        this.gameNumber = gameNumber;
     }
 
     public List<String> getOpponentIds() {

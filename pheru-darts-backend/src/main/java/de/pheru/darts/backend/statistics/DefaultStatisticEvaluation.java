@@ -5,7 +5,6 @@ import de.pheru.darts.backend.security.SecurityUtil;
 import de.pheru.darts.backend.util.ReservedUser;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class DefaultStatisticEvaluation implements StatisticEvaluation {
 
@@ -18,9 +17,11 @@ public class DefaultStatisticEvaluation implements StatisticEvaluation {
         sortedGames.sort(Comparator.comparing(GameEntity::getTimestamp));
         final EvaluationState evaluationState = new EvaluationState();
         final Statistic statistic = new Statistic();
-        final List<GameEntity> filteredGames = applyFilterToGames(filter, sortedGames);
-        for (final GameEntity game : filteredGames) {
-            evaluateGame(game, statistic, evaluationState, filter);
+        for (final GameEntity game : sortedGames) {
+            evaluationState.currentGameNumber++;
+            if (gameInFilter(filter, game)) {
+                evaluateGame(game, statistic, evaluationState, filter);
+            }
         }
         statistic.getAufnahmen().setHighestAufnahmen(evaluationState.highestAufnahmenCounts);
         if (evaluationState.aufnahmeCount > 0) {
@@ -44,7 +45,7 @@ public class DefaultStatisticEvaluation implements StatisticEvaluation {
         // Jetzt steht im GameState fest, ob Spiel gewonnen oder verloren,
         // also kann jetzt die Sieg-Statistik gegen die restlichen Spieler gesetzt werden
         for (final PlayerDocument player : game.getPlayers()) {
-            final String playerIdNotNull = player.getId() != null ? player.getId() : ReservedUser.UNREGISTERED_USER.getId();
+            final String playerIdNotNull = getPlayerIdNotNull(player.getId());
             if (!playerIdNotNull.equals(SecurityUtil.getLoggedInUserId())) {
                 final Map<String, GameCountStatistic> gameCountsPerPlayerId = gameStatistic.getCountsPerPlayerIds();
                 gameCountsPerPlayerId.putIfAbsent(playerIdNotNull, new GameCountStatistic());
@@ -65,11 +66,15 @@ public class DefaultStatisticEvaluation implements StatisticEvaluation {
         }
         if (evaluationState.currentGameState.aufnahmeCount > 0) {
             final StatisticGameInformation gameInformation = new StatisticGameInformation();
+            gameInformation.setGameNumber(evaluationState.currentGameNumber);
             gameInformation.setId(game.getId());
             gameInformation.setTimestamp(game.getTimestamp());
             gameInformation.setOpponentIds(new ArrayList<>());
             for (final PlayerDocument player : game.getPlayers()) {
-                gameInformation.getOpponentIds().add(player.getId());
+                final String playerIdNotNull = getPlayerIdNotNull(player.getId());
+                if (!playerIdNotNull.equals(SecurityUtil.getLoggedInUserId())) {
+                    gameInformation.getOpponentIds().add(playerIdNotNull);
+                }
             }
             final ProgressStatistic progressStatistic = new ProgressStatistic();
             progressStatistic.setGameInformation(gameInformation);
@@ -201,44 +206,6 @@ public class DefaultStatisticEvaluation implements StatisticEvaluation {
         return score - dartScore <= (checkOutMode == CheckOutMode.SINGLE_OUT ? 0 : 1);
     }
 
-    private List<GameEntity> applyFilterToGames(final StatisticFilter filter, final List<GameEntity> games) {
-        if (filter == null) {
-            return games;
-        }
-        return games.stream()
-                .filter(gameEntity -> {
-                    if (filter.getStartScore() != null
-                            && filter.getStartScoreComparatorOperator() != null
-                            && !filter.getStartScoreComparatorOperator().getComparativeMatcher()
-                            .match(gameEntity.getScore(), filter.getStartScore())) {
-                        return false;
-                    }
-                    if (filter.getCheckOutModes() != null
-                            && !filter.getCheckOutModes().contains(gameEntity.getCheckOutMode())) {
-                        return false;
-                    }
-                    if (filter.getCheckInModes() != null
-                            && !filter.getCheckInModes().contains(gameEntity.getCheckInModeOrDefault())) {
-                        return false;
-                    }
-                    if ((filter.getStartDate() != null && filter.getStartDate() > gameEntity.getTimestamp())
-                            || filter.getEndDate() != null && (filter.getEndDate() + MILLIS_PER_DAY) < gameEntity.getTimestamp()) {
-                        return false;
-                    }
-                    if (filter.getGameIds() != null
-                            && !filter.getGameIds().isEmpty()
-                            && !filter.getGameIds().contains(gameEntity.getId())) {
-                        return false;
-                    }
-                    if (filter.getUserIds() != null
-                            && !filter.getUserIds().isEmpty()
-                            && !containsFilterUserId(gameEntity, filter)) {
-                        return false;
-                    }
-                    return true;
-                }).collect(Collectors.toList());
-    }
-
     private boolean containsFilterUserId(final GameEntity game, final StatisticFilter filter) {
         if (game.isTrainingOrDefault() && filter.getUserIds().contains(ReservedUser.TRAINING.getId())) {
             return true;
@@ -252,6 +219,41 @@ public class DefaultStatisticEvaluation implements StatisticEvaluation {
         return false;
     }
 
+    private boolean gameInFilter(final StatisticFilter filter, final GameEntity gameEntity) {
+        if (filter == null) {
+            return true;
+        }
+        if (filter.getStartScore() != null
+                && filter.getStartScoreComparatorOperator() != null
+                && !filter.getStartScoreComparatorOperator().getComparativeMatcher()
+                .match(gameEntity.getScore(), filter.getStartScore())) {
+            return false;
+        }
+        if (filter.getCheckOutModes() != null
+                && !filter.getCheckOutModes().contains(gameEntity.getCheckOutMode())) {
+            return false;
+        }
+        if (filter.getCheckInModes() != null
+                && !filter.getCheckInModes().contains(gameEntity.getCheckInModeOrDefault())) {
+            return false;
+        }
+        if ((filter.getStartDate() != null && filter.getStartDate() > gameEntity.getTimestamp())
+                || filter.getEndDate() != null && (filter.getEndDate() + MILLIS_PER_DAY) < gameEntity.getTimestamp()) {
+            return false;
+        }
+        if (filter.getGameIds() != null
+                && !filter.getGameIds().isEmpty()
+                && !filter.getGameIds().contains(gameEntity.getId())) {
+            return false;
+        }
+        if (filter.getUserIds() != null
+                && !filter.getUserIds().isEmpty()
+                && !containsFilterUserId(gameEntity, filter)) {
+            return false;
+        }
+        return true;
+    }
+
     private boolean currentScoreInFilter(final StatisticFilter filter, final long currentScore) {
         return filter == null
                 || filter.getCurrentScore() == null
@@ -260,7 +262,12 @@ public class DefaultStatisticEvaluation implements StatisticEvaluation {
                 .match(currentScore, filter.getCurrentScore());
     }
 
+    private String getPlayerIdNotNull(final String playerid) {
+        return playerid != null ? playerid : ReservedUser.UNREGISTERED_USER.getId();
+    }
+
     private class EvaluationState {
+        private long currentGameNumber = 0L;
         private EvaluationGameState currentGameState;
         private long aufnahmeScoreSum = 0L;
         private int aufnahmeCount = 0;

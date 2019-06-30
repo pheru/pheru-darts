@@ -10,7 +10,7 @@ import Select from "react-select";
 import PropTypes from "prop-types";
 import SortUtil from "../../../util/SortUtil";
 import KeyUtil from "../../../util/KeyUtil";
-import DateUtil from "../../../util/DateUtil";
+import StatisticUtil from "../../../util/StatisticUtil";
 
 const INITIAL_STATE = {
     open: false,
@@ -231,17 +231,11 @@ class StatisticsFilter extends React.Component {
         }
         usernameToUserIds.sort(SortUtil.sortByLabelAsc);
 
-        let sortedGames = this.props.options.games.slice().sort(SortUtil.sortByTimestampDesc);
+        let sortedGames = this.props.options.games.slice().reverse();
         let playedGames = [];
         for (let i = 0; i < sortedGames.length; i++) {
-            let gameText = sortedGames[i].opponents.length > 0
-                ? " vs. " + sortedGames[i].opponents.join() : " Training";
-            let gameNumber = sortedGames.length - i;
-            let gameDate = DateUtil.toDate(new Date(sortedGames[i].timestamp),
-                {replaceToday: true, replaceYesterday: true});
-            let gameTime = DateUtil.toTime(new Date(sortedGames[i].timestamp));
             playedGames.push({
-                label: gameText + " (" + gameDate + " " + gameTime + ") [#" + gameNumber + "]",
+                label: StatisticUtil.labelTextForGameInformation(sortedGames[i]),
                 value: sortedGames[i].id
             });
         }

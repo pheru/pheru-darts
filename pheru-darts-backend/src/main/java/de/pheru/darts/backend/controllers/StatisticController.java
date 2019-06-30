@@ -2,8 +2,8 @@ package de.pheru.darts.backend.controllers;
 
 import de.pheru.darts.backend.dtos.statistics.StatisticDto;
 import de.pheru.darts.backend.dtos.statistics.StatisticFilterDto;
-import de.pheru.darts.backend.dtos.statistics.StatisticGameInformationDto;
 import de.pheru.darts.backend.dtos.statistics.StatisticFilterOptionsDto;
+import de.pheru.darts.backend.dtos.statistics.StatisticGameInformationDto;
 import de.pheru.darts.backend.entities.game.GameEntity;
 import de.pheru.darts.backend.entities.user.UserEntity;
 import de.pheru.darts.backend.mappers.DtoToModelMapper;
@@ -51,12 +51,15 @@ public class StatisticController {
     @GetMapping("/filterOptions")
     public StatisticFilterOptionsDto getFilterOptions() {
         final String loggedInUserId = SecurityUtil.getLoggedInUserId();
-        final List<GameEntity> games = gameRepository.findByUserId(loggedInUserId);
+        final List<GameEntity> sortedGames = new ArrayList<>(gameRepository.findByUserId(loggedInUserId));
+        sortedGames.sort(Comparator.comparing(GameEntity::getTimestamp));
 
         final Map<String, Set<String>> playerNameToPlayerIds = new HashMap<>();
         final List<StatisticGameInformationDto> gameOptionDtos = new ArrayList<>();
-        games.forEach(gameEntity -> {
+        for (int i = 0; i < sortedGames.size(); i++) {
+            final GameEntity gameEntity = sortedGames.get(i);
             final StatisticGameInformationDto gameOptionDto = new StatisticGameInformationDto();
+            gameOptionDto.setGameNumber(i + 1);
             gameOptionDto.setId(gameEntity.getId());
             gameOptionDto.setTimestamp(gameEntity.getTimestamp());
             gameOptionDto.setOpponents(new ArrayList<>());
@@ -79,7 +82,7 @@ public class StatisticController {
                         }
                     });
             gameOptionDtos.add(gameOptionDto);
-        });
+        }
 
         final List<String> operators = new ArrayList<>();
         for (final ComparativeOperator operator : ComparativeOperator.values()) {
