@@ -335,6 +335,63 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Get mit Filter",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://localhost:8443/statistic",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8443",
+							"path": [
+								"statistic"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FilterOptions",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://localhost:8443/statistic/filterOptions",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8443",
+							"path": [
+								"statistic",
+								"filterOptions"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -381,7 +438,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"currentPassword\" : \"\",\n\t\"newName\" : \"\",\n\t\"newPassword\" : \"\"\n}"
+							"raw": "{\n\t\"currentPassword\" : \"1\",\n\t\"newName\" : \"1\",\n\t\"newPassword\" : \"\"\n}"
 						},
 						"url": {
 							"raw": "https://localhost:8443/user",

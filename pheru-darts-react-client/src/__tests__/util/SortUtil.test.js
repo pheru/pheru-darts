@@ -2,7 +2,7 @@ import SortUtil from "../../util/SortUtil";
 
 describe('sortService', () => {
 
-    it('sortPlayerByNameAsc', () => {
+    it('sortByNameAsc', () => {
         let players = [
             createPlayer("Chris"),
             createPlayer("Peter B"),
@@ -12,7 +12,7 @@ describe('sortService', () => {
             createPlayer("Adam")
         ];
 
-        players.sort(SortUtil.sortPlayerByNameAsc);
+        players.sort(SortUtil.sortByNameAsc);
 
         expect(players[0].name).toEqual("Adam");
         expect(players[1].name).toEqual("Chris");
@@ -22,7 +22,7 @@ describe('sortService', () => {
         expect(players[5].name).toEqual("Willi");
     });
 
-    it('sortDartDataByScoreDesc', () => {
+    it('sortByScoreDesc', () => {
         let dartData = [
             createDartData("25"),
             createDartData("18"),
@@ -33,7 +33,7 @@ describe('sortService', () => {
             createDartData("12")
         ];
 
-        dartData.sort(SortUtil.sortDartDataByScoreDesc);
+        dartData.sort(SortUtil.sortByScoreDesc);
 
         expect(dartData[0].score).toEqual("25");
         expect(dartData[1].score).toEqual("20");
@@ -44,13 +44,13 @@ describe('sortService', () => {
         expect(dartData[6].score).toEqual("1");
     });
 
-    it('sortDartDataByScoreBoardOrder', () => {
+    it('sortScoreByBoardOrder', () => {
         let dartData = [];
         for (let i = 1; i <= 20; i++) {
             dartData.push(createDartData("" + i));
         }
 
-        dartData.sort(SortUtil.sortDartDataByScoreBoardOrder);
+        dartData.sort(SortUtil.sortScoreByBoardOrder);
 
         expect(dartData[0].score).toEqual("20");
         expect(dartData[1].score).toEqual("1");
@@ -74,7 +74,7 @@ describe('sortService', () => {
         expect(dartData[19].score).toEqual("5");
     });
 
-    it('sortGameDataByOpponentAsc', () => {
+    it('sortByOpponentAsc', () => {
         let gameData = [
             createGameData("Adelbert"),
             createGameData("Bernd"),
@@ -83,7 +83,7 @@ describe('sortService', () => {
             createGameData("Noch ein Adelbert")
         ];
 
-        gameData.sort(SortUtil.sortGameDataByOpponentAsc);
+        gameData.sort(SortUtil.sortByOpponentAsc);
 
         expect(gameData[0].opponent).toEqual("Adelbert");
         expect(gameData[1].opponent).toEqual("Adelbert II");

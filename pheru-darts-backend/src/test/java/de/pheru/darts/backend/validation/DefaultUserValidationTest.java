@@ -88,7 +88,7 @@ public class DefaultUserValidationTest {
         expectedException.expect(ValidationException.class);
         expectedException.expectMessage(DefaultUserValidation.USERNAME_IS_NOT_ALLOWED);
 
-        userValidation.validateName(ReservedUser.DELETED_USERS.getName());
+        userValidation.validateName(ReservedUser.DELETED_USER.getName());
     }
 
     @Test
@@ -96,7 +96,7 @@ public class DefaultUserValidationTest {
         expectedException.expect(ValidationException.class);
         expectedException.expectMessage(DefaultUserValidation.USERNAME_IS_NOT_ALLOWED);
 
-        userValidation.validateName(ReservedUser.DELETED_USERS.getName().toUpperCase());
+        userValidation.validateName(ReservedUser.DELETED_USER.getName().toUpperCase());
     }
 
     @Test

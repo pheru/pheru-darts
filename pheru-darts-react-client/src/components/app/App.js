@@ -9,22 +9,36 @@ import SettingsContainer from "../../containers/views/settings/SettingsContainer
 import LoginModalContainer from "../../containers/modals/LoginModalContainer";
 import SignUpModalContainer from "../../containers/modals/SignUpModalContainer";
 import PropTypes from 'prop-types';
-import AboutContainer from "../../containers/views/about/AboutContainer";
 import SimpleModalContainer from "../../containers/modals/SimpleModalContainer";
 import MainContainer from "../../containers/views/main/MainContainer";
 import NotificationsContainer from "../../containers/views/notifications/NotificationsContainer";
 import AppNavigationBarContainer from "../../containers/app/AppNavigationBarContainer";
+import WindowUtil from "../../util/WindowUtil";
+import { registerLocale, setDefaultLocale } from "react-datepicker";
+import de from "date-fns/locale/de";
+import About from "../views/about/About";
 
 class App extends React.Component {
 
     constructor(props) {
         super(props);
         this.appContainerRef = React.createRef();
+
+        this.updateOrientation = this.updateOrientation.bind(this);
         this.onBeforeUnload = this.onBeforeUnload.bind(this);
         this.onUnload = this.onUnload.bind(this);
     }
 
     componentDidMount() {
+        registerLocale("de", de);
+        setDefaultLocale("de");
+
+        console.log(`Client Version: ${process.env.REACT_APP_VERSION}`);
+        this.props.fetchServerVersion();
+
+        this.updateOrientation();
+        window.addEventListener("resize", this.updateOrientation);
+
         window.onunload = this.onUnload;
         window.onbeforeunload = this.onBeforeUnload;
 
@@ -38,6 +52,7 @@ class App extends React.Component {
                 }
             };
         }
+
         this.props.loginByToken(false);
     }
 
@@ -61,11 +76,27 @@ class App extends React.Component {
         if (this.props.location !== prevProps.location) {
             this.appContainerRef.current.scrollTo(0, 0);
         }
+        if (this.props.serverVersion !== prevProps.serverVersion) {
+            console.log("Server Version: " + this.props.serverVersion);
+        }
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener("resize", this.updateOrientation);
+    }
+
+    updateOrientation() {
+        let landscapeOrientation = WindowUtil.isLandscapeOrientation();
+        if (this.props.landscapeOrientation !== landscapeOrientation) {
+            this.props.setLandscapeOrientation(landscapeOrientation);
+        }
     }
 
     render() {
         return <div style={{height: "100%"}}>
+            {this.props.navigationBarVisible &&
             <AppNavigationBarContainer/>
+            }
             <div ref={this.appContainerRef}
                  style={{
                      position: "absolute",
@@ -73,10 +104,8 @@ class App extends React.Component {
                      left: 0,
                      right: 0,
                      bottom: 0,
-                     paddingTop: 10,
-                     paddingLeft: 20,
-                     paddingRight: 20,
-                     marginTop: 40,
+                     padding: 5,
+                     marginTop: this.props.navigationBarVisible ? 40 : 0,
                      overflowY: "auto"
                  }}>
                 <Switch>
@@ -92,7 +121,7 @@ class App extends React.Component {
                     <Route path={NAVIGATION_ITEM.NOTIFICATIONS.route} component={NotificationsContainer}/>
                     <Route path={NAVIGATION_ITEM.STATISTICS.route} component={StatisticsContainer}/>
                     <Route path={NAVIGATION_ITEM.SETTINGS.route} component={SettingsContainer}/>
-                    <Route path={NAVIGATION_ITEM.ABOUT.route} component={AboutContainer}/>
+                    <Route path={NAVIGATION_ITEM.ABOUT.route} component={About}/>
                     {/*no-match-route*/}
                     <Route component={MainContainer}/>
                 </Switch>
@@ -105,11 +134,11 @@ class App extends React.Component {
 }
 
 App.propTypes = {
+    serverVersion: PropTypes.string,
+    landscapeOrientation: PropTypes.bool.isRequired,
     userName: PropTypes.string,
 
-    isLoggedIn: PropTypes.bool.isRequired,
-    isLoggingIn: PropTypes.bool.isRequired,
-    isLoggingOut: PropTypes.bool.isRequired,
+    navigationBarVisible: PropTypes.bool.isRequired,
 
     gameRunning: PropTypes.bool.isRequired,
 
@@ -128,7 +157,8 @@ App.propTypes = {
 
     unreadNotificationsCount: PropTypes.number.isRequired,
 
-    selectedVoice: PropTypes.object
+    selectedVoice: PropTypes.object,
+    setLandscapeOrientation: PropTypes.func.isRequired,
 };
 
 export default App;

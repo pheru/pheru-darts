@@ -1,22 +1,35 @@
 class FetchUtil {
-    static fetchGet(url, onSuccess, onResponseNotOK, onError) {
-        return baseFetch(url, 'GET', {}, onSuccess, onResponseNotOK, onError);
+
+    static DEFAULT_TIMEOUT = 30000;
+    static LOGIN_BY_TOKEN_TIMEOUT = 5000;
+
+    static fetchGet(url, onSuccess, onResponseNotOK, onError, timeout) {
+        return baseFetch(url, 'GET', {}, onSuccess, onResponseNotOK, onError, timeout);
     }
 
-    static fetchPost(url, data, onSuccess, onResponseNotOK, onError) {
-        return baseFetch(url, 'POST', data, onSuccess, onResponseNotOK, onError);
+    static fetchPost(url, data, onSuccess, onResponseNotOK, onError, timeout) {
+        return baseFetch(url, 'POST', data, onSuccess, onResponseNotOK, onError, timeout);
     }
 
-    static fetchPut(url, data, onSuccess, onResponseNotOK, onError) {
-        return baseFetch(url, 'PUT', data, onSuccess, onResponseNotOK, onError);
+    static fetchPut(url, data, onSuccess, onResponseNotOK, onError, timeout) {
+        return baseFetch(url, 'PUT', data, onSuccess, onResponseNotOK, onError, timeout);
     }
 
-    static fetchDelete(url, data, onSuccess, onResponseNotOK, onError) {
-        return baseFetch(url, 'DELETE', data, onSuccess, onResponseNotOK, onError);
+    static fetchDelete(url, data, onSuccess, onResponseNotOK, onError, timeout) {
+        return baseFetch(url, 'DELETE', data, onSuccess, onResponseNotOK, onError, timeout);
     }
 }
 
-function baseFetch(url, method, data, onSuccess, onResponseNotOK, onError) {
+function withTimeout(ms, promise) {
+    return new Promise(function(resolve, reject) {
+        setTimeout(function() {
+            reject(new Error("Zeitüberschreitung"))
+        }, ms);
+        promise.then(resolve, reject)
+    })
+}
+
+function baseFetch(url, method, data, onSuccess, onResponseNotOK, onError, timeout) {
     let fetchParameter = {
         credentials: 'include'
     };
@@ -28,7 +41,8 @@ function baseFetch(url, method, data, onSuccess, onResponseNotOK, onError) {
             credentials: 'include'
         }
     }
-    return fetch(url, fetchParameter)
+    let timeoutMillis = timeout ? timeout : FetchUtil.DEFAULT_TIMEOUT;
+    return withTimeout(timeoutMillis, fetch(url, fetchParameter))
         .then(response => {
             if (response.ok) {
                 const contentType = response.headers.get("content-type");

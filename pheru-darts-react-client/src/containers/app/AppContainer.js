@@ -6,13 +6,16 @@ import {fetchPermittedUsers, fetchPlayableUsers} from "../../actions/playerPermi
 import {showConfirmation} from "../../actions/modal";
 import {exitGame} from "../../actions/game";
 import {setPossibleVoices, setSelectedVoiceByName} from "../../actions/speech";
+import {setLandscapeOrientation} from "../../actions/app";
+import {fetchServerVersion} from "../../actions/serverInformation";
 
 const mapStateToProps = state => ({
+    serverVersion: state.serverInformation.version,
+    landscapeOrientation: state.app.landscapeOrientation,
+
     userName: state.user.name,
 
-    isLoggedIn: state.user.isLoggedIn,
-    isLoggingIn: state.user.isLoggingIn,
-    isLoggingOut: state.user.isLoggingOut,
+    navigationBarVisible: state.app.navigationBarVisible,
 
     gameRunning: state.game !== null,
 
@@ -25,15 +28,17 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    fetchPlayableUsers : () => dispatch(fetchPlayableUsers()),
-    fetchPermittedUsers : () => dispatch(fetchPermittedUsers()),
+    fetchServerVersion: () => dispatch(fetchServerVersion()),
+    fetchPlayableUsers: () => dispatch(fetchPlayableUsers()),
+    fetchPermittedUsers: () => dispatch(fetchPermittedUsers()),
     showLogin: () => dispatch(showLoginModal()),
     loginByToken: (showErrorOnFailure) => dispatch(loginByToken(showErrorOnFailure)),
     logout: () => dispatch(logout()),
     showConfirmation: (title, message, onConfirm, onCancel) => dispatch(showConfirmation(title, message, onConfirm, onCancel)),
     exitGame: () => dispatch(exitGame()),
     setPossibleVoices: (voices) => dispatch(setPossibleVoices(voices)),
-    setSelectedVoiceByName: (voice) => dispatch(setSelectedVoiceByName(voice))
+    setSelectedVoiceByName: (voice) => dispatch(setSelectedVoiceByName(voice)),
+    setLandscapeOrientation: (landscapeOrientation) => dispatch(setLandscapeOrientation(landscapeOrientation))
 });
 
 export default withRouter(connect(

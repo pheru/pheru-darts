@@ -6,11 +6,11 @@ import SortUtil from "../../../util/SortUtil";
 const mapStateToProps = state => ({
     userId: state.user.id,
 
-    playableUsers: state.playerPermission.playableUsers.slice().sort(SortUtil.sortPlayerByNameAsc),
+    playableUsers: state.playerPermission.playableUsers.slice().sort(SortUtil.sortByNameAsc),
     fetchPlayableUsersFailed: state.playerPermission.fetchPlayableUsersFailed,
     isFetchingPlayableUsers: state.playerPermission.isFetchingPlayableUsers,
 
-    permittedUsers: state.playerPermission.permittedUsers.slice().sort(SortUtil.sortPlayerByNameAsc),
+    permittedUsers: state.playerPermission.permittedUsers.slice().sort(SortUtil.sortByNameAsc),
     fetchPermittedUsersFailed: state.playerPermission.fetchPermittedUsersFailed,
     isFetchingPermittedUsers: state.playerPermission.isFetchingPermittedUsers,
 

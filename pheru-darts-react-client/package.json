@@ -1,6 +1,6 @@
 {
   "name": "pheru-darts",
-  "version": "1.2.1-SNAPSHOT",
+  "version": "2.1.0-SNAPSHOT",
   "private": true,
   "homepage": ".",
   "devDependencies": {
@@ -10,12 +10,14 @@
     "prop-types": "^15.6.1",
     "react": "^16.3.1",
     "react-bootstrap": "^0.32.1",
+    "react-datepicker": "^2.1.0",
     "react-dom": "^16.3.1",
-    "react-icons": "^3.2.2",
+    "react-icons": "^3.5.0",
     "react-redux": "^5.0.7",
     "react-responsive": "^6.0.1",
     "react-router-dom": "^4.2.2",
-    "recharts": "^1.0.0",
+    "react-select": "^2.4.1",
+    "recharts": "^1.6.0",
     "redux": "^3.5.2",
     "redux-thunk": "^2.3.0",
     "reselect": "^3.0.1"

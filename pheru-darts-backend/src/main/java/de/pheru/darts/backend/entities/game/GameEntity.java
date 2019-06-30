@@ -70,6 +70,11 @@ public class GameEntity {
         return checkInMode;
     }
 
+    @DynamoDBIgnore
+    public CheckInMode getCheckInModeOrDefault() {
+        return checkInMode != null ? checkInMode : CheckInMode.defaultValue();
+    }
+
     public void setCheckInMode(final CheckInMode checkInMode) {
         this.checkInMode = checkInMode;
     }
@@ -84,6 +89,11 @@ public class GameEntity {
 
     public Boolean isTraining() {
         return training;
+    }
+
+    @DynamoDBIgnore
+    public boolean isTrainingOrDefault() {
+        return training != null && training;
     }
 
     public void setTraining(final Boolean training) {

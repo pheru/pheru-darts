@@ -1,22 +1,16 @@
 import React from 'react'
-import {
-    Button,
-    Col,
-    Glyphicon,
-    Grid,
-    OverlayTrigger,
-    Row,
-    ToggleButton,
-    ToggleButtonGroup,
-    Tooltip
-} from "react-bootstrap";
-import {ALL_CHECKOUT_MODES, DOUBLE_OUT} from "../../../constants/checkoutModes";
+import {Button, Glyphicon, OverlayTrigger, Tooltip} from "react-bootstrap";
+import {DOUBLE_OUT} from "../../../constants/checkoutModes";
 import {NAVIGATION_ITEM} from "../../../constants/navigationItems";
 import DropdownTextfield from "../../general/input/DropdownTextfield";
 import PropTypes from "prop-types";
-import {ALL_CHECKIN_MODES, SINGLE_IN} from "../../../constants/checkinModes";
+import {SINGLE_IN} from "../../../constants/checkinModes";
 import DocumentUtil from "../../../util/DocumentUtil";
 import ScoreInput from "../../general/input/ScoreInput";
+import CheckInModeSelection from "../../general/input/CheckInModeSelection";
+import CheckOutModeSelection from "../../general/input/CheckOutModeSelection";
+
+const ROW_STYLE = {marginBottom: 10};
 
 class NewGameConfig extends React.Component {
 
@@ -26,7 +20,7 @@ class NewGameConfig extends React.Component {
             this.state = {...props.initialState};
         } else {
             this.state = {
-                score: 501,
+                score: "501",
                 selectedPlayers: [
                     {name: ""},
                     {name: ""}
@@ -35,12 +29,6 @@ class NewGameConfig extends React.Component {
                 checkInMode: SINGLE_IN
             };
         }
-        this.colStyle = {
-            marginBottom: 15
-        };
-        this.colStyleButton = {
-            ...this.colStyle
-        };
 
         this.swapPlayerSelection = this.swapPlayerSelection.bind(this);
         this.handleScoreChange = this.handleScoreChange.bind(this);
@@ -53,7 +41,9 @@ class NewGameConfig extends React.Component {
     }
 
     componentDidMount() {
-        DocumentUtil.setTitlePrefix(this.props.training ? "Training" : "Neues Spiel");
+        DocumentUtil.setTitlePrefix(this.props.training
+            ? NAVIGATION_ITEM.NEW_TRAINING.text
+            : NAVIGATION_ITEM.NEW_GAME.text);
     }
 
     componentDidUpdate(prevProps) {
@@ -206,7 +196,7 @@ class NewGameConfig extends React.Component {
                                overlay={<Tooltip id="user-tooltip">
                                    Dieser Spieler ist entweder kein registrierter Benutzer oder Du bist nicht berechtigt
                                    worden, ein Spiel mit ihm zu erstellen.<br/>
-                                   In den Statistiken wird dieser Spieler als "Unregistrierter Benutzer" gelistet.
+                                   In den Statistiken wird dieser Spieler als unregistrierter Benutzer gelistet.
                                </Tooltip>}>
             <Glyphicon glyph='exclamation-sign' style={{color: 'orange'}}/>
         </OverlayTrigger>;
@@ -222,81 +212,69 @@ class NewGameConfig extends React.Component {
     }
 
     render() {
-        return <div>
-            <Grid>
-                {!this.props.training &&
-                <Row className="show-grid text-center">
-                    <Col xs={12} sm={5} style={this.colStyle}>
-                        <DropdownTextfield id="player-1-dropdown" placeholder="Spieler 1"
-                                           value={this.state.selectedPlayers[0].name}
-                                           choices={this.props.playableUsers}
-                                           dropdownPropertyName='name'
-                                           style={{width: '100%'}}
-                                           iconFactory={this.playerIconFactory}
-                                           onDropdownClick={(newValue) => this.changeSelectedPlayer(0, newValue)}
-                                           onInputChange={(newValue) => this.handleUnregisteredUserChange(0, newValue)}
-                                           autoFocus
-                        />
-                    </Col>
-                    <Col xs={6} xsOffset={3} sm={2} smOffset={0} style={this.colStyleButton}>
+        return <div style={{textAlign: "center"}}>
+            {!this.props.training &&
+            <div style={{display: "flex", flexDirection: this.props.landscapeOrientation ? "row" : "column"}}>
+                <div style={{...ROW_STYLE, flexGrow: 2}}>
+                    <DropdownTextfield id="player-1-dropdown" placeholder="Spieler 1"
+                                       value={this.state.selectedPlayers[0].name}
+                                       choices={this.props.playableUsers}
+                                       dropdownPropertyName='name'
+                                       style={{width: '100%'}}
+                                       iconFactory={this.playerIconFactory}
+                                       onDropdownClick={(newValue) => this.changeSelectedPlayer(0, newValue)}
+                                       onInputChange={(newValue) => this.handleUnregisteredUserChange(0, newValue)}
+                                       autoFocus
+                                       dividerPositions={[0]}
+                    />
+                </div>
+                <div style={{...ROW_STYLE, flexGrow: 1}}>
+                    <div style={{paddingLeft: 10, paddingRight: 10}}>
                         <Button block bsStyle="primary" onClick={this.swapPlayerSelection}>
                             <Glyphicon glyph="transfer"/>
                         </Button>
-                    </Col>
-                    <Col xs={12} sm={5} style={this.colStyle}>
-                        <DropdownTextfield id="player-1-dropdown" placeholder="Spieler 2"
-                                           value={this.state.selectedPlayers[1].name}
-                                           choices={this.props.playableUsers}
-                                           dropdownPropertyName='name'
-                                           style={{width: '100%'}}
-                                           iconFactory={this.playerIconFactory}
-                                           onDropdownClick={(newValue) => this.changeSelectedPlayer(1, newValue)}
-                                           onInputChange={(newValue) => this.handleUnregisteredUserChange(1, newValue)}/>
-                    </Col>
-                </Row>
-                }
-                <Row className="show-grid text-center">
-                    <Col xs={12} sm={12} style={this.colStyle}>
-                        <ScoreInput value={this.state.score} onChange={this.handleScoreChange}/>
-                    </Col>
-                </Row>
-                <Row className="show-grid text-center">
-                    <Col xs={12} sm={12} style={this.colStyle}>
-                        <ToggleButtonGroup type="radio" name="options" defaultValue={this.state.checkInMode}
-                                           onChange={this.handleCheckInModeChange}>
-                            {ALL_CHECKIN_MODES.map(mode =>
-                                <ToggleButton
-                                    style={{width: '50%'}} key={mode.key} value={mode}>{mode.text}</ToggleButton>
-                            )}
-                        </ToggleButtonGroup>
-                    </Col>
-                </Row>
-                <Row className="show-grid text-center">
-                    <Col xs={12} sm={12} style={this.colStyle}>
-                        <ToggleButtonGroup type="radio" name="options" defaultValue={this.state.checkOutMode}
-                                           onChange={this.handleCheckOutModeChange}>
-                            {ALL_CHECKOUT_MODES.map(mode =>
-                                <ToggleButton key={mode.key} value={mode}>{mode.text}</ToggleButton>
-                            )}
-                        </ToggleButtonGroup>
-                    </Col>
-                </Row>
-                <Row className="show-grid text-center">
-                    <Col xs={12} sm={12} style={this.colStyleButton}>
-                        <Button bsStyle="primary" bsSize="large" block
-                                disabled={this.props.isLoggingIn}
-                                onClick={this.onStartNewGameButtonClicked}>
-                            Neues {this.props.training ? "Trainingsspiel" : "Spiel"} starten
-                        </Button>
-                    </Col>
-                </Row>
-            </Grid>
+                    </div>
+                </div>
+                <div style={{...ROW_STYLE, flexGrow: 2}}>
+                    <DropdownTextfield id="player-2-dropdown" placeholder="Spieler 2"
+                                       value={this.state.selectedPlayers[1].name}
+                                       choices={this.props.playableUsers}
+                                       dropdownPropertyName='name'
+                                       style={{width: '100%'}}
+                                       iconFactory={this.playerIconFactory}
+                                       onDropdownClick={(newValue) => this.changeSelectedPlayer(1, newValue)}
+                                       onInputChange={(newValue) => this.handleUnregisteredUserChange(1, newValue)}
+                                       dividerPositions={[0]}
+                    />
+                </div>
+            </div>
+            }
+            <div style={ROW_STYLE}>
+                <ScoreInput id="new_game_scoreinput" value={this.state.score} onChange={this.handleScoreChange}/>
+            </div>
+            <div style={ROW_STYLE}>
+                <CheckInModeSelection value={this.state.checkInMode} onChange={this.handleCheckInModeChange}/>
+            </div>
+            <div style={ROW_STYLE}>
+                <CheckOutModeSelection value={this.state.checkOutMode} onChange={this.handleCheckOutModeChange}/>
+            </div>
+            <div style={ROW_STYLE}>
+                <Button bsStyle="primary" bsSize="large" block
+                        disabled={this.props.isLoggingIn}
+                        onClick={this.onStartNewGameButtonClicked}>
+                    {this.props.isLoggingIn
+                        ? "Melde an..."
+                        : "Neues " + (this.props.training ? "Trainingsspiel" : "Spiel") + " starten"
+                    }
+                </Button>
+            </div>
         </div>
     }
 }
 
 NewGameConfig.propTypes = {
     initialState: PropTypes.object,
+    landscapeOrientation: PropTypes.bool.isRequired,
     training: PropTypes.bool,
     isLoggedIn: PropTypes.bool.isRequired,
     isLoggingIn: PropTypes.bool.isRequired,

@@ -8,7 +8,7 @@ import de.pheru.darts.backend.dtos.user.UserModificationDto;
 import de.pheru.darts.backend.entities.playerpermission.PlayerPermissionEntity;
 import de.pheru.darts.backend.entities.user.UserEntity;
 import de.pheru.darts.backend.exceptions.FailedPasswordConfirmationException;
-import de.pheru.darts.backend.mappers.EntityMapper;
+import de.pheru.darts.backend.mappers.EntityToDtoMapper;
 import de.pheru.darts.backend.repositories.GameRepository;
 import de.pheru.darts.backend.repositories.NotificationRepository;
 import de.pheru.darts.backend.repositories.PlayerPermissionRepository;
@@ -22,9 +22,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/user")
 public class UserController {
 
-    private static final Logger LOGGER = new Logger();
+    private static final Logger LOGGER = new Logger(UserController.class);
 
-    public static final String INVALID_CURRENT_PASSWORD = "Invalid current password";
+    static final String INVALID_CURRENT_PASSWORD = "Invalid current password";
 
     private final UserRepository userRepository;
     private final PlayerPermissionRepository playerPermissionRepository;
@@ -51,7 +51,7 @@ public class UserController {
     public UserDto getCurrentUser() {
         final String loggedInUserId = SecurityUtil.getLoggedInUserId();
         final UserEntity userEntity = userRepository.findById(loggedInUserId);
-        return EntityMapper.toUserDto(userEntity);
+        return EntityToDtoMapper.toUserDto(userEntity);
     }
 
     @PostMapping
@@ -100,7 +100,7 @@ public class UserController {
         if (changePassword) {
             LOGGER.info("Password changed for user " + savedEntity.getId());
         }
-        return EntityMapper.toUserDto(savedEntity);
+        return EntityToDtoMapper.toUserDto(savedEntity);
     }
 
     @DeleteMapping

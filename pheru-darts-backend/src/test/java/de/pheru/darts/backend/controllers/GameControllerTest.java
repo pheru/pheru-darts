@@ -56,7 +56,7 @@ public class GameControllerTest extends ControllerTest {
         final GameEntity savedGame = allAfterSave.get(0);
         assertEquals(LOGIN_ID, savedGame.getUserId());
         assertEquals(CheckOutMode.DOUBLE_OUT, savedGame.getCheckOutMode());
-        assertEquals(CheckInMode.SINGLE_IN, savedGame.getCheckInMode());
+        assertEquals(CheckInMode.SINGLE_IN, savedGame.getCheckInModeOrDefault());
         assertEquals(game.getScore(), savedGame.getScore());
         assertTrue(savedGame.getTimestamp() >= postGameDate.getTime()
                 && savedGame.getTimestamp() < postGameDate.getTime() + 100);
@@ -89,7 +89,7 @@ public class GameControllerTest extends ControllerTest {
 
         final GameEntity savedGame = allAfterSave.get(0);
         assertEquals(LOGIN_ID, savedGame.getUserId());
-        assertEquals(CheckInMode.defaultValue(), savedGame.getCheckInMode());
+        assertEquals(CheckInMode.defaultValue(), savedGame.getCheckInModeOrDefault());
     }
 
     @Test

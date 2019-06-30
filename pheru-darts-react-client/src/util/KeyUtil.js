@@ -9,8 +9,8 @@ class KeyUtil {
 }
 
 function ifKey(keyCode, action) {
-    return function (target) {
-        if (target.keyCode === keyCode) {
+    return function (event) {
+        if (event.keyCode === keyCode) {
             action();
         }
     }

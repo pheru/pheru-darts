@@ -21,7 +21,7 @@ import java.util.Date;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-    private static final Logger LOGGER = new Logger();
+    private static final Logger LOGGER = new Logger(JWTAuthenticationFilter.class);
 
     private final AuthenticationManager authenticationManager;
     private final String jwtSecret;

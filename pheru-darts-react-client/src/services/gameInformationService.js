@@ -1,4 +1,4 @@
-import {DOUBLE_OUT, SINGLE_OUT} from "../constants/checkoutModes";
+import {DOUBLE_OUT, MASTER_OUT, SINGLE_OUT} from "../constants/checkoutModes";
 import {DOUBLE_IN, SINGLE_IN} from "../constants/checkinModes";
 
 function getTurnInformation(players, startScore, checkInMode, checkOutMode) {
@@ -20,9 +20,12 @@ function getTurnInformation(players, startScore, checkInMode, checkOutMode) {
     let prevAufnahmeIndex;
     let prevDartIndex;
 
+    let lastTurnThrownOver = false;
+
     let aufnahmeStartScore = startScore;
     while (players[playerIndex].aufnahmen[aufnahmeIndex] !== undefined
     && players[playerIndex].aufnahmen[aufnahmeIndex][dartIndex] !== undefined) {
+        lastTurnThrownOver = false;
         prevPlayerIndex = playerIndex;
         prevAufnahmeIndex = aufnahmeIndex;
         prevDartIndex = dartIndex;
@@ -31,7 +34,9 @@ function getTurnInformation(players, startScore, checkInMode, checkOutMode) {
 
         let dart = players[playerIndex].aufnahmen[aufnahmeIndex][dartIndex];
         let dartScore = dart.value * dart.multiplier;
-        let checkOutCondition = checkOutMode === SINGLE_OUT || (checkOutMode === DOUBLE_OUT && dart.multiplier === 2);
+        let checkOutCondition = checkOutMode === SINGLE_OUT
+            || (checkOutMode === DOUBLE_OUT && dart.multiplier === 2)
+            || (checkOutMode === MASTER_OUT && (dart.multiplier === 2 || dart.multiplier === 3));
         let score = playerInformationList[playerIndex].score;
         let checkInCondition = playerInformationList[playerIndex].checkInCondition;
         if (dartIndex === 0) {
@@ -48,6 +53,7 @@ function getTurnInformation(players, startScore, checkInMode, checkOutMode) {
                 score = 0;
             } else if (thrownOver) { // ueberworfen
                 score = aufnahmeStartScore;
+                lastTurnThrownOver = true;
             } else {
                 score -= dartScore;
             }
@@ -94,7 +100,8 @@ function getTurnInformation(players, startScore, checkInMode, checkOutMode) {
             previous: {
                 playerIndex: prevPlayerIndex,
                 aufnahmeIndex: prevAufnahmeIndex,
-                dartIndex: prevDartIndex
+                dartIndex: prevDartIndex,
+                thrownOver: lastTurnThrownOver
             }
         },
         playerInformation: playerInformationList

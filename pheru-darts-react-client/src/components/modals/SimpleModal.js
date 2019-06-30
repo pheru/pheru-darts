@@ -12,9 +12,9 @@ class SimpleModal extends React.Component {
 
     constructor(props) {
         super(props);
-        let appearance = this.props.item.modalType !== undefined ?
-            this.getAppearanceByModalType(this.props.item.modalType)
-            : this.getAppearanceByModalType(TYPE_INFORMATION);
+        let appearance = this.props.item.modalType !== undefined
+            ? SimpleModal.getAppearanceByModalType(this.props.item.modalType)
+            : SimpleModal.getAppearanceByModalType(TYPE_INFORMATION);
         this.state = {
             appearance: appearance
         };
@@ -24,7 +24,7 @@ class SimpleModal extends React.Component {
     componentDidUpdate(prevProps) {
         if (prevProps.item.modalType !== this.props.item.modalType
             && this.props.item.modalType !== undefined) {
-            let appearance = this.getAppearanceByModalType(this.props.item.modalType);
+            let appearance = SimpleModal.getAppearanceByModalType(this.props.item.modalType);
             this.setState({
                 appearance: appearance
             });
@@ -32,14 +32,17 @@ class SimpleModal extends React.Component {
     }
 
     render() {
-        return <Modal show={this.props.show} onKeyDown={(target) => {
-            if (this.props.item.modalType === TYPE_INFORMATION
-                || this.props.item.modalType === TYPE_WARNING
-                || this.props.item.modalType === TYPE_ERROR) {
-                KeyUtil.ifEnterKey(this.props.hide)(target);
-            }
-            KeyUtil.ifEscKey(this.props.hide)(target);
-        }}>
+        const Wrapper = this.props.static ? Modal.Dialog : Modal;
+        return <Wrapper className={this.props.static && "static-modal"} style={{textAlign: "center"}}
+                        onKeyDown={(target) => {
+                            if (this.props.item.modalType === TYPE_INFORMATION
+                                || this.props.item.modalType === TYPE_WARNING
+                                || this.props.item.modalType === TYPE_ERROR) {
+                                KeyUtil.ifEnterKey(this.props.hide)(target);
+                            }
+                            KeyUtil.ifEscKey(this.props.hide)(target);
+                        }}
+                        show={this.props.show}>
             <Modal.Body style={{paddingTop: 0, paddingBottom: 0}}>
                 <h3>
                     <Glyphicon glyph={this.state.appearance.glyph}
@@ -48,7 +51,8 @@ class SimpleModal extends React.Component {
                 </h3>
                 <h4>{this.props.item.message}</h4>
             </Modal.Body>
-            <Modal.Footer>
+            {!this.props.static &&
+            <Modal.Footer style={{textAlign: "center"}}>
                 <Button style={{width: 100}} bsStyle={this.state.appearance.bsStyle}
                         onClick={() => {
                             if (this.props.item.onConfirm) {
@@ -69,10 +73,11 @@ class SimpleModal extends React.Component {
                     Nein
                 </Button>}
             </Modal.Footer>
-        </Modal>;
+            }
+        </Wrapper>;
     }
 
-    getAppearanceByModalType(modalType) {
+    static getAppearanceByModalType(modalType) {
         switch (modalType) {
             case TYPE_ERROR:
                 return {
@@ -105,9 +110,10 @@ class SimpleModal extends React.Component {
 }
 
 SimpleModal.propTypes = {
-    show: PropTypes.bool.isRequired,
+    static: PropTypes.bool,
+    show: PropTypes.bool,
     item: PropTypes.object.isRequired,
-    hide: PropTypes.func.isRequired,
+    hide: PropTypes.func,
 };
 
 export default SimpleModal;

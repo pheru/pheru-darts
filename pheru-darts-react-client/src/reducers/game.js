@@ -1,5 +1,6 @@
 import {ADD_DART, EXIT_GAME, REMATCH, START_NEW_GAME, UNDO_DART} from "../actions/game";
 import getTurnInformation from "../services/gameInformationService";
+import AudioUtil from "../util/AudioUtil";
 
 function game(state = null, action) {
     switch (action.type) {
@@ -46,6 +47,7 @@ function initPlayers(players) {
 function addDart(state, dart) {
     let multiplier = dart.multiplier;
     if (dart.value === 25 && multiplier > 2) {
+        AudioUtil.playUndo();
         return state;
     }
     if (dart.value === 0 && multiplier !== 1) {
@@ -62,9 +64,9 @@ function addDart(state, dart) {
     currentTurnInfo = turnInfo.turnInformation.current;
 
     let announcementText = undefined;
-    if (players[currentTurnInfo.playerIndex].aufnahmen[currentTurnInfo.aufnahmeIndex] === undefined) {
+    let playerChanged = players[currentTurnInfo.playerIndex].aufnahmen[currentTurnInfo.aufnahmeIndex] === undefined;
+    if (playerChanged) {
         players[currentTurnInfo.playerIndex].aufnahmen[currentTurnInfo.aufnahmeIndex] = [];
-
         announcementText = state.players[currentTurnInfo.playerIndex].name + ", "
             + turnInfo.playerInformation[currentTurnInfo.playerIndex].score;
     }
@@ -78,6 +80,17 @@ function addDart(state, dart) {
             break;
         }
     }
+
+    if (winner) {
+        AudioUtil.playPlayerWon();
+    } else if (turnInfo.turnInformation.previous.thrownOver) {
+        AudioUtil.playOverthrown();
+    } else if (playerChanged) {
+        AudioUtil.playPlayerChange();
+    } else {
+        AudioUtil.playScoreButtonClick();
+    }
+
     return {
         ...state,
         players: players,
@@ -87,6 +100,7 @@ function addDart(state, dart) {
 }
 
 function undoDart(state) {
+    AudioUtil.playUndo();
     let players = state.players;
 
     let currentTurnInfo = getTurnInformation(players, state.score, state.checkInMode, state.checkOutMode).turnInformation.current;

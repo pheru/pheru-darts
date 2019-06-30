@@ -6,18 +6,18 @@ import de.pheru.darts.backend.mocks.repositories.MockedGameRepository;
 import de.pheru.darts.backend.mocks.repositories.MockedNotificationRepository;
 import de.pheru.darts.backend.mocks.repositories.MockedPlayerPermissionRepository;
 import de.pheru.darts.backend.mocks.repositories.MockedUserRepository;
-import de.pheru.darts.backend.security.IdAuthentication;
+import de.pheru.darts.backend.testutil.SecurityTestUtil;
 import org.junit.Before;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
-import java.util.ArrayList;
 
 public class ControllerTest {
 
     protected static final String LOGIN_ID = "login-id";
     protected static final String LOGIN_NAME = "login-name";
     protected static final String LOGIN_PASSWORD = "login-password";
+
+    protected static final String DEFAULT_NAME = "default-name";
+    protected static final String DEFAULT_PASSWORD = "default-password";
 
     protected BCryptPasswordEncoder passwordEncoder;
 
@@ -34,16 +34,12 @@ public class ControllerTest {
         gamesRepository = new MockedGameRepository();
         notificationRepository = new MockedNotificationRepository();
         playerPermissionRepository = new MockedPlayerPermissionRepository();
-        login();
-    }
 
-    private void login() {
-        final IdAuthentication idAuthentication = new IdAuthentication(LOGIN_ID, new ArrayList<>());
-        SecurityContextHolder.getContext().setAuthentication(idAuthentication);
+        SecurityTestUtil.setIdAuthenticationInSecurityContext(LOGIN_ID);
     }
 
     protected UserEntity createDefaultUserEntity() {
-        return createUserEntity(LOGIN_NAME, LOGIN_PASSWORD);
+        return createUserEntity(DEFAULT_NAME, DEFAULT_PASSWORD);
     }
 
     protected UserEntity createUserEntity(final String name, final String password) {
@@ -62,12 +58,23 @@ public class ControllerTest {
         loggedInUser.setPassword(passwordEncoder.encode(loggedInUser.getPassword()));
         loggedInUser.setId(LOGIN_ID);
         userRepository.save(loggedInUser);
+        saveSelfPermission(LOGIN_ID);
+        return loggedInUser;
+    }
 
+    protected UserEntity createAndSaveUser(final String name, final String password) {
+        final UserEntity user = createUserEntity(name, password);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        final UserEntity savedEntity = userRepository.save(user);
+        saveSelfPermission(savedEntity.getId());
+        return savedEntity;
+    }
+
+    private void saveSelfPermission(final String id) {
         final PlayerPermissionEntity permissionEntity = new PlayerPermissionEntity();
-        permissionEntity.setUserId(LOGIN_ID);
-        permissionEntity.setPermittedUserId(LOGIN_ID);
+        permissionEntity.setUserId(id);
+        permissionEntity.setPermittedUserId(id);
         playerPermissionRepository.save(permissionEntity);
 
-        return loggedInUser;
     }
 }

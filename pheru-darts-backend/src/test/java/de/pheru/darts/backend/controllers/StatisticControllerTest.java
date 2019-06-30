@@ -1,270 +1,204 @@
 package de.pheru.darts.backend.controllers;
 
 import de.pheru.darts.backend.dtos.statistics.*;
-import de.pheru.darts.backend.entities.game.CheckInMode;
-import de.pheru.darts.backend.entities.game.CheckOutMode;
 import de.pheru.darts.backend.entities.user.UserEntity;
-import de.pheru.darts.backend.testutil.AufnahmeDocumentBuilder;
-import de.pheru.darts.backend.testutil.DartDocumentBuilder;
+import de.pheru.darts.backend.mocks.statistics.MockedStatisticEvaluation;
+import de.pheru.darts.backend.statistics.*;
 import de.pheru.darts.backend.testutil.GameEntityBuilder;
+import de.pheru.darts.backend.util.ComparativeOperator;
 import de.pheru.darts.backend.util.ReservedUser;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Map;
+import java.util.*;
 
 import static org.junit.Assert.*;
 
 public class StatisticControllerTest extends ControllerTest {
 
-    private final DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+    private static final String GAME_ID_ONE = "game-1";
+    private static final String GAME_ID_TWO = "game-2";
+    private static final String DELETED_ID_ONE = "deleted-1";
+    private static final String DELETED_ID_TWO = "deleted-2";
 
     private StatisticController statisticController;
+    private MockedStatisticEvaluation mockedStatisticEvaluation;
 
     @Before
     public void setUp() {
-        statisticController = new StatisticController(gamesRepository, userRepository);
+        mockedStatisticEvaluation = new MockedStatisticEvaluation();
+        statisticController = new StatisticController(mockedStatisticEvaluation, gamesRepository, userRepository);
     }
 
     @Test
-    public void get() throws Exception {
-        final UserEntity savedUser = userRepository.save(createDefaultUserEntity());
+    public void getFilterOptionsDifferentUserIds() {
+        createAndSaveDefaultLoginUser();
+        final UserEntity playerOne = createAndSaveUser("Name 1", "Password 1");
+        final UserEntity playerTwo = createAndSaveUser("Name 2", "Password 2");
 
-        /*
-        T1: Trainingsspiel
-        2 Darts
-        - 1x D25
-        - 1x T17
-        Checkout: 1/1
-         */
+        // Trainingsmatch
         gamesRepository.save(new GameEntityBuilder()
+                .id(GAME_ID_ONE)
                 .userId(LOGIN_ID)
-                .checkOutMode(CheckOutMode.DOUBLE_OUT)
-                .score(101)
+                .player(LOGIN_ID)
                 .training(true)
-                .player(LOGIN_ID)
-                .timestamp(dateFormat.parse("01.01.2001 01:00:00").getTime())
-                .neueAufnahme(new AufnahmeDocumentBuilder()
-                        .dart(new DartDocumentBuilder().value(17).multiplier(3).build()) // 51
-                        .dart(new DartDocumentBuilder().value(25).multiplier(2).build()) // 101
-                        .build())
+                .timestamp(1L)
                 .build());
-
-        /*
-        1: Sieg gegen saved
-        6 Darts
-        - 3x  20
-        - 1x D15
-        - 1x  10
-        - 1x   1
-        - Checkout: 1/2
-         */
+        // Spiel gegen one
+        gamesRepository.save(new GameEntityBuilder()
+                .id(GAME_ID_TWO)
+                .userId(LOGIN_ID)
+                .player(LOGIN_ID)
+                .player(playerOne.getId())
+                .timestamp(2L)
+                .build());
+        // Spiel gegen one und two
         gamesRepository.save(new GameEntityBuilder()
                 .userId(LOGIN_ID)
-                .checkOutMode(CheckOutMode.DOUBLE_OUT)
-                .score(101)
                 .player(LOGIN_ID)
-                .player(savedUser.getId())
-                .timestamp(dateFormat.parse("02.02.2002 22:22:22").getTime())
-                .neueAufnahme(new AufnahmeDocumentBuilder()
-                        .dart(new DartDocumentBuilder().value(20).build()) // 20
-                        .dart(new DartDocumentBuilder().value(20).build()) // 40
-                        .dart(new DartDocumentBuilder().value(20).build()) // 60
-                        .build())
-                .neueAufnahme(new AufnahmeDocumentBuilder().build())
-                .neueAufnahme(new AufnahmeDocumentBuilder()
-                        .dart(new DartDocumentBuilder().value(1).build()) // 61
-                        .dart(new DartDocumentBuilder().value(10).build()) // 71
-                        .dart(new DartDocumentBuilder().value(15).multiplier(2).build()) // 101
-                        .build())
+                .player(playerOne.getId())
+                .player(playerTwo.getId())
+                .timestamp(3L)
                 .build());
-
-        /*
-        2: Niederlage gegen saved
-        7 Darts
-        - 2x T20
-        - 1x D20
-        - 1x  20
-        - 1x D18
-        - 1x  17
-        - 1x T 2
-        Checkout: 0/2
-         */
+        // Spiel gegen gelöscht 1
         gamesRepository.save(new GameEntityBuilder()
                 .userId(LOGIN_ID)
-                .checkOutMode(CheckOutMode.SINGLE_OUT)
-                .score(201)
                 .player(LOGIN_ID)
-                .player(savedUser.getId())
-                .timestamp(dateFormat.parse("11.11.2011 11:11:11").getTime())
-                .neueAufnahme(new AufnahmeDocumentBuilder()
-                        .dart(new DartDocumentBuilder().value(20).multiplier(3).build()) // 1: 60
-                        .dart(new DartDocumentBuilder().value(20).multiplier(2).build()) // 1: 100
-                        .dart(new DartDocumentBuilder().value(20).build()) // 1: 120
-                        .build())
-                .neueAufnahme(new AufnahmeDocumentBuilder()
-                        .dart(new DartDocumentBuilder().value(20).multiplier(3).build()) // 2: 60
-                        .dart(new DartDocumentBuilder().value(20).multiplier(3).build()) // 2: 120
-                        .dart(new DartDocumentBuilder().value(20).multiplier(3).build()) // 2: 180
-                        .build())
-                .neueAufnahme(new AufnahmeDocumentBuilder()
-                        .dart(new DartDocumentBuilder().value(17).build()) // 1: 137
-                        .dart(new DartDocumentBuilder().value(18).multiplier(2).build()) // 1: 173
-                        .dart(new DartDocumentBuilder().value(2).multiplier(3).build()) // 1: 179
-                        .build())
-                .neueAufnahme(new AufnahmeDocumentBuilder()
-                        .dart(new DartDocumentBuilder().value(0).build()) // 2: 180
-                        .dart(new DartDocumentBuilder().value(0).build()) // 2: 180
-                        .dart(new DartDocumentBuilder().value(0).build()) // 2: 180
-                        .build())
-                .neueAufnahme(new AufnahmeDocumentBuilder()
-                        .dart(new DartDocumentBuilder().value(20).multiplier(3).build()) // 1: 179 (Überworfen)
-                        .build())
-                .neueAufnahme(new AufnahmeDocumentBuilder()
-                        .dart(new DartDocumentBuilder().value(7).multiplier(3).build()) // 2: 201
-                        .build())
+                .player(DELETED_ID_ONE)
+                .timestamp(4L)
                 .build());
-
-        /*
-        3: Sieg gegen gelöschter User
-        4 Darts
-        - 1x D25
-        - 2x T20
-        - 1x T17
-        Checkout: 1/1
-         */
+        // Spiel gegen gelöscht 2
         gamesRepository.save(new GameEntityBuilder()
                 .userId(LOGIN_ID)
-                .checkOutMode(CheckOutMode.DOUBLE_OUT)
-                .score(101)
                 .player(LOGIN_ID)
-                .player("gibtesnichtmehrweilgelöscht")
-                .timestamp(dateFormat.parse("31.12.2111 23:59:00").getTime())
-                .neueAufnahme(new AufnahmeDocumentBuilder()
-                        .dart(new DartDocumentBuilder().value(20).multiplier(3).build()) // 60
-                        .dart(new DartDocumentBuilder().value(20).multiplier(3).build()) // 0 (Überworfen)
-                        .build())
-                .neueAufnahme(new AufnahmeDocumentBuilder().build())
-                .neueAufnahme(new AufnahmeDocumentBuilder()
-                        .dart(new DartDocumentBuilder().value(17).multiplier(3).build()) // 51
-                        .dart(new DartDocumentBuilder().value(25).multiplier(2).build()) // 101
-                        .build())
+                .player(DELETED_ID_TWO)
+                .timestamp(5L)
                 .build());
-
-        /*
-        4: Sieg gegen unregistriert
-        2 Darts
-        - 1x D25
-        - 1x T17
-        Checkout: 1/1
-         */
+        // Spiel gegen unregistriert
         gamesRepository.save(new GameEntityBuilder()
                 .userId(LOGIN_ID)
-                .checkOutMode(CheckOutMode.DOUBLE_OUT)
-                .score(101)
                 .player(LOGIN_ID)
                 .player(null)
-                .timestamp(dateFormat.parse("15.05.2015 05:15:00").getTime())
-                .neueAufnahme(new AufnahmeDocumentBuilder()
-                        .dart(new DartDocumentBuilder().value(17).multiplier(3).build()) // 51
-                        .dart(new DartDocumentBuilder().value(25).multiplier(2).build()) // 101
-                        .build())
+                .timestamp(6L)
                 .build());
 
-        /*
-        5: Double-In
-        7 Darts
-        - 2x D25
-        - 1x T20
-        - 1x T17
-        - 3x   1
-        Checkout: 1/1
-        Checkin: 1/4
-         */
-        gamesRepository.save(new GameEntityBuilder()
-                .userId(LOGIN_ID)
-                .checkInMode(CheckInMode.DOUBLE_IN)
-                .checkOutMode(CheckOutMode.DOUBLE_OUT)
-                .score(101)
-                .player(LOGIN_ID)
-                .player(null)
-                .timestamp(dateFormat.parse("01.01.2001 01:00:00").getTime())
-                .neueAufnahme(new AufnahmeDocumentBuilder()
-                        .dart(new DartDocumentBuilder().value(1).multiplier(1).build()) // 0
-                        .dart(new DartDocumentBuilder().value(1).multiplier(1).build()) // 0
-                        .dart(new DartDocumentBuilder().value(1).multiplier(1).build()) // 0
-                        .build())
-                .neueAufnahme(new AufnahmeDocumentBuilder().build())
-                .neueAufnahme(new AufnahmeDocumentBuilder()
-                        .dart(new DartDocumentBuilder().value(25).multiplier(2).build()) // 50
-                        .dart(new DartDocumentBuilder().value(20).multiplier(3).build()) // 0 (überworfen)
-                        .build())
-                .neueAufnahme(new AufnahmeDocumentBuilder().build())
-                .neueAufnahme(new AufnahmeDocumentBuilder()
-                        .dart(new DartDocumentBuilder().value(17).multiplier(3).build()) // 51
-                        .dart(new DartDocumentBuilder().value(25).multiplier(2).build()) // 101
-                        .build())
-                .build());
+        final StatisticFilterOptionsDto filterOptions = statisticController.getFilterOptions();
 
-        final StatisticDto statistics = statisticController.get();
-        final DartStatisticDto dartStatistics = statistics.getDarts();
-        final Map<Integer, DartCountStatisticDto> countsPerScore = dartStatistics.getCountsPerScore();
-        final GameStatisticDto gamesStatistics = statistics.getGames();
-        final Map<String, GameCountStatisticDto> countsPerPlayer = gamesStatistics.getCountsPerPlayer();
+        final Map<String, Set<String>> usernameToUserIds = filterOptions.getUsernameToUserIds();
+        assertEquals(5, usernameToUserIds.size());
 
-        assertEquals(28, dartStatistics.getTotalCount().longValue());
-        assertEquals(8, dartStatistics.getPossibleCheckoutCount().longValue());
-        assertEquals(5, dartStatistics.getCheckoutCount().longValue());
-        assertEquals(9, dartStatistics.getPossibleCheckinCount().longValue());
-        assertEquals(6, dartStatistics.getCheckinCount().longValue());
-        assertDartCount(countsPerScore.get(25), 0, 5, 0);
-        assertDartCount(countsPerScore.get(20), 4, 1, 5);
-        assertNull(countsPerScore.get(19));
-        assertDartCount(countsPerScore.get(18), 0, 1, 0);
-        assertDartCount(countsPerScore.get(17), 1, 0, 4);
-        assertNull(countsPerScore.get(16));
-        assertDartCount(countsPerScore.get(15), 0, 1, 0);
-        assertDartCount(countsPerScore.get(10), 1, 0, 0);
-        assertNull(countsPerScore.get(5));
-        assertDartCount(countsPerScore.get(2), 0, 0, 1);
-        assertDartCount(countsPerScore.get(1), 4, 0, 0);
+        assertTrue(usernameToUserIds.containsKey(ReservedUser.TRAINING.getName()));
+        assertEquals(1, usernameToUserIds.get(ReservedUser.TRAINING.getName()).size());
+        assertTrue(usernameToUserIds.get(ReservedUser.TRAINING.getName()).contains(ReservedUser.TRAINING.getId()));
 
+        assertTrue(usernameToUserIds.containsKey(playerOne.getName()));
+        assertEquals(1, usernameToUserIds.get(playerOne.getName()).size());
+        assertTrue(usernameToUserIds.get(playerOne.getName()).contains(playerOne.getId()));
 
-        assertEquals(4, gamesStatistics.getWonCount().longValue());
-        assertEquals(1, gamesStatistics.getLostCount().longValue());
-        assertEquals(1, countsPerPlayer.get(savedUser.getName()).getWonCount().longValue());
-        assertEquals(1, countsPerPlayer.get(savedUser.getName()).getLostCount().longValue());
-        assertEquals(2, countsPerPlayer.get(ReservedUser.UNREGISTERED_USERS.getName()).getWonCount().longValue());
-        assertEquals(0, countsPerPlayer.get(ReservedUser.UNREGISTERED_USERS.getName()).getLostCount().longValue());
-        assertEquals(1, countsPerPlayer.get(ReservedUser.DELETED_USERS.getName()).getWonCount().longValue());
-        assertEquals(0, countsPerPlayer.get(ReservedUser.DELETED_USERS.getName()).getLostCount().longValue());
-    }
+        assertTrue(usernameToUserIds.containsKey(playerTwo.getName()));
+        assertEquals(1, usernameToUserIds.get(playerTwo.getName()).size());
+        assertTrue(usernameToUserIds.get(playerTwo.getName()).contains(playerTwo.getId()));
 
-    private void assertDartCount(final DartCountStatisticDto dartStatistic, final long singleCount, final long doubleCount, final long tripleCount) {
-        assertEquals(singleCount, dartStatistic.getSingleCount().longValue());
-        assertEquals(doubleCount, dartStatistic.getDoubleCount().longValue());
-        assertEquals(tripleCount, dartStatistic.getTripleCount().longValue());
+        assertTrue(usernameToUserIds.containsKey(ReservedUser.UNREGISTERED_USER.getName()));
+        assertEquals(1, usernameToUserIds.get(ReservedUser.UNREGISTERED_USER.getName()).size());
+        assertTrue(usernameToUserIds.get(ReservedUser.UNREGISTERED_USER.getName()).contains(ReservedUser.UNREGISTERED_USER.getId()));
+
+        assertTrue(usernameToUserIds.containsKey(ReservedUser.DELETED_USER.getName()));
+        assertEquals(2, usernameToUserIds.get(ReservedUser.DELETED_USER.getName()).size());
+        assertTrue(usernameToUserIds.get(ReservedUser.DELETED_USER.getName()).contains(DELETED_ID_ONE));
+        assertTrue(usernameToUserIds.get(ReservedUser.DELETED_USER.getName()).contains(DELETED_ID_TWO));
+
+        assertEquals(ComparativeOperator.values().length, filterOptions.getComparativeOperators().size());
+
+        final List<StatisticGameInformationDto> games = filterOptions.getGames();
+        assertEquals(6, games.size());
+        assertEquals(GAME_ID_ONE, games.get(0).getId());
+        assertEquals(0, games.get(0).getOpponents().size());
+        assertEquals(1L, games.get(0).getTimestamp());
+        assertEquals(GAME_ID_TWO, games.get(1).getId());
+        assertEquals(1, games.get(1).getOpponents().size());
+        assertEquals(2L, games.get(1).getTimestamp());
+        assertEquals(2, games.get(2).getOpponents().size());
+        assertEquals(1, games.get(3).getOpponents().size());
+        assertEquals(1, games.get(4).getOpponents().size());
+        assertEquals(1, games.get(5).getOpponents().size());
     }
 
     @Test
-    public void getNoGamesPlayed() {
-        final StatisticDto statistics = statisticController.get();
-        final DartStatisticDto dartStatistics = statistics.getDarts();
-        final Map<Integer, DartCountStatisticDto> countsPerScore = dartStatistics.getCountsPerScore();
-        final GameStatisticDto gamesStatistics = statistics.getGames();
-        final Map<String, GameCountStatisticDto> countsPerPlayer = gamesStatistics.getCountsPerPlayer();
+    public void getFilterOptionsNoGamesPlayed() {
+        final StatisticFilterOptionsDto filterOptions = statisticController.getFilterOptions();
+        assertTrue(filterOptions.getUsernameToUserIds().isEmpty());
+        assertTrue(filterOptions.getGames().isEmpty());
+        assertEquals(ComparativeOperator.values().length, filterOptions.getComparativeOperators().size());
+    }
 
-        assertEquals(0, dartStatistics.getTotalCount().longValue());
-        assertEquals(0, dartStatistics.getPossibleCheckoutCount().longValue());
-        assertEquals(0, dartStatistics.getCheckoutCount().longValue());
-        assertTrue(countsPerScore.isEmpty());
+    @Test
+    public void getFilterOptionsComparativeOperators() {
+        final StatisticFilterOptionsDto filterOptions = statisticController.getFilterOptions();
 
+        final List<String> comparativeOperators = filterOptions.getComparativeOperators();
+        final Object[] comparativeOperatorValuesStringArray = Arrays.stream(ComparativeOperator.values())
+                .map(ComparativeOperator::getOperator)
+                .toArray();
+        assertArrayEquals(comparativeOperatorValuesStringArray, comparativeOperators.toArray());
+    }
 
-        assertEquals(0, gamesStatistics.getWonCount().longValue());
-        assertEquals(0, gamesStatistics.getLostCount().longValue());
-        assertTrue(countsPerPlayer.isEmpty());
+    @Test
+    public void get() {
+        createAndSaveDefaultLoginUser();
+        final UserEntity playerOne = createAndSaveUser("Name 1", "Password 1");
+        final UserEntity playerTwo = createAndSaveUser("Name 2", "Password 2");
+
+        final GameStatistic games = new GameStatistic();
+        final Map<String, GameCountStatistic> countsPerId = new HashMap<>();
+        countsPerId.put(playerOne.getId(), createGameCountStatistic(1L, 1L));
+        countsPerId.put(playerTwo.getId(), createGameCountStatistic(2L, 2L));
+        countsPerId.put(DELETED_ID_ONE, createGameCountStatistic(3L, 3L));
+        countsPerId.put(DELETED_ID_TWO, createGameCountStatistic(4L, 4L));
+        countsPerId.put(ReservedUser.UNREGISTERED_USER.getId(), createGameCountStatistic(5L, 5L));
+        games.setCountsPerPlayerIds(countsPerId);
+
+        final Statistic result = new Statistic();
+        result.setGames(games);
+
+        mockedStatisticEvaluation.setEvaluationResult(result);
+
+        final StatisticDto statisticDto = statisticController.createStatistic(null);
+        final Map<String, GameCountStatisticDto> countsPerPlayer = statisticDto.getGames().getCountsPerPlayer();
+        assertEquals(4, countsPerPlayer.size());
+
+        assertTrue(countsPerPlayer.containsKey(playerOne.getName()));
+        assertEquals(1L, countsPerPlayer.get(playerOne.getName()).getWonCount().longValue());
+        assertEquals(1L, countsPerPlayer.get(playerOne.getName()).getLostCount().longValue());
+
+        assertTrue(countsPerPlayer.containsKey(playerTwo.getName()));
+        assertEquals(2L, countsPerPlayer.get(playerTwo.getName()).getWonCount().longValue());
+        assertEquals(2L, countsPerPlayer.get(playerTwo.getName()).getLostCount().longValue());
+
+        assertTrue(countsPerPlayer.containsKey(ReservedUser.DELETED_USER.getName()));
+        assertEquals(7L, countsPerPlayer.get(ReservedUser.DELETED_USER.getName()).getWonCount().longValue());
+        assertEquals(7L, countsPerPlayer.get(ReservedUser.DELETED_USER.getName()).getLostCount().longValue());
+
+        assertTrue(countsPerPlayer.containsKey(ReservedUser.UNREGISTERED_USER.getName()));
+        assertEquals(5L, countsPerPlayer.get(ReservedUser.UNREGISTERED_USER.getName()).getWonCount().longValue());
+        assertEquals(5L, countsPerPlayer.get(ReservedUser.UNREGISTERED_USER.getName()).getLostCount().longValue());
+    }
+
+    @Test
+    public void getWithFilter() {
+        final StatisticEvaluation evaluation = (games, filter) -> {
+            assertNotNull(filter);
+            return new Statistic();
+        };
+        statisticController = new StatisticController(evaluation, gamesRepository, userRepository);
+        statisticController.createStatistic(new StatisticFilterDto());
+    }
+
+    private GameCountStatistic createGameCountStatistic(final long won, final long lost){
+        final GameCountStatistic gameCountStatistic = new GameCountStatistic();
+        gameCountStatistic.setWonCount(won);
+        gameCountStatistic.setLostCount(lost);
+        return gameCountStatistic;
     }
 
 }

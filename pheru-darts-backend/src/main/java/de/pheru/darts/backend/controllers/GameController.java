@@ -5,10 +5,11 @@ import de.pheru.darts.backend.dtos.game.DartDto;
 import de.pheru.darts.backend.dtos.game.GameDto;
 import de.pheru.darts.backend.dtos.game.PlayerDto;
 import de.pheru.darts.backend.entities.game.GameEntity;
+import de.pheru.darts.backend.entities.notification.NotificationEntity;
 import de.pheru.darts.backend.entities.notification.NotificationTemplates;
 import de.pheru.darts.backend.entities.user.UserEntity;
 import de.pheru.darts.backend.exceptions.ForbiddenException;
-import de.pheru.darts.backend.mappers.DtoMapper;
+import de.pheru.darts.backend.mappers.DtoToEntityMapper;
 import de.pheru.darts.backend.repositories.GameRepository;
 import de.pheru.darts.backend.repositories.NotificationRepository;
 import de.pheru.darts.backend.repositories.PlayerPermissionRepository;
@@ -26,7 +27,7 @@ import java.util.Date;
 @RequestMapping("/game")
 public class GameController {
 
-    private static final Logger LOGGER = new Logger();
+    private static final Logger LOGGER = new Logger(GameController.class);
 
     private final PlayerPermissionRepository playerPermissionRepository;
     private final GameRepository gameRepository;
@@ -60,7 +61,7 @@ public class GameController {
             if (aufnahmen[aufnahmen.length - 1].length == 0) {
                 playerDto.setAufnahmen(Arrays.copyOfRange(aufnahmen, 0, aufnahmen.length - 1));
             }
-            final GameEntity gameEntity = DtoMapper.toGameEntity(game);
+            final GameEntity gameEntity = DtoToEntityMapper.toGameEntity(game);
             gameEntity.setUserId(playerDto.getId());
             gameEntity.setTimestamp(timestamp.getTime());
             gameRepository.save(gameEntity);
@@ -71,9 +72,12 @@ public class GameController {
                     final UserEntity loggedInUser = userRepository.findById(loggedInUserId);
                     loggedInUsername = loggedInUser.getName();
                 }
-                notificationRepository.save(NotificationTemplates.gameSaved(
-                        playerDto.getId(), timestamp.getTime(), loggedInUsername));
-                LOGGER.info("Notification for user " + playerDto.getId() + " saved by user " + loggedInUserId + ".");
+                final NotificationEntity notification = NotificationTemplates.gameSaved(
+                        playerDto.getId(), timestamp.getTime(), loggedInUsername);
+                notificationRepository.save(notification);
+                LOGGER.info("Notification of type " + notification.getNotificationType()
+                        + " for user " + playerDto.getId()
+                        + " saved by user " + loggedInUserId + ".");
             }
         }
     }

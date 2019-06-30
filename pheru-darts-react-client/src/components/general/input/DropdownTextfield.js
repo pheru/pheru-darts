@@ -23,24 +23,29 @@ class DropdownTextfield extends React.Component {
 
     render() {
         let showDropdownToggle = this.props.choices !== undefined && this.props.choices.length > 0;
-        return <Dropdown style={{...this.props.style, display: 'inline-flex'}} id={this.props.id}>
-            <div style={{position: 'absolute', top: 1, left: 3}}>
+        return <Dropdown id={this.props.id} style={{...this.props.style, display: 'inline-flex'}}>
+            <div style={{position: 'absolute', top: 1, left: 7}}>
                 {this.state.icon}
             </div>
             <FormControl type="text" value={this.props.value} placeholder={this.props.placeholder}
                          onChange={(e) => this.props.onInputChange(e.target.value)}
-                         style={{borderTopRightRadius: showDropdownToggle ? 0 : undefined,
+                         style={{
+                             borderTopRightRadius: showDropdownToggle ? 0 : undefined,
                              borderBottomRightRadius: showDropdownToggle ? 0 : undefined,
-                             textAlign: 'center'}}
-                        autoFocus={this.props.autoFocus}
+                             textAlign: 'center'
+                         }}
+                         autoFocus={this.props.autoFocus}
             />
             <Dropdown.Toggle style={{borderLeftWidth: 0, display: showDropdownToggle ? "" : "none"}}/>
             <Dropdown.Menu style={{minWidth: 'calc(100% - 34px)', textAlign: 'center'}}>
-                {this.props.choices.map(choice =>
-                    <MenuItem key={"choice" + this.getTextForChoice(choice)}
-                              onClick={() => this.props.onDropdownClick(choice)}>
+                {this.props.choices.map((choice, i) =>
+                    [<MenuItem key={"choice" + this.getTextForChoice(choice)}
+                               style={{width: 'calc(100% - 1px)', margin: "auto"}}
+                               onClick={() => this.props.onDropdownClick(choice)}>
                         {this.getTextForChoice(choice)}
-                    </MenuItem>
+                    </MenuItem>,
+                        (this.props.dividerPositions && this.props.dividerPositions.includes(i)) && <MenuItem divider/>
+                    ]
                 )}
             </Dropdown.Menu>
         </Dropdown>
@@ -59,7 +64,8 @@ DropdownTextfield.propTypes = {
     onDropdownClick: PropTypes.func,
     onInputChange: PropTypes.func,
     placeholder: PropTypes.string,
-    autoFocus: PropTypes.bool
+    autoFocus: PropTypes.bool,
+    dividerPositions: PropTypes.array
 };
 
 export default DropdownTextfield

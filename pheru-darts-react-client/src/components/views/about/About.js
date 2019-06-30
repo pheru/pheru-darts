@@ -1,24 +1,16 @@
 import React from 'react'
-import PropTypes from "prop-types";
+import NewFeaturesInfoPanel from "../main/NewFeaturesInfoPanel";
 
 class About extends React.Component {
 
-    componentDidMount() {
-        this.props.fetchServerVersion();
-    }
-
     render() {
         return <div>
-            Client: {`${process.env.REACT_APP_VERSION}`} <br/>
-            Server: {this.props.serverVersion ? this.props.serverVersion : "Lade..."}
+            <NewFeaturesInfoPanel/>
         </div>
     }
 
 }
 
-About.propTypes = {
-    fetchServerVersion: PropTypes.func.isRequired,
-    serverVersion: PropTypes.string
-};
+About.propTypes = {};
 
 export default About

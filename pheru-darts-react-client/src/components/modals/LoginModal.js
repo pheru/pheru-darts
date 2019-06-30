@@ -58,7 +58,7 @@ class LoginModal extends React.Component {
                 <Button bsStyle="link" onClick={() => {
                     this.props.hide();
                     this.props.showSignUp();
-                }}>Registrieren</Button>
+                }}>Neu hier? Jetzt registrieren!</Button>
             </Modal.Body>
             <Modal.Footer style={{textAlign: 'center'}}>
                 <Button style={{width: 100}} bsStyle="primary"

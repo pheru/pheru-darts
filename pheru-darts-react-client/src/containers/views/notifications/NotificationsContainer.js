@@ -6,9 +6,7 @@ import {showLoginModal} from "../../../actions/user";
 const mapStateToProps = state => ({
     notifications: state.notifications.notifications.slice().reverse(),
     unreadNotifications: state.notifications.unreadNotifications,
-    isFetchingNotifications: state.notifications.isFetching,
-    isLoggedIn: state.user.isLoggedIn,
-    isLoggingIn: state.user.isLoggingIn
+    isFetchingNotifications: state.notifications.isFetching
 });
 
 const mapDispatchToProps = dispatch => ({

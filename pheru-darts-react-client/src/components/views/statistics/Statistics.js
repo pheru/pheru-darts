@@ -7,8 +7,9 @@ import StackLoader from "../../general/loaders/StackLoader";
 import DartsRadarChart from "./DartsRadarChart";
 import OnlyForLoggedInUsersContainer from "../../../containers/general/OnlyForLoggedInUsersContainer";
 import DocumentUtil from "../../../util/DocumentUtil";
-
-const TITLE = "Statistiken";
+import StatisticsFilter from "./StatisticsFilter";
+import AufnahmeProgressAreaChart from "./AufnahmeProgressAreaChart";
+import {NAVIGATION_ITEM} from "../../../constants/navigationItems";
 
 const DART_CHART_TYPE_BAR = "bar";
 const DART_CHART_TYPE_RADAR = "radar";
@@ -18,28 +19,26 @@ class Statistics extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            dartChartType: DART_CHART_TYPE_BAR
-        };
-        this.tableStyle = {
-            border: "1px solid #a5b0b6",
-            borderCollapse: "collapse",
-            textAlign: "center",
-            verticalAlign: "middle"
+            dartChartType: DART_CHART_TYPE_BAR,
+            fixedYAxisAufnahmeChart: false
         };
         this.dartsBarChartRef = React.createRef();
         this.dartsRadarChartRef = React.createRef();
         this.handleDartChartTypeChange = this.handleDartChartTypeChange.bind(this);
+        this.toggleFixedYAxisAufnahmeChartChange = this.toggleFixedYAxisAufnahmeChartChange.bind(this);
     }
 
     componentDidMount() {
-        DocumentUtil.setTitlePrefix(TITLE);
+        DocumentUtil.setTitlePrefix(NAVIGATION_ITEM.STATISTICS.text);
         if (this.props.isLoggedIn) {
+            this.props.fetchStatisticsFilterOptions();
             this.props.fetchStatistics();
         }
     }
 
     componentDidUpdate(prevProps) {
         if (!prevProps.isLoggedIn && this.props.isLoggedIn) {
+            this.props.fetchStatisticsFilterOptions();
             this.props.fetchStatistics();
         }
     }
@@ -71,57 +70,68 @@ class Statistics extends React.Component {
         }
     }
 
+    toggleFixedYAxisAufnahmeChartChange() {
+        this.setState({fixedYAxisAufnahmeChart: !this.state.fixedYAxisAufnahmeChart});
+    }
+
     render() {
         return <OnlyForLoggedInUsersContainer
             text="Statistiken können nur für angemeldete Benutzer erstellt und eingesehen werden">
-            {this.props.isFetchingStatistics ?
-                <div style={{position: 'absolute', left: '50%', top: '50%'}}>
-                    <StackLoader label="Lade Statistiken..."/>
+            <div className="statistics">
+                <div style={{textAlign: 'center'}}>
+                    <h1 style={{marginTop: 0}}><strong>{NAVIGATION_ITEM.STATISTICS.text}</strong></h1>
+                    <StatisticsFilter style={{marginBottom: 5}}
+                                      fetchStatistics={this.props.fetchStatistics}
+                                      options={this.props.options}
+                    />
                 </div>
-                : this.createStatisticsView()}
+                {this.props.isFetchingStatistics ?
+                    <StackLoader modal label="Lade Statistiken..."/>
+                    : <div>
+                        {this.props.dartData.length > 0
+                            ? this.createDartsView()
+                            : <Alert bsStyle="warning">
+                                <strong>Keine Dart-Daten vorhanden</strong>
+                            </Alert>}
+                        {Object.keys(this.props.highestAufnahmen).length > 0
+                            ? this.createAufnahmenView()
+                            : <Alert bsStyle="warning">
+                                <strong>Keine Aufnahmen-Daten vorhanden</strong>
+                            </Alert>}
+                        {this.props.gamesData.length > 0
+                            ? this.createGamesView()
+                            : <Alert bsStyle="warning">
+                                <strong>Keine Spiel-Daten vorhanden</strong>
+                            </Alert>}
+                    </div>
+                }
+            </div>
         </OnlyForLoggedInUsersContainer>
-    }
-
-    createStatisticsView() {
-        return <div style={{textAlign: 'center'}}>
-            <h1 style={{marginTop: 0}}><strong>{TITLE}</strong></h1>
-            <h2><strong>Darts</strong></h2>
-            {this.props.dartData.length > 0
-                ? this.createDartsView()
-                : <Alert bsStyle="warning">
-                    <strong>Keine Daten vorhanden</strong>
-                </Alert>}
-            <h2><strong>Spiele</strong></h2>
-            {this.props.gamesData.length > 0
-                ? this.createGamesView()
-                : <Alert bsStyle="warning">
-                    <strong>Keine Daten vorhanden</strong>
-                </Alert>}
-        </div>
     }
 
     createDartsView() {
         return <Well style={{
             paddingBottom: 0,
-            marginBottom: 5,
+            marginBottom: 15,
             textAlign: 'center'
         }}>
-            <Table responsive style={{textAlign: 'center'}}>
+            <h2 style={{marginTop: 0}}><strong>Darts</strong></h2>
+            <Table className="statistics-table" responsive>
                 <tbody>
                 <tr>
-                    <th style={this.tableStyle}>Gesamt:</th>
-                    <td colSpan={3} style={this.tableStyle}>{this.props.totalDarts}</td>
+                    <th>Gesamt:</th>
+                    <td colSpan={3}>{this.props.totalDarts}</td>
                 </tr>
                 <tr>
-                    <th rowSpan={2} style={this.tableStyle}>Checkouts:</th>
-                    <th style={this.tableStyle}>Mögliche Checkouts</th>
-                    <th style={this.tableStyle}>Erfolgreiche Checkouts</th>
-                    <th style={this.tableStyle}>Checkoutrate</th>
+                    <th rowSpan={2}>Checkouts:</th>
+                    <th>Mögliche Checkouts</th>
+                    <th>Erfolgreiche Checkouts</th>
+                    <th>Checkoutrate</th>
                 </tr>
                 <tr>
-                    <td style={this.tableStyle}>{this.props.possibleCheckoutDarts}</td>
-                    <td style={this.tableStyle}>{this.props.checkoutDarts}</td>
-                    <td style={this.tableStyle}>{this.getDartCheckoutRate()}</td>
+                    <td>{this.props.possibleCheckoutDarts}</td>
+                    <td>{this.props.checkoutDarts}</td>
+                    <td>{this.getDartCheckoutRate()}</td>
                 </tr>
                 </tbody>
             </Table>
@@ -148,25 +158,63 @@ class Statistics extends React.Component {
         </Well>
     }
 
+    createAufnahmenView() {
+        let ths = [];
+        let tds = [];
+        for (let property in this.props.highestAufnahmen) {
+            if (this.props.highestAufnahmen.hasOwnProperty(property)) {
+                ths.unshift(<th key={"aufnahme_th_" + property}>{property}</th>);
+                tds.unshift(<td key={"aufnahme_td_" + property}>{this.props.highestAufnahmen[property]}</td>);
+            }
+        }
+        return <Well style={{
+            paddingBottom: 0,
+            marginBottom: 15,
+            textAlign: 'center'
+        }}>
+            <h2 style={{marginTop: 0}}><strong>Aufnahmen</strong></h2>
+            <Table className="statistics-table" responsive>
+                <tbody>
+                <tr>
+                    <th>Durchschnitt:</th>
+                    <td colSpan={ths.length}>{this.props.averageAufnahmeScore.toFixed(2)}</td>
+                </tr>
+                <tr>
+                    <th rowSpan={2}>Höchste Aufnahmen (Top {ths.length}):</th>
+                    {ths}
+                </tr>
+                <tr>
+                    {tds}
+                </tr>
+                </tbody>
+            </Table>
+            <AufnahmeProgressAreaChart data={this.props.progressData}
+                                       fixedYAxis={this.state.fixedYAxisAufnahmeChart}
+                                       onClick={this.toggleFixedYAxisAufnahmeChartChange}/>
+        </Well>
+    }
+
     createGamesView() {
         return <Well
             style={{
                 paddingBottom: 0,
-                marginBottom: 5
+                marginBottom: 15,
+                textAlign: 'center'
             }}>
-            <Table responsive style={{textAlign: 'center'}}>
+            <h2 style={{marginTop: 0}}><strong>Spiele</strong></h2>
+            <Table className="statistics-table" responsive>
                 <tbody>
                 <tr>
-                    <th style={this.tableStyle}>Gesamt</th>
-                    <th style={this.tableStyle}>Gewonnen</th>
-                    <th style={this.tableStyle}>Verloren</th>
-                    <th style={this.tableStyle}>Siegrate</th>
+                    <th>Gesamt</th>
+                    <th>Gewonnen</th>
+                    <th>Verloren</th>
+                    <th>Siegrate</th>
                 </tr>
                 <tr>
-                    <td style={this.tableStyle}>{this.props.gamesWon + this.props.gamesLost}</td>
-                    <td style={this.tableStyle}>{this.props.gamesWon}</td>
-                    <td style={this.tableStyle}>{this.props.gamesLost}</td>
-                    <td style={this.tableStyle}>{this.getWinRate()}</td>
+                    <td>{this.props.gamesWon + this.props.gamesLost}</td>
+                    <td>{this.props.gamesWon}</td>
+                    <td>{this.props.gamesLost}</td>
+                    <td>{this.getWinRate()}</td>
                 </tr>
                 </tbody>
             </Table>
@@ -190,17 +238,21 @@ class Statistics extends React.Component {
 }
 
 Statistics.propTypes = {
-    isLoggedIn: PropTypes.bool.isRequired,
-    isLoggingIn: PropTypes.bool.isRequired,
     isFetchingStatistics: PropTypes.bool.isRequired,
     gamesWon: PropTypes.number.isRequired,
     gamesLost: PropTypes.number.isRequired,
     totalDarts: PropTypes.number.isRequired,
+    averageAufnahmeScore: PropTypes.number.isRequired,
+    highestAufnahmen: PropTypes.object.isRequired,
+
     dartData: PropTypes.array,
     gamesData: PropTypes.array,
 
+    options: PropTypes.object.isRequired,
+
     showLogin: PropTypes.func.isRequired,
-    fetchStatistics: PropTypes.func.isRequired
+    fetchStatistics: PropTypes.func.isRequired,
+    fetchStatisticsFilterOptions: PropTypes.func.isRequired
 };
 
 export default Statistics;

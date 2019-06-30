@@ -7,12 +7,37 @@ import PropTypes from "prop-types";
 import NavbarLoginLoader from "../general/loaders/NavbarLoginLoader";
 import NavigationBarItem from "../general/navigationbar/NavigationBarItem";
 import NavigationBar, {DropdownConfig, NavigationBarContainer} from "../general/navigationbar/NavigationBar";
+import {FaMoon, FaSun} from "react-icons/fa";
 
 class AppNavigationBar extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            darktheme: true
+        };
+        this.toggleTheme = this.toggleTheme.bind(this);
+    }
+
+    toggleTheme() {
+        if (this.state.darktheme) {
+            document.getElementById("theme_link").setAttribute("href", "");
+        } else {
+            document.getElementById("theme_link").setAttribute("href", "css/themes/darktheme.css");
+        }
+        this.setState({darktheme: !this.state.darktheme})
+    }
 
     render() {
         let fixedItems = [
             <FullscreenButton key="fullscreen-button" className="navigation-bar-bordered-item"/>,
+            <Button key="theme-toggle" style={{marginLeft: 5}} className="navigation-bar-bordered-item"
+                    onClick={this.toggleTheme}>
+                {this.state.darktheme
+                    ? <FaSun style={{verticalAlign: "middle"}}/>
+                    : <FaMoon style={{verticalAlign: "middle"}}/>
+                }
+            </Button>,
             <Link key="brand" className="navigation-bar-item navigation-bar-header" to={"/"}>
                 Pheru-Darts
             </Link>
