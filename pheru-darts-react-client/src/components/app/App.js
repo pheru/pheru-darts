@@ -17,6 +17,7 @@ import WindowUtil from "../../util/WindowUtil";
 import { registerLocale, setDefaultLocale } from "react-datepicker";
 import de from "date-fns/locale/de";
 import About from "../views/about/About";
+import Bracket from "../views/tournament/Bracket";
 
 class App extends React.Component {
 
@@ -122,6 +123,7 @@ class App extends React.Component {
                     <Route path={NAVIGATION_ITEM.STATISTICS.route} component={StatisticsContainer}/>
                     <Route path={NAVIGATION_ITEM.SETTINGS.route} component={SettingsContainer}/>
                     <Route path={NAVIGATION_ITEM.ABOUT.route} component={About}/>
+                    <Route path={NAVIGATION_ITEM.BRACKET.route} component={Bracket}/>
                     {/*no-match-route*/}
                     <Route component={MainContainer}/>
                 </Switch>

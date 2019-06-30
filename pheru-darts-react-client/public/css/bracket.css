@@ -57,12 +57,6 @@
     color: #3F915F;
 }
 
-.bracket-round li {
-    background-color: #fff;
-    box-shadow: none;
-    opacity: 0.45;
-}
-
 .bracket-score {
     font-size: 11px;
     text-transform: uppercase;
@@ -78,31 +72,36 @@
     box-sizing: initial;
     margin: 0;
     width: 100%;
-    padding: 10px 0;
+    padding: 5px 0;
     height: 60px;
     -webkit-transition: all 0.2s;
     transition: all 0.2s;
 }
 
-.bracket-round-two .bracket-matchup {
-    padding: 50px 0;
+.bracket-round-2 .bracket-matchup {
+    padding: 40px 0;
 }
 
-.bracket-round-three .bracket-matchup {
-    padding: 130px 0;
+.bracket-round-3 .bracket-matchup {
+    padding: 110px 0;
+}
+
+.bracket-round-4 .bracket-matchup {
+    padding: 250px 0;
+}
+
+.bracket-round-5 .bracket-matchup {
+    padding: 530px 0;
 }
 
 .bracket-current li {
     opacity: 1;
 }
 
-.bracket-current li.bracket-player {
-    background-color: #fff;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-    opacity: 1;
-}
-
 .bracket-player {
+    background-color: #fff;
+    box-shadow: none;
+    color: black;
     text-align: center;
     border-radius: 4px;
     padding: 0 5px;
@@ -112,4 +111,12 @@
     white-space: nowrap;
     overflow: hidden;
     position: relative;
+}
+
+.bracket-player-winner {
+    background-color: #78ff78;
+}
+
+.bracket-player-loser {
+    background-color: #fd8787;
 }

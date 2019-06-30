@@ -22,6 +22,7 @@ export const NAVIGATION_ITEM = {
     SETTINGS_SPEECH: new NavigationItem("Spracheinstellungen", <Glyphicon glyph="volume-up"/>, SETTINGS_PATH + "/speech"),
     SETTINGS_PERMISSIONS: new NavigationItem("Berechtigungen", <Glyphicon glyph="list-alt"/>, SETTINGS_PATH + "/permissions"),
     ABOUT: new NavigationItem("Info", <Glyphicon glyph="info-sign"/>, "/about"),
+    BRACKET: new NavigationItem("Turnierbaum", <Glyphicon glyph="info-sign"/>, "/bracket"),
 
     LOGIN: new NavigationItem("Anmelden", <Glyphicon glyph="log-in"/>),
     LOGOUT: new NavigationItem("Abmelden", <Glyphicon glyph="log-out"/>)
