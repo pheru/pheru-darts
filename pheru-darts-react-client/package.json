@@ -4,7 +4,7 @@
   "private": true,
   "homepage": ".",
   "devDependencies": {
-    "react-scripts": "2.1.1"
+    "react-scripts": "5.0.1"
   },
   "dependencies": {
     "prop-types": "^15.6.1",
